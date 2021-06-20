@@ -53,6 +53,7 @@ export default defineComponent({
         async persistUser(user: User) {
             try {
                 await HttpHandler.post<User, User>(`/v1/users`, user);
+                await this.$router.push('/authenticated-home');
             } catch (error) {
                 await Toast.present(error.message);
             }
