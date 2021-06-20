@@ -1,7 +1,7 @@
 {
-  "name": "ielts-gibberish-android",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue"
+    "name": "ielts-gibberish-android",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "vue"
 }
