@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ielts-gibberish-android",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}
