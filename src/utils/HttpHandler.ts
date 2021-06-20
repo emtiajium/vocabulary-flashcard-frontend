@@ -1,0 +1,24 @@
+import Axios, { AxiosError } from 'axios';
+import Config from '../../config.json';
+
+export default class HttpHandler {
+    static handleError(error: AxiosError) {
+        if (Array.isArray(error?.response?.data?.message)) {
+            throw new Error(error.response?.data.message[0]);
+        }
+        throw new Error(error.response?.data.message);
+    }
+
+    static async post<T, U>(url: string, payload: T): Promise<U | undefined> {
+        let response;
+        try {
+            const axiosResponse = await Axios.post(`${Config.server.apiPrefix}${url}`, payload, {
+                headers: { 'content-type': 'application/json' },
+            });
+            response = axiosResponse.data;
+        } catch (error) {
+            throw HttpHandler.handleError(error);
+        }
+        return response;
+    }
+}

@@ -44,6 +44,10 @@ export default class GoogleAuthorization {
         });
     }
 
+    async load() {
+        await Promise.all([this.onGoogleApiLoad(), this.createScript()]);
+    }
+
     renderElement = (elementId: string): void => {
         window.gapi.signin2.render(elementId, { width: 250, height: 50, longtitle: true });
     };
@@ -54,6 +58,7 @@ export default class GoogleAuthorization {
         // and on the backend from the sub claim of the ID token.
         return {
             email: profile.getEmail(),
+            username: profile.getEmail(),
             firstname: profile.getGivenName(),
             lastname: profile.getFamilyName(),
             profilePictureUrl: profile.getImageUrl(),

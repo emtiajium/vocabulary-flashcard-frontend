@@ -19,6 +19,8 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue
 import { defineComponent } from 'vue';
 import GoogleAuth from '@/utils/GoogleAuthorization';
 import User from '@/domains/User';
+import HttpHandler from '@/utils/HttpHandler';
+import Toast from '@/utils/Toast';
 
 export default defineComponent({
     name: 'SignIn',
@@ -36,23 +38,24 @@ export default defineComponent({
         };
     },
     async mounted() {
-        await this.load();
+        await this.googleAuth.load();
         if (this.googleAuth.isSignedIn()) {
-            this.onSuccessfulAuthentication(this.googleAuth.getAuthenticatedUser());
+            await this.persistUser(this.googleAuth.getAuthenticatedUser());
         } else {
             this.googleAuth.renderElement(this.signInButtonId);
         }
     },
     methods: {
-        async load() {
-            await Promise.all([this.googleAuth.onGoogleApiLoad(), this.googleAuth.createScript()]);
-        },
         async handleClick() {
             const user = await this.googleAuth.signIn();
-            this.onSuccessfulAuthentication(user);
+            await this.persistUser(user);
         },
-        onSuccessfulAuthentication(user: User) {
-            console.log(`User details`, user);
+        async persistUser(user: User) {
+            try {
+                await HttpHandler.post<User, User>(`/v1/users`, user);
+            } catch (error) {
+                await Toast.present(error.message);
+            }
         },
     },
 });
@@ -60,6 +63,7 @@ export default defineComponent({
 
 <style scoped>
 .container {
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
