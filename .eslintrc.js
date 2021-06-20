@@ -3,6 +3,9 @@ module.exports = {
     env: {
         node: true,
     },
+    globals: {
+        gapi: true,
+    },
     extends: [
         'plugin:vue/vue3-essential',
         'eslint:recommended',
@@ -25,6 +28,12 @@ module.exports = {
             files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
             env: {
                 jest: true,
+            },
+        },
+        {
+            files: ['src/utils/GoogleAuthorization.ts'],
+            rules: {
+                '@typescript-eslint/camelcase': 'off',
             },
         },
     ],

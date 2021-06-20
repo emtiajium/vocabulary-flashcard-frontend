@@ -10,10 +10,11 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "sourceMap": true,
+        "resolveJsonModule": true,
         "baseUrl": ".",
-        "types": ["webpack-env", "jest"],
+        "types": ["webpack-env", "jest", "gapi", "gapi.auth2"],
         "paths": {
-            "@/*": ["src/*"]
+            "@/*": ["./src/*"],
         },
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
     },
