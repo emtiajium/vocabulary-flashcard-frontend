@@ -1,5 +1,5 @@
 <template>
-    <VocabularyList />
+    <vocabulary-list />
 </template>
 
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-    <SignIn />
+    <sign-in />
 </template>
 
 <script lang="ts">
