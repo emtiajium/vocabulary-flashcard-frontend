@@ -1,5 +1,6 @@
 <template>
-    <ion-page>
+    <!--tried with routing, but could not find a way to set the definition before navigating back to this page-->
+    <ion-page v-show="!isInDefinition()">
         <ion-header :translucent="true">
             <ion-toolbar>
                 <ion-title>Add Vocabulary</ion-title>
@@ -41,6 +42,10 @@
             <ion-button expand="block" @click="persist">Save</ion-button>
         </ion-content>
     </ion-page>
+
+    <ion-page v-show="isInDefinition()">
+        <add-definition :word="word" :vocabularyId="id" :afterAddingDefinition="afterAddingDefinition" />
+    </ion-page>
 </template>
 
 <script lang="ts">
@@ -66,10 +71,18 @@ import NativeStorage from '@/utils/NativeStorage';
 import AddLinkerWords from '@/views/AddLinkerWords.vue';
 import AddGenericNotes from '@/views/AddGenericNotes.vue';
 import AddGenericExternalLinks from '@/views/AddGenericExternalLinks.vue';
+import Definition from '@/domains/Definition';
+import AddDefinition from '@/views/AddDefinition.vue';
+
+enum PageType {
+    ADD_VOCABULARY = 'ADD_VOCABULARY',
+    ADD_DEFINITION = 'ADD_DEFINITION',
+}
 
 export default defineComponent({
     name: 'AddVocabulary',
     components: {
+        AddDefinition,
         IonContent,
         IonHeader,
         IonPage,
@@ -90,6 +103,8 @@ export default defineComponent({
             id: uuidV4(),
             word: '',
             isDraft: true,
+            definitions: [] as Definition[],
+            currentPage: PageType.ADD_VOCABULARY,
         };
     },
     methods: {
@@ -103,14 +118,28 @@ export default defineComponent({
             if (!this.word) {
                 await Toast.present(`Please insert the word before adding the definition`);
             } else {
-                await this.$router.push(`/add-definition/${this.id}/${this.word}`);
+                this.setCurrentPage(PageType.ADD_DEFINITION);
             }
+        },
+        setCurrentPage(currentPage: string) {
+            this.currentPage = currentPage;
+        },
+        isInDefinition() {
+            return this.currentPage === PageType.ADD_DEFINITION;
+        },
+        afterAddingDefinition(definition: Definition) {
+            this.insertDefinition(definition);
+            this.setCurrentPage(PageType.ADD_VOCABULARY);
+        },
+        insertDefinition(definition: Definition) {
+            this.definitions.push(definition);
         },
         async generatePayload() {
             const vocabulary = new Vocabulary();
             vocabulary.id = this.id;
             vocabulary.cohortId = await NativeStorage.getCohortId();
             vocabulary.word = this.word;
+            vocabulary.definitions = this.definitions;
             vocabulary.linkerWords = (
                 this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>
             ).getLinkerWords();

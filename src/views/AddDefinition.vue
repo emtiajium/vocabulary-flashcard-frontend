@@ -11,21 +11,21 @@
                 <ion-label>Meaning</ion-label>
             </ion-item>
             <ion-item>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" :value="meaning" @keyup="setMeaning($event.target.value)"></ion-input>
             </ion-item>
 
-            <add-definition-example />
+            <add-definition-example ref="AddDefinitionExampleRef" />
 
-            <add-definition-notes />
+            <add-definition-notes ref="AddDefinitionNotesRef" />
 
-            <add-definition-external-links />
+            <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
 
-            <ion-button expand="block" @click="$router.back()">Save</ion-button>
+            <ion-button expand="block" @click="back()">Save</ion-button>
         </ion-content>
     </ion-page>
 </template>
 
-<script>
+<script lang="ts">
 import {
     IonContent,
     IonHeader,
@@ -41,7 +41,8 @@ import { defineComponent } from 'vue';
 import AddDefinitionExample from '@/views/AddDefinitionExample.vue';
 import AddDefinitionNotes from '@/views/AddDefinitionNotes.vue';
 import AddDefinitionExternalLinks from '@/views/AddDefinitionExternalLinks.vue';
-import { useRoute } from 'vue-router';
+import Definition from '@/domains/Definition';
+import { v4 as uuidV4 } from 'uuid';
 
 export default defineComponent({
     name: 'AddDefinition',
@@ -59,12 +60,33 @@ export default defineComponent({
         IonItem,
         IonButton,
     },
+    props: ['word', 'vocabularyId', 'afterAddingDefinition'],
     data() {
-        const { vocabularyId, word } = useRoute().params;
         return {
-            vocabularyId,
-            word,
+            meaning: '',
         };
+    },
+    methods: {
+        setMeaning(meaning: string) {
+            this.meaning = meaning.trim();
+        },
+        getDefinitionPayload() {
+            const definition = new Definition();
+            definition.id = uuidV4();
+            definition.vocabularyId = this.vocabularyId;
+            definition.meaning = this.meaning;
+            definition.examples = (
+                this.$refs.AddDefinitionExampleRef as InstanceType<AddDefinitionExample>
+            ).getExamples();
+            definition.notes = (this.$refs.AddDefinitionNotesRef as InstanceType<AddDefinitionNotes>).getNotes();
+            definition.externalLinks = (
+                this.$refs.AddDefinitionExternalLinksRef as InstanceType<AddDefinitionExternalLinks>
+            ).getExternalLinks();
+            return definition;
+        },
+        back() {
+            this.afterAddingDefinition(this.getDefinitionPayload());
+        },
     },
 });
 </script>
