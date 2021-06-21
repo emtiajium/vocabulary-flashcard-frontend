@@ -2,7 +2,11 @@
     <ion-page>
         <ion-header :translucent="true">
             <ion-toolbar>
-                <ion-title>IELTS Gibberish</ion-title>
+                <ion-title
+                    ><ion-text class="header-title">
+                        <h3>IELTS Gibberish</h3>
+                    </ion-text></ion-title
+                >
             </ion-toolbar>
         </ion-header>
 
@@ -15,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import GoogleAuth from '@/utils/GoogleAuthorization';
 import User from '@/domains/User';
@@ -31,6 +35,7 @@ export default defineComponent({
         IonPage,
         IonTitle,
         IonToolbar,
+        IonText,
     },
     data() {
         return {
@@ -69,5 +74,9 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.header-title {
+    display: flex;
+    justify-content: center;
 }
 </style>
