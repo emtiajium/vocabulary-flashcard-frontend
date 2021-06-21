@@ -19,9 +19,12 @@
                 <ion-label>Definition</ion-label>
             </ion-item>
             <ion-item>
-                <ion-button @click="onAddingDefinition">Add Definition</ion-button>
+                <ion-button v-show="!definitions.length" @click="onAddingDefinition">Add Definition</ion-button>
+                <div v-show="definitions.length" v-for="definition in definitions" :key="definition.id">
+                    <ion-button>{{ definition.meaning }}</ion-button>
+                </div>
                 <ion-item-group>
-                    <ion-button>Add More</ion-button>
+                    <ion-button @click="onAddingDefinition">Add More</ion-button>
                     <ion-button>Remove</ion-button>
                 </ion-item-group>
             </ion-item>
