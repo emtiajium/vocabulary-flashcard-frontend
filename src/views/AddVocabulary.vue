@@ -14,6 +14,17 @@
                 <ion-input type="text" :value="word" @keyup="setWord($event.target.value)"></ion-input>
             </ion-item>
 
+            <ion-item lines="none">
+                <ion-label>Definition</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-button @click="onAddingDefinition">Add Definition</ion-button>
+                <ion-item-group>
+                    <ion-button>Add More</ion-button>
+                    <ion-button>Remove</ion-button>
+                </ion-item-group>
+            </ion-item>
+
             <add-linker-words ref="AddLinkerWordsRef" />
 
             <add-generic-notes ref="AddGenericNotes" />
@@ -45,6 +56,7 @@ import {
     IonToggle,
     IonToolbar,
     IonButton,
+    IonItemGroup,
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
@@ -68,6 +80,7 @@ export default defineComponent({
         IonItem,
         IonToggle,
         IonButton,
+        IonItemGroup,
         AddLinkerWords,
         AddGenericNotes,
         AddGenericExternalLinks,
@@ -81,10 +94,17 @@ export default defineComponent({
     },
     methods: {
         setWord(word: string) {
-            this.word = word;
+            this.word = word.trim();
         },
         setIsDraft(isDraft: boolean) {
             this.isDraft = isDraft;
+        },
+        async onAddingDefinition() {
+            if (!this.word) {
+                await Toast.present(`Please insert the word before adding the definition`);
+            } else {
+                await this.$router.push(`/add-definition/${this.id}/${this.word}`);
+            }
         },
         async generatePayload() {
             const vocabulary = new Vocabulary();
