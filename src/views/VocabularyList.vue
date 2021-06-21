@@ -33,7 +33,7 @@ export default defineComponent({
         IonFab,
         IonFabButton,
     },
-    setup() {
+    data() {
         return { add };
     },
 });
