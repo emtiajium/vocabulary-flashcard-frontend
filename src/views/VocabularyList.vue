@@ -9,7 +9,7 @@
         <ion-content :fullscreen="true">
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                 <ion-fab-button>
-                    <ion-icon :icon="add"></ion-icon>
+                    <ion-icon :icon="add" @click="$router.push('/add-vocabulary')"></ion-icon>
                 </ion-fab-button>
             </ion-fab>
         </ion-content>
