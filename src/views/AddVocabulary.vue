@@ -18,28 +18,7 @@
 
             <add-generic-notes ref="AddGenericNotes" />
 
-            <ion-item lines="none">
-                <ion-label>Generic External Links</ion-label>
-            </ion-item>
-            <div v-for="(item, index) in itemsInGenericExternalLinks" :key="index">
-                <ion-item>
-                    <ion-input
-                        type="url"
-                        :value="genericExternalLinks[index] || ''"
-                        @keyup="insertGenericExternalLink($event.target.value, index)"
-                    ></ion-input>
-                    <ion-button
-                        v-show="index === itemsInGenericExternalLinks.length - 1"
-                        @click="onAddMoreGenericExternalLink"
-                        >Add More</ion-button
-                    >
-                    <ion-button
-                        v-show="index === itemsInGenericExternalLinks.length - 1"
-                        @click="onRemoveLastGenericExternalLink(index)"
-                        >Remove</ion-button
-                    >
-                </ion-item>
-            </div>
+            <add-generic-external-links ref="AddGenericExternalLinks" />
 
             <ion-item lines="none">
                 <ion-label>Is Draft</ion-label>
@@ -74,6 +53,7 @@ import { v4 as uuidV4 } from 'uuid';
 import NativeStorage from '@/utils/NativeStorage';
 import AddLinkerWords from '@/views/AddLinkerWords.vue';
 import AddGenericNotes from '@/views/AddGenericNotes.vue';
+import AddGenericExternalLinks from '@/views/AddGenericExternalLinks.vue';
 
 export default defineComponent({
     name: 'AddVocabulary',
@@ -90,14 +70,13 @@ export default defineComponent({
         IonButton,
         AddLinkerWords,
         AddGenericNotes,
+        AddGenericExternalLinks,
     },
     data() {
         return {
             id: uuidV4(),
             word: '',
             isDraft: true,
-            itemsInGenericExternalLinks: [uuidV4()],
-            genericExternalLinks: [] as string[],
         };
     },
     methods: {
@@ -106,20 +85,6 @@ export default defineComponent({
         },
         setIsDraft(isDraft: boolean) {
             this.isDraft = isDraft;
-        },
-        insertGenericExternalLink(genericExternalLink: string, index: number) {
-            this.genericExternalLinks[index] = genericExternalLink;
-        },
-        onAddMoreGenericExternalLink() {
-            this.itemsInGenericExternalLinks.push(uuidV4());
-        },
-        onRemoveLastGenericExternalLink(removableIndex: number) {
-            if (removableIndex !== 0) {
-                this.itemsInGenericExternalLinks.pop();
-            }
-            this.genericExternalLinks = this.genericExternalLinks.filter(
-                (genericExternalLink, index) => index !== removableIndex,
-            );
         },
         async generatePayload() {
             const vocabulary = new Vocabulary();
@@ -132,7 +97,9 @@ export default defineComponent({
             vocabulary.genericNotes = (
                 this.$refs.AddGenericNotes as InstanceType<typeof AddGenericNotes>
             ).getGenericNotes();
-            vocabulary.genericExternalLinks = this.genericExternalLinks;
+            vocabulary.genericExternalLinks = (
+                this.$refs.AddGenericExternalLinks as InstanceType<typeof AddGenericExternalLinks>
+            ).getGenericExternalLinks();
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
         },
