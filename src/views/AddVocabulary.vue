@@ -16,26 +16,7 @@
 
             <add-linker-words ref="AddLinkerWordsRef" />
 
-            <ion-item lines="none">
-                <ion-label>Generic Notes</ion-label>
-            </ion-item>
-            <div v-for="(item, index) in itemsInGenericNotes" :key="index">
-                <ion-item>
-                    <ion-input
-                        type="text"
-                        :value="genericNotes[index] || ''"
-                        @keyup="insertGenericNote($event.target.value, index)"
-                    ></ion-input>
-                    <ion-button v-show="index === itemsInGenericNotes.length - 1" @click="onAddMoreGenericNote"
-                        >Add More</ion-button
-                    >
-                    <ion-button
-                        v-show="index === itemsInGenericNotes.length - 1"
-                        @click="onRemoveLastGenericNote(index)"
-                        >Remove</ion-button
-                    >
-                </ion-item>
-            </div>
+            <add-generic-notes ref="AddGenericNotes" />
 
             <ion-item lines="none">
                 <ion-label>Generic External Links</ion-label>
@@ -92,6 +73,7 @@ import Vocabulary from '@/domains/Vocabulary';
 import { v4 as uuidV4 } from 'uuid';
 import NativeStorage from '@/utils/NativeStorage';
 import AddLinkerWords from '@/views/AddLinkerWords.vue';
+import AddGenericNotes from '@/views/AddGenericNotes.vue';
 
 export default defineComponent({
     name: 'AddVocabulary',
@@ -107,14 +89,13 @@ export default defineComponent({
         IonToggle,
         IonButton,
         AddLinkerWords,
+        AddGenericNotes,
     },
     data() {
         return {
             id: uuidV4(),
             word: '',
             isDraft: true,
-            itemsInGenericNotes: [uuidV4()],
-            genericNotes: [] as string[],
             itemsInGenericExternalLinks: [uuidV4()],
             genericExternalLinks: [] as string[],
         };
@@ -125,18 +106,6 @@ export default defineComponent({
         },
         setIsDraft(isDraft: boolean) {
             this.isDraft = isDraft;
-        },
-        insertGenericNote(genericNote: string, index: number) {
-            this.genericNotes[index] = genericNote;
-        },
-        onAddMoreGenericNote() {
-            this.itemsInGenericNotes.push(uuidV4());
-        },
-        onRemoveLastGenericNote(removableIndex: number) {
-            if (removableIndex !== 0) {
-                this.itemsInGenericNotes.pop();
-            }
-            this.genericNotes = this.genericNotes.filter((genericNote, index) => index !== removableIndex);
         },
         insertGenericExternalLink(genericExternalLink: string, index: number) {
             this.genericExternalLinks[index] = genericExternalLink;
@@ -160,7 +129,9 @@ export default defineComponent({
             vocabulary.linkerWords = (
                 this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>
             ).getLinkerWords();
-            vocabulary.genericNotes = this.genericNotes;
+            vocabulary.genericNotes = (
+                this.$refs.AddGenericNotes as InstanceType<typeof AddGenericNotes>
+            ).getGenericNotes();
             vocabulary.genericExternalLinks = this.genericExternalLinks;
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
