@@ -15,7 +15,7 @@
             </ion-item>
 
             <ion-item lines="none">
-                <ion-label>Linker Word</ion-label>
+                <ion-label>Linker Words</ion-label>
             </ion-item>
             <div v-for="(item, index) in itemsInLinkerWords" :key="index">
                 <ion-item>
@@ -28,6 +28,27 @@
                         >Add More</ion-button
                     >
                     <ion-button v-show="index === itemsInLinkerWords.length - 1" @click="onRemoveLastLinkerWord(index)"
+                        >Remove</ion-button
+                    >
+                </ion-item>
+            </div>
+
+            <ion-item lines="none">
+                <ion-label>Generic Notes</ion-label>
+            </ion-item>
+            <div v-for="(item, index) in itemsInGenericNotes" :key="index">
+                <ion-item>
+                    <ion-input
+                        type="text"
+                        :value="genericNotes[index] || ''"
+                        @keyup="insertGenericNote($event.target.value, index)"
+                    ></ion-input>
+                    <ion-button v-show="index === itemsInGenericNotes.length - 1" @click="onAddMoreGenericNote"
+                        >Add More</ion-button
+                    >
+                    <ion-button
+                        v-show="index === itemsInGenericNotes.length - 1"
+                        @click="onRemoveLastGenericNote(index)"
                         >Remove</ion-button
                     >
                 </ion-item>
@@ -86,6 +107,8 @@ export default defineComponent({
             isDraft: true,
             itemsInLinkerWords: [uuidV4()],
             linkerWords: [] as string[],
+            itemsInGenericNotes: [uuidV4()],
+            genericNotes: [] as string[],
         };
     },
     methods: {
@@ -98,17 +121,26 @@ export default defineComponent({
         insertLinkerWord(linkerWord: string, index: number) {
             this.linkerWords[index] = linkerWord;
         },
-        getLinkerWordsLength() {
-            return this.linkerWords.length;
-        },
         onAddMoreLinkerWord() {
             this.itemsInLinkerWords.push(uuidV4());
         },
-        onRemoveLastLinkerWord(index: number) {
-            if (index !== 0) {
+        onRemoveLastLinkerWord(removableIndex: number) {
+            if (removableIndex !== 0) {
                 this.itemsInLinkerWords.pop();
             }
-            this.linkerWords = this.linkerWords.filter((linkerWord, index2) => index2 !== index);
+            this.linkerWords = this.linkerWords.filter((linkerWord, index) => index !== removableIndex);
+        },
+        insertGenericNote(genericNote: string, index: number) {
+            this.genericNotes[index] = genericNote;
+        },
+        onAddMoreGenericNote() {
+            this.itemsInGenericNotes.push(uuidV4());
+        },
+        onRemoveLastGenericNote(removableIndex: number) {
+            if (removableIndex !== 0) {
+                this.itemsInGenericNotes.pop();
+            }
+            this.genericNotes = this.genericNotes.filter((genericNote, index) => index !== removableIndex);
         },
         async generatePayload() {
             const vocabulary = new Vocabulary();
@@ -116,6 +148,7 @@ export default defineComponent({
             vocabulary.cohortId = await NativeStorage.getCohortId();
             vocabulary.word = this.word;
             vocabulary.linkerWords = this.linkerWords;
+            vocabulary.genericNotes = this.genericNotes;
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
         },
