@@ -55,6 +55,29 @@
             </div>
 
             <ion-item lines="none">
+                <ion-label>Generic External Links</ion-label>
+            </ion-item>
+            <div v-for="(item, index) in itemsInGenericExternalLinks" :key="index">
+                <ion-item>
+                    <ion-input
+                        type="url"
+                        :value="genericExternalLinks[index] || ''"
+                        @keyup="insertGenericExternalLink($event.target.value, index)"
+                    ></ion-input>
+                    <ion-button
+                        v-show="index === itemsInGenericExternalLinks.length - 1"
+                        @click="onAddMoreGenericExternalLink"
+                        >Add More</ion-button
+                    >
+                    <ion-button
+                        v-show="index === itemsInGenericExternalLinks.length - 1"
+                        @click="onRemoveLastGenericExternalLink(index)"
+                        >Remove</ion-button
+                    >
+                </ion-item>
+            </div>
+
+            <ion-item lines="none">
                 <ion-label>Is Draft</ion-label>
             </ion-item>
             <ion-item>
@@ -109,6 +132,8 @@ export default defineComponent({
             linkerWords: [] as string[],
             itemsInGenericNotes: [uuidV4()],
             genericNotes: [] as string[],
+            itemsInGenericExternalLinks: [uuidV4()],
+            genericExternalLinks: [] as string[],
         };
     },
     methods: {
@@ -142,6 +167,20 @@ export default defineComponent({
             }
             this.genericNotes = this.genericNotes.filter((genericNote, index) => index !== removableIndex);
         },
+        insertGenericExternalLink(genericExternalLink: string, index: number) {
+            this.genericExternalLinks[index] = genericExternalLink;
+        },
+        onAddMoreGenericExternalLink() {
+            this.itemsInGenericExternalLinks.push(uuidV4());
+        },
+        onRemoveLastGenericExternalLink(removableIndex: number) {
+            if (removableIndex !== 0) {
+                this.itemsInGenericExternalLinks.pop();
+            }
+            this.genericExternalLinks = this.genericExternalLinks.filter(
+                (genericExternalLink, index) => index !== removableIndex,
+            );
+        },
         async generatePayload() {
             const vocabulary = new Vocabulary();
             vocabulary.id = this.id;
@@ -149,6 +188,7 @@ export default defineComponent({
             vocabulary.word = this.word;
             vocabulary.linkerWords = this.linkerWords;
             vocabulary.genericNotes = this.genericNotes;
+            vocabulary.genericExternalLinks = this.genericExternalLinks;
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
         },
