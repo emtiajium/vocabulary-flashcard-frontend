@@ -73,6 +73,8 @@ import AddGenericNotes from '@/views/AddGenericNotes.vue';
 import AddGenericExternalLinks from '@/views/AddGenericExternalLinks.vue';
 import Definition from '@/domains/Definition';
 import AddDefinition from '@/views/AddDefinition.vue';
+import { validateSync } from 'class-validator';
+import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -152,9 +154,16 @@ export default defineComponent({
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
         },
+        validatePayload(vocabulary: Vocabulary) {
+            const errors = validateSync(vocabulary);
+            if (errors.length > 0) {
+                throw new Error(ValidationErrorTransform.transform(errors)[0]);
+            }
+        },
         async persist() {
             try {
                 const vocabulary = await this.generatePayload();
+                this.validatePayload(vocabulary);
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
             } catch (error) {
                 await Toast.present(error.message);
