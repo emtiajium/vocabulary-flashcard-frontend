@@ -15,6 +15,25 @@
             </ion-item>
 
             <ion-item lines="none">
+                <ion-label>Linker Word</ion-label>
+            </ion-item>
+            <div v-for="(item, index) in itemsInLinkerWords" :key="index">
+                <ion-item>
+                    <ion-input
+                        type="text"
+                        :value="linkerWords[index] || ''"
+                        @keyup="insertLinkerWord($event.target.value, index)"
+                    ></ion-input>
+                    <ion-button v-show="index === itemsInLinkerWords.length - 1" @click="onAddMoreLinkerWord"
+                        >Add More</ion-button
+                    >
+                    <ion-button v-show="index === itemsInLinkerWords.length - 1" @click="onRemoveLastLinkerWord(index)"
+                        >Remove</ion-button
+                    >
+                </ion-item>
+            </div>
+
+            <ion-item lines="none">
                 <ion-label>Is Draft</ion-label>
             </ion-item>
             <ion-item>
@@ -65,6 +84,8 @@ export default defineComponent({
             id: uuidV4(),
             word: '',
             isDraft: true,
+            itemsInLinkerWords: [uuidV4()],
+            linkerWords: [] as string[],
         };
     },
     methods: {
@@ -74,11 +95,27 @@ export default defineComponent({
         setIsDraft(isDraft: boolean) {
             this.isDraft = isDraft;
         },
+        insertLinkerWord(linkerWord: string, index: number) {
+            this.linkerWords[index] = linkerWord;
+        },
+        getLinkerWordsLength() {
+            return this.linkerWords.length;
+        },
+        onAddMoreLinkerWord() {
+            this.itemsInLinkerWords.push(uuidV4());
+        },
+        onRemoveLastLinkerWord(index: number) {
+            if (index !== 0) {
+                this.itemsInLinkerWords.pop();
+            }
+            this.linkerWords = this.linkerWords.filter((linkerWord, index2) => index2 !== index);
+        },
         async generatePayload() {
             const vocabulary = new Vocabulary();
             vocabulary.id = this.id;
             vocabulary.cohortId = await NativeStorage.getCohortId();
             vocabulary.word = this.word;
+            vocabulary.linkerWords = this.linkerWords;
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
         },
