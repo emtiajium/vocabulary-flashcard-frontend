@@ -21,6 +21,7 @@ import GoogleAuth from '@/utils/GoogleAuthorization';
 import User from '@/domains/User';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
+import { Storage } from '@capacitor/storage';
 
 export default defineComponent({
     name: 'SignIn',
@@ -52,9 +53,20 @@ export default defineComponent({
         },
         async persistUser(user: User) {
             try {
-                await HttpHandler.post<User, User>(`/v1/users`, user);
-                await this.$router.push('/authenticated-home');
+                const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
+                await Promise.all([
+                    Storage.set({
+                        key: 'authorizedUser',
+                        value: JSON.stringify({
+                            id: persistedUser?.id,
+                            cohortId: persistedUser?.cohortId,
+                            username: persistedUser?.username,
+                        }),
+                    }),
+                    this.$router.push('/authenticated-home'),
+                ]);
             } catch (error) {
+                console.log('error', error);
                 await Toast.present(error.message);
             }
         },

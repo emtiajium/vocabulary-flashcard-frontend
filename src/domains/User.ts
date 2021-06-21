@@ -8,4 +8,8 @@ export default class User {
     lastname?: string;
 
     profilePictureUrl?: string;
+
+    id?: string;
+
+    cohortId?: string;
 }
