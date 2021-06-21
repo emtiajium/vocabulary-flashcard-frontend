@@ -14,24 +14,7 @@
                 <ion-input type="text" :value="word" @keyup="setWord($event.target.value)"></ion-input>
             </ion-item>
 
-            <ion-item lines="none">
-                <ion-label>Linker Words</ion-label>
-            </ion-item>
-            <div v-for="(item, index) in itemsInLinkerWords" :key="index">
-                <ion-item>
-                    <ion-input
-                        type="text"
-                        :value="linkerWords[index] || ''"
-                        @keyup="insertLinkerWord($event.target.value, index)"
-                    ></ion-input>
-                    <ion-button v-show="index === itemsInLinkerWords.length - 1" @click="onAddMoreLinkerWord"
-                        >Add More</ion-button
-                    >
-                    <ion-button v-show="index === itemsInLinkerWords.length - 1" @click="onRemoveLastLinkerWord(index)"
-                        >Remove</ion-button
-                    >
-                </ion-item>
-            </div>
+            <add-linker-words ref="AddLinkerWordsRef" />
 
             <ion-item lines="none">
                 <ion-label>Generic Notes</ion-label>
@@ -108,6 +91,7 @@ import Toast from '@/utils/Toast';
 import Vocabulary from '@/domains/Vocabulary';
 import { v4 as uuidV4 } from 'uuid';
 import NativeStorage from '@/utils/NativeStorage';
+import AddLinkerWords from '@/views/AddLinkerWords.vue';
 
 export default defineComponent({
     name: 'AddVocabulary',
@@ -122,14 +106,13 @@ export default defineComponent({
         IonItem,
         IonToggle,
         IonButton,
+        AddLinkerWords,
     },
     data() {
         return {
             id: uuidV4(),
             word: '',
             isDraft: true,
-            itemsInLinkerWords: [uuidV4()],
-            linkerWords: [] as string[],
             itemsInGenericNotes: [uuidV4()],
             genericNotes: [] as string[],
             itemsInGenericExternalLinks: [uuidV4()],
@@ -142,18 +125,6 @@ export default defineComponent({
         },
         setIsDraft(isDraft: boolean) {
             this.isDraft = isDraft;
-        },
-        insertLinkerWord(linkerWord: string, index: number) {
-            this.linkerWords[index] = linkerWord;
-        },
-        onAddMoreLinkerWord() {
-            this.itemsInLinkerWords.push(uuidV4());
-        },
-        onRemoveLastLinkerWord(removableIndex: number) {
-            if (removableIndex !== 0) {
-                this.itemsInLinkerWords.pop();
-            }
-            this.linkerWords = this.linkerWords.filter((linkerWord, index) => index !== removableIndex);
         },
         insertGenericNote(genericNote: string, index: number) {
             this.genericNotes[index] = genericNote;
@@ -186,7 +157,9 @@ export default defineComponent({
             vocabulary.id = this.id;
             vocabulary.cohortId = await NativeStorage.getCohortId();
             vocabulary.word = this.word;
-            vocabulary.linkerWords = this.linkerWords;
+            vocabulary.linkerWords = (
+                this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>
+            ).getLinkerWords();
             vocabulary.genericNotes = this.genericNotes;
             vocabulary.genericExternalLinks = this.genericExternalLinks;
             vocabulary.isDraft = this.isDraft;
