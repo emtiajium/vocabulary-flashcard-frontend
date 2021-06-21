@@ -1,5 +1,6 @@
 import Definition from '@/domains/Definition';
 import {
+    ArrayNotEmpty,
     IsArray,
     IsBoolean,
     IsDefined,
@@ -30,6 +31,7 @@ export default class Vocabulary {
 
     @ValidateIf((vocabulary) => vocabulary.isDraft === false)
     @ValidateNested({ each: true })
+    @ArrayNotEmpty()
     @IsArray()
     @Type(() => Definition)
     definitions?: Definition[];
