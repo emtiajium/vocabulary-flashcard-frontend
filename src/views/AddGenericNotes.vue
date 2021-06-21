@@ -52,7 +52,7 @@ export default defineComponent({
             this.genericNotes = this.genericNotes.filter((genericNote, index) => index !== removableIndex);
         },
         getGenericNotes() {
-            return this.genericNotes;
+            return this.genericNotes.filter((genericNote) => genericNote.trim().length > 0);
         },
     },
 });

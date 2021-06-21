@@ -52,7 +52,7 @@ export default defineComponent({
             this.linkerWords = this.linkerWords.filter((linkerWord, index) => index !== removableIndex);
         },
         getLinkerWords() {
-            return this.linkerWords;
+            return this.linkerWords.filter((linkerWord) => linkerWord.trim().length > 0);
         },
     },
 });

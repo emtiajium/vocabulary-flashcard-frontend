@@ -56,7 +56,7 @@ export default defineComponent({
             );
         },
         getGenericExternalLinks() {
-            return this.genericExternalLinks;
+            return this.genericExternalLinks.filter((genericExternalLink) => genericExternalLink.trim().length > 0);
         },
     },
 });
