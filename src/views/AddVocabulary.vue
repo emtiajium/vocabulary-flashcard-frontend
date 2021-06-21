@@ -121,7 +121,7 @@ export default defineComponent({
                 this.setCurrentPage(PageType.ADD_DEFINITION);
             }
         },
-        setCurrentPage(currentPage: string) {
+        setCurrentPage(currentPage: PageType) {
             this.currentPage = currentPage;
         },
         isInDefinition() {

@@ -36,5 +36,12 @@ module.exports = {
                 '@typescript-eslint/camelcase': 'off',
             },
         },
+        {
+            files: ['src/utils/ValidationErrorTransform.ts'],
+            rules: {
+                'no-plusplus': 'off',
+                'class-methods-use-this': 'off',
+            },
+        },
     ],
 };
