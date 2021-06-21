@@ -21,8 +21,7 @@ import GoogleAuth from '@/utils/GoogleAuthorization';
 import User from '@/domains/User';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
-import { Storage } from '@capacitor/storage';
-import NativeStorage from '@/domains/NativeStorage';
+import NativeStorage from '@/utils/NativeStorage';
 
 export default defineComponent({
     name: 'SignIn',
@@ -50,24 +49,13 @@ export default defineComponent({
     methods: {
         async handleClick() {
             const user = await this.googleAuth.signIn();
-            await this.persistUser(user);
+            await Promise.all([this.persistUser(user), this.$router.push('/authenticated-home')]);
         },
         async persistUser(user: User) {
             try {
                 const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
-                await Promise.all([
-                    Storage.set({
-                        key: NativeStorage.AUTHORIZED_USER,
-                        value: JSON.stringify({
-                            id: persistedUser?.id,
-                            cohortId: persistedUser?.cohortId,
-                            username: persistedUser?.username,
-                        }),
-                    }),
-                    this.$router.push('/authenticated-home'),
-                ]);
+                await NativeStorage.setAuthorizedUser(persistedUser as User);
             } catch (error) {
-                console.log('error', error);
                 await Toast.present(error.message);
             }
         },
