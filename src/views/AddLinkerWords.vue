@@ -40,7 +40,7 @@ export default defineComponent({
     },
     methods: {
         insertLinkerWord(linkerWord: string, index: number) {
-            this.linkerWords[index] = linkerWord;
+            this.linkerWords[index] = linkerWord.trim();
         },
         onAddMoreLinkerWord() {
             this.itemsInLinkerWords.push(uuidV4());
@@ -52,7 +52,7 @@ export default defineComponent({
             this.linkerWords = this.linkerWords.filter((linkerWord, index) => index !== removableIndex);
         },
         getLinkerWords() {
-            return this.linkerWords.filter((linkerWord) => linkerWord.trim().length > 0);
+            return this.linkerWords.filter((linkerWord) => linkerWord.length > 0);
         },
     },
 });

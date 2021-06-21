@@ -40,7 +40,7 @@ export default defineComponent({
     },
     methods: {
         insertExternalLink(externalLink: string, index: number) {
-            this.externalLinks[index] = externalLink;
+            this.externalLinks[index] = externalLink.trim();
         },
         onAddMoreExternalLink() {
             this.itemsInExternalLinks.push(uuidV4());
@@ -52,7 +52,7 @@ export default defineComponent({
             this.externalLinks = this.externalLinks.filter((externalLink, index) => index !== removableIndex);
         },
         getExternalLinks() {
-            return this.externalLinks.filter((externalLink) => externalLink.trim().length > 0);
+            return this.externalLinks.filter((externalLink) => externalLink.length > 0);
         },
     },
 });

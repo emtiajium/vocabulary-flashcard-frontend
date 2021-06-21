@@ -36,7 +36,7 @@ export default defineComponent({
     },
     methods: {
         insertNote(note: string, index: number) {
-            this.notes[index] = note;
+            this.notes[index] = note.trim();
         },
         onAddMoreNote() {
             this.itemsInNotes.push(uuidV4());
@@ -48,7 +48,7 @@ export default defineComponent({
             this.notes = this.notes.filter((note, index) => index !== removableIndex);
         },
         getNotes() {
-            return this.notes.filter((note) => note.trim().length > 0);
+            return this.notes.filter((note) => note.length > 0);
         },
     },
 });

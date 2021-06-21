@@ -40,7 +40,7 @@ export default defineComponent({
     },
     methods: {
         insertGenericNote(genericNote: string, index: number) {
-            this.genericNotes[index] = genericNote;
+            this.genericNotes[index] = genericNote.trim();
         },
         onAddMoreGenericNote() {
             this.itemsInGenericNotes.push(uuidV4());
@@ -52,7 +52,7 @@ export default defineComponent({
             this.genericNotes = this.genericNotes.filter((genericNote, index) => index !== removableIndex);
         },
         getGenericNotes() {
-            return this.genericNotes.filter((genericNote) => genericNote.trim().length > 0);
+            return this.genericNotes.filter((genericNote) => genericNote.length > 0);
         },
     },
 });

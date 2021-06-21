@@ -42,7 +42,7 @@ export default defineComponent({
     },
     methods: {
         insertGenericExternalLink(genericExternalLink: string, index: number) {
-            this.genericExternalLinks[index] = genericExternalLink;
+            this.genericExternalLinks[index] = genericExternalLink.trim();
         },
         onAddMoreGenericExternalLink() {
             this.itemsInGenericExternalLinks.push(uuidV4());
@@ -56,7 +56,7 @@ export default defineComponent({
             );
         },
         getGenericExternalLinks() {
-            return this.genericExternalLinks.filter((genericExternalLink) => genericExternalLink.trim().length > 0);
+            return this.genericExternalLinks.filter((genericExternalLink) => genericExternalLink.length > 0);
         },
     },
 });

@@ -38,7 +38,7 @@ export default defineComponent({
     },
     methods: {
         insertExample(example: string, index: number) {
-            this.examples[index] = example;
+            this.examples[index] = example.trim();
         },
         onAddMoreExample() {
             this.itemsInExamples.push(uuidV4());
@@ -50,7 +50,7 @@ export default defineComponent({
             this.examples = this.examples.filter((example, index) => index !== removableIndex);
         },
         getExamples() {
-            return this.examples.filter((example) => example.trim().length > 0);
+            return this.examples.filter((example) => example.length > 0);
         },
     },
 });
