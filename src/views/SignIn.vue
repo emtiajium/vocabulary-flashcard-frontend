@@ -22,6 +22,7 @@ import User from '@/domains/User';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import { Storage } from '@capacitor/storage';
+import NativeStorage from '@/domains/NativeStorage';
 
 export default defineComponent({
     name: 'SignIn',
@@ -56,7 +57,7 @@ export default defineComponent({
                 const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
                 await Promise.all([
                     Storage.set({
-                        key: 'authorizedUser',
+                        key: NativeStorage.AUTHORIZED_USER,
                         value: JSON.stringify({
                             id: persistedUser?.id,
                             cohortId: persistedUser?.cohortId,
