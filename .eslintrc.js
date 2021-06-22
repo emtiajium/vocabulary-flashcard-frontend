@@ -47,6 +47,7 @@ module.exports = {
             files: ['src/views/VocabularyList.vue'],
             rules: {
                 'no-param-reassign': 'off',
+                'no-unused-expressions': 'off',
             },
         },
     ],

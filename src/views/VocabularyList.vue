@@ -8,8 +8,8 @@
 
         <ion-content :fullscreen="true">
             <ion-list>
-                <ion-item v-for="(vocabulary, index) in vocabularies" :key="vocabulary.id">
-                    <ion-label>{{ `${index} ${vocabulary.word}` }}</ion-label>
+                <ion-item v-for="vocabulary in vocabularies" :key="vocabulary.id">
+                    <vocabulary :vocabulary="vocabulary" />
                 </ion-item>
             </ion-list>
 
@@ -45,6 +45,7 @@ import {
     IonList,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
+    IonItem,
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import { defineComponent } from 'vue';
@@ -53,10 +54,15 @@ import NativeStorage from '@/utils/NativeStorage';
 import SearchResult from '@/domains/SearchResult';
 import Vocabulary from '@/domains/Vocabulary';
 import VocabularySearch from '@/domains/VocabularySearch';
+import { Components } from '@ionic/core/components';
+import VocabularyView from '@/views/Vocabulary.vue';
+
+type IonInfiniteScrollType = Components.IonInfiniteScroll;
 
 export default defineComponent({
     name: 'VocabularyList',
     components: {
+        Vocabulary: VocabularyView,
         IonContent,
         IonHeader,
         IonPage,
@@ -68,6 +74,7 @@ export default defineComponent({
         IonList,
         IonInfiniteScroll,
         IonInfiniteScrollContent,
+        IonItem,
     },
     data() {
         return { add, cohortId: '', vocabularies: [] as Vocabulary[], pageNumber: 1, isDisabled: false };
@@ -93,8 +100,8 @@ export default defineComponent({
             this.pageNumber += 1;
             this.isDisabled = this.vocabularies.length >= total;
             if (event?.target) {
-                (event as CustomEvent).target.disabled = this.isDisabled;
-                event.target.complete();
+                ((event as CustomEvent).target as unknown as IonInfiniteScrollType).disabled = this.isDisabled;
+                await ((event as CustomEvent).target as unknown as IonInfiniteScrollType).complete();
             }
         },
     },
