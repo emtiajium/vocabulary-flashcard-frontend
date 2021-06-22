@@ -8,45 +8,47 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <ion-item lines="none">
-                <ion-label>Word</ion-label>
-            </ion-item>
-            <ion-item>
-                <ion-input type="text" :value="word" @keyup="setWord($event.target.value)"></ion-input>
-            </ion-item>
-
-            <ion-item lines="none">
-                <ion-label>Definition</ion-label>
-            </ion-item>
-            <ion-item>
-                <ion-button color="success" @click="onAddingDefinition">{{
-                    getAddButtonLabel(definitions.length)
-                }}</ion-button>
-            </ion-item>
-            <view v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
-                <ion-item>
-                    <ion-item-group>
-                        <ion-button color="dark">{{ `${definition.meaning.slice(0, 5)} ...` }}</ion-button>
-                        <ion-button color="warning">Edit</ion-button>
-                        <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
-                    </ion-item-group>
+            <ion-card>
+                <ion-item lines="none">
+                    <ion-label>Word</ion-label>
                 </ion-item>
-            </view>
+                <ion-item>
+                    <ion-input type="text" :value="word" @keyup="setWord($event.target.value)"></ion-input>
+                </ion-item>
 
-            <add-linker-words ref="AddLinkerWordsRef" />
+                <ion-item lines="none">
+                    <ion-label>Definition</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-button color="success" @click="onAddingDefinition">{{
+                        getAddButtonLabel(definitions.length)
+                    }}</ion-button>
+                </ion-item>
+                <view v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
+                    <ion-item>
+                        <ion-item-group>
+                            <ion-button color="dark">{{ `${definition.meaning.slice(0, 5)} ...` }}</ion-button>
+                            <ion-button color="warning">Edit</ion-button>
+                            <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
+                        </ion-item-group>
+                    </ion-item>
+                </view>
 
-            <add-generic-notes ref="AddGenericNotesRef" />
+                <add-linker-words ref="AddLinkerWordsRef" />
 
-            <add-generic-external-links ref="AddGenericExternalLinksRef" />
+                <add-generic-notes ref="AddGenericNotesRef" />
 
-            <ion-item lines="none">
-                <ion-label>Is Draft</ion-label>
-            </ion-item>
-            <ion-item>
-                <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)"></ion-toggle>
-            </ion-item>
+                <add-generic-external-links ref="AddGenericExternalLinksRef" />
 
-            <ion-button expand="block" @click="persist">Save</ion-button>
+                <ion-item lines="none">
+                    <ion-label>Is Draft</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)"></ion-toggle>
+                </ion-item>
+
+                <ion-button expand="block" @click="persist">Save</ion-button>
+            </ion-card>
         </ion-content>
     </ion-page>
 
@@ -70,6 +72,7 @@ import {
     IonToolbar,
     IonButton,
     IonItemGroup,
+    IonCard,
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
@@ -93,6 +96,9 @@ export default defineComponent({
     name: 'AddVocabulary',
     components: {
         AddDefinition,
+        AddLinkerWords,
+        AddGenericNotes,
+        AddGenericExternalLinks,
         IonContent,
         IonHeader,
         IonPage,
@@ -104,9 +110,7 @@ export default defineComponent({
         IonToggle,
         IonButton,
         IonItemGroup,
-        AddLinkerWords,
-        AddGenericNotes,
-        AddGenericExternalLinks,
+        IonCard,
     },
     data() {
         return {

@@ -7,20 +7,22 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <ion-item lines="none">
-                <ion-label>Meaning</ion-label>
-            </ion-item>
-            <ion-item>
-                <ion-input type="text" :value="meaning" @keyup="setMeaning($event.target.value)"></ion-input>
-            </ion-item>
+            <ion-card>
+                <ion-item lines="none">
+                    <ion-label>Meaning</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-input type="text" :value="meaning" @keyup="setMeaning($event.target.value)"></ion-input>
+                </ion-item>
 
-            <add-definition-example ref="AddDefinitionExampleRef" />
+                <add-definition-example ref="AddDefinitionExampleRef" />
 
-            <add-definition-notes ref="AddDefinitionNotesRef" />
+                <add-definition-notes ref="AddDefinitionNotesRef" />
 
-            <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
+                <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
 
-            <ion-button expand="block" @click="back()">Save</ion-button>
+                <ion-button expand="block" @click="back()">Save</ion-button>
+            </ion-card>
         </ion-content>
     </ion-page>
 </template>
@@ -36,6 +38,7 @@ import {
     IonTitle,
     IonToolbar,
     IonButton,
+    IonCard,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import AddDefinitionExample from '@/views/AddDefinitionExample.vue';
@@ -62,6 +65,7 @@ export default defineComponent({
         IonLabel,
         IonItem,
         IonButton,
+        IonCard,
     },
     props: ['word', 'vocabularyId', 'afterAddingDefinition'],
     data() {
