@@ -74,6 +74,16 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-light-contrast-rgb: 0, 0, 0;
     --ion-color-light-shade: #d7d8da;
     --ion-color-light-tint: #f5f6f9;
+
+    /** customization by Emtiaj start */
+
+    --ion-background-color: #0000000C;
+    --ion-item-background: #ffffff;
+    --ion-toolbar-background: #ffffff;
+    --ion-tab-bar-background: #ffffff;
+    --ion-card-background: #ffffff;
+
+    /** customization by Emtiaj end */
 }
 
 @media (prefers-color-scheme: dark) {

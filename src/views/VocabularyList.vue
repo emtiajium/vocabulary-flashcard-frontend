@@ -7,11 +7,9 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <ion-list>
-                <ion-item v-for="vocabulary in vocabularies" :key="vocabulary.id">
-                    <vocabulary :vocabulary="vocabulary" />
-                </ion-item>
-            </ion-list>
+            <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
+                <vocabulary :vocabulary="vocabulary" />
+            </view>
 
             <ion-infinite-scroll
                 @ionInfinite="findVocabularies($event)"
@@ -42,10 +40,8 @@ import {
     IonIcon,
     IonFab,
     IonFabButton,
-    IonList,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonItem,
 } from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import { defineComponent } from 'vue';
@@ -71,10 +67,8 @@ export default defineComponent({
         IonIcon,
         IonFab,
         IonFabButton,
-        IonList,
         IonInfiniteScroll,
         IonInfiniteScrollContent,
-        IonItem,
     },
     data() {
         return { add, cohortId: '', vocabularies: [] as Vocabulary[], pageNumber: 1, isDisabled: false };
