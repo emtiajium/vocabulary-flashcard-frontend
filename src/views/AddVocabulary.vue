@@ -180,7 +180,7 @@ export default defineComponent({
                 this.validatePayload(vocabulary);
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
                 this.clear();
-                // await this.$router.back();
+                this.$router.back();
             } catch (error) {
                 await Toast.present(error.message);
             }
