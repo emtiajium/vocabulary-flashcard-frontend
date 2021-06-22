@@ -11,9 +11,9 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <div class="container">
-                <div @click="handleClick" :id="signInButtonId"></div>
-            </div>
+            <view class="container">
+                <view @click="handleClick" :id="signInButtonId"></view>
+            </view>
         </ion-content>
     </ion-page>
 </template>

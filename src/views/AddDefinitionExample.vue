@@ -2,7 +2,7 @@
     <ion-item lines="none">
         <ion-label>Examples</ion-label>
     </ion-item>
-    <div v-for="(item, index) in itemsInExamples" :key="index">
+    <view v-for="(item, index) in itemsInExamples" :key="index">
         <ion-item>
             <ion-input
                 type="url"
@@ -16,7 +16,7 @@
                 >Remove</ion-button
             >
         </ion-item>
-    </div>
+    </view>
 </template>
 
 <script lang="ts">

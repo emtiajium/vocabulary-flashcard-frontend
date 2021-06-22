@@ -23,7 +23,7 @@
                     getAddButtonLabel(definitions.length)
                 }}</ion-button>
             </ion-item>
-            <div v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
+            <view v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
                 <ion-item>
                     <ion-item-group>
                         <ion-button color="dark">{{ `${definition.meaning.slice(0, 5)} ...` }}</ion-button>
@@ -31,7 +31,7 @@
                         <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
                     </ion-item-group>
                 </ion-item>
-            </div>
+            </view>
 
             <add-linker-words ref="AddLinkerWordsRef" />
 

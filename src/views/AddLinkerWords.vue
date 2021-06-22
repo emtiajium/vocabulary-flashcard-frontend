@@ -2,7 +2,7 @@
     <ion-item lines="none">
         <ion-label>Linker Words</ion-label>
     </ion-item>
-    <div v-for="(item, index) in itemsInLinkerWords" :key="index">
+    <view v-for="(item, index) in itemsInLinkerWords" :key="index">
         <ion-item>
             <ion-input
                 type="text"
@@ -19,7 +19,7 @@
                 >Remove</ion-button
             >
         </ion-item>
-    </div>
+    </view>
 </template>
 
 <script lang="ts">

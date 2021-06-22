@@ -2,7 +2,7 @@
     <ion-item lines="none">
         <ion-label>Generic Notes</ion-label>
     </ion-item>
-    <div v-for="(item, index) in itemsInGenericNotes" :key="index">
+    <view v-for="(item, index) in itemsInGenericNotes" :key="index">
         <ion-item>
             <ion-input
                 type="text"
@@ -22,7 +22,7 @@
                 >Remove</ion-button
             >
         </ion-item>
-    </div>
+    </view>
 </template>
 
 <script lang="ts">
