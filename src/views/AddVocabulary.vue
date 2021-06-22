@@ -116,7 +116,7 @@ export default defineComponent({
         return {
             id: uuidV4(),
             word: '',
-            isDraft: true,
+            isDraft: false,
             definitions: [] as Definition[],
             currentPage: PageType.ADD_VOCABULARY,
         };
@@ -192,7 +192,7 @@ export default defineComponent({
         clear() {
             this.id = uuidV4();
             this.word = '';
-            this.isDraft = true;
+            this.isDraft = false;
             this.definitions = [] as Definition[];
             this.currentPage = PageType.ADD_VOCABULARY;
             (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
