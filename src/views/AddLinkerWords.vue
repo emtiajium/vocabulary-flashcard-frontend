@@ -9,10 +9,13 @@
                 :value="linkerWords[index] || ''"
                 @keyup="insertLinkerWord($event.target.value, index)"
             ></ion-input>
-            <ion-button v-show="index === itemsInLinkerWords.length - 1" @click="onAddMoreLinkerWord"
-                >Add More</ion-button
-            >
-            <ion-button v-show="index === itemsInLinkerWords.length - 1" @click="onRemoveLastLinkerWord(index)"
+            <ion-button v-show="index === itemsInLinkerWords.length - 1" color="success" @click="onAddMoreLinkerWord">{{
+                getAddButtonLabel(linkerWords.length)
+            }}</ion-button>
+            <ion-button
+                v-show="index === itemsInLinkerWords.length - 1"
+                color="danger"
+                @click="onRemoveLastLinkerWord(index)"
                 >Remove</ion-button
             >
         </ion-item>
@@ -39,6 +42,9 @@ export default defineComponent({
         };
     },
     methods: {
+        getAddButtonLabel(itemsLength: number) {
+            return itemsLength ? 'Add More' : 'Add';
+        },
         insertLinkerWord(linkerWord: string, index: number) {
             this.linkerWords[index] = linkerWord.trim();
         },
@@ -53,6 +59,10 @@ export default defineComponent({
         },
         getLinkerWords() {
             return this.linkerWords.filter((linkerWord) => linkerWord.length > 0);
+        },
+        clear() {
+            this.linkerWords = [];
+            this.itemsInLinkerWords = [uuidV4()];
         },
     },
 });

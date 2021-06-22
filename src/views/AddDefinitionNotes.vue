@@ -9,8 +9,12 @@
                 :value="notes[index] || ''"
                 @keyup="insertNote($event.target.value, index)"
             ></ion-input>
-            <ion-button v-show="index === itemsInNotes.length - 1" @click="onAddMoreNote">Add More</ion-button>
-            <ion-button v-show="index === itemsInNotes.length - 1" @click="onRemoveLastNote(index)">Remove</ion-button>
+            <ion-button v-show="index === itemsInNotes.length - 1" color="success" @click="onAddMoreNote">{{
+                getAddButtonLabel(notes.length)
+            }}</ion-button>
+            <ion-button v-show="index === itemsInNotes.length - 1" color="danger" @click="onRemoveLastNote(index)"
+                >Remove</ion-button
+            >
         </ion-item>
     </div>
 </template>
@@ -35,6 +39,9 @@ export default defineComponent({
         };
     },
     methods: {
+        getAddButtonLabel(itemsLength: number) {
+            return itemsLength ? 'Add More' : 'Add';
+        },
         insertNote(note: string, index: number) {
             this.notes[index] = note.trim();
         },
@@ -49,6 +56,10 @@ export default defineComponent({
         },
         getNotes() {
             return this.notes.filter((note) => note.length > 0);
+        },
+        clear() {
+            this.notes = [];
+            this.itemsInNotes = [uuidV4()];
         },
     },
 });

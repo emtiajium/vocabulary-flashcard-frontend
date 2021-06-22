@@ -9,8 +9,10 @@
                 :value="examples[index] || ''"
                 @keyup="insertExample($event.target.value, index)"
             ></ion-input>
-            <ion-button v-show="index === itemsInExamples.length - 1" @click="onAddMoreExample">Add More</ion-button>
-            <ion-button v-show="index === itemsInExamples.length - 1" @click="onRemoveLastExample(index)"
+            <ion-button v-show="index === itemsInExamples.length - 1" color="success" @click="onAddMoreExample">{{
+                getAddButtonLabel(examples.length)
+            }}</ion-button>
+            <ion-button v-show="index === itemsInExamples.length - 1" color="danger" @click="onRemoveLastExample(index)"
                 >Remove</ion-button
             >
         </ion-item>
@@ -37,6 +39,9 @@ export default defineComponent({
         };
     },
     methods: {
+        getAddButtonLabel(itemsLength: number) {
+            return itemsLength ? 'Add More' : 'Add';
+        },
         insertExample(example: string, index: number) {
             this.examples[index] = example.trim();
         },
@@ -51,6 +56,10 @@ export default defineComponent({
         },
         getExamples() {
             return this.examples.filter((example) => example.length > 0);
+        },
+        clear() {
+            this.examples = [];
+            this.itemsInExamples = [uuidV4()];
         },
     },
 });

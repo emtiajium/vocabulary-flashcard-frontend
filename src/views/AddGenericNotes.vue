@@ -9,10 +9,16 @@
                 :value="genericNotes[index] || ''"
                 @keyup="insertGenericNote($event.target.value, index)"
             ></ion-input>
-            <ion-button v-show="index === itemsInGenericNotes.length - 1" @click="onAddMoreGenericNote"
-                >Add More</ion-button
+            <ion-button
+                v-show="index === itemsInGenericNotes.length - 1"
+                color="success"
+                @click="onAddMoreGenericNote"
+                >{{ getAddButtonLabel(genericNotes.length) }}</ion-button
             >
-            <ion-button v-show="index === itemsInGenericNotes.length - 1" @click="onRemoveLastGenericNote(index)"
+            <ion-button
+                v-show="index === itemsInGenericNotes.length - 1"
+                color="danger"
+                @click="onRemoveLastGenericNote(index)"
                 >Remove</ion-button
             >
         </ion-item>
@@ -39,6 +45,9 @@ export default defineComponent({
         };
     },
     methods: {
+        getAddButtonLabel(itemsLength: number) {
+            return itemsLength ? 'Add More' : 'Add';
+        },
         insertGenericNote(genericNote: string, index: number) {
             this.genericNotes[index] = genericNote.trim();
         },
@@ -53,6 +62,10 @@ export default defineComponent({
         },
         getGenericNotes() {
             return this.genericNotes.filter((genericNote) => genericNote.length > 0);
+        },
+        clear() {
+            this.genericNotes = [];
+            this.itemsInGenericNotes = [uuidV4()];
         },
     },
 });

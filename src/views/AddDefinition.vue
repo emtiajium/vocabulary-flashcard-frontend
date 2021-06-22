@@ -70,6 +70,9 @@ export default defineComponent({
         };
     },
     methods: {
+        getAddButtonLabel(itemsLength: number) {
+            return itemsLength ? 'Add More' : 'Add';
+        },
         setMeaning(meaning: string) {
             this.meaning = meaning.trim();
         },
@@ -94,7 +97,14 @@ export default defineComponent({
                 await Toast.present(ValidationErrorTransform.transform(errors)[0]);
             } else {
                 this.afterAddingDefinition(definition);
+                this.clear();
             }
+        },
+        clear() {
+            this.setMeaning('');
+            (this.$refs.AddDefinitionExampleRef as InstanceType<typeof AddDefinitionExample>).clear();
+            (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).clear();
+            (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
         },
     },
 });

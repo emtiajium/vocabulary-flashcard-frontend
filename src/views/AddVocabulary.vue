@@ -19,15 +19,19 @@
                 <ion-label>Definition</ion-label>
             </ion-item>
             <ion-item>
-                <ion-button v-show="!definitions.length" @click="onAddingDefinition">Add Definition</ion-button>
-                <div v-show="definitions.length" v-for="definition in definitions" :key="definition.id">
-                    <ion-button>{{ definition.meaning }}</ion-button>
-                </div>
-                <ion-item-group>
-                    <ion-button @click="onAddingDefinition">Add More</ion-button>
-                    <ion-button>Remove</ion-button>
-                </ion-item-group>
+                <ion-button color="success" @click="onAddingDefinition">{{
+                    getAddButtonLabel(definitions.length)
+                }}</ion-button>
             </ion-item>
+            <div v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
+                <ion-item>
+                    <ion-item-group>
+                        <ion-button color="dark">{{ `${definition.meaning.slice(0, 5)} ...` }}</ion-button>
+                        <ion-button color="warning">Edit</ion-button>
+                        <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
+                    </ion-item-group>
+                </ion-item>
+            </div>
 
             <add-linker-words ref="AddLinkerWordsRef" />
 
@@ -113,6 +117,9 @@ export default defineComponent({
         };
     },
     methods: {
+        getAddButtonLabel(itemsLength: number) {
+            return itemsLength ? 'Add More' : 'Add';
+        },
         setWord(word: string) {
             this.word = word.trim();
         },
@@ -139,7 +146,10 @@ export default defineComponent({
         insertDefinition(definition: Definition) {
             this.definitions.push(definition);
         },
-        async generatePayload() {
+        removeDefinition(removableIndex: number) {
+            this.definitions = this.definitions.filter((definition, index) => index !== removableIndex);
+        },
+        async getVocabularyPayload() {
             const vocabulary = new Vocabulary();
             vocabulary.id = this.id;
             vocabulary.cohortId = await NativeStorage.getCohortId();
@@ -165,12 +175,24 @@ export default defineComponent({
         },
         async persist() {
             try {
-                const vocabulary = await this.generatePayload();
+                const vocabulary = await this.getVocabularyPayload();
                 this.validatePayload(vocabulary);
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
+                this.clear();
+                // await this.$router.back();
             } catch (error) {
                 await Toast.present(error.message);
             }
+        },
+        clear() {
+            this.id = uuidV4();
+            this.word = '';
+            this.isDraft = true;
+            this.definitions = [] as Definition[];
+            this.currentPage = PageType.ADD_VOCABULARY;
+            (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
+            (this.$refs.AddGenericNotes as InstanceType<typeof AddGenericNotes>).clear();
+            (this.$refs.AddGenericExternalLinks as InstanceType<typeof AddGenericExternalLinks>).clear();
         },
     },
 });

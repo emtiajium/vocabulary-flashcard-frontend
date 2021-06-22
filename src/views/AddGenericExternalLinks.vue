@@ -9,11 +9,15 @@
                 :value="genericExternalLinks[index] || ''"
                 @keyup="insertGenericExternalLink($event.target.value, index)"
             ></ion-input>
-            <ion-button v-show="index === itemsInGenericExternalLinks.length - 1" @click="onAddMoreGenericExternalLink"
-                >Add More</ion-button
+            <ion-button
+                v-show="index === itemsInGenericExternalLinks.length - 1"
+                color="success"
+                @click="onAddMoreGenericExternalLink"
+                >{{ getAddButtonLabel(genericExternalLinks.length) }}</ion-button
             >
             <ion-button
                 v-show="index === itemsInGenericExternalLinks.length - 1"
+                color="danger"
                 @click="onRemoveLastGenericExternalLink(index)"
                 >Remove</ion-button
             >
@@ -41,6 +45,9 @@ export default defineComponent({
         };
     },
     methods: {
+        getAddButtonLabel(itemsLength: number) {
+            return itemsLength ? 'Add More' : 'Add';
+        },
         insertGenericExternalLink(genericExternalLink: string, index: number) {
             this.genericExternalLinks[index] = genericExternalLink.trim();
         },
@@ -57,6 +64,10 @@ export default defineComponent({
         },
         getGenericExternalLinks() {
             return this.genericExternalLinks.filter((genericExternalLink) => genericExternalLink.length > 0);
+        },
+        clear() {
+            this.genericExternalLinks = [];
+            this.itemsInGenericExternalLinks = [uuidV4()];
         },
     },
 });

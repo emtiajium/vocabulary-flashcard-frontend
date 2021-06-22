@@ -9,10 +9,16 @@
                 :value="externalLinks[index] || ''"
                 @keyup="insertExternalLink($event.target.value, index)"
             ></ion-input>
-            <ion-button v-show="index === itemsInExternalLinks.length - 1" @click="onAddMoreExternalLink"
-                >Add More</ion-button
+            <ion-button
+                v-show="index === itemsInExternalLinks.length - 1"
+                color="success"
+                @click="onAddMoreExternalLink"
+                >{{ getAddButtonLabel(externalLinks.length) }}</ion-button
             >
-            <ion-button v-show="index === itemsInExternalLinks.length - 1" @click="onRemoveLastExternalLink(index)"
+            <ion-button
+                v-show="index === itemsInExternalLinks.length - 1"
+                color="danger"
+                @click="onRemoveLastExternalLink(index)"
                 >Remove</ion-button
             >
         </ion-item>
@@ -39,6 +45,9 @@ export default defineComponent({
         };
     },
     methods: {
+        getAddButtonLabel(itemsLength: number) {
+            return itemsLength ? 'Add More' : 'Add';
+        },
         insertExternalLink(externalLink: string, index: number) {
             this.externalLinks[index] = externalLink.trim();
         },
@@ -53,6 +62,10 @@ export default defineComponent({
         },
         getExternalLinks() {
             return this.externalLinks.filter((externalLink) => externalLink.length > 0);
+        },
+        clear() {
+            this.externalLinks = [];
+            this.itemsInExternalLinks = [uuidV4()];
         },
     },
 });
