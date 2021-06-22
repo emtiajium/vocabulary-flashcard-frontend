@@ -35,9 +35,9 @@
 
             <add-linker-words ref="AddLinkerWordsRef" />
 
-            <add-generic-notes ref="AddGenericNotes" />
+            <add-generic-notes ref="AddGenericNotesRef" />
 
-            <add-generic-external-links ref="AddGenericExternalLinks" />
+            <add-generic-external-links ref="AddGenericExternalLinksRef" />
 
             <ion-item lines="none">
                 <ion-label>Is Draft</ion-label>
@@ -50,7 +50,8 @@
         </ion-content>
     </ion-page>
 
-    <ion-page v-show="isInDefinition()">
+    <!--https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance-->
+    <ion-page v-bind="$attrs" v-show="isInDefinition()">
         <add-definition :word="word" :vocabularyId="id" :afterAddingDefinition="afterAddingDefinition" />
     </ion-page>
 </template>
@@ -159,10 +160,10 @@ export default defineComponent({
                 this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>
             ).getLinkerWords();
             vocabulary.genericNotes = (
-                this.$refs.AddGenericNotes as InstanceType<typeof AddGenericNotes>
+                this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>
             ).getGenericNotes();
             vocabulary.genericExternalLinks = (
-                this.$refs.AddGenericExternalLinks as InstanceType<typeof AddGenericExternalLinks>
+                this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>
             ).getGenericExternalLinks();
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
@@ -191,8 +192,8 @@ export default defineComponent({
             this.definitions = [] as Definition[];
             this.currentPage = PageType.ADD_VOCABULARY;
             (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
-            (this.$refs.AddGenericNotes as InstanceType<typeof AddGenericNotes>).clear();
-            (this.$refs.AddGenericExternalLinks as InstanceType<typeof AddGenericExternalLinks>).clear();
+            (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
+            (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
         },
     },
 });
