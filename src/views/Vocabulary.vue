@@ -42,9 +42,6 @@ import {
 } from '@ionic/vue';
 import { trashOutline, pencilOutline } from 'ionicons/icons';
 import { defineComponent } from 'vue';
-import { Components } from '@ionic/core/components';
-
-type IonInfiniteScrollType = Components.IonInfiniteScroll;
 
 export default defineComponent({
     name: 'Vocabulary',
