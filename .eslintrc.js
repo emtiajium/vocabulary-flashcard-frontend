@@ -43,5 +43,11 @@ module.exports = {
                 'class-methods-use-this': 'off',
             },
         },
+        {
+            files: ['src/views/VocabularyList.vue'],
+            rules: {
+                'no-param-reassign': 'off',
+            },
+        },
     ],
 };

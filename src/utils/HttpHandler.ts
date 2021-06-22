@@ -9,7 +9,7 @@ export default class HttpHandler {
         throw new Error(error.response?.data.message);
     }
 
-    static async post<TPayload, UResponse>(url: string, payload: TPayload): Promise<UResponse | undefined> {
+    static async post<TPayload, UResponse>(url: string, payload: TPayload): Promise<UResponse | void> {
         let response;
         try {
             const axiosResponse = await Axios.post(`${Config.server.apiPrefix}${url}`, payload, {
