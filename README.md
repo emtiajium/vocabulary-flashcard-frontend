@@ -26,6 +26,8 @@
 
 ###### Run the web app natively on Android 
 
+➜ `npm run build`
+
 ➜ `rm -rf android/`
 
 ➜ `npx cap add android`
