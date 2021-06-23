@@ -12,7 +12,7 @@
 
 ➜ `npm install`
 
-###### Create your configuration and edit the .env environment
+###### Create your configuration and edit
 
 ➜ `config.json.text` > `config.json`
 
@@ -20,11 +20,7 @@
 
 ➜ `npm run serve`
 
-###### Start the development environment
-
-➜ `npm run serve`
-
-###### Run web app natively on Android 
+###### Run the web app natively on Android 
 
 ➜ `rm -rf android/`
 
