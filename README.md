@@ -24,11 +24,11 @@
 
 ➜ <http://localhost:8080/>
 
-###### Run the web app natively on Android 
-
-➜ `npm run build`
+###### Run the web app natively on Android
 
 ➜ `rm -rf android/`
+
+➜ `ionic build`
 
 ➜ `npx cap add android`
 
