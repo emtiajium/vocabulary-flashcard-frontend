@@ -3,7 +3,7 @@
         <ion-header :translucent="true">
             <ion-toolbar>
                 <ion-title
-                    ><ion-text class="header-title">
+                    ><ion-text class="ion-text-center">
                         <h3>IELTS Gibberish</h3>
                     </ion-text></ion-title
                 >
@@ -11,7 +11,7 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <view class="container">
+            <view class="container ion-justify-content-center ion-align-items-center">
                 <view @click="handleClick" :id="signInButtonId"></view>
             </view>
         </ion-content>
@@ -72,11 +72,5 @@ export default defineComponent({
 .container {
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.header-title {
-    display: flex;
-    justify-content: center;
 }
 </style>
