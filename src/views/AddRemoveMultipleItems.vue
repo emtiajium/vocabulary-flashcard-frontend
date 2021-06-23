@@ -7,13 +7,13 @@
                 @keyup="insertItem($event.target.value, index)"
             ></ion-input>
             <ion-button
-                v-show="items.length > 0 && index === placeholderItems.length - 1"
+                v-show="items.length > 0 && index === placeholderItems.length - 1 && items[index]?.length > 0"
                 color="success"
                 @click="onAddMoreItem"
                 >Add More</ion-button
             >
             <ion-button
-                v-show="items.length > 0 && index === placeholderItems.length - 1"
+                v-show="items.length > 0 && items[index]?.length > 0"
                 color="danger"
                 @click="onRemoveLastItem(index)"
                 >Remove</ion-button
