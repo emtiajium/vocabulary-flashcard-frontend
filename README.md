@@ -6,6 +6,8 @@
 
 ➜ [OAuth 2.0 Client ID](https://console.cloud.google.com/)
 
+➜ <https://github.com/emtiajium/ielts-gibberish>
+
 ###### Clone the repo and install all dependencies
 
 ➜ `git clone git@bitbucket.org:sheenab/ielts-gibberish-android.git`
