@@ -1,12 +1,16 @@
 import User from '@/domains/User';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { User as GoogleUser } from '@codetrix-studio/capacitor-google-auth/dist/esm/user';
+import { Device } from '@capacitor/device';
 import Config from '../../capacitor.config.json';
 
 export default class GoogleAuthorization {
-    static load() {
-        GoogleAuthorization.createMetadata();
-        GoogleAuth.init();
+    static async load() {
+        const deviceInfo = await Device.getInfo();
+        if (deviceInfo.platform === 'web') {
+            GoogleAuthorization.createMetadata();
+            GoogleAuth.init();
+        }
     }
 
     static createMetadata(): void {

@@ -34,7 +34,7 @@
 
 ➜ `rm -rf android/`
 
-➜ `ionic build`
+➜ `ionic build --prod`
 
 ➜ `npx cap add android`
 
