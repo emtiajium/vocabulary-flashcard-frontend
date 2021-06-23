@@ -24,7 +24,9 @@ export default defineComponent({
     },
     methods: {
         getExternalLinks() {
-            this.externalLinks = this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>;
+            this.externalLinks = (
+                this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
+            ).getItems();
             return this.externalLinks;
         },
         clear() {
