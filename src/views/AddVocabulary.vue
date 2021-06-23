@@ -43,7 +43,7 @@
                 <ion-item lines="none">
                     <ion-label>Is Draft</ion-label>
                 </ion-item>
-                <ion-item>
+                <ion-item lines="none">
                     <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)"></ion-toggle>
                 </ion-item>
 
