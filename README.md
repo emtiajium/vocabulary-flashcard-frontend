@@ -20,6 +20,24 @@
 
 ➜ `npm run serve`
 
+###### Start the development environment
+
+➜ `npm run serve`
+
+###### Run web app natively on Android 
+
+➜ `rm -rf android/`
+
+➜ `npx cap add android`
+
+➜ `npx cap sync`
+
+➜ Open the project (`/android`) in Android Studio
+
+➜ Sync project with gradle files
+
+➜ Shift + F10
+
 ## Change Log
 
 -   `0.1.0`: ***
