@@ -21,4 +21,17 @@ export default class HttpHandler {
         }
         return response;
     }
+
+    static async get<TResponse>(url: string): Promise<TResponse> {
+        let response;
+        try {
+            const axiosResponse = await Axios.get(`${Config.server.apiPrefix}${url}`, {
+                headers: { 'content-type': 'application/json' },
+            });
+            response = axiosResponse.data;
+        } catch (error) {
+            throw HttpHandler.handleError(error);
+        }
+        return response;
+    }
 }
