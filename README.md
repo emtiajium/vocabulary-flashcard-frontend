@@ -4,6 +4,8 @@
 
 ➜ Install Node 14 LTS
 
+➜ [OAuth 2.0 Client ID](https://console.cloud.google.com/)
+
 ###### Clone the repo and install all dependencies
 
 ➜ `git clone git@bitbucket.org:sheenab/ielts-gibberish-android.git`
@@ -15,6 +17,8 @@
 ###### Create your configuration and edit
 
 ➜ `config.json.text` > `config.json`
+
+➜ `capacitor.config.json.text` -> `capacitor.config.json` 
 
 ###### Start the development environment
 
@@ -35,6 +39,8 @@
 ➜ `npx cap sync`
 
 ➜ Open the project (`/android`) in Android Studio
+
+➜ Replace `MainActivity.java`, `strings.xml`
 
 ➜ Sync project with gradle files
 
