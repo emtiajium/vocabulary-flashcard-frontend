@@ -20,6 +20,10 @@
 
 ➜ `npm run serve`
 
+###### Run the web app on browser
+
+➜ <http://localhost:8080/>
+
 ###### Run the web app natively on Android 
 
 ➜ `rm -rf android/`
