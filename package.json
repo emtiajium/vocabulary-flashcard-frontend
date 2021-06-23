@@ -16,6 +16,7 @@
     "dependencies": {
         "@capacitor/android": "^3.0.1",
         "@capacitor/app": "1.0.1",
+        "@capacitor/cli": "^3.0.1",
         "@capacitor/core": "^3.0.1",
         "@capacitor/haptics": "1.0.1",
         "@capacitor/keyboard": "1.0.1",
@@ -37,7 +38,6 @@
         "vue-router": "^4.0.0-0"
     },
     "devDependencies": {
-        "@capacitor/cli": "^3.0.1",
         "@types/gapi": "0.0.39",
         "@types/gapi.auth2": "0.0.54",
         "@types/jest": "^24.0.19",
