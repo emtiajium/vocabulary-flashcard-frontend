@@ -1,80 +1,36 @@
 import User from '@/domains/User';
-import Config from '../../config.json';
-import BasicProfile = gapi.auth2.BasicProfile;
-import GoogleAuth = gapi.auth2.GoogleAuth;
-import GoogleUser = gapi.auth2.GoogleUser;
-
-declare global {
-    interface Window {
-        onGoogleApiLoad: () => void;
-    }
-}
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { User as GoogleUser } from '@codetrix-studio/capacitor-google-auth/dist/esm/user';
+import Config from '../../capacitor.config.json';
 
 export default class GoogleAuthorization {
-    private auth2!: GoogleAuth;
-
-    onGoogleApiLoad(): Promise<void> {
-        return new Promise((resolve) => {
-            window.onGoogleApiLoad = () => {
-                window.gapi.load('auth2', () => {
-                    this.auth2 = window.gapi.auth2.init({
-                        client_id: Config.google.clientId,
-                    });
-                    resolve();
-                });
-            };
-        });
+    static load() {
+        GoogleAuthorization.createMetadata();
+        GoogleAuth.init();
     }
 
-    createScript(): Promise<void> {
-        return new Promise((resolve) => {
-            const el = document.getElementById('auth2-script-id');
-            if (!el) {
-                const googlePlatformScript = document.createElement('script');
-                googlePlatformScript.setAttribute(
-                    'src',
-                    `https://apis.google.com/js/platform.js?onload=${this.onGoogleApiLoad.name}`,
-                );
-                googlePlatformScript.setAttribute('async', 'true');
-                googlePlatformScript.setAttribute('defer', 'defer');
-                googlePlatformScript.setAttribute('id', 'auth2-script-id');
-                document.head.appendChild(googlePlatformScript);
-            }
-            resolve();
-        });
+    static createMetadata(): void {
+        const googlePlatformMetadata = document.createElement('meta');
+        googlePlatformMetadata.setAttribute('name', 'google-signin-client_id');
+        googlePlatformMetadata.setAttribute('content', Config.plugins.GoogleAuth.serverClientId);
+        document.head.appendChild(googlePlatformMetadata);
     }
 
-    async load() {
-        await Promise.all([this.onGoogleApiLoad(), this.createScript()]);
-    }
-
-    renderElement = (elementId: string): void => {
-        window.gapi.signin2.render(elementId, { width: 250, height: 50, longtitle: true });
-    };
-
-    generateAuthenticatedUserPayload = (profile: BasicProfile): User => {
+    static generateAuthenticatedUserPayload(googleUser: GoogleUser): User {
         // A Google account's email address can change, so don't use it to identify a user.
         // Instead, use the account's ID, which you can get on the client with getBasicProfile().getId(),
         // and on the backend from the sub claim of the ID token.
         return {
-            email: profile.getEmail(),
-            username: profile.getEmail(),
-            firstname: profile.getGivenName(),
-            lastname: profile.getFamilyName(),
-            profilePictureUrl: profile.getImageUrl(),
+            email: googleUser.email,
+            username: googleUser.email,
+            firstname: googleUser.givenName,
+            lastname: googleUser.familyName,
+            profilePictureUrl: googleUser.imageUrl,
         };
-    };
-
-    async signIn(): Promise<User> {
-        const authenticatedUser: GoogleUser = await this.auth2.signIn();
-        return this.generateAuthenticatedUserPayload(authenticatedUser.getBasicProfile());
     }
 
-    isSignedIn(): boolean {
-        return this.auth2.isSignedIn.get();
-    }
-
-    getAuthenticatedUser(): User {
-        return this.generateAuthenticatedUserPayload(this.auth2.currentUser.get().getBasicProfile());
+    static async signIn(): Promise<User> {
+        const authenticatedUser: GoogleUser = await GoogleAuth.signIn();
+        return GoogleAuthorization.generateAuthenticatedUserPayload(authenticatedUser);
     }
 }

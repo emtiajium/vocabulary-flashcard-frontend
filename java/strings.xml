@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">IELTS Gibberish</string>
+    <string name="title_activity_main">IELTS Gibberish</string>
+    <string name="package_name">com.emtiajium.ielts.gibberish.android</string>
+    <string name="custom_url_scheme">com.emtiajium.ielts.gibberish.android</string>
+    <string name="server_client_id">***-***.apps.googleusercontent.com</string>
+</resources>

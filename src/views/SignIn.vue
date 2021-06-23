@@ -12,7 +12,7 @@
 
         <ion-content :fullscreen="true">
             <view class="container ion-justify-content-center ion-align-items-center">
-                <view @click="handleClick" :id="signInButtonId"></view>
+                <view class="g-signin2" @click="handleClick"></view>
             </view>
         </ion-content>
     </ion-page>
@@ -37,23 +37,12 @@ export default defineComponent({
         IonToolbar,
         IonText,
     },
-    data() {
-        return {
-            signInButtonId: `btn-google-sign-in`,
-            googleAuth: new GoogleAuth(),
-        };
-    },
     async mounted() {
-        await this.googleAuth.load();
-        if (this.googleAuth.isSignedIn()) {
-            await this.persistUser(this.googleAuth.getAuthenticatedUser());
-        } else {
-            this.googleAuth.renderElement(this.signInButtonId);
-        }
+        GoogleAuth.load();
     },
     methods: {
         async handleClick() {
-            const user = await this.googleAuth.signIn();
+            const user = await GoogleAuth.signIn();
             await Promise.all([this.persistUser(user), this.$router.push('/authenticated-home')]);
         },
         async persistUser(user: User) {
