@@ -47,7 +47,16 @@
                     <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)"></ion-toggle>
                 </ion-item>
 
-                <ion-button expand="block" @click="persist">Save</ion-button>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-button color="warning" expand="block" @click="back()">Cancel</ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-button color="success" expand="block" @click="persist">Save</ion-button>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
             </ion-card>
         </ion-content>
     </ion-page>
@@ -73,6 +82,9 @@ import {
     IonButton,
     IonItemGroup,
     IonCard,
+    IonGrid,
+    IonRow,
+    IonCol,
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
@@ -111,6 +123,9 @@ export default defineComponent({
         IonButton,
         IonItemGroup,
         IonCard,
+        IonGrid,
+        IonRow,
+        IonCol,
     },
     data() {
         return {
@@ -198,6 +213,10 @@ export default defineComponent({
             (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
             (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
+        },
+        back() {
+            this.clear();
+            this.$router.back();
         },
     },
 });
