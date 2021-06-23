@@ -38,7 +38,7 @@
 
 ➜ `npx cap add android`
 
-➜ `npx cap sync`
+➜ `npx cap sync android`
 
 ➜ Open the project (`/android`) in Android Studio
 
