@@ -42,7 +42,9 @@
 
 ➜ Open the project (`/android`) in Android Studio
 
-➜ Replace `MainActivity.java`, `strings.xml`
+➜ Replace `/android/app/src/main/res/values/strings.xml` with `/java/strings.xml`
+
+➜ Replace `/android/app/src/main/java/com/emtiajium/ielts/gibberish/android/MainActivity.java`, `/java/MainActivity.java`
 
 ➜ Sync project with gradle files
 
