@@ -11,7 +11,8 @@
         "lint": "vue-cli-service lint --fix",
         "lint:check": "vue-cli-service lint",
         "format": "prettier --write \"public/*.html\" \"src/**/*.{css,ts,vue}\" \"tests/**/*.{js,ts}\" \"tests/**/*.{js,ts}\"",
-        "format:check": "prettier --check \"public/*.html\" \"src/**/*.{css,ts,vue}\" \"tests/**/*.{js,ts}\""
+        "format:check": "prettier --check \"public/*.html\" \"src/**/*.{css,ts,vue}\" \"tests/**/*.{js,ts}\"",
+        "serve:native:anew": "rm -rf android/ && npm run build && npx cap add android && npx cap sync"
     },
     "dependencies": {
         "@capacitor/android": "^3.0.1",
