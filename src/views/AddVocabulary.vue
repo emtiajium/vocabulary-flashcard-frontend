@@ -63,7 +63,12 @@
 
     <!--https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance-->
     <ion-page v-bind="$attrs" v-show="isInDefinition()">
-        <add-definition :word="word" :vocabularyId="id" :afterAddingDefinition="afterAddingDefinition" />
+        <add-definition
+            :word="word"
+            :vocabularyId="id"
+            :afterAddingDefinition="afterAddingDefinition"
+            :onCancellingAddingDefinition="onCancellingAddingDefinition"
+        />
     </ion-page>
 </template>
 
@@ -161,6 +166,9 @@ export default defineComponent({
         },
         afterAddingDefinition(definition: Definition) {
             this.insertDefinition(definition);
+            this.setCurrentPage(PageType.ADD_VOCABULARY);
+        },
+        onCancellingAddingDefinition() {
             this.setCurrentPage(PageType.ADD_VOCABULARY);
         },
         insertDefinition(definition: Definition) {

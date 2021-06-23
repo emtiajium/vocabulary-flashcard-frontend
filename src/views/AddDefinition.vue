@@ -21,7 +21,16 @@
 
                 <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
 
-                <ion-button expand="block" @click="back()">Save</ion-button>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-button color="warning" expand="block" @click="back">Cancel</ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-button color="success" expand="block" @click="persist">Save</ion-button>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
             </ion-card>
         </ion-content>
     </ion-page>
@@ -39,6 +48,9 @@ import {
     IonToolbar,
     IonButton,
     IonCard,
+    IonGrid,
+    IonRow,
+    IonCol,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import AddDefinitionExample from '@/views/AddDefinitionExample.vue';
@@ -66,8 +78,11 @@ export default defineComponent({
         IonItem,
         IonButton,
         IonCard,
+        IonGrid,
+        IonRow,
+        IonCol,
     },
-    props: ['word', 'vocabularyId', 'afterAddingDefinition'],
+    props: ['word', 'vocabularyId', 'afterAddingDefinition', 'onCancellingAddingDefinition'],
     data() {
         return {
             meaning: '',
@@ -94,7 +109,7 @@ export default defineComponent({
             ).getExternalLinks();
             return definition;
         },
-        async back() {
+        async persist() {
             const definition = this.getDefinitionPayload();
             const errors = validateSync(definition);
             if (errors.length) {
@@ -109,6 +124,10 @@ export default defineComponent({
             (this.$refs.AddDefinitionExampleRef as InstanceType<typeof AddDefinitionExample>).clear();
             (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).clear();
             (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
+        },
+        back() {
+            this.clear();
+            this.onCancellingAddingDefinition();
         },
     },
 });
