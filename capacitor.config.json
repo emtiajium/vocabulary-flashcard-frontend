@@ -1,6 +1,6 @@
 {
-    "appId": "io.ionic.starter",
-    "appName": "ielts-gibberish-android",
+    "appId": "com.emtiajium.ielts.gibberish.android",
+    "appName": "IELTS Gibberish",
     "webDir": "dist",
     "bundledWebRuntime": false
 }
