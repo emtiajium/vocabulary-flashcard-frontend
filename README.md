@@ -32,13 +32,15 @@
 
 ###### Run the web app natively on Android
 
-➜ `rm -rf android/`
+➜ Read [these](https://facebook.github.io/react-native/docs/running-on-device.html) and execute three task given below
 
-➜ `ionic build --prod`
+➜ Enable Debugging over USB
 
-➜ `npx cap add android`
+➜ Plug in your device via USB
 
-➜ `npx cap sync android`
+➜ Connect to the development server
+
+➜ `npm run serve:native:anew`
 
 ➜ Open the project (`/android`) in Android Studio
 
