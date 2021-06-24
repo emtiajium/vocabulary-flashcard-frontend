@@ -2,7 +2,7 @@ import User from '@/domains/User';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { User as GoogleUser } from '@codetrix-studio/capacitor-google-auth/dist/esm/user';
 import { Device } from '@capacitor/device';
-import Config from '../../capacitor.config.json';
+import Config from '../../config.json';
 
 export default class GoogleAuthorization {
     static async load() {
@@ -16,7 +16,7 @@ export default class GoogleAuthorization {
     static createMetadata(): void {
         const googlePlatformMetadata = document.createElement('meta');
         googlePlatformMetadata.setAttribute('name', 'google-signin-client_id');
-        googlePlatformMetadata.setAttribute('content', Config.plugins.GoogleAuth.serverClientId);
+        googlePlatformMetadata.setAttribute('content', Config.google.webClientId);
         document.head.appendChild(googlePlatformMetadata);
     }
 
