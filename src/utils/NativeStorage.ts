@@ -1,11 +1,24 @@
-import { Storage } from '@capacitor/storage';
+import { Storage } from '@ionic/storage';
 import NativeStorageKey from '@/domains/NativeStorageKey';
 import User from '@/domains/User';
 
+let storage: Storage;
+
 export default class NativeStorage {
-    static async getByKey<T>(key: NativeStorageKey, type = 'JSON'): Promise<T> {
-        const result = await Storage.get({ key });
-        return type === 'JSON' ? JSON.parse(result.value as string) : result.value;
+    static async getStorage(): Promise<Storage> {
+        await NativeStorage.createStorageIfNotExist();
+        return storage;
+    }
+
+    static async createStorageIfNotExist(): Promise<void> {
+        if (!storage) {
+            // IndexedDB
+            storage = await new Storage().create();
+        }
+    }
+
+    static async getByKey<T>(key: NativeStorageKey): Promise<T> {
+        return (await NativeStorage.getStorage()).get(key);
     }
 
     static async getCohortId(): Promise<string> {
@@ -14,13 +27,12 @@ export default class NativeStorage {
     }
 
     static async setAuthorizedUser(user: User): Promise<void> {
-        await Storage.set({
-            key: NativeStorageKey.AUTHORIZED_USER,
-            value: JSON.stringify({
-                id: user?.id,
-                cohortId: user?.cohortId,
-                username: user?.username,
-            }),
+        await (
+            await NativeStorage.getStorage()
+        ).set(NativeStorageKey.AUTHORIZED_USER, {
+            id: user?.id,
+            cohortId: user?.cohortId,
+            username: user?.username,
         });
     }
 }
