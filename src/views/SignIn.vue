@@ -51,16 +51,17 @@ export default defineComponent({
     },
     methods: {
         async handleClick() {
-            const user = await GoogleAuth.signIn();
-            await Promise.all([this.persistUser(user), this.$router.push('/authenticated-home')]);
+            try {
+                const user = await GoogleAuth.signIn();
+                await this.persistUser(user);
+                await this.$router.push('/authenticated-home');
+            } catch (error) {
+                await Toast.present(error.message || `Something went wrong!`);
+            }
         },
         async persistUser(user: User) {
-            try {
-                const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
-                await NativeStorage.setAuthorizedUser(persistedUser as User);
-            } catch (error) {
-                await Toast.present(error.message);
-            }
+            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
+            await NativeStorage.setAuthorizedUser(persistedUser as User);
         },
     },
 });

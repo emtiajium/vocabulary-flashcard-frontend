@@ -1,4 +1,5 @@
-import { Storage } from '@ionic/storage';
+import { Drivers, Storage } from '@ionic/storage';
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import NativeStorageKey from '@/domains/NativeStorageKey';
 import User from '@/domains/User';
 
@@ -12,8 +13,14 @@ export default class NativeStorage {
 
     static async createStorageIfNotExist(): Promise<void> {
         if (!storage) {
-            // IndexedDB
-            storage = await new Storage().create();
+            // IndexedDB: Web app
+            // SQLite: Native app
+            storage = new Storage({
+                // eslint-disable-next-line no-underscore-dangle
+                driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB],
+            });
+            await storage.defineDriver(CordovaSQLiteDriver);
+            await storage.create();
         }
     }
 
