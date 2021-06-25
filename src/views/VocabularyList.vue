@@ -22,8 +22,8 @@
             </ion-infinite-scroll>
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                <ion-fab-button>
-                    <ion-icon :icon="add" @click="$router.push('/add-vocabulary')"></ion-icon>
+                <ion-fab-button @click="$router.push('/add-vocabulary')">
+                    <font-awesome-icon :icon="faPlus"></font-awesome-icon>
                 </ion-fab-button>
             </ion-fab>
         </ion-content>
@@ -37,13 +37,11 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
-    IonIcon,
     IonFab,
     IonFabButton,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
 } from '@ionic/vue';
-import { add } from 'ionicons/icons';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
 import NativeStorage from '@/utils/NativeStorage';
@@ -52,6 +50,8 @@ import Vocabulary from '@/domains/Vocabulary';
 import VocabularySearch from '@/domains/VocabularySearch';
 import { Components } from '@ionic/core/components';
 import VocabularyView from '@/views/Vocabulary.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 
@@ -64,14 +64,14 @@ export default defineComponent({
         IonPage,
         IonTitle,
         IonToolbar,
-        IonIcon,
         IonFab,
         IonFabButton,
         IonInfiniteScroll,
         IonInfiniteScrollContent,
+        FontAwesomeIcon,
     },
     data() {
-        return { add, cohortId: '', vocabularies: [] as Vocabulary[], pageNumber: 1, isDisabled: false };
+        return { faPlus, cohortId: '', vocabularies: [] as Vocabulary[], pageNumber: 1, isDisabled: false };
     },
     async mounted() {
         this.cohortId = await NativeStorage.getCohortId();

@@ -13,7 +13,7 @@
         <ion-content :fullscreen="true">
             <view class="container ion-justify-content-center ion-align-items-center">
                 <ion-button @click="handleClick">
-                    <ion-icon :icon="logoGoogle"></ion-icon>
+                    <font-awesome-icon :icon="faGoogle"></font-awesome-icon>
                     <ion-text class="ion-padding-start ion-text-capitalize">Sign in with Google</ion-text>
                 </ion-button>
             </view>
@@ -22,14 +22,15 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText, IonButton, IonIcon } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText, IonButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import GoogleAuth from '@/utils/GoogleAuthorization';
 import User from '@/domains/User';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import NativeStorage from '@/utils/NativeStorage';
-import { logoGoogle } from 'ionicons/icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 export default defineComponent({
     name: 'SignIn',
@@ -41,13 +42,13 @@ export default defineComponent({
         IonToolbar,
         IonText,
         IonButton,
-        IonIcon,
+        FontAwesomeIcon,
     },
     async mounted() {
         await GoogleAuth.load();
     },
     data() {
-        return { logoGoogle };
+        return { faGoogle };
     },
     methods: {
         async handleClick() {
