@@ -8,7 +8,7 @@
                     </ion-col>
                     <ion-col size="4">
                         <ion-row class="ion-justify-content-end">
-                            <ion-button color="warning">
+                            <ion-button color="warning" @click="$router.push(`/edit-vocabulary/${vocabulary.id}`)">
                                 <font-awesome-icon :icon="faEdit" />
                             </ion-button>
                             <ion-button color="danger">
