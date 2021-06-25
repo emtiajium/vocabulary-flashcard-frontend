@@ -95,6 +95,7 @@ ion-toolbar {
 
 ion-button {
     --background: #2E8B57;
+    --ion-color-primary: #2E8B57;
     --ion-color-success: #2E8B57;
     --ion-color-warning: #50C878;
     --ion-color-danger: #D0F0C0;
