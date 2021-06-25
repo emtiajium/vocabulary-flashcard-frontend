@@ -79,7 +79,7 @@ http://ionicframework.com/docs/theming/ */
 /** customization by Emtiaj start */
 
 ion-content {
-    --ion-background-color: #0000000C;
+    --ion-background-color: #FFFFFF;
 }
 
 ion-toggle {
@@ -104,11 +104,16 @@ ion-button {
 }
 
 ion-card {
-    --background: #FFFFFF;
+    --background: #EFFAE9;
+}
+
+ion-card-title {
+    --color: #444C38;
 }
 
 ion-item {
-    --background: #FFFFFF;
+    --background: #EFFAE9;
+    --ion-item-color: #444C38;
 }
 
 ion-fab-button {

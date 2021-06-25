@@ -25,9 +25,13 @@
                     }}</ion-button>
                 </ion-item>
                 <view v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
+                    <ion-item lines="none">
+                        <ion-label color="dark" class="ion-text-capitalize ion-text-nowrap">{{
+                            definition.meaning
+                        }}</ion-label>
+                    </ion-item>
                     <ion-item>
                         <ion-item-group>
-                            <ion-button color="dark">{{ `${definition.meaning.slice(0, 5)} ...` }}</ion-button>
                             <ion-button color="warning">Edit</ion-button>
                             <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
                         </ion-item-group>
