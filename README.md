@@ -4,9 +4,13 @@
 
 ➜ Install Node 14 LTS
 
-➜ [OAuth 2.0 Client ID](https://console.cloud.google.com/)
-
 ➜ <https://github.com/emtiajium/ielts-gibberish>
+
+➜ Add Firebase to the Android project
+
+> [OAuth 2.0 Client ID](https://console.cloud.google.com/)
+
+> Enable Google Sign-In in the Firebase console
 
 ###### Clone the repo and install all dependencies
 
@@ -34,11 +38,11 @@
 
 ➜ Read [these](https://facebook.github.io/react-native/docs/running-on-device.html) and execute three task given below
 
-➜ Enable Debugging over USB
+> Enable Debugging over USB
 
-➜ Plug in your device via USB
+> Plug in your device via USB
 
-➜ Connect to the development server
+> Connect to the development server
 
 ➜ `npm run serve:native:anew`
 
