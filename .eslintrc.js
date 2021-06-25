@@ -21,7 +21,7 @@ module.exports = {
         'no-console': 'off',
         'no-debugger': 'off',
         'vue/no-deprecated-slot-attribute': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-explicit-any': 'error',
     },
     overrides: [
         {
