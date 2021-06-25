@@ -74,17 +74,48 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-light-contrast-rgb: 0, 0, 0;
     --ion-color-light-shade: #d7d8da;
     --ion-color-light-tint: #f5f6f9;
-
-    /** customization by Emtiaj start */
-
-    --ion-background-color: #0000000C;
-    --ion-item-background: #ffffff;
-    --ion-toolbar-background: #ffffff;
-    --ion-tab-bar-background: #ffffff;
-    --ion-card-background: #ffffff;
-
-    /** customization by Emtiaj end */
 }
+
+/** customization by Emtiaj start */
+
+ion-content {
+    --ion-background-color: #0000000C;
+}
+
+ion-toggle {
+    --background: #D0F0C0;
+    --background-checked: #D0F0C0;
+    --handle-background-checked: #2E8B57;
+}
+
+ion-toolbar {
+    --background: #2E8B57;
+    --color: #FFFFFF;
+}
+
+ion-button {
+    --background: #2E8B57;
+    --ion-color-success: #2E8B57;
+    --ion-color-warning: #50C878;
+    --ion-color-danger: #D0F0C0;
+    --ion-color-dark: #444C38;
+    --ion-color-warning-contrast: #FFFFFF;
+    --ion-color-danger-contrast: #2E2E2E;
+}
+
+ion-card {
+    --background: #FFFFFF;
+}
+
+ion-item {
+    --background: #FFFFFF;
+}
+
+ion-fab-button {
+    --background: #2E8B57;
+}
+
+/** customization by Emtiaj end */
 
 @media (prefers-color-scheme: dark) {
     /*
