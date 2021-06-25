@@ -40,15 +40,18 @@
 
                 <view v-if="isInCreationMode()">
                     <add-linker-words ref="AddLinkerWordsRef" />
+                    <add-generic-notes ref="AddGenericNotesRef" />
+                    <add-generic-external-links ref="AddGenericExternalLinksRef" />
                 </view>
 
                 <view v-if="isInUpdateMode()">
                     <add-linker-words ref="AddLinkerWordsRef" :existingLinkerWords="linkerWords" />
+                    <add-generic-notes ref="AddGenericNotesRef" :existingGenericNotes="genericNotes" />
+                    <add-generic-external-links
+                        ref="AddGenericExternalLinksRef"
+                        :existingGenericExternalLinks="genericExternalLinks"
+                    />
                 </view>
-
-                <add-generic-notes ref="AddGenericNotesRef" />
-
-                <add-generic-external-links ref="AddGenericExternalLinksRef" />
 
                 <ion-item lines="none">
                     <ion-label>Is Draft</ion-label>
@@ -156,6 +159,8 @@ export default defineComponent({
             id: uuidV4(),
             word: '',
             linkerWords: [] as string[],
+            genericNotes: [] as string[],
+            genericExternalLinks: [] as string[],
             isDraft: false,
             definitions: [] as Definition[],
             currentPage: PageType.ADD_VOCABULARY,
@@ -165,13 +170,7 @@ export default defineComponent({
         const routeParameters = useRoute().params;
         if (routeParameters?.id) {
             this.headerTitle = 'Edit Vocabulary';
-            const vocabularyId = routeParameters.id;
-            const vocabulary = (await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${vocabularyId}`)) as Vocabulary;
-            this.id = vocabulary.id;
-            this.word = vocabulary.word;
-            this.linkerWords = vocabulary.linkerWords as string[];
-            this.isDraft = vocabulary.isDraft;
-            this.definitions = vocabulary.definitions as Definition[];
+            await this.getAndSetExistingVocabulary(routeParameters.id as string);
             this.mode = Mode.UPDATE;
             this.isLoading = false;
         } else {
@@ -181,6 +180,16 @@ export default defineComponent({
         }
     },
     methods: {
+        async getAndSetExistingVocabulary(vocabularyId: string) {
+            const vocabulary = (await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${vocabularyId}`)) as Vocabulary;
+            this.id = vocabulary.id;
+            this.word = vocabulary.word;
+            this.linkerWords = vocabulary.linkerWords as string[];
+            this.genericNotes = vocabulary.genericNotes as string[];
+            this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
+            this.isDraft = vocabulary.isDraft;
+            this.definitions = vocabulary.definitions as Definition[];
+        },
         getAddButtonLabel(itemsLength: number) {
             return itemsLength ? 'Add More' : 'Add';
         },
