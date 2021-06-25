@@ -36,7 +36,7 @@
                         </ion-item>
                         <ion-item>
                             <ion-item-group>
-                                <ion-button color="warning">Edit</ion-button>
+                                <ion-button color="warning" @click="updateDefinition(index)">Edit</ion-button>
                                 <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
                             </ion-item-group>
                         </ion-item>
@@ -80,13 +80,24 @@
     </ion-page>
 
     <!--https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance-->
-    <ion-page v-bind="$attrs" v-if="!isLoading" v-show="isInDefinition()">
-        <add-definition
-            :word="word"
-            :vocabularyId="id"
-            :afterAddingDefinition="afterAddingDefinition"
-            :onCancellingAddingDefinition="onCancellingAddingDefinition"
-        />
+    <ion-page v-bind="$attrs" v-show="isInDefinition()">
+        <view v-if="!isInDefinitionUpdateMode()">
+            <add-definition
+                :word="word"
+                :vocabularyId="id"
+                :afterAddingDefinition="afterAddingDefinition"
+                :onCancellingAddingDefinition="onCancellingAddingDefinition"
+            />
+        </view>
+        <view v-if="isInDefinitionUpdateMode()">
+            <add-definition
+                :word="word"
+                :vocabularyId="id"
+                :definition="goingToBeUpdatedDefinition"
+                :afterAddingDefinition="afterAddingDefinition"
+                :onCancellingAddingDefinition="onCancellingAddingDefinition"
+            />
+        </view>
     </ion-page>
 </template>
 
@@ -130,8 +141,10 @@ enum PageType {
 }
 
 enum Mode {
-    CREATE = 'CREATE',
-    UPDATE = 'UPDATE',
+    VOCABULARY_CREATE = 'VOCABULARY_CREATE',
+    VOCABULARY_UPDATE = 'VOCABULARY_UPDATE',
+    DEFINITION_CREATE = 'DEFINITION_CREATE',
+    DEFINITION_UPDATE = 'DEFINITION_UPDATE',
 }
 
 export default defineComponent({
@@ -171,6 +184,7 @@ export default defineComponent({
             isDraft: false,
             definitions: [] as Definition[],
             currentPage: PageType.ADD_VOCABULARY,
+            goingToBeUpdatedDefinition: {} as Definition,
         };
     },
     async mounted() {
@@ -178,11 +192,11 @@ export default defineComponent({
         if (routeParameters?.id) {
             this.headerTitle = 'Edit Vocabulary';
             await this.getAndSetExistingVocabulary(routeParameters.id as string);
-            this.mode = Mode.UPDATE;
+            this.mode = Mode.VOCABULARY_UPDATE;
             this.isLoading = false;
         } else {
             this.headerTitle = 'Add Vocabulary';
-            this.mode = Mode.CREATE;
+            this.mode = Mode.VOCABULARY_CREATE;
             this.isLoading = false;
         }
     },
@@ -219,11 +233,17 @@ export default defineComponent({
         isInDefinition() {
             return this.currentPage === PageType.ADD_DEFINITION;
         },
+        isInDefinitionCreationMode() {
+            return this.mode === Mode.DEFINITION_CREATE;
+        },
+        isInDefinitionUpdateMode() {
+            return this.mode === Mode.DEFINITION_UPDATE;
+        },
         isInCreationMode() {
-            return this.mode === Mode.CREATE;
+            return this.mode === Mode.VOCABULARY_CREATE || this.isInDefinitionCreationMode();
         },
         isInUpdateMode() {
-            return this.mode === Mode.UPDATE;
+            return this.mode === Mode.VOCABULARY_UPDATE || this.isInDefinitionUpdateMode();
         },
         afterAddingDefinition(definition: Definition) {
             this.insertDefinition(definition);
@@ -237,6 +257,16 @@ export default defineComponent({
         },
         removeDefinition(removableIndex: number) {
             this.definitions = this.definitions.filter((definition, index) => index !== removableIndex);
+        },
+        setGoingToBeUpdatedDefinition(updatableIndex: number) {
+            this.goingToBeUpdatedDefinition = this.definitions.find(
+                (definition, index) => index === updatableIndex,
+            ) as Definition;
+        },
+        updateDefinition(updatableIndex: number) {
+            this.setGoingToBeUpdatedDefinition(updatableIndex);
+            this.mode = Mode.DEFINITION_UPDATE;
+            this.setCurrentPage(PageType.ADD_DEFINITION);
         },
         async getVocabularyPayload() {
             const vocabulary = new Vocabulary();
@@ -279,6 +309,7 @@ export default defineComponent({
             this.isDraft = false;
             this.definitions = [] as Definition[];
             this.currentPage = PageType.ADD_VOCABULARY;
+            this.goingToBeUpdatedDefinition = {} as Definition;
             (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
             (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
