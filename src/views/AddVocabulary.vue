@@ -3,7 +3,7 @@
     <ion-page v-show="!isInDefinition()">
         <ion-header :translucent="true">
             <ion-toolbar>
-                <ion-title>Add Vocabulary</ion-title>
+                <ion-title>{{ headerTitle }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -107,6 +107,7 @@ import Definition from '@/domains/Definition';
 import AddDefinition from '@/views/AddDefinition.vue';
 import { validateSync } from 'class-validator';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
+import { useRoute } from 'vue-router';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -138,12 +139,29 @@ export default defineComponent({
     },
     data() {
         return {
+            isLoading: true,
+            headerTitle: '',
             id: uuidV4(),
             word: '',
             isDraft: false,
             definitions: [] as Definition[],
             currentPage: PageType.ADD_VOCABULARY,
         };
+    },
+    async mounted() {
+        const routeParameters = useRoute().params;
+        if (routeParameters?.id) {
+            this.headerTitle = 'Edit Vocabulary';
+            const vocabularyId = routeParameters.id;
+            const vocabulary = (await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${vocabularyId}`)) as Vocabulary;
+            this.id = vocabulary.id;
+            this.word = vocabulary.word;
+            this.isDraft = vocabulary.isDraft;
+            this.isLoading = false;
+        } else {
+            this.headerTitle = 'Add Vocabulary';
+            this.isLoading = false;
+        }
     },
     methods: {
         getAddButtonLabel(itemsLength: number) {
