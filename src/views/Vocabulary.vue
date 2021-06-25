@@ -7,14 +7,14 @@
                         <ion-card-title class="ion-text-capitalize">{{ vocabulary.word }}</ion-card-title>
                     </ion-col>
                     <ion-col size="4">
-                        <ion-buttons class="ion-justify-content-end">
-                            <ion-button color="light">
-                                <ion-icon :icon="trashOutline" color="danger"></ion-icon>
+                        <ion-row class="ion-justify-content-end">
+                            <ion-button color="warning">
+                                <font-awesome-icon :icon="faEdit" />
                             </ion-button>
-                            <ion-button color="light">
-                                <ion-icon :icon="pencilOutline" color="warning"></ion-icon>
+                            <ion-button color="danger">
+                                <font-awesome-icon :icon="faTrashAlt" />
                             </ion-button>
-                        </ion-buttons>
+                        </ion-row>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -28,20 +28,11 @@
 </template>
 
 <script lang="ts">
-import {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonIcon,
-    IonButton,
-    IonButtons,
-} from '@ionic/vue';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonButton } from '@ionic/vue';
 import { trashOutline, pencilOutline } from 'ionicons/icons';
 import { defineComponent } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'Vocabulary',
@@ -53,13 +44,12 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonCol,
-        IonIcon,
         IonButton,
-        IonButtons,
+        FontAwesomeIcon,
     },
     props: ['vocabulary'],
     data() {
-        return { trashOutline, pencilOutline };
+        return { trashOutline, pencilOutline, faTrashAlt, faEdit };
     },
 });
 </script>
