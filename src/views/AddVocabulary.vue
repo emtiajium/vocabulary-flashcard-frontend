@@ -38,7 +38,13 @@
                     </ion-item>
                 </view>
 
-                <add-linker-words ref="AddLinkerWordsRef" />
+                <view v-if="isInCreationMode()">
+                    <add-linker-words ref="AddLinkerWordsRef" />
+                </view>
+
+                <view v-if="isInUpdateMode()">
+                    <add-linker-words ref="AddLinkerWordsRef" :existingLinkerWords="linkerWords" />
+                </view>
 
                 <add-generic-notes ref="AddGenericNotesRef" />
 
@@ -114,6 +120,11 @@ enum PageType {
     ADD_DEFINITION = 'ADD_DEFINITION',
 }
 
+enum Mode {
+    CREATE = 'CREATE',
+    UPDATE = 'UPDATE',
+}
+
 export default defineComponent({
     name: 'AddVocabulary',
     components: {
@@ -140,9 +151,11 @@ export default defineComponent({
     data() {
         return {
             isLoading: true,
+            mode: '',
             headerTitle: '',
             id: uuidV4(),
             word: '',
+            linkerWords: [] as string[],
             isDraft: false,
             definitions: [] as Definition[],
             currentPage: PageType.ADD_VOCABULARY,
@@ -156,10 +169,14 @@ export default defineComponent({
             const vocabulary = (await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${vocabularyId}`)) as Vocabulary;
             this.id = vocabulary.id;
             this.word = vocabulary.word;
+            this.linkerWords = vocabulary.linkerWords as string[];
             this.isDraft = vocabulary.isDraft;
+            this.definitions = vocabulary.definitions as Definition[];
+            this.mode = Mode.UPDATE;
             this.isLoading = false;
         } else {
             this.headerTitle = 'Add Vocabulary';
+            this.mode = Mode.CREATE;
             this.isLoading = false;
         }
     },
@@ -185,6 +202,12 @@ export default defineComponent({
         },
         isInDefinition() {
             return this.currentPage === PageType.ADD_DEFINITION;
+        },
+        isInCreationMode() {
+            return this.mode === Mode.CREATE;
+        },
+        isInUpdateMode() {
+            return this.mode === Mode.UPDATE;
         },
         afterAddingDefinition(definition: Definition) {
             this.insertDefinition(definition);

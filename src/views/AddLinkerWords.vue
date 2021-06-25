@@ -2,7 +2,12 @@
     <ion-item lines="none">
         <ion-label>Linker Words</ion-label>
     </ion-item>
-    <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
+    <view v-if="$props.existingLinkerWords">
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existingItems="linkerWords" />
+    </view>
+    <view v-if="!$props.existingLinkerWords">
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
+    </view>
 </template>
 
 <script lang="ts">
@@ -17,9 +22,10 @@ export default defineComponent({
         IonLabel,
         IonItem,
     },
+    props: ['existingLinkerWords'],
     data() {
         return {
-            linkerWords: [] as string[],
+            linkerWords: (this.existingLinkerWords || []) as string[],
         };
     },
     methods: {

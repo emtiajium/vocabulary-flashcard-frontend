@@ -26,6 +26,7 @@
 import { defineComponent } from 'vue';
 import { IonInput, IonItem, IonButton } from '@ionic/vue';
 import { v4 as uuidV4 } from 'uuid';
+import * as _ from 'lodash';
 
 export default defineComponent({
     name: 'AddRemoveMultipleItems',
@@ -34,10 +35,12 @@ export default defineComponent({
         IonItem,
         IonButton,
     },
+    props: ['existingItems'],
     data() {
+        const placeholderItems = _.fill(_.times(this.existingItems?.length || 1), uuidV4());
         return {
-            placeholderItems: [uuidV4()],
-            items: [] as string[],
+            placeholderItems,
+            items: (this.existingItems || []) as string[],
         };
     },
     methods: {
