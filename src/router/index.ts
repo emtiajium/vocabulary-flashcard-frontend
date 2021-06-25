@@ -20,6 +20,10 @@ const routes: Array<RouteRecordRaw> = [
         component: AuthenticatedHome,
     },
     {
+        path: '/vocabularies',
+        redirect: '/authenticated-home',
+    },
+    {
         path: '/add-vocabulary',
         name: 'AddVocabulary',
         component: AddVocabulary,
