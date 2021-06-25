@@ -8,7 +8,9 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <ion-card>
+            <spinner v-show="isLoading" />
+
+            <ion-card v-show="!isLoading">
                 <ion-item lines="none">
                     <ion-label>Word</ion-label>
                 </ion-item>
@@ -117,6 +119,7 @@ import AddDefinition from '@/views/AddDefinition.vue';
 import { validateSync } from 'class-validator';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
 import { useRoute } from 'vue-router';
+import Spinner from '@/views/Spinner.vue';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -131,6 +134,7 @@ enum Mode {
 export default defineComponent({
     name: 'AddVocabulary',
     components: {
+        Spinner,
         AddDefinition,
         AddLinkerWords,
         AddGenericNotes,
