@@ -8,9 +8,9 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <spinner v-show="isLoading" />
+            <spinner v-if="isLoading" v-show="isLoading" />
 
-            <ion-card v-show="!isLoading">
+            <ion-card v-if="!isLoading" v-show="!isLoading">
                 <ion-item lines="none">
                     <ion-label>Word</ion-label>
                 </ion-item>
@@ -21,23 +21,26 @@
                 <ion-item lines="none">
                     <ion-label>Definition</ion-label>
                 </ion-item>
-                <ion-item>
+                <ion-item v-if="!isLoading">
                     <ion-button color="success" @click="onAddingDefinition">{{
                         getAddButtonLabel(definitions.length)
                     }}</ion-button>
                 </ion-item>
-                <view v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
-                    <ion-item lines="none">
-                        <ion-label color="dark" class="ion-text-capitalize ion-text-nowrap">{{
-                            definition.meaning
-                        }}</ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-item-group>
-                            <ion-button color="warning">Edit</ion-button>
-                            <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
-                        </ion-item-group>
-                    </ion-item>
+
+                <view v-if="!isLoading">
+                    <view v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
+                        <ion-item lines="none">
+                            <ion-label color="dark" class="ion-text-capitalize ion-text-nowrap">{{
+                                definition.meaning
+                            }}</ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-item-group>
+                                <ion-button color="warning">Edit</ion-button>
+                                <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
+                            </ion-item-group>
+                        </ion-item>
+                    </view>
                 </view>
 
                 <view v-if="isInCreationMode()">
@@ -77,7 +80,7 @@
     </ion-page>
 
     <!--https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance-->
-    <ion-page v-bind="$attrs" v-show="isInDefinition()">
+    <ion-page v-bind="$attrs" v-if="!isLoading" v-show="isInDefinition()">
         <add-definition
             :word="word"
             :vocabularyId="id"
@@ -188,11 +191,11 @@ export default defineComponent({
             const vocabulary = (await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${vocabularyId}`)) as Vocabulary;
             this.id = vocabulary.id;
             this.word = vocabulary.word;
+            this.definitions = vocabulary.definitions as Definition[];
             this.linkerWords = vocabulary.linkerWords as string[];
             this.genericNotes = vocabulary.genericNotes as string[];
             this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
             this.isDraft = vocabulary.isDraft;
-            this.definitions = vocabulary.definitions as Definition[];
         },
         getAddButtonLabel(itemsLength: number) {
             return itemsLength ? 'Add More' : 'Add';
