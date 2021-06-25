@@ -29,7 +29,6 @@
 
 <script lang="ts">
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonButton } from '@ionic/vue';
-import { trashOutline, pencilOutline } from 'ionicons/icons';
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -49,7 +48,7 @@ export default defineComponent({
     },
     props: ['vocabulary'],
     data() {
-        return { trashOutline, pencilOutline, faTrashAlt, faEdit };
+        return { faTrashAlt, faEdit };
     },
 });
 </script>
