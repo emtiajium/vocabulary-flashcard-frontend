@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/edit-vocabulary/:id',
-        name: 'AddVocabulary',
+        name: 'EditVocabulary',
         component: AddVocabulary,
     },
 ];
