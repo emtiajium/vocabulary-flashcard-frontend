@@ -12,14 +12,32 @@
                     <ion-label>Meaning</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-input type="text" :value="meaning" @keyup="setMeaning($event.target.value)"></ion-input>
+                    <view v-if="!$props.definition">
+                        <ion-input type="text" :value="meaning" @keyup="setMeaning($event.target.value)"></ion-input>
+                    </view>
+                    <view v-if="$props.definition">
+                        <ion-input
+                            type="text"
+                            :value="definition.meaning"
+                            @keyup="setMeaning($event.target.value)"
+                        ></ion-input>
+                    </view>
                 </ion-item>
 
-                <add-definition-example ref="AddDefinitionExampleRef" />
+                <view v-if="!$props.definition">
+                    <add-definition-example ref="AddDefinitionExampleRef" />
+                    <add-definition-notes ref="AddDefinitionNotesRef" />
+                    <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
+                </view>
 
-                <add-definition-notes ref="AddDefinitionNotesRef" />
-
-                <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
+                <view v-if="$props.definition">
+                    <add-definition-example ref="AddDefinitionExampleRef" :existingExamples="definition.examples" />
+                    <add-definition-notes ref="AddDefinitionNotesRef" :existingNotes="definition.notes" />
+                    <add-definition-external-links
+                        ref="AddDefinitionExternalLinksRef"
+                        :existingExternalLinks="definition.externalLinks"
+                    />
+                </view>
 
                 <ion-grid>
                     <ion-row>
@@ -82,11 +100,14 @@ export default defineComponent({
         IonRow,
         IonCol,
     },
-    props: ['word', 'vocabularyId', 'afterAddingDefinition', 'onCancellingAddingDefinition'],
+    props: ['word', 'vocabularyId', 'definition', 'afterAddingDefinition', 'onCancellingAddingDefinition'],
     data() {
         return {
             meaning: '',
         };
+    },
+    mounted() {
+        this.meaning = this.$props.definition?.meaning || '';
     },
     methods: {
         getAddButtonLabel(itemsLength: number) {
@@ -97,7 +118,7 @@ export default defineComponent({
         },
         getDefinitionPayload() {
             const definition = new Definition();
-            definition.id = uuidV4();
+            definition.id = this.definition?.id || uuidV4();
             definition.vocabularyId = this.vocabularyId;
             definition.meaning = this.meaning;
             definition.examples = (

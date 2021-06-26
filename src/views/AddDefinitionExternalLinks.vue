@@ -2,7 +2,12 @@
     <ion-item lines="none">
         <ion-label>External Links</ion-label>
     </ion-item>
-    <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
+    <view v-if="!$props.existingExternalLinks">
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
+    </view>
+    <view v-if="$props.existingExternalLinks">
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingExternalLinks" />
+    </view>
 </template>
 
 <script lang="ts">
@@ -17,6 +22,7 @@ export default defineComponent({
         IonLabel,
         IonItem,
     },
+    props: ['existingExternalLinks'],
     data() {
         return {
             externalLinks: [] as string[],

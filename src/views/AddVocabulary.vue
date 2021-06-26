@@ -1,6 +1,6 @@
 <template>
     <!--tried with routing, but could not find a way to set the definition before navigating back to this page-->
-    <ion-page v-show="!isInDefinition()">
+    <ion-page v-bind="$attrs" v-if="!isInDefinition()">
         <ion-header :translucent="true">
             <ion-toolbar>
                 <ion-title>{{ headerTitle }}</ion-title>
@@ -80,7 +80,7 @@
     </ion-page>
 
     <!--https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance-->
-    <ion-page v-bind="$attrs" v-show="isInDefinition()">
+    <ion-page v-bind="$attrs" v-if="isInDefinition()">
         <view v-if="!isInDefinitionUpdateMode()">
             <add-definition
                 :word="word"
@@ -94,7 +94,7 @@
                 :word="word"
                 :vocabularyId="id"
                 :definition="goingToBeUpdatedDefinition"
-                :afterAddingDefinition="afterAddingDefinition"
+                :afterAddingDefinition="afterUpdatingDefinition"
                 :onCancellingAddingDefinition="onCancellingAddingDefinition"
             />
         </view>
@@ -249,11 +249,16 @@ export default defineComponent({
             this.insertDefinition(definition);
             this.setCurrentPage(PageType.ADD_VOCABULARY);
         },
+        afterUpdatingDefinition(definition: Definition) {
+            this.definitions[this.definitions.findIndex(({ id }) => definition.id === id)] = definition as Definition;
+            this.setCurrentPage(PageType.ADD_VOCABULARY);
+        },
         onCancellingAddingDefinition() {
             this.setCurrentPage(PageType.ADD_VOCABULARY);
         },
         insertDefinition(definition: Definition) {
             this.definitions.push(definition);
+            this.mode = Mode.DEFINITION_CREATE;
         },
         removeDefinition(removableIndex: number) {
             this.definitions = this.definitions.filter((definition, index) => index !== removableIndex);

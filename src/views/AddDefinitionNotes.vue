@@ -2,7 +2,12 @@
     <ion-item lines="none">
         <ion-label>Notes</ion-label>
     </ion-item>
-    <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
+    <view v-if="!$props.existingNotes">
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
+    </view>
+    <view v-if="$props.existingNotes">
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingNotes" />
+    </view>
 </template>
 
 <script lang="ts">
@@ -17,6 +22,7 @@ export default defineComponent({
         IonLabel,
         IonItem,
     },
+    props: ['existingNotes'],
     data() {
         return {
             notes: [] as string[],

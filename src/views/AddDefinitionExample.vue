@@ -2,7 +2,12 @@
     <ion-item lines="none">
         <ion-label>Examples</ion-label>
     </ion-item>
-    <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
+    <view v-if="!$props.existingExamples">
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
+    </view>
+    <view v-if="$props.existingExamples">
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingExamples" />
+    </view>
 </template>
 
 <script lang="ts">
@@ -17,6 +22,7 @@ export default defineComponent({
         IonLabel,
         IonItem,
     },
+    props: ['existingExamples'],
     data() {
         return {
             examples: [] as string[],
