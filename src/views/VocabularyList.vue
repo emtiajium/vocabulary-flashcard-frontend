@@ -17,7 +17,7 @@
                 id="infinite-scroll"
                 :disabled="isDisabled"
             >
-                <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Loading more data...">
+                <ion-infinite-scroll-content loading-spinner="lines" loading-text="Loading more ...">
                 </ion-infinite-scroll-content>
             </ion-infinite-scroll>
 
