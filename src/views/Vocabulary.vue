@@ -1,5 +1,5 @@
 <template>
-    <ion-card>
+    <ion-card button="true">
         <ion-card-header>
             <ion-grid>
                 <ion-row>
@@ -20,15 +20,37 @@
             </ion-grid>
         </ion-card-header>
 
-        <ion-card-content>
-            Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week
-            in the woods. Wash your spirit clean.
+        <ion-card-content @click="seeMore">
+            <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
+                <ion-item lines="none">
+                    <ion-label class="ion-text-capitalize">{{ definition.meaning }}</ion-label>
+                </ion-item>
+            </view>
+            <view v-if="vocabulary.definitions.length > 2">
+                <ion-item lines="none">
+                    <ion-label>... ...</ion-label>
+                </ion-item>
+            </view>
+            <ion-item lines="none">
+                <ion-label>Click to see details!</ion-label>
+            </ion-item>
         </ion-card-content>
     </ion-card>
 </template>
 
 <script lang="ts">
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonButton } from '@ionic/vue';
+import {
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonButton,
+    IonItem,
+    IonLabel,
+} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -45,10 +67,17 @@ export default defineComponent({
         IonCol,
         IonButton,
         FontAwesomeIcon,
+        IonItem,
+        IonLabel,
     },
     props: ['vocabulary'],
     data() {
         return { faTrashAlt, faEdit };
+    },
+    methods: {
+        seeMore() {
+            console.log('See more!');
+        },
     },
 });
 </script>
