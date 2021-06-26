@@ -50,5 +50,11 @@ module.exports = {
                 'no-unused-expressions': 'off',
             },
         },
+        {
+            files: ['src/utils/Transformer.ts'],
+            rules: {
+                'class-methods-use-this': 'off',
+            },
+        },
     ],
 };
