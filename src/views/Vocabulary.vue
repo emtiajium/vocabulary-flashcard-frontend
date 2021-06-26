@@ -32,7 +32,7 @@
                 </ion-item>
             </view>
             <ion-item lines="none">
-                <ion-label>Click to see details!</ion-label>
+                <ion-label>View details!</ion-label>
             </ion-item>
         </ion-card-content>
     </ion-card>
