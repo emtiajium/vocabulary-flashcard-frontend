@@ -13,8 +13,8 @@
         <ion-content :fullscreen="true">
             <view class="container ion-justify-content-center ion-align-items-center">
                 <ion-button @click="handleClick">
-                    <font-awesome-icon :icon="faGoogle"></font-awesome-icon>
-                    <ion-text class="ion-padding-start ion-text-capitalize">Sign in with Google</ion-text>
+                    <font-awesome-icon :icon="faGoogle" />
+                    <ion-text class="ion-padding-start ion-text-capitalize">Continue with Google</ion-text>
                 </ion-button>
             </view>
         </ion-content>
