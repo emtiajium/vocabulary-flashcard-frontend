@@ -8,9 +8,9 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <spinner v-if="isLoading" v-show="isLoading" />
+            <spinner v-if="isLoading" />
 
-            <ion-card v-if="!isLoading" v-show="!isLoading">
+            <ion-card v-if="!isLoading">
                 <ion-item lines="none">
                     <ion-label>Word</ion-label>
                 </ion-item>
@@ -68,7 +68,7 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col size="6">
-                            <ion-button color="warning" expand="block" @click="back()">Cancel</ion-button>
+                            <ion-button color="warning" expand="block" @click="back">Cancel</ion-button>
                         </ion-col>
                         <ion-col size="6">
                             <ion-button color="success" expand="block" @click="persist">Save</ion-button>
