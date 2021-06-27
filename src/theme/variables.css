@@ -125,6 +125,10 @@ ion-spinner {
     --ion-color-primary: #2E8B57;
 }
 
+.ion-activatable {
+    --ion-color-primary: #2E8B57;
+}
+
 /** customization by Emtiaj end */
 
 @media (prefers-color-scheme: dark) {

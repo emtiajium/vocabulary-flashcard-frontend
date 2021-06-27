@@ -11,7 +11,7 @@
                             <ion-button color="warning" @click="$router.push(`/edit-vocabulary/${vocabulary.id}`)">
                                 <font-awesome-icon :icon="faEdit" />
                             </ion-button>
-                            <ion-button color="danger">
+                            <ion-button color="danger" @click="presentAlertConfirm(vocabulary)">
                                 <font-awesome-icon :icon="faTrashAlt" />
                             </ion-button>
                         </ion-row>
@@ -54,6 +54,10 @@ import {
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import Alert from '@/utils/Alert';
+import HttpHandler from '@/utils/HttpHandler';
+import Vocabulary from '@/domains/Vocabulary';
+import Toast from '@/utils/Toast';
 
 export default defineComponent({
     name: 'Vocabulary',
@@ -77,6 +81,13 @@ export default defineComponent({
     methods: {
         seeMore() {
             console.log('See more!');
+        },
+        async presentAlertConfirm(vocabulary: Vocabulary) {
+            await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"`, async () => {
+                return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`).catch((error) =>
+                    Toast.present(error.message),
+                );
+            });
         },
     },
 });
