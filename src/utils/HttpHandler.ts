@@ -34,4 +34,14 @@ export default class HttpHandler {
         }
         return response;
     }
+
+    static async delete(url: string): Promise<void> {
+        try {
+            await Axios.delete(`${Config.server.apiPrefix}${url}`, {
+                headers: { 'content-type': 'application/json' },
+            });
+        } catch (error) {
+            throw HttpHandler.handleError(error);
+        }
+    }
 }
