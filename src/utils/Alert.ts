@@ -5,7 +5,6 @@ type Handler = () => Promise<unknown>;
 export default class Alert {
     static async presentAlertConfirm(header: string, message: string, handler: Handler) {
         const alert = await alertController.create({
-            cssClass: 'custom-alert',
             header,
             message,
             buttons: [
