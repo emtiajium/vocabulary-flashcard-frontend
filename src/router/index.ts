@@ -7,6 +7,7 @@ import AddVocabulary from '@/views/AddVocabulary.vue';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
+        name: 'Root',
         redirect: '/home',
     },
     {
@@ -21,6 +22,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/vocabularies',
+        name: 'Vocabularies',
         redirect: '/authenticated-home',
     },
     {
