@@ -74,7 +74,7 @@ export default defineComponent({
         IonItem,
         IonLabel,
     },
-    props: ['vocabulary'],
+    props: ['vocabulary', 'deleteVocabulary'],
     data() {
         return { faTrashAlt, faEdit };
     },
@@ -84,9 +84,9 @@ export default defineComponent({
         },
         async presentAlertConfirm(vocabulary: Vocabulary) {
             await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"`, async () => {
-                return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`).catch((error) =>
-                    Toast.present(error.message),
-                );
+                return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`)
+                    .then(() => this.deleteVocabulary(vocabulary.id))
+                    .catch((error) => Toast.present(error.message));
             });
         },
     },

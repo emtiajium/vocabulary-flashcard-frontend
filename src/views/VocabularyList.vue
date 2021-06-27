@@ -8,7 +8,7 @@
 
         <ion-content :fullscreen="true">
             <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
-                <vocabulary :vocabulary="vocabulary" />
+                <vocabulary :vocabulary="vocabulary" :delete-vocabulary="deleteVocabulary" />
             </view>
 
             <ion-infinite-scroll
@@ -97,6 +97,10 @@ export default defineComponent({
                 ((event as CustomEvent).target as unknown as IonInfiniteScrollType).disabled = this.isDisabled;
                 await ((event as CustomEvent).target as unknown as IonInfiniteScrollType).complete();
             }
+        },
+
+        deleteVocabulary(id: string) {
+            this.vocabularies = this.vocabularies.filter(({ id: vocabularyId }) => id !== vocabularyId);
         },
     },
 });
