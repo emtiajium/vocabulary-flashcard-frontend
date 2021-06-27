@@ -12,7 +12,7 @@
             </view>
 
             <ion-infinite-scroll
-                @ionInfinite="findVocabularies($event)"
+                @ionInfinite="renderVocabularies($event)"
                 threshold="100px"
                 id="infinite-scroll"
                 :disabled="isDisabled"
@@ -23,7 +23,7 @@
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                 <ion-fab-button @click="$router.push('/add-vocabulary')">
-                    <font-awesome-icon :icon="faPlus"></font-awesome-icon>
+                    <font-awesome-icon :icon="faPlus" />
                 </ion-fab-button>
             </ion-fab>
         </ion-content>
@@ -75,21 +75,11 @@ export default defineComponent({
     },
     async mounted() {
         this.cohortId = await NativeStorage.getCohortId();
-        await this.findVocabularies();
+        await this.renderVocabularies();
     },
     methods: {
-        async findVocabularies(event?: CustomEvent<void>) {
-            const vocabularySearch = {
-                cohortId: this.cohortId,
-                pagination: {
-                    pageSize: 10,
-                    pageNumber: this.pageNumber,
-                },
-            } as VocabularySearch;
-            const { results, total } = (await HttpHandler.post<VocabularySearch, SearchResult<Vocabulary>>(
-                '/v1/vocabularies/search',
-                vocabularySearch,
-            )) as SearchResult<Vocabulary>;
+        async renderVocabularies(event?: CustomEvent<void>) {
+            const { results, total } = await this.findVocabularies();
             this.vocabularies = this.vocabularies.concat(results);
             this.pageNumber += 1;
             this.isDisabled = this.vocabularies.length >= total;
@@ -97,6 +87,20 @@ export default defineComponent({
                 ((event as CustomEvent).target as unknown as IonInfiniteScrollType).disabled = this.isDisabled;
                 await ((event as CustomEvent).target as unknown as IonInfiniteScrollType).complete();
             }
+        },
+
+        async findVocabularies() {
+            const vocabularySearch: VocabularySearch = {
+                cohortId: this.cohortId,
+                pagination: {
+                    pageSize: 10,
+                    pageNumber: this.pageNumber,
+                },
+            };
+            return (await HttpHandler.post<VocabularySearch, SearchResult<Vocabulary>>(
+                '/v1/vocabularies/search',
+                vocabularySearch,
+            )) as SearchResult<Vocabulary>;
         },
 
         deleteVocabulary(id: string) {
