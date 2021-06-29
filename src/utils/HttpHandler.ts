@@ -1,47 +1,36 @@
-import Axios, { AxiosError } from 'axios';
+import { Device } from '@capacitor/device';
+import AxiosAdapter from '@/utils/AxiosAdapter';
 import Config from '../../config.json';
 
 export default class HttpHandler {
-    static handleError(error: AxiosError) {
-        if (Array.isArray(error?.response?.data?.message)) {
-            throw new Error(error.response?.data.message[0]);
-        }
-        throw new Error(error.response?.data.message);
+    static async isWeb(): Promise<boolean> {
+        const { platform } = await Device.getInfo();
+        return platform === 'web';
+    }
+
+    static getCompleteUrl(url: string): string {
+        return `${Config.server.apiPrefix}${url}`;
     }
 
     static async post<TPayload, UResponse>(url: string, payload: TPayload): Promise<UResponse | void> {
-        let response;
-        try {
-            const axiosResponse = await Axios.post(`${Config.server.apiPrefix}${url}`, payload, {
-                headers: { 'content-type': 'application/json' },
-            });
-            response = axiosResponse.data;
-        } catch (error) {
-            throw HttpHandler.handleError(error);
+        let response: UResponse | void;
+        if (await HttpHandler.isWeb()) {
+            response = await AxiosAdapter.post(HttpHandler.getCompleteUrl(url), payload);
         }
         return response;
     }
 
     static async get<TResponse>(url: string): Promise<TResponse> {
-        let response;
-        try {
-            const axiosResponse = await Axios.get(`${Config.server.apiPrefix}${url}`, {
-                headers: { 'content-type': 'application/json' },
-            });
-            response = axiosResponse.data;
-        } catch (error) {
-            throw HttpHandler.handleError(error);
+        let response: TResponse | void; // TODO fix it
+        if (await HttpHandler.isWeb()) {
+            response = await AxiosAdapter.get(HttpHandler.getCompleteUrl(url));
         }
-        return response;
+        return response as TResponse;
     }
 
     static async delete(url: string): Promise<void> {
-        try {
-            await Axios.delete(`${Config.server.apiPrefix}${url}`, {
-                headers: { 'content-type': 'application/json' },
-            });
-        } catch (error) {
-            throw HttpHandler.handleError(error);
+        if (await HttpHandler.isWeb()) {
+            await AxiosAdapter.get(HttpHandler.getCompleteUrl(url));
         }
     }
 }
