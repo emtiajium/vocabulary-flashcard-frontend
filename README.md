@@ -48,7 +48,7 @@
 
 ➜ Open the project (`/android`) in Android Studio
 
-➜ Replace `/android/app/src/main/res/values/strings.xml` with `/java/strings.xml`
+➜ `cp ./java/strings.xml ./android/app/src/main/res/values/strings.xml`
 
 ➜ Sync project with gradle files
 
@@ -59,6 +59,9 @@
 ➜ Install [Firebase CLI](https://firebase.google.com/docs/cli)
 
 ➜ Set config for the production
+> config.json
+
+> capacitor.config.json
 
 ➜ `npm run deploy:firebase`
 
