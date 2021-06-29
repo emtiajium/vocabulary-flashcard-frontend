@@ -44,7 +44,7 @@
 
 > Connect to the development server
 
-➜ `npm run serve:native:anew`
+➜ `npm run serve:android:anew`
 
 ➜ Open the project (`/android`) in Android Studio
 
@@ -54,6 +54,14 @@
 
 ➜ Shift + F10
 
+## Deploy the web app to the Google Firebase Hosting
+
+➜ Install [Firebase CLI](https://firebase.google.com/docs/cli)
+
+➜ Set config for the production
+
+➜ `npm run deploy:firebase`
+
 ## Change Log
 
--   `0.1.0`: ***
+-   `0.1.0`: User creation with Google authentication + Basic vocabulary functionalities 
