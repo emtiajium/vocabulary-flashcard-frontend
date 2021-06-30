@@ -34,4 +34,5 @@ config.json
 capacitor.config.json
 
 android
+android-replacer
 .firebase

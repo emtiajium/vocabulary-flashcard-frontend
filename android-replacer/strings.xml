@@ -4,5 +4,5 @@
     <string name="title_activity_main">IELTS Gibberish</string>
     <string name="package_name">com.emtiajium.ielts.gibberish.android</string>
     <string name="custom_url_scheme">com.emtiajium.ielts.gibberish.android</string>
-    <string name="server_client_id">***-***.apps.googleusercontent.com</string>
+    <string name="server_client_id">793818450987-ccb4008g3nd6l22qbbtdvl65irijr2v4.apps.googleusercontent.com</string>
 </resources>
