@@ -18,7 +18,7 @@ export default class HttpHandler {
         if (await HttpHandler.isWeb()) {
             response = await AxiosAdapter.post(HttpHandler.getCompleteUrl(url), payload);
         } else {
-            response = await FetchApiAdapter.post(url, payload);
+            response = await FetchApiAdapter.post(HttpHandler.getCompleteUrl(url), payload);
         }
         return response as UResponse;
     }
@@ -28,7 +28,7 @@ export default class HttpHandler {
         if (await HttpHandler.isWeb()) {
             response = await AxiosAdapter.get(HttpHandler.getCompleteUrl(url));
         } else {
-            response = await FetchApiAdapter.get(url);
+            response = await FetchApiAdapter.get(HttpHandler.getCompleteUrl(url));
         }
         return response as TResponse;
     }
@@ -37,7 +37,7 @@ export default class HttpHandler {
         if (await HttpHandler.isWeb()) {
             await AxiosAdapter.delete(HttpHandler.getCompleteUrl(url));
         } else {
-            await FetchApiAdapter.delete(url);
+            await FetchApiAdapter.delete(HttpHandler.getCompleteUrl(url));
         }
     }
 }
