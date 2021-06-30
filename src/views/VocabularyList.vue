@@ -49,7 +49,7 @@ import SearchResult from '@/domains/SearchResult';
 import Vocabulary from '@/domains/Vocabulary';
 import VocabularySearch from '@/domains/VocabularySearch';
 import { Components } from '@ionic/core/components';
-import VocabularyView from '@/views/Vocabulary.vue';
+import MinifiedVocabulary from '@/views/MinifiedVocabulary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -58,7 +58,7 @@ type IonInfiniteScrollType = Components.IonInfiniteScroll;
 export default defineComponent({
     name: 'VocabularyList',
     components: {
-        Vocabulary: VocabularyView,
+        Vocabulary: MinifiedVocabulary,
         IonContent,
         IonHeader,
         IonPage,
