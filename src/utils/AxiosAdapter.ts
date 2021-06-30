@@ -8,7 +8,7 @@ export default class AxiosAdapter {
         throw new Error(error.response?.data.message);
     }
 
-    static async post<TPayload, UResponse>(url: string, payload: TPayload): Promise<UResponse | void> {
+    static async post<TPayload, UResponse>(url: string, payload: TPayload): Promise<UResponse> {
         let response;
         try {
             const axiosResponse = await Axios.post(url, payload, {
