@@ -3,6 +3,8 @@ import { RouteRecordRaw } from 'vue-router';
 import AuthenticatedHome from '@/views/AuthenticatedHome.vue';
 import Home from '@/views/Home.vue';
 import AddVocabulary from '@/views/AddVocabulary.vue';
+import Vocabulary from '@/views/Vocabulary.vue';
+import SignIn from '@/views/SignIn.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -14,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/home',
         name: 'Home',
         component: Home,
+    },
+    {
+        path: '/sign-in',
+        name: 'SignIn',
+        component: SignIn,
     },
     {
         path: '/authenticated-home',
@@ -34,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/edit-vocabulary/:id',
         name: 'EditVocabulary',
         component: AddVocabulary,
+    },
+    {
+        path: '/vocabulary/:id',
+        name: 'DisplayVocabulary',
+        component: Vocabulary,
     },
 ];
 
