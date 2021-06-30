@@ -1,5 +1,6 @@
 import { Device } from '@capacitor/device';
 import AxiosAdapter from '@/utils/AxiosAdapter';
+import FetchApiAdapter from '@/utils/FetchApiAdapter';
 import Config from '../../config.json';
 
 export default class HttpHandler {
@@ -16,6 +17,8 @@ export default class HttpHandler {
         let response: UResponse | void;
         if (await HttpHandler.isWeb()) {
             response = await AxiosAdapter.post(HttpHandler.getCompleteUrl(url), payload);
+        } else {
+            response = await FetchApiAdapter.post(url, payload);
         }
         return response as UResponse;
     }
@@ -24,6 +27,8 @@ export default class HttpHandler {
         let response: TResponse | void;
         if (await HttpHandler.isWeb()) {
             response = await AxiosAdapter.get(HttpHandler.getCompleteUrl(url));
+        } else {
+            response = await FetchApiAdapter.get(url);
         }
         return response as TResponse;
     }
@@ -31,6 +36,8 @@ export default class HttpHandler {
     static async delete(url: string): Promise<void> {
         if (await HttpHandler.isWeb()) {
             await AxiosAdapter.delete(HttpHandler.getCompleteUrl(url));
+        } else {
+            await FetchApiAdapter.delete(url);
         }
     }
 }
