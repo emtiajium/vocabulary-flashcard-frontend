@@ -20,7 +20,7 @@
             </ion-grid>
         </ion-card-header>
 
-        <ion-card-content @click="seeMore">
+        <ion-card-content @click="seeMore(vocabulary.id)">
             <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
                 <ion-item lines="none">
                     <ion-label class="ion-text-capitalize">{{ definition.meaning }}</ion-label>
@@ -60,7 +60,7 @@ import Vocabulary from '@/domains/Vocabulary';
 import Toast from '@/utils/Toast';
 
 export default defineComponent({
-    name: 'Vocabulary',
+    name: 'MinifiedVocabulary',
     components: {
         IonCard,
         IonCardHeader,
@@ -79,8 +79,8 @@ export default defineComponent({
         return { faTrashAlt, faEdit };
     },
     methods: {
-        seeMore() {
-            console.log('See more!');
+        async seeMore(id: string) {
+            await this.$router.push(`/vocabulary/${id}`);
         },
         async presentAlertConfirm(vocabulary: Vocabulary) {
             await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"`, async () => {
