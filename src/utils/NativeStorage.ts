@@ -28,8 +28,12 @@ export default class NativeStorage {
         return (await NativeStorage.getStorage()).get(key);
     }
 
+    static async getAuthorizedUser(): Promise<User> {
+        return NativeStorage.getByKey<User>(NativeStorageKey.AUTHORIZED_USER);
+    }
+
     static async getCohortId(): Promise<string> {
-        const user = await NativeStorage.getByKey<User>(NativeStorageKey.AUTHORIZED_USER);
+        const user = await NativeStorage.getAuthorizedUser();
         return user.cohortId as string;
     }
 
