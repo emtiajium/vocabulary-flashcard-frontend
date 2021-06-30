@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import AuthenticatedHome from '@/views/AuthenticatedHome.vue';
 import Home from '@/views/Home.vue';
 import AddVocabulary from '@/views/AddVocabulary.vue';
-import Vocabulary from '@/views/Vocabulary.vue';
+import Vocabulary from '@/views/VocabularyDetails.vue';
 import SignIn from '@/views/SignIn.vue';
 
 const routes: Array<RouteRecordRaw> = [
