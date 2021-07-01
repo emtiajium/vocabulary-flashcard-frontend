@@ -39,7 +39,7 @@ export default defineComponent({
     font-size: 12pt;
 }
 .fa-meh-blank-extra {
-    font-size: 100pt;
+    font-size: 80pt;
     color: #2e8b57;
 }
 </style>
