@@ -138,13 +138,13 @@ import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import { useRoute } from 'vue-router';
 import Spinner from '@/views/Spinner.vue';
-import { faMehBlank } from '@fortawesome/free-regular-svg-icons';
 import EmptyContainer from '@/views/EmptyContainer.vue';
 
 export default defineComponent({
     name: 'VocabularyDetails',
     components: {
         Spinner,
+        EmptyContainer,
         IonPage,
         IonToolbar,
         IonHeader,
@@ -152,14 +152,12 @@ export default defineComponent({
         IonContent,
         IonCard,
         IonCardContent,
-        EmptyContainer,
     },
     data() {
         return {
             isLoading: true,
             vocabulary: {} as Vocabulary,
             showDefaultMessage: false,
-            faMehBlank,
             defaultMessage: `Looks like you haven't added anything yet!`,
         };
     },
@@ -174,6 +172,10 @@ export default defineComponent({
             this.showDefaultMessage = true;
         }
         this.isLoading = false;
+    },
+    beforeUnmount() {
+        this.showDefaultMessage = false;
+        this.vocabulary = {} as Vocabulary;
     },
 });
 </script>
