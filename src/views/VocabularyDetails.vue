@@ -13,13 +13,15 @@
 
             <ion-card v-if="!isLoading && Object.keys(vocabulary).length">
                 <ion-card-content>
+                    <empty-container v-if="showDefaultMessage" />
+
                     <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
                         <span>
                             {{ definitionIndex === 0 ? 'Meaning of' : 'Another Meaning of' }}
                             <strong>{{ vocabulary.word }}</strong>
                         </span>
-                        <br />
-                        <br />
+                        <hr class="solid" />
+
                         <span>{{ definition.meaning }}</span>
                         <br />
                         <br />
@@ -67,6 +69,8 @@
                             </ul>
                         </view>
                     </view>
+
+                    <hr v-if="vocabulary.definitions.length" class="solid" />
 
                     <view v-if="vocabulary.linkerWords.length">
                         <strong>Linker Words</strong>
@@ -136,6 +140,8 @@ import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import { useRoute } from 'vue-router';
 import Spinner from '@/views/Spinner.vue';
+import { faMehBlank } from '@fortawesome/free-regular-svg-icons';
+import EmptyContainer from '@/views/EmptyContainer.vue';
 
 export default defineComponent({
     name: 'VocabularyDetails',
@@ -148,18 +154,35 @@ export default defineComponent({
         IonContent,
         IonCard,
         IonCardContent,
+        EmptyContainer,
     },
     data() {
         return {
             isLoading: true,
             vocabulary: {} as Vocabulary,
+            showDefaultMessage: false,
+            faMehBlank,
         };
     },
     async mounted() {
         this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${useRoute().params.id}`);
+        if (
+            !this.vocabulary.definitions?.length ||
+            !this.vocabulary.linkerWords?.length ||
+            !this.vocabulary.genericNotes?.length ||
+            !this.vocabulary.genericExternalLinks?.length
+        ) {
+            this.showDefaultMessage = true;
+        }
         this.isLoading = false;
     },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+hr.solid {
+    border-top: 3px solid #495057;
+    margin-left: -20px;
+    margin-right: -20px;
+}
+</style>
