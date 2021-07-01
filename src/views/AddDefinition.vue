@@ -11,17 +11,12 @@
                 <ion-item lines="none">
                     <ion-label>Meaning</ion-label>
                 </ion-item>
-                <ion-item>
-                    <view v-if="!$props.definition">
-                        <ion-input type="text" :value="meaning" @keyup="setMeaning($event.target.value)"></ion-input>
-                    </view>
-                    <view v-if="$props.definition">
-                        <ion-input
-                            type="text"
-                            :value="definition.meaning"
-                            @keyup="setMeaning($event.target.value)"
-                        ></ion-input>
-                    </view>
+
+                <ion-item v-if="!$props.definition">
+                    <ion-input type="text" :value="meaning" @keyup="setMeaning($event.target.value)" />
+                </ion-item>
+                <ion-item v-if="$props.definition">
+                    <ion-input type="text" :value="definition.meaning" @keyup="setMeaning($event.target.value)" />
                 </ion-item>
 
                 <view v-if="!$props.definition">
@@ -31,11 +26,11 @@
                 </view>
 
                 <view v-if="$props.definition">
-                    <add-definition-example ref="AddDefinitionExampleRef" :existingExamples="definition.examples" />
-                    <add-definition-notes ref="AddDefinitionNotesRef" :existingNotes="definition.notes" />
+                    <add-definition-example ref="AddDefinitionExampleRef" :existing-examples="definition.examples" />
+                    <add-definition-notes ref="AddDefinitionNotesRef" :existing-notes="definition.notes" />
                     <add-definition-external-links
                         ref="AddDefinitionExternalLinksRef"
-                        :existingExternalLinks="definition.externalLinks"
+                        :existing-external-links="definition.externalLinks"
                     />
                 </view>
 
