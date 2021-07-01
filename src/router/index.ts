@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
         component: AddVocabulary,
     },
     {
-        path: '/vocabulary/:id',
+        path: '/vocabulary/:id/:word',
         name: 'DisplayVocabulary',
         component: Vocabulary,
     },

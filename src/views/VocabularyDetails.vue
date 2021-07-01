@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header :translucent="true">
             <ion-toolbar>
-                <ion-title>Vocabulary</ion-title>
+                <ion-title>{{ $route.params.word }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -12,13 +12,12 @@
             </view>
 
             <ion-card v-if="!isLoading && Object.keys(vocabulary).length">
-                <ion-card-header>
-                    <ion-card-title>{{ vocabulary.word }}</ion-card-title>
-                </ion-card-header>
-
                 <ion-card-content>
                     <view v-for="definition in vocabulary.definitions" :key="definition.id">
-                        <strong>Meaning</strong>
+                        <span>
+                            Meaning of
+                            <strong>{{ vocabulary.word }}</strong>
+                        </span>
                         <br />
                         <br />
                         <span>{{ definition.meaning }}</span>
@@ -111,17 +110,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {
-    IonPage,
-    IonToolbar,
-    IonHeader,
-    IonTitle,
-    IonContent,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-} from '@ionic/vue';
+import { IonPage, IonToolbar, IonHeader, IonTitle, IonContent, IonCard, IonCardContent } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import { useRoute } from 'vue-router';
@@ -137,8 +126,6 @@ export default defineComponent({
         IonTitle,
         IonContent,
         IonCard,
-        IonCardHeader,
-        IonCardTitle,
         IonCardContent,
     },
     data() {

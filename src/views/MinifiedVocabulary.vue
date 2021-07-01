@@ -20,7 +20,7 @@
             </ion-grid>
         </ion-card-header>
 
-        <ion-card-content @click="seeMore(vocabulary.id)">
+        <ion-card-content @click="seeMore(vocabulary.id, vocabulary.word)">
             <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
                 <ion-item lines="none">
                     <ion-label class="ion-text-capitalize">{{ definition.meaning }}</ion-label>
@@ -79,8 +79,8 @@ export default defineComponent({
         return { faTrashAlt, faEdit };
     },
     methods: {
-        async seeMore(id: string) {
-            await this.$router.push(`/vocabulary/${id}`);
+        async seeMore(id: string, word: string) {
+            await this.$router.push(`/vocabulary/${id}/${word}`);
         },
         async presentAlertConfirm(vocabulary: Vocabulary) {
             await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"`, async () => {
