@@ -21,10 +21,17 @@
         </ion-card-header>
 
         <ion-card-content @click="seeMore(vocabulary.id, vocabulary.word)">
-            <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
+            <view v-if="!vocabulary.definitions.length">
                 <ion-item lines="none">
-                    <ion-label class="ion-text-capitalize">{{ definition.meaning }}</ion-label>
+                    <ion-label> No definition has been added yet! </ion-label>
                 </ion-item>
+            </view>
+            <view v-if="vocabulary.definitions.length">
+                <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
+                    <ion-item lines="none">
+                        <ion-label class="ion-text-capitalize">{{ definition.meaning }}</ion-label>
+                    </ion-item>
+                </view>
             </view>
             <view v-if="vocabulary.definitions.length > 2">
                 <ion-item lines="none">
@@ -32,7 +39,9 @@
                 </ion-item>
             </view>
             <ion-item lines="none">
-                <ion-label>View details!</ion-label>
+                <ion-button color="success">
+                    <font-awesome-icon :icon="faExpandAlt" />
+                </ion-button>
             </ion-item>
         </ion-card-content>
     </ion-card>
@@ -53,7 +62,7 @@ import {
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import Alert from '@/utils/Alert';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
@@ -76,7 +85,7 @@ export default defineComponent({
     },
     props: ['vocabulary', 'deleteVocabulary'],
     data() {
-        return { faTrashAlt, faEdit };
+        return { faTrashAlt, faEdit, faExpandAlt };
     },
     methods: {
         async seeMore(id: string, word: string) {
