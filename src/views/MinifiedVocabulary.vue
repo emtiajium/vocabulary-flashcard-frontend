@@ -3,17 +3,19 @@
         <ion-card-header>
             <ion-grid>
                 <ion-row>
-                    <ion-col size="8">
+                    <ion-col size="10">
                         <ion-card-title class="capitalize">{{ vocabulary.word }}</ion-card-title>
                     </ion-col>
-                    <ion-col size="4">
+                    <ion-col size="2">
                         <ion-row class="ion-justify-content-end">
-                            <ion-button color="warning" @click="$router.push(`/edit-vocabulary/${vocabulary.id}`)">
-                                <font-awesome-icon :icon="faEdit" />
-                            </ion-button>
-                            <ion-button color="danger" @click="presentAlertConfirm(vocabulary)">
-                                <font-awesome-icon :icon="faTrashAlt" />
-                            </ion-button>
+                            <ion-item lines="none">
+                                <ion-button color="warning" @click="$router.push(`/edit-vocabulary/${vocabulary.id}`)">
+                                    <font-awesome-icon :icon="faEdit" />
+                                </ion-button>
+                                <ion-button color="danger" @click="presentAlertConfirm(vocabulary)">
+                                    <font-awesome-icon :icon="faTrashAlt" />
+                                </ion-button>
+                            </ion-item>
                         </ion-row>
                     </ion-col>
                 </ion-row>
