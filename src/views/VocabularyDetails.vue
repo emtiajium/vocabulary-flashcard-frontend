@@ -7,9 +7,7 @@
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <view v-if="isLoading">
-                <spinner />
-            </view>
+            <spinner v-if="isLoading" />
 
             <ion-card v-if="!isLoading && Object.keys(vocabulary).length">
                 <ion-card-content>
@@ -70,7 +68,7 @@
                         </view>
                     </view>
 
-                    <hr v-if="vocabulary.definitions.length" class="solid" />
+                    <hr v-if="vocabulary.definitions.length && vocabulary.linkerWords.length" class="solid" />
 
                     <view v-if="vocabulary.linkerWords.length">
                         <strong>Linker Words</strong>
@@ -182,7 +180,7 @@ export default defineComponent({
 
 <style scoped>
 hr.solid {
-    border-top: 3px solid #495057;
+    border-top: 2px solid #2e8b57;
     margin-left: -20px;
     margin-right: -20px;
 }
