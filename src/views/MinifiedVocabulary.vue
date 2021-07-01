@@ -1,33 +1,13 @@
 <template>
     <ion-card button="true">
         <ion-card-header>
-            <ion-grid>
-                <ion-row>
-                    <ion-col size="10">
-                        <ion-card-title class="capitalize">{{ vocabulary.word }}</ion-card-title>
-                    </ion-col>
-                    <ion-col size="2">
-                        <ion-row class="ion-justify-content-end">
-                            <ion-item lines="none">
-                                <ion-button color="warning" @click="$router.push(`/edit-vocabulary/${vocabulary.id}`)">
-                                    <font-awesome-icon :icon="faEdit" />
-                                </ion-button>
-                                <ion-button color="danger" @click="presentAlertConfirm(vocabulary)">
-                                    <font-awesome-icon :icon="faTrashAlt" />
-                                </ion-button>
-                            </ion-item>
-                        </ion-row>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+            <ion-card-title class="capitalize">{{ vocabulary.word }}</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content @click="seeMore(vocabulary.id, vocabulary.word)">
-            <view v-if="!vocabulary.definitions.length">
-                <ion-item lines="none">
-                    <ion-label> No definition has been added yet! </ion-label>
-                </ion-item>
-            </view>
+        <ion-card-content>
+            <ion-item v-if="!vocabulary.definitions.length" lines="none">
+                <ion-card-subtitle> No definition has been added yet! </ion-card-subtitle>
+            </ion-item>
             <view v-if="vocabulary.definitions.length">
                 <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
                     <ion-item lines="none">
@@ -35,14 +15,20 @@
                     </ion-item>
                 </view>
             </view>
-            <view v-if="vocabulary.definitions.length > 2">
-                <ion-item lines="none">
-                    <ion-label>... ...</ion-label>
-                </ion-item>
-            </view>
+
+            <ion-item v-if="vocabulary.definitions.length > 2" lines="none">
+                <ion-card-subtitle>... ...</ion-card-subtitle>
+            </ion-item>
+
             <ion-item lines="none">
-                <ion-button color="success">
+                <ion-button color="success" @click="seeMore(vocabulary.id, vocabulary.word)">
                     <font-awesome-icon :icon="faExpandAlt" />
+                </ion-button>
+                <ion-button color="warning" @click="$router.push(`/edit-vocabulary/${vocabulary.id}`)">
+                    <font-awesome-icon :icon="faEdit" />
+                </ion-button>
+                <ion-button color="danger" @click="presentAlertConfirm(vocabulary)">
+                    <font-awesome-icon :icon="faTrashAlt" />
                 </ion-button>
             </ion-item>
         </ion-card-content>
@@ -54,10 +40,8 @@ import {
     IonCard,
     IonCardHeader,
     IonCardTitle,
+    IonCardSubtitle,
     IonCardContent,
-    IonGrid,
-    IonRow,
-    IonCol,
     IonButton,
     IonItem,
     IonLabel,
@@ -76,10 +60,8 @@ export default defineComponent({
         IonCard,
         IonCardHeader,
         IonCardTitle,
+        IonCardSubtitle,
         IonCardContent,
-        IonGrid,
-        IonRow,
-        IonCol,
         IonButton,
         FontAwesomeIcon,
         IonItem,
@@ -94,7 +76,7 @@ export default defineComponent({
             await this.$router.push(`/vocabulary/${id}/${word}`);
         },
         async presentAlertConfirm(vocabulary: Vocabulary) {
-            await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"`, async () => {
+            await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"?`, async () => {
                 return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`)
                     .then(() => this.deleteVocabulary(vocabulary.id))
                     .catch((error) => Toast.present(error.message));
