@@ -56,11 +56,15 @@
                             <strong>External Links</strong>
                             <br />
                             <br />
-                            <view v-for="(externalLink, index2) in definition.externalLinks" :key="index2">
-                                <a :href="externalLink" target="_blank">{{ externalLink }}</a>
-                                <br />
-                                <br />
-                            </view>
+                            <ul>
+                                <view v-for="(externalLink, index2) in definition.externalLinks" :key="index2">
+                                    <li>
+                                        <a :href="externalLink" target="_blank">{{ externalLink }}</a>
+                                        <br />
+                                        <br />
+                                    </li>
+                                </view>
+                            </ul>
                         </view>
                     </view>
 
@@ -68,39 +72,56 @@
                         <strong>Linker Words</strong>
                         <br />
                         <br />
-                        <view v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords" :key="linkerWordIndex">
-                            <span>{{ linkerWord }}</span>
-                            <br />
-                            <br />
-                        </view>
+                        <ul>
+                            <view
+                                v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords"
+                                :key="linkerWordIndex"
+                            >
+                                <li>
+                                    <span>{{ linkerWord }}</span>
+                                    <br />
+                                    <br />
+                                </li>
+                            </view>
+                        </ul>
                     </view>
 
                     <view v-if="vocabulary.genericNotes.length">
                         <strong>Generic Notes</strong>
                         <br />
                         <br />
-                        <view
-                            v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
-                            :key="genericNotesIndex"
-                        >
-                            <span>{{ genericNote }}</span>
-                            <br />
-                            <br />
-                        </view>
+                        <ul>
+                            <view
+                                v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
+                                :key="genericNotesIndex"
+                            >
+                                <li>
+                                    <span>{{ genericNote }}</span>
+                                    <br />
+                                    <br />
+                                </li>
+                            </view>
+                        </ul>
                     </view>
 
                     <view v-if="vocabulary.genericExternalLinks.length">
                         <strong>Generic External Links</strong>
                         <br />
                         <br />
-                        <view
-                            v-for="(genericExternalLink, genericExternalLinkIndex) in vocabulary.genericExternalLinks"
-                            :key="genericExternalLinkIndex"
-                        >
-                            <a :href="genericExternalLink" target="_blank">{{ genericExternalLink }}</a>
-                            <br />
-                            <br />
-                        </view>
+                        <ul>
+                            <view
+                                v-for="(
+                                    genericExternalLink, genericExternalLinkIndex
+                                ) in vocabulary.genericExternalLinks"
+                                :key="genericExternalLinkIndex"
+                            >
+                                <li>
+                                    <a :href="genericExternalLink" target="_blank">{{ genericExternalLink }}</a>
+                                    <br />
+                                    <br />
+                                </li>
+                            </view>
+                        </ul>
                     </view>
                 </ion-card-content>
             </ion-card>
