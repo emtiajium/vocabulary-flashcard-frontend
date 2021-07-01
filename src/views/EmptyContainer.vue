@@ -1,7 +1,7 @@
 <template>
     <view>
         <view class="empty-container ion-justify-content-center">
-            <ion-label class="empty-container-message">Looks like you haven't added anything yet!</ion-label>
+            <ion-label class="empty-container-message">{{ message }}</ion-label>
         </view>
         <br />
         <view class="empty-container ion-justify-content-center">
@@ -22,6 +22,7 @@ export default defineComponent({
         IonLabel,
         FontAwesomeIcon,
     },
+    props: ['message'],
     data() {
         return {
             faMehBlank,

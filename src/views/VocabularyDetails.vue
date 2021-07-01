@@ -13,7 +13,7 @@
 
             <ion-card v-if="!isLoading && Object.keys(vocabulary).length">
                 <ion-card-content>
-                    <empty-container v-if="showDefaultMessage" />
+                    <empty-container v-if="showDefaultMessage" :message="defaultMessage" />
 
                     <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
                         <span>
@@ -162,6 +162,7 @@ export default defineComponent({
             vocabulary: {} as Vocabulary,
             showDefaultMessage: false,
             faMehBlank,
+            defaultMessage: `Looks like you haven't added anything yet!`,
         };
     },
     async mounted() {
