@@ -9,7 +9,7 @@
         <ion-content :fullscreen="true">
             <ion-card>
                 <ion-item lines="none">
-                    <ion-label>Meaning</ion-label>
+                    <ion-card-title>Meaning</ion-card-title>
                 </ion-item>
 
                 <ion-item v-if="!$props.definition">
@@ -55,12 +55,12 @@ import {
     IonHeader,
     IonInput,
     IonItem,
-    IonLabel,
     IonPage,
     IonTitle,
     IonToolbar,
     IonButton,
     IonCard,
+    IonCardTitle,
     IonGrid,
     IonRow,
     IonCol,
@@ -87,7 +87,7 @@ export default defineComponent({
         IonTitle,
         IonToolbar,
         IonInput,
-        IonLabel,
+        IonCardTitle,
         IonItem,
         IonButton,
         IonCard,

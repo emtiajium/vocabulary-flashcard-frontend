@@ -12,14 +12,14 @@
 
             <ion-card v-if="!isLoading">
                 <ion-item lines="none">
-                    <ion-label>Word</ion-label>
+                    <ion-card-title>Word</ion-card-title>
                 </ion-item>
                 <ion-item>
                     <ion-input type="text" :value="word" @keyup="setWord($event.target.value)"></ion-input>
                 </ion-item>
 
                 <ion-item lines="none">
-                    <ion-label>Definition</ion-label>
+                    <ion-card-title>Definition</ion-card-title>
                 </ion-item>
                 <ion-item v-if="!isLoading">
                     <ion-button color="success" @click="onAddingDefinition">{{
@@ -59,7 +59,7 @@
                 </view>
 
                 <ion-item lines="none">
-                    <ion-label>Is Draft</ion-label>
+                    <ion-card-title>Is Draft</ion-card-title>
                 </ion-item>
                 <ion-item lines="none">
                     <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)"></ion-toggle>
@@ -119,6 +119,7 @@ import {
     IonGrid,
     IonRow,
     IonCol,
+    IonCardTitle,
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
@@ -170,6 +171,7 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonCol,
+        IonCardTitle,
     },
     data() {
         return {

@@ -1,6 +1,6 @@
 <template>
     <ion-item lines="none">
-        <ion-label>Notes</ion-label>
+        <ion-card-title>Notes</ion-card-title>
     </ion-item>
     <view v-if="!$props.existingNotes">
         <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonLabel } from '@ionic/vue';
+import { IonItem, IonCardTitle } from '@ionic/vue';
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
     name: 'AddDefinitionNotes',
     components: {
         AddRemoveMultipleItems,
-        IonLabel,
+        IonCardTitle,
         IonItem,
     },
     props: ['existingNotes'],

@@ -1,9 +1,9 @@
 <template>
     <ion-item lines="none">
-        <ion-label>Generic External Links</ion-label>
+        <ion-card-title>Generic External Links</ion-card-title>
     </ion-item>
     <view v-if="$props.existingGenericExternalLinks">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existingItems="existingGenericExternalLinks" />
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericExternalLinks" />
     </view>
     <view v-if="!$props.existingGenericExternalLinks">
         <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonLabel } from '@ionic/vue';
+import { IonItem, IonCardTitle } from '@ionic/vue';
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
     name: 'AddGenericExternalLinks',
     components: {
         AddRemoveMultipleItems,
-        IonLabel,
+        IonCardTitle,
         IonItem,
     },
     props: ['existingGenericExternalLinks'],

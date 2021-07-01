@@ -1,9 +1,9 @@
 <template>
     <ion-item lines="none">
-        <ion-label>Linker Words</ion-label>
+        <ion-card-title>Linker Words</ion-card-title>
     </ion-item>
     <view v-if="$props.existingLinkerWords">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existingItems="linkerWords" />
+        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="linkerWords" />
     </view>
     <view v-if="!$props.existingLinkerWords">
         <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonLabel } from '@ionic/vue';
+import { IonItem, IonCardTitle } from '@ionic/vue';
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
     name: 'AddLinkerWords',
     components: {
         AddRemoveMultipleItems,
-        IonLabel,
+        IonCardTitle,
         IonItem,
     },
     props: ['existingLinkerWords'],

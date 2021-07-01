@@ -1,6 +1,6 @@
 <template>
     <ion-item lines="none">
-        <ion-label>Examples</ion-label>
+        <ion-card-title>Examples</ion-card-title>
     </ion-item>
     <view v-if="!$props.existingExamples">
         <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonLabel } from '@ionic/vue';
+import { IonItem, IonCardTitle } from '@ionic/vue';
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
     name: 'AddDefinitionExample',
     components: {
         AddRemoveMultipleItems,
-        IonLabel,
+        IonCardTitle,
         IonItem,
     },
     props: ['existingExamples'],
