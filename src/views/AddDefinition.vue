@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header :translucent="true">
             <ion-toolbar>
-                <ion-title class="ion-text-capitalize">{{ word }}</ion-title>
+                <ion-title class="capitalize">{{ word }}</ion-title>
             </ion-toolbar>
         </ion-header>
 

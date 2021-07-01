@@ -30,7 +30,7 @@
                 <view v-if="!isLoading">
                     <view v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
                         <ion-item lines="none">
-                            <ion-label color="dark" class="ion-text-capitalize ion-text-nowrap">{{
+                            <ion-label color="dark" class="capitalize ion-text-nowrap">{{
                                 definition.meaning
                             }}</ion-label>
                         </ion-item>
