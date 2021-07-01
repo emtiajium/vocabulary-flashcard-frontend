@@ -13,9 +13,9 @@
 
             <ion-card v-if="!isLoading && Object.keys(vocabulary).length">
                 <ion-card-content>
-                    <view v-for="definition in vocabulary.definitions" :key="definition.id">
+                    <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
                         <span>
-                            Meaning of
+                            {{ definitionIndex === 0 ? 'Meaning of' : 'Another Meaning of' }}
                             <strong>{{ vocabulary.word }}</strong>
                         </span>
                         <br />
