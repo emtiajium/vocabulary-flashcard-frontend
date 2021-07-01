@@ -12,6 +12,7 @@ import {
     ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import IsArrayContainsOnlyUrl from '@/validators/IsArrayContainsOnlyUrl';
 
 export default class Vocabulary {
     @IsUUID()
@@ -40,6 +41,8 @@ export default class Vocabulary {
     @IsOptional()
     genericNotes?: string[];
 
+    @ValidateIf((vocabulary) => !!vocabulary.genericExternalLinks)
+    @IsArrayContainsOnlyUrl()
     @IsArray()
     @IsOptional()
     genericExternalLinks?: string[];

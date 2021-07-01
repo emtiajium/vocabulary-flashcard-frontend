@@ -1,4 +1,14 @@
-import { ArrayNotEmpty, IsArray, IsDefined, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+    ArrayNotEmpty,
+    IsArray,
+    IsDefined,
+    IsNotEmpty,
+    IsOptional,
+    IsString,
+    IsUUID,
+    ValidateIf,
+} from 'class-validator';
+import IsArrayContainsOnlyUrl from '@/validators/IsArrayContainsOnlyUrl';
 
 export default class Definition {
     @IsUUID()
@@ -25,6 +35,8 @@ export default class Definition {
     @IsOptional()
     notes?: string[];
 
+    @ValidateIf((definition) => !!definition.externalLinks)
+    @IsArrayContainsOnlyUrl()
     @IsArray()
     @IsOptional()
     externalLinks?: string[];
