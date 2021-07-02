@@ -1,40 +1,42 @@
 <template>
     <view v-for="(item, index) in placeholderItems" :key="index">
         <ion-grid>
-            <ion-row>
-                <ion-col size="8">
-                    <ion-textarea
-                        autoGrow="true"
-                        inputmode="text"
-                        :value="items[index] || ''"
-                        @keyup="insertItem($event.target.value, index)"
-                    ></ion-textarea>
-                </ion-col>
-                <ion-col size="4">
-                    <ion-row class="action-buttons">
-                        <ion-item lines="none">
-                            <ion-button
-                                v-show="
-                                    items.length > 0 &&
-                                    index === placeholderItems.length - 1 &&
-                                    items[index]?.length > 0
-                                "
-                                color="success"
-                                @click="onAddMoreItem"
-                            >
-                                <font-awesome-icon :icon="faPlusCircle" />
-                            </ion-button>
-                            <ion-button
-                                v-show="items.length > 0 && items[index]?.length > 0"
-                                color="danger"
-                                @click="onRemoveLastItem(index)"
-                            >
-                                <font-awesome-icon :icon="faMinusCircle" />
-                            </ion-button>
-                        </ion-item>
-                    </ion-row>
-                </ion-col>
-            </ion-row>
+            <ion-item>
+                <ion-row>
+                    <ion-col size="8">
+                        <ion-textarea
+                            autoGrow="true"
+                            inputmode="text"
+                            :value="items[index] || ''"
+                            @keyup="insertItem($event.target.value, index)"
+                        ></ion-textarea>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-row class="action-buttons">
+                            <ion-item lines="none">
+                                <ion-button
+                                    v-show="
+                                        items.length > 0 &&
+                                        index === placeholderItems.length - 1 &&
+                                        items[index]?.length > 0
+                                    "
+                                    color="success"
+                                    @click="onAddMoreItem"
+                                >
+                                    <font-awesome-icon :icon="faPlusCircle" />
+                                </ion-button>
+                                <ion-button
+                                    v-show="items.length > 0 && items[index]?.length > 0"
+                                    color="danger"
+                                    @click="onRemoveLastItem(index)"
+                                >
+                                    <font-awesome-icon :icon="faMinusCircle" />
+                                </ion-button>
+                            </ion-item>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ion-item>
         </ion-grid>
     </view>
 </template>
