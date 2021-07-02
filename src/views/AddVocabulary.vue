@@ -49,8 +49,12 @@
                         </ion-item>
                         <ion-item>
                             <ion-item-group>
-                                <ion-button color="warning" @click="updateDefinition(index)">Edit</ion-button>
-                                <ion-button color="danger" @click="removeDefinition(index)">Remove</ion-button>
+                                <ion-button color="warning" @click="updateDefinition(index)">
+                                    <font-awesome-icon :icon="faPencilAlt" />
+                                </ion-button>
+                                <ion-button color="danger" @click="removeDefinition(index)">
+                                    <font-awesome-icon :icon="faMinusCircle" />
+                                </ion-button>
                             </ion-item-group>
                         </ion-item>
                     </view>
@@ -151,6 +155,8 @@ import { validateSync } from 'class-validator';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
 import { useRoute } from 'vue-router';
 import Spinner from '@/views/Spinner.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faPlusCircle, faMinusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -188,6 +194,7 @@ export default defineComponent({
         IonRow,
         IonCol,
         IonCardTitle,
+        FontAwesomeIcon,
     },
     data() {
         return {
@@ -203,6 +210,9 @@ export default defineComponent({
             definitions: [] as Definition[],
             currentPage: PageType.ADD_VOCABULARY,
             goingToBeUpdatedDefinition: {} as Definition,
+            faPlusCircle,
+            faMinusCircle,
+            faPencilAlt,
         };
     },
     async mounted() {
