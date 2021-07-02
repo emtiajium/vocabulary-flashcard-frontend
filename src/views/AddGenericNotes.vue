@@ -2,6 +2,12 @@
     <ion-item lines="none">
         <ion-card-title>Generic Notes</ion-card-title>
     </ion-item>
+    <ion-item lines="none">
+        <div class="form-text">
+            Any gibberish note can be put here, for example, the origin of the word, synonym, antonym, pronunciation,
+            etc
+        </div>
+    </ion-item>
     <view v-if="$props.existingGenericNotes">
         <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericNotes" />
     </view>
