@@ -1,11 +1,12 @@
 <template>
     <view v-for="(item, index) in placeholderItems" :key="index">
         <ion-item>
-            <ion-input
-                type="text"
+            <ion-textarea
+                autoGrow="true"
+                inputmode="text"
                 :value="items[index] || ''"
                 @keyup="insertItem($event.target.value, index)"
-            ></ion-input>
+            ></ion-textarea>
             <ion-button
                 v-show="items.length > 0 && index === placeholderItems.length - 1 && items[index]?.length > 0"
                 color="success"
@@ -24,14 +25,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonInput, IonItem, IonButton } from '@ionic/vue';
+import { IonTextarea, IonItem, IonButton } from '@ionic/vue';
 import { v4 as uuidV4 } from 'uuid';
 import * as _ from 'lodash';
 
 export default defineComponent({
     name: 'AddRemoveMultipleItems',
     components: {
-        IonInput,
+        IonTextarea,
         IonItem,
         IonButton,
     },

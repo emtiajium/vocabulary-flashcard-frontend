@@ -13,10 +13,20 @@
                 </ion-item>
 
                 <ion-item v-if="!$props.definition">
-                    <ion-input type="text" :value="meaning" @keyup="setMeaning($event.target.value)" />
+                    <ion-textarea
+                        autoGrow="true"
+                        inputmode="text"
+                        :value="meaning"
+                        @keyup="setMeaning($event.target.value)"
+                    />
                 </ion-item>
                 <ion-item v-if="$props.definition">
-                    <ion-input type="text" :value="definition.meaning" @keyup="setMeaning($event.target.value)" />
+                    <ion-textarea
+                        autoGrow="true"
+                        inputmode="text"
+                        :value="definition.meaning"
+                        @keyup="setMeaning($event.target.value)"
+                    />
                 </ion-item>
 
                 <view v-if="!$props.definition">
@@ -53,7 +63,6 @@
 import {
     IonContent,
     IonHeader,
-    IonInput,
     IonItem,
     IonPage,
     IonTitle,
@@ -64,6 +73,7 @@ import {
     IonGrid,
     IonRow,
     IonCol,
+    IonTextarea,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import AddDefinitionExample from '@/views/AddDefinitionExample.vue';
@@ -86,7 +96,6 @@ export default defineComponent({
         IonPage,
         IonTitle,
         IonToolbar,
-        IonInput,
         IonCardTitle,
         IonItem,
         IonButton,
@@ -94,6 +103,7 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonCol,
+        IonTextarea,
     },
     props: ['word', 'vocabularyId', 'definition', 'afterAddingDefinition', 'onCancellingAddingDefinition'],
     data() {

@@ -15,7 +15,12 @@
                     <ion-card-title>Word</ion-card-title>
                 </ion-item>
                 <ion-item>
-                    <ion-input type="text" :value="word" @keyup="setWord($event.target.value)"></ion-input>
+                    <ion-textarea
+                        autoGrow="true"
+                        inputmode="text"
+                        :value="word"
+                        @keyup="setWord($event.target.value)"
+                    ></ion-textarea>
                 </ion-item>
 
                 <ion-item lines="none">
@@ -106,7 +111,7 @@ import { defineComponent } from 'vue';
 import {
     IonContent,
     IonHeader,
-    IonInput,
+    IonTextarea,
     IonItem,
     IonLabel,
     IonPage,
@@ -161,7 +166,7 @@ export default defineComponent({
         IonPage,
         IonTitle,
         IonToolbar,
-        IonInput,
+        IonTextarea,
         IonLabel,
         IonItem,
         IonToggle,
