@@ -14,7 +14,7 @@
         "format:check": "prettier --check \"public/*.html\" \"src/**/*.{css,ts,vue}\" \"tests/**/*.{js,ts}\"",
         "serve:android:anew": "rm -rf android/ && ionic build --prod && npx cap add android && npx cap sync android",
         "deploy:firebase": "npm run build && firebase deploy --only hosting",
-        "replace-generated-android-files": "cp ./android-replacer/AndroidManifest.xml ./android/app/src/main/AndroidManifest.xml && cp ./android-replacer/strings.xml ./android/app/src/main/res/values/strings.xml && cp ./android-replacer/variables.gradle ./android/variables.gradle"
+        "replace-generated-android-files": "cp ./android-replacer/AndroidManifest.xml ./android/app/src/main/AndroidManifest.xml && cp ./android-replacer/ic_launcher_background.xml ./android/app/src/main/res/values/ic_launcher_background.xml && cp ./android-replacer/strings.xml ./android/app/src/main/res/values/strings.xml && cp ./android-replacer/variables.gradle ./android/variables.gradle"
     },
     "dependencies": {
         "@capacitor/android": "^3.0.1",
