@@ -2,27 +2,34 @@
     <ion-page>
         <ion-header :translucent="true">
             <ion-toolbar>
-                <ion-title
-                    ><ion-text class="ion-text-center">
+                <ion-title>
+                    <ion-text class="ion-text-center">
                         <h3>IELTS Gibberish</h3>
-                    </ion-text></ion-title
-                >
+                    </ion-text>
+                </ion-title>
             </ion-toolbar>
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <view class="container ion-justify-content-center ion-align-items-center">
-                <ion-button @click="handleClick">
-                    <font-awesome-icon :icon="faGoogle" />
-                    <ion-text class="ion-padding-start capitalize">Continue with Google</ion-text>
-                </ion-button>
+            <view class="container">
+                <ion-grid class="display-grid ion-align-items-center">
+                    <ion-row class="ion-justify-content-center">
+                        <font-awesome-icon :icon="faFingerprint" class="fa-fingerprint-extra" />
+                    </ion-row>
+                    <ion-row class="ion-justify-content-center">
+                        <ion-button @click="handleClick">
+                            <font-awesome-icon :icon="faGoogle" />
+                            <ion-text class="ion-padding-start capitalize">Continue with Google</ion-text>
+                        </ion-button>
+                    </ion-row>
+                </ion-grid>
             </view>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText, IonButton } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText, IonButton, IonGrid, IonRow } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import GoogleAuth from '@/utils/GoogleAuthorization';
 import User from '@/domains/User';
@@ -31,6 +38,7 @@ import Toast from '@/utils/Toast';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFingerprint } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'SignIn',
@@ -43,12 +51,14 @@ export default defineComponent({
         IonText,
         IonButton,
         FontAwesomeIcon,
+        IonGrid,
+        IonRow,
     },
     async mounted() {
         await GoogleAuth.load();
     },
     data() {
-        return { faGoogle };
+        return { faGoogle, faFingerprint };
     },
     methods: {
         async handleClick() {
@@ -72,5 +82,12 @@ export default defineComponent({
 .container {
     height: 100%;
     display: flex;
+}
+.display-grid {
+    display: grid;
+}
+.fa-fingerprint-extra {
+    font-size: 70pt;
+    color: #2e8b57;
 }
 </style>
