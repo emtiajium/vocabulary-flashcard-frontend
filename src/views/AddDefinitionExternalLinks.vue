@@ -2,6 +2,12 @@
     <ion-item lines="none">
         <ion-card-title>External Links</ion-card-title>
     </ion-item>
+    <ion-item lines="none">
+        <div class="form-text">
+            Any link can be inserted here, for example, if you found a new word while you were viewing a Quora post or a
+            blog then you can put the link here
+        </div>
+    </ion-item>
     <view v-if="!$props.existingExternalLinks">
         <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
     </view>

@@ -2,6 +2,11 @@
     <ion-item lines="none">
         <ion-card-title>Notes</ion-card-title>
     </ion-item>
+    <ion-item lines="none">
+        <div class="form-text">
+            It can be a ninja technique to memorize the meaning, a personal relatable incident, etc
+        </div>
+    </ion-item>
     <view v-if="!$props.existingNotes">
         <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
     </view>

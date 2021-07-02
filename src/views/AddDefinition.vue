@@ -11,6 +11,9 @@
                 <ion-item lines="none">
                     <ion-card-title>Meaning</ion-card-title>
                 </ion-item>
+                <ion-item lines="none">
+                    <div class="form-text">An idea or a thing that a word represents</div>
+                </ion-item>
 
                 <ion-item v-if="!$props.definition">
                     <ion-textarea
