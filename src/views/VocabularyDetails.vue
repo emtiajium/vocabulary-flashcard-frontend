@@ -164,9 +164,9 @@ export default defineComponent({
     async mounted() {
         this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${useRoute().params.id}`);
         if (
-            !this.vocabulary.definitions?.length ||
-            !this.vocabulary.linkerWords?.length ||
-            !this.vocabulary.genericNotes?.length ||
+            !this.vocabulary.definitions?.length &&
+            !this.vocabulary.linkerWords?.length &&
+            !this.vocabulary.genericNotes?.length &&
             !this.vocabulary.genericExternalLinks?.length
         ) {
             this.showDefaultMessage = true;
