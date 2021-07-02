@@ -20,7 +20,7 @@
                         </span>
                         <hr class="solid" />
 
-                        <span>{{ definition.meaning }}</span>
+                        <span class="capitalize">{{ definition.meaning }}</span>
                         <br />
                         <br />
 
@@ -30,7 +30,7 @@
                         <ul>
                             <view v-for="(example, index) in definition.examples" :key="index">
                                 <li>
-                                    <span>{{ example }}</span>
+                                    <span class="capitalize">{{ example }}</span>
                                     <br />
                                     <br />
                                 </li>
@@ -44,7 +44,7 @@
                             <ul>
                                 <view v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
                                     <li>
-                                        <span>{{ note }}</span>
+                                        <span class="capitalize">{{ note }}</span>
                                         <br />
                                         <br />
                                     </li>
@@ -80,7 +80,7 @@
                                 :key="linkerWordIndex"
                             >
                                 <li>
-                                    <span>{{ linkerWord }}</span>
+                                    <span class="capitalize">{{ linkerWord }}</span>
                                     <br />
                                     <br />
                                 </li>
@@ -98,7 +98,7 @@
                                 :key="genericNotesIndex"
                             >
                                 <li>
-                                    <span>{{ genericNote }}</span>
+                                    <span class="capitalize">{{ genericNote }}</span>
                                     <br />
                                     <br />
                                 </li>
