@@ -35,9 +35,16 @@
                     <div class="form-text">An explanation of what a word means</div>
                 </ion-item>
                 <ion-item v-if="!isLoading">
-                    <ion-button color="success" @click="onAddingDefinition">{{
-                        getAddButtonLabel(definitions.length)
-                    }}</ion-button>
+                    <ion-button color="success" @click="onAddingDefinition">
+                        <view v-if="!definitions.length">
+                            <font-awesome-icon :icon="faPlusCircle" />
+                        </view>
+                        <view v-if="definitions.length">
+                            <font-awesome-icon :icon="faPlusCircle" />
+                            <span class="ion-padding-start" />
+                            <font-awesome-icon :icon="faPlusCircle" />
+                        </view>
+                    </ion-button>
                 </ion-item>
 
                 <view v-if="!isLoading">
@@ -238,9 +245,6 @@ export default defineComponent({
             this.genericNotes = vocabulary.genericNotes as string[];
             this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
             this.isDraft = vocabulary.isDraft;
-        },
-        getAddButtonLabel(itemsLength: number) {
-            return itemsLength ? 'Add More' : 'Add';
         },
         setWord(word: string) {
             this.word = word.trim();
