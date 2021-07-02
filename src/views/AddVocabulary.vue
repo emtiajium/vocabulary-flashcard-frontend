@@ -14,6 +14,11 @@
                 <ion-item lines="none">
                     <ion-card-title>Word</ion-card-title>
                 </ion-item>
+                <ion-item lines="none">
+                    <div class="form-text">
+                        A word, an idiom, even a prepositional phrase and most importantly whatever you wish to insert
+                    </div>
+                </ion-item>
                 <ion-item>
                     <ion-textarea
                         autoGrow="true"
@@ -25,6 +30,9 @@
 
                 <ion-item lines="none">
                     <ion-card-title>Definition</ion-card-title>
+                </ion-item>
+                <ion-item lines="none">
+                    <div class="form-text">An explanation of what a word means</div>
                 </ion-item>
                 <ion-item v-if="!isLoading">
                     <ion-button color="success" @click="onAddingDefinition">{{
@@ -65,6 +73,9 @@
 
                 <ion-item lines="none">
                     <ion-card-title>Is Draft</ion-card-title>
+                </ion-item>
+                <ion-item lines="none">
+                    <div class="form-text">It is possible to save a vocabulary without a definition in draft mode</div>
                 </ion-item>
                 <ion-item lines="none">
                     <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)"></ion-toggle>

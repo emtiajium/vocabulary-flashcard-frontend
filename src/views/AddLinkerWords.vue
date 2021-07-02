@@ -2,6 +2,12 @@
     <ion-item lines="none">
         <ion-card-title>Linker Words</ion-card-title>
     </ion-item>
+    <ion-item lines="none">
+        <div class="form-text">
+            Any related vocabulary can be inserted here. For example, if the word is <strong>Zenith</strong>, I can put
+            <strong>Pinnacle</strong> here
+        </div>
+    </ion-item>
     <view v-if="$props.existingLinkerWords">
         <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="linkerWords" />
     </view>
