@@ -4,7 +4,7 @@
             <ion-toolbar>
                 <ion-title>
                     <ion-text class="ion-text-center">
-                        <h3>IELTS Gibberish</h3>
+                        <h3>Firecracker Vocab Practice</h3>
                     </ion-text>
                 </ion-title>
             </ion-toolbar>
