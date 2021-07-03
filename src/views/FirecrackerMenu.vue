@@ -10,7 +10,9 @@
                 </div>
             </div>
             <ion-list>
-                <ion-item>Menu Item</ion-item>
+                <ion-item button @click="$router.push('/vocabularies')"> Vocabularies </ion-item>
+                <ion-item>My Cohort</ion-item>
+                <ion-item>Sign Out</ion-item>
             </ion-list>
         </ion-content>
     </ion-menu>

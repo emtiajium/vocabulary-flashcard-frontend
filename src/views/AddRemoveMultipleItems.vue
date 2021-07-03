@@ -3,12 +3,15 @@
         <ion-grid>
             <ion-row>
                 <ion-col size="8">
-                    <ion-textarea
-                        autoGrow="true"
-                        inputmode="text"
-                        :value="items[index] || ''"
-                        @keyup="insertItem($event.target.value, index)"
-                    ></ion-textarea>
+                    <ion-item>
+                        <ion-textarea
+                            autoGrow="true"
+                            inputmode="text"
+                            :value="items[index] || ''"
+                            @keyup="insertItem($event.target.value, index)"
+                        >
+                        </ion-textarea>
+                    </ion-item>
                 </ion-col>
                 <ion-col size="4">
                     <ion-row class="action-buttons">
