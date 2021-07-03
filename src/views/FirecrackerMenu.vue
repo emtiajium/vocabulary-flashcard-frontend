@@ -10,9 +10,18 @@
                 </div>
             </div>
             <ion-list>
-                <ion-item button @click="$router.push('/vocabularies')"> Vocabularies </ion-item>
-                <ion-item button @click="$router.push('/cohort')"> My Cohort </ion-item>
-                <ion-item button @click="signOut"> Sign Out </ion-item>
+                <ion-item button @click="$router.push('/vocabularies')">
+                    <font-awesome-icon :icon="faBook" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Vocabularies </ion-label>
+                </ion-item>
+                <ion-item button @click="$router.push('/cohort')">
+                    <font-awesome-icon :icon="faUsers" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> My Cohort </ion-label>
+                </ion-item>
+                <ion-item button @click="signOut">
+                    <font-awesome-icon :icon="faSignOutAlt" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Sign Out </ion-label>
+                </ion-item>
             </ion-list>
         </ion-content>
     </ion-menu>
@@ -20,8 +29,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonContent, IonItem, IonList, IonMenu, menuController } from '@ionic/vue';
+import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel } from '@ionic/vue';
 import NativeStorage from '@/utils/NativeStorage';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faBook, faUsers, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -30,6 +41,8 @@ export default defineComponent({
         IonItem,
         IonList,
         IonMenu,
+        IonLabel,
+        FontAwesomeIcon,
     },
     props: ['contentId', 'menuId'],
     data() {
@@ -37,11 +50,15 @@ export default defineComponent({
             profilePictureUrl: '',
             username: '',
             fullName: '',
+            faBook,
+            faUsers,
+            faSignOutAlt,
         };
     },
     async mounted() {
         const user = await NativeStorage.getAuthorizedUser();
-        this.profilePictureUrl = user.profilePictureUrl as string;
+        this.profilePictureUrl =
+            user.profilePictureUrl || `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`;
         this.username = user.username as string;
         this.fullName = `${user.firstname?.trim()} ${(user.lastname || '').trim()}`.trim();
     },
@@ -65,5 +82,8 @@ export default defineComponent({
 }
 .item-text {
     color: #ffffff;
+}
+.menu-icon {
+    color: #2e8b57;
 }
 </style>
