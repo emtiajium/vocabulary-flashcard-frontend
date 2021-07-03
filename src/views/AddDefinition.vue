@@ -1,6 +1,11 @@
 <template>
     <ion-page>
-        <firecracker-header :header-title="word" content-id="add-definition" menu-id="add-definition-menu" />
+        <firecracker-header
+            :header-title="word"
+            content-id="add-definition"
+            menu-id="add-definition-menu"
+            type="BACK"
+        />
 
         <ion-content :fullscreen="true" id="add-definition">
             <ion-card>

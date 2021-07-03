@@ -63,9 +63,12 @@ export default defineComponent({
         this.fullName = `${user.firstname?.trim()} ${(user.lastname || '').trim()}`.trim();
     },
     methods: {
-        toggleMenu() {
-            menuController.enable(true, this.menuId);
-            menuController.open(this.menuId);
+        async toggleMenu() {
+            if (await menuController.isOpen()) {
+                await menuController.close();
+            }
+            await menuController.enable(true, this.menuId);
+            await menuController.open(this.menuId);
         },
         async signOut() {
             await NativeStorage.removeAuthorizedUser();
