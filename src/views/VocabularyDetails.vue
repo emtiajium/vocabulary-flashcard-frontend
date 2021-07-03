@@ -1,8 +1,12 @@
 <template>
     <ion-page>
-        <firecracker-header :header-title="$route.params.word" />
+        <firecracker-header
+            :header-title="$route.params.word"
+            content-id="vocabulary-details"
+            menu-id="vocabulary-details-menu"
+        />
 
-        <ion-content :fullscreen="true">
+        <ion-content :fullscreen="true" id="vocabulary-details">
             <spinner v-if="isLoading" />
 
             <ion-card v-if="!isLoading && Object.keys(vocabulary).length">
