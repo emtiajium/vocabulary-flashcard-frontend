@@ -1,11 +1,7 @@
 <template>
     <!--tried with routing, but could not find a way to set the definition before navigating back to this page-->
     <ion-page v-bind="$attrs" v-if="!isInDefinition()">
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-title>{{ headerTitle }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <firecracker-header :header-title="headerTitle" />
 
         <ion-content :fullscreen="true">
             <spinner v-if="isLoading" />
@@ -132,14 +128,11 @@
 import { defineComponent } from 'vue';
 import {
     IonContent,
-    IonHeader,
     IonTextarea,
     IonItem,
     IonLabel,
     IonPage,
-    IonTitle,
     IonToggle,
-    IonToolbar,
     IonButton,
     IonItemGroup,
     IonCard,
@@ -164,6 +157,7 @@ import { useRoute } from 'vue-router';
 import Spinner from '@/views/Spinner.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlusCircle, faMinusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -180,16 +174,14 @@ enum Mode {
 export default defineComponent({
     name: 'AddVocabulary',
     components: {
+        FirecrackerHeader,
         Spinner,
         AddDefinition,
         AddLinkerWords,
         AddGenericNotes,
         AddGenericExternalLinks,
         IonContent,
-        IonHeader,
         IonPage,
-        IonTitle,
-        IonToolbar,
         IonTextarea,
         IonLabel,
         IonItem,

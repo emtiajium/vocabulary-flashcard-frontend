@@ -1,10 +1,6 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-title>{{ $route.params.word }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <firecracker-header :header-title="$route.params.word" />
 
         <ion-content :fullscreen="true">
             <spinner v-if="isLoading" />
@@ -133,22 +129,21 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonToolbar, IonHeader, IonTitle, IonContent, IonCard, IonCardContent } from '@ionic/vue';
+import { IonPage, IonContent, IonCard, IonCardContent } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import { useRoute } from 'vue-router';
 import Spinner from '@/views/Spinner.vue';
 import EmptyContainer from '@/views/EmptyContainer.vue';
+import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 
 export default defineComponent({
     name: 'VocabularyDetails',
     components: {
+        FirecrackerHeader,
         Spinner,
         EmptyContainer,
         IonPage,
-        IonToolbar,
-        IonHeader,
-        IonTitle,
         IonContent,
         IonCard,
         IonCardContent,

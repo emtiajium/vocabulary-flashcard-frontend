@@ -1,10 +1,6 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-title class="capitalize">{{ word }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <firecracker-header :header-title="word" />
 
         <ion-content :fullscreen="true">
             <ion-card>
@@ -65,11 +61,8 @@
 <script lang="ts">
 import {
     IonContent,
-    IonHeader,
     IonItem,
     IonPage,
-    IonTitle,
-    IonToolbar,
     IonButton,
     IonCard,
     IonCardTitle,
@@ -87,18 +80,17 @@ import { v4 as uuidV4 } from 'uuid';
 import { validateSync } from 'class-validator';
 import Toast from '@/utils/Toast';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
+import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 
 export default defineComponent({
     name: 'AddDefinition',
     components: {
+        FirecrackerHeader,
         AddDefinitionExternalLinks,
         AddDefinitionNotes,
         AddDefinitionExample,
         IonContent,
-        IonHeader,
         IonPage,
-        IonTitle,
-        IonToolbar,
         IonCardTitle,
         IonItem,
         IonButton,

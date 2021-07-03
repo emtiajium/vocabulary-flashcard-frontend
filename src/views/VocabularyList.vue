@@ -1,10 +1,6 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-title>Vocabularies</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <firecracker-header header-title="Vocabularies" />
 
         <ion-content :fullscreen="true">
             <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
@@ -31,17 +27,7 @@
 </template>
 
 <script lang="ts">
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    IonFab,
-    IonFabButton,
-    IonInfiniteScroll,
-    IonInfiniteScrollContent,
-} from '@ionic/vue';
+import { IonContent, IonPage, IonFab, IonFabButton, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
 import NativeStorage from '@/utils/NativeStorage';
@@ -52,6 +38,7 @@ import { Components } from '@ionic/core/components';
 import MinifiedVocabulary from '@/views/MinifiedVocabulary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 
@@ -59,11 +46,9 @@ export default defineComponent({
     name: 'VocabularyList',
     components: {
         Vocabulary: MinifiedVocabulary,
+        FirecrackerHeader,
         IonContent,
-        IonHeader,
         IonPage,
-        IonTitle,
-        IonToolbar,
         IonFab,
         IonFabButton,
         IonInfiniteScroll,
