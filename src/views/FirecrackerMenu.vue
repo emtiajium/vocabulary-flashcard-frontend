@@ -11,7 +11,7 @@
             </div>
             <ion-list>
                 <ion-item button @click="$router.push('/vocabularies')"> Vocabularies </ion-item>
-                <ion-item> My Cohort </ion-item>
+                <ion-item button @click="$router.push('/cohort')"> My Cohort </ion-item>
                 <ion-item button @click="signOut"> Sign Out </ion-item>
             </ion-list>
         </ion-content>

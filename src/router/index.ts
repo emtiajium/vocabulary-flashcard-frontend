@@ -5,6 +5,7 @@ import Home from '@/views/Home.vue';
 import AddVocabulary from '@/views/AddVocabulary.vue';
 import Vocabulary from '@/views/VocabularyDetails.vue';
 import SignIn from '@/views/SignIn.vue';
+import Cohort from '@/views/Cohort.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -46,6 +47,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/vocabulary/:id/:word',
         name: 'DisplayVocabulary',
         component: Vocabulary,
+    },
+    {
+        path: '/cohort',
+        name: 'Cohort',
+        component: Cohort,
     },
 ];
 
