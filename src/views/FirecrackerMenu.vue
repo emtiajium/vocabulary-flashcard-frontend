@@ -10,11 +10,11 @@
                 </div>
             </div>
             <ion-list>
-                <ion-item button @click="$router.push('/vocabularies')">
+                <ion-item button @click="navigate('/vocabularies')">
                     <font-awesome-icon :icon="faBook" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Vocabularies </ion-label>
                 </ion-item>
-                <ion-item button @click="$router.push('/cohort')">
+                <ion-item button @click="navigate('/cohort')">
                     <font-awesome-icon :icon="faUsers" class="menu-icon" />
                     <ion-label class="ion-padding-start"> My Cohort </ion-label>
                 </ion-item>
@@ -63,12 +63,18 @@ export default defineComponent({
         this.fullName = `${user.firstname?.trim()} ${(user.lastname || '').trim()}`.trim();
     },
     methods: {
-        async toggleMenu() {
-            if (await menuController.isOpen()) {
-                await menuController.close();
-            }
+        async openMenu() {
             await menuController.enable(true, this.menuId);
             await menuController.open(this.menuId);
+        },
+        async closeMenu() {
+            if (await menuController.isOpen()) {
+                await menuController.close(this.menuId);
+            }
+        },
+        async navigate(url: string) {
+            await this.closeMenu();
+            await this.$router.push(url);
         },
         async signOut() {
             await NativeStorage.removeAuthorizedUser();

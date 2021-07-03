@@ -4,11 +4,9 @@
             <ion-grid>
                 <ion-row>
                     <ion-col size="12" class="firecracker-menu">
-                        <ion-menu-button v-if="type === 'MENU'" @click="toggleMenu">
-                            <font-awesome-icon :icon="faBars" />
-                        </ion-menu-button>
-                        <ion-menu-button v-if="type === 'BACK'" @click="$router.back()">
-                            <font-awesome-icon :icon="faArrowLeft" />
+                        <ion-menu-button @click="onClickIcon">
+                            <font-awesome-icon v-if="type === 'MENU'" :icon="faBars" />
+                            <font-awesome-icon v-if="type === 'BACK'" :icon="faArrowLeft" />
                         </ion-menu-button>
                         <ion-title>{{ headerTitle }}</ion-title>
                     </ion-col>
@@ -65,8 +63,18 @@ export default defineComponent({
         };
     },
     methods: {
-        async toggleMenu() {
-            await (this.$refs.FirecrackerMenuRef as InstanceType<typeof FirecrackerMenu>).toggleMenu();
+        async openMenu() {
+            await (this.$refs.FirecrackerMenuRef as InstanceType<typeof FirecrackerMenu>).openMenu();
+        },
+        async back() {
+            this.$router.back();
+        },
+        async onClickIcon() {
+            if (this.type === 'MENU') {
+                await this.openMenu();
+            } else {
+                this.back();
+            }
         },
     },
 });
