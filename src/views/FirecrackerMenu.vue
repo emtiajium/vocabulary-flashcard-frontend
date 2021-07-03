@@ -63,9 +63,6 @@ export default defineComponent({
 .profile {
     background-color: #2e8b57;
 }
-.rounded-circle {
-    border-radius: 50%;
-}
 .item-text {
     color: #ffffff;
 }
