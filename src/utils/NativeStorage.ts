@@ -44,6 +44,9 @@ export default class NativeStorage {
             id: user?.id,
             cohortId: user?.cohortId,
             username: user?.username,
+            firstname: user?.firstname,
+            lastname: user?.lastname,
+            profilePictureUrl: user?.profilePictureUrl,
         });
     }
 }
