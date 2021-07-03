@@ -66,7 +66,8 @@ export default defineComponent({
         async openMenu() {
             await (this.$refs.FirecrackerMenuRef as InstanceType<typeof FirecrackerMenu>).openMenu();
         },
-        async back() {
+        back() {
+            // Something is wrong!
             this.$router.back();
         },
         async onClickIcon() {
