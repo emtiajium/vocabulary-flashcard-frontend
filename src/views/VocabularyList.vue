@@ -1,8 +1,8 @@
 <template>
     <ion-page>
-        <firecracker-header header-title="Vocabularies" />
+        <firecracker-header header-title="Vocabularies" content-id="vocabulary-list" menu-id="vocabulary-list-menu" />
 
-        <ion-content :fullscreen="true">
+        <ion-content :fullscreen="true" id="vocabulary-list">
             <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
                 <vocabulary :vocabulary="vocabulary" :delete-vocabulary="deleteVocabulary" />
             </view>

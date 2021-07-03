@@ -1,9 +1,9 @@
 <template>
     <!--tried with routing, but could not find a way to set the definition before navigating back to this page-->
     <ion-page v-bind="$attrs" v-if="!isInDefinition()">
-        <firecracker-header :header-title="headerTitle" />
+        <firecracker-header :header-title="headerTitle" content-id="add-vocabulary" menu-id="add-vocabulary-menu" />
 
-        <ion-content :fullscreen="true">
+        <ion-content :fullscreen="true" id="add-vocabulary">
             <spinner v-if="isLoading" />
 
             <ion-card v-if="!isLoading">
