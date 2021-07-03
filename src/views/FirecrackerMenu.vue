@@ -11,8 +11,8 @@
             </div>
             <ion-list>
                 <ion-item button @click="$router.push('/vocabularies')"> Vocabularies </ion-item>
-                <ion-item>My Cohort</ion-item>
-                <ion-item>Sign Out</ion-item>
+                <ion-item> My Cohort </ion-item>
+                <ion-item button @click="signOut"> Sign Out </ion-item>
             </ion-list>
         </ion-content>
     </ion-menu>
@@ -49,6 +49,11 @@ export default defineComponent({
         toggleMenu() {
             menuController.enable(true, this.menuId);
             menuController.open(this.menuId);
+        },
+        async signOut() {
+            await NativeStorage.removeAuthorizedUser();
+            await menuController.close();
+            await this.$router.push('/sign-in');
         },
     },
 });

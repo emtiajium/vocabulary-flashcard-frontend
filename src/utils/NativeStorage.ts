@@ -49,4 +49,8 @@ export default class NativeStorage {
             profilePictureUrl: user?.profilePictureUrl,
         });
     }
+
+    static async removeAuthorizedUser(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
+    }
 }

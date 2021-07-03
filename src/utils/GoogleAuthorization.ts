@@ -37,4 +37,8 @@ export default class GoogleAuthorization {
         const authenticatedUser: GoogleUser = await GoogleAuth.signIn();
         return GoogleAuthorization.generateAuthenticatedUserPayload(authenticatedUser);
     }
+
+    static async signOut(): Promise<void> {
+        await GoogleAuth.signOut();
+    }
 }
