@@ -1,5 +1,5 @@
 <template>
-    <view v-for="(item, index) in placeholderItems" :key="index">
+    <view v-for="(item, index) in placeholderItems" :key="item">
         <ion-grid>
             <ion-row>
                 <ion-col size="8">
