@@ -64,6 +64,9 @@
 
 ➜ Foreground: Visit [here](https://easyappicon.com/)
 
+➜ Splash screen: Visit [here](https://www.fotor.com/)
+> `cordova-res android`
+
 ## Deploy the web app to the Google Firebase Hosting
 
 ➜ Install [Firebase CLI](https://firebase.google.com/docs/cli)
