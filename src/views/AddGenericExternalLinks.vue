@@ -32,13 +32,13 @@ export default defineComponent({
         };
     },
     methods: {
-        getGenericExternalLinks() {
+        getGenericExternalLinks(): string[] {
             this.genericExternalLinks = (
                 this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
             ).getItems();
             return this.genericExternalLinks;
         },
-        clear() {
+        clear(): void {
             (this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>).clear();
             this.genericExternalLinks = [];
         },

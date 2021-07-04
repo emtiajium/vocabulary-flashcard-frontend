@@ -5,7 +5,7 @@ import { Device } from '@capacitor/device';
 import Config from '../../config.json';
 
 export default class GoogleAuthorization {
-    static async load() {
+    static async load(): Promise<void> {
         const deviceInfo = await Device.getInfo();
         if (deviceInfo.platform === 'web') {
             GoogleAuthorization.createMetadata();

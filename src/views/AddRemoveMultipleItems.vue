@@ -74,29 +74,29 @@ export default defineComponent({
         };
     },
     methods: {
-        insertItem(item: string, index: number) {
+        insertItem(item: string, index: number): void {
             if (!item) {
                 this.removeItem(index);
             } else {
                 this.items[index] = item.trim();
             }
         },
-        onAddMoreItem() {
+        onAddMoreItem(): void {
             this.placeholderItems.push(uuidV4());
         },
-        removeItem(removableIndex: number) {
+        removeItem(removableIndex: number): void {
             this.items = this.items.filter((word, index) => index !== removableIndex);
         },
-        onRemoveLastItem(removableIndex: number) {
+        onRemoveLastItem(removableIndex: number): void {
             if (removableIndex !== 0) {
                 this.placeholderItems.pop();
             }
             this.removeItem(removableIndex);
         },
-        getItems() {
+        getItems(): string[] {
             return this.items.filter((item) => item.length > 0);
         },
-        clear() {
+        clear(): void {
             this.items = [];
             this.placeholderItems = [uuidV4()];
         },

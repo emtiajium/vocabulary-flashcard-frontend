@@ -34,13 +34,13 @@ export default defineComponent({
         };
     },
     methods: {
-        getNotes() {
+        getNotes(): string[] {
             this.notes = (
                 this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
             ).getItems();
             return this.notes;
         },
-        clear() {
+        clear(): void {
             (this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>).clear();
             this.notes = [];
         },

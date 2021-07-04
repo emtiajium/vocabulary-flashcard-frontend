@@ -63,20 +63,20 @@ export default defineComponent({
         this.fullName = `${user.firstname?.trim()} ${(user.lastname || '').trim()}`.trim();
     },
     methods: {
-        async openMenu() {
+        async openMenu(): Promise<void> {
             await menuController.enable(true, this.menuId);
             await menuController.open(this.menuId);
         },
-        async closeMenu() {
+        async closeMenu(): Promise<void> {
             if (await menuController.isOpen()) {
                 await menuController.close(this.menuId);
             }
         },
-        async navigate(url: string) {
+        async navigate(url: string): Promise<void> {
             await this.closeMenu();
             await this.$router.push(url);
         },
-        async signOut() {
+        async signOut(): Promise<void> {
             await NativeStorage.removeAuthorizedUser();
             await menuController.close();
             await this.$router.push('/sign-in');

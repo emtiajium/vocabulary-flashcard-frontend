@@ -115,13 +115,13 @@ export default defineComponent({
         this.meaning = this.$props.definition?.meaning || '';
     },
     methods: {
-        getAddButtonLabel(itemsLength: number) {
+        getAddButtonLabel(itemsLength: number): string {
             return itemsLength ? 'Add More' : 'Add';
         },
-        setMeaning(meaning: string) {
+        setMeaning(meaning: string): void {
             this.meaning = meaning.trim();
         },
-        getDefinitionPayload() {
+        getDefinitionPayload(): Definition {
             const definition = new Definition();
             definition.id = this.definition?.id || uuidV4();
             definition.vocabularyId = this.vocabularyId;
@@ -135,7 +135,7 @@ export default defineComponent({
             ).getExternalLinks();
             return definition;
         },
-        async persist() {
+        async persist(): Promise<void> {
             const definition = this.getDefinitionPayload();
             const errors = validateSync(definition);
             if (errors.length) {
@@ -145,13 +145,13 @@ export default defineComponent({
                 this.clear();
             }
         },
-        clear() {
+        clear(): void {
             this.setMeaning('');
             (this.$refs.AddDefinitionExampleRef as InstanceType<typeof AddDefinitionExample>).clear();
             (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).clear();
             (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
         },
-        back() {
+        back(): void {
             this.clear();
             this.onCancellingAddingDefinition();
         },

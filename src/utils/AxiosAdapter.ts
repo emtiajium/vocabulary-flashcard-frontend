@@ -1,7 +1,7 @@
 import Axios, { AxiosError } from 'axios';
 
 export default class AxiosAdapter {
-    static handleError(error: AxiosError) {
+    static handleError(error: AxiosError): void {
         if (Array.isArray(error?.response?.data?.message)) {
             throw new Error(error.response?.data.message[0]);
         }

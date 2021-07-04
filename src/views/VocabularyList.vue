@@ -63,7 +63,7 @@ export default defineComponent({
         await this.renderVocabularies();
     },
     methods: {
-        async renderVocabularies(event?: CustomEvent<void>) {
+        async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findVocabularies();
             this.vocabularies = this.vocabularies.concat(results);
             this.pageNumber += 1;
@@ -74,7 +74,7 @@ export default defineComponent({
             }
         },
 
-        async findVocabularies() {
+        async findVocabularies(): Promise<SearchResult<Vocabulary>> {
             const vocabularySearch: VocabularySearch = {
                 cohortId: this.cohortId,
                 pagination: {
@@ -88,7 +88,7 @@ export default defineComponent({
             )) as SearchResult<Vocabulary>;
         },
 
-        deleteVocabulary(id: string) {
+        deleteVocabulary(id: string): void {
             this.vocabularies = this.vocabularies.filter(({ id: vocabularyId }) => id !== vocabularyId);
         },
     },

@@ -3,7 +3,7 @@ import { alertController } from '@ionic/vue';
 type Handler = () => Promise<unknown>;
 
 export default class Alert {
-    static async presentAlertConfirm(header: string, message: string, handler: Handler) {
+    static async presentAlertConfirm(header: string, message: string, handler: Handler): Promise<void> {
         const alert = await alertController.create({
             header,
             message,
@@ -14,7 +14,7 @@ export default class Alert {
                 },
                 {
                     text: 'Yes',
-                    handler: async () => {
+                    handler: async (): Promise<void> => {
                         await handler();
                     },
                 },

@@ -22,6 +22,7 @@ module.exports = {
         'no-debugger': 'off',
         'vue/no-deprecated-slot-attribute': 'off',
         '@typescript-eslint/no-explicit-any': 'error',
+        '@typescript-eslint/explicit-function-return-type': 'error',
     },
     overrides: [
         {

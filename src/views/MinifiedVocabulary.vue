@@ -90,10 +90,10 @@ export default defineComponent({
         return { faTrashAlt, faPencilAlt, faExpandAlt };
     },
     methods: {
-        async seeMore(id: string, word: string) {
+        async seeMore(id: string, word: string): Promise<void> {
             await this.$router.push(`/vocabulary/${id}/${word}`);
         },
-        async presentAlertConfirm(vocabulary: Vocabulary) {
+        async presentAlertConfirm(vocabulary: Vocabulary): Promise<void> {
             await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"?`, async () => {
                 return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`)
                     .then(() => this.deleteVocabulary(vocabulary.id))

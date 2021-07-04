@@ -228,7 +228,7 @@ export default defineComponent({
         }
     },
     methods: {
-        async getAndSetExistingVocabulary(vocabularyId: string) {
+        async getAndSetExistingVocabulary(vocabularyId: string): Promise<void> {
             const vocabulary = (await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${vocabularyId}`)) as Vocabulary;
             this.id = vocabulary.id;
             this.word = vocabulary.word;
@@ -238,66 +238,66 @@ export default defineComponent({
             this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
             this.isDraft = vocabulary.isDraft;
         },
-        setWord(word: string) {
+        setWord(word: string): void {
             this.word = word.trim();
         },
-        setIsDraft(isDraft: boolean) {
+        setIsDraft(isDraft: boolean): void {
             this.isDraft = isDraft;
         },
-        async onAddingDefinition() {
+        async onAddingDefinition(): void {
             if (!this.word) {
                 await Toast.present(`Please insert the word before adding the definition`);
             } else {
                 this.setCurrentPage(PageType.ADD_DEFINITION);
             }
         },
-        setCurrentPage(currentPage: PageType) {
+        setCurrentPage(currentPage: PageType): void {
             this.currentPage = currentPage;
         },
-        isInDefinition() {
+        isInDefinition(): boolean {
             return this.currentPage === PageType.ADD_DEFINITION;
         },
-        isInDefinitionCreationMode() {
+        isInDefinitionCreationMode(): boolean {
             return this.mode === Mode.DEFINITION_CREATE;
         },
-        isInDefinitionUpdateMode() {
+        isInDefinitionUpdateMode(): boolean {
             return this.mode === Mode.DEFINITION_UPDATE;
         },
-        isInCreationMode() {
+        isInCreationMode(): boolean {
             return this.mode === Mode.VOCABULARY_CREATE || this.isInDefinitionCreationMode();
         },
-        isInUpdateMode() {
+        isInUpdateMode(): boolean {
             return this.mode === Mode.VOCABULARY_UPDATE || this.isInDefinitionUpdateMode();
         },
-        afterAddingDefinition(definition: Definition) {
+        afterAddingDefinition(definition: Definition): void {
             this.insertDefinition(definition);
             this.setCurrentPage(PageType.ADD_VOCABULARY);
         },
-        afterUpdatingDefinition(definition: Definition) {
+        afterUpdatingDefinition(definition: Definition): void {
             this.definitions[this.definitions.findIndex(({ id }) => definition.id === id)] = definition as Definition;
             this.setCurrentPage(PageType.ADD_VOCABULARY);
         },
-        onCancellingAddingDefinition() {
+        onCancellingAddingDefinition(): void {
             this.setCurrentPage(PageType.ADD_VOCABULARY);
         },
-        insertDefinition(definition: Definition) {
+        insertDefinition(definition: Definition): void {
             this.definitions.push(definition);
             this.mode = Mode.DEFINITION_CREATE;
         },
-        removeDefinition(removableIndex: number) {
+        removeDefinition(removableIndex: number): void {
             this.definitions = this.definitions.filter((definition, index) => index !== removableIndex);
         },
-        setGoingToBeUpdatedDefinition(updatableIndex: number) {
+        setGoingToBeUpdatedDefinition(updatableIndex: number): void {
             this.goingToBeUpdatedDefinition = this.definitions.find(
                 (definition, index) => index === updatableIndex,
             ) as Definition;
         },
-        updateDefinition(updatableIndex: number) {
+        updateDefinition(updatableIndex: number): void {
             this.setGoingToBeUpdatedDefinition(updatableIndex);
             this.mode = Mode.DEFINITION_UPDATE;
             this.setCurrentPage(PageType.ADD_DEFINITION);
         },
-        async getVocabularyPayload() {
+        async getVocabularyPayload(): Promise<Vocabulary> {
             const vocabulary = new Vocabulary();
             vocabulary.id = this.id;
             vocabulary.cohortId = await NativeStorage.getCohortId();
@@ -315,13 +315,13 @@ export default defineComponent({
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
         },
-        validatePayload(vocabulary: Vocabulary) {
+        validatePayload(vocabulary: Vocabulary): void {
             const errors = validateSync(vocabulary);
             if (errors.length > 0) {
                 throw new Error(ValidationErrorTransform.transform(errors)[0]);
             }
         },
-        async persist() {
+        async persist(): Promise<void> {
             try {
                 const vocabulary = await this.getVocabularyPayload();
                 this.validatePayload(vocabulary);
@@ -332,7 +332,7 @@ export default defineComponent({
                 await Toast.present(error.message);
             }
         },
-        clear() {
+        clear(): void {
             this.id = uuidV4();
             this.word = '';
             this.isDraft = false;
@@ -343,7 +343,7 @@ export default defineComponent({
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
             (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
         },
-        back() {
+        back(): void {
             this.clear();
             this.$router.back();
         },

@@ -35,13 +35,13 @@ export default defineComponent({
         };
     },
     methods: {
-        getLinkerWords() {
+        getLinkerWords(): string[] {
             this.linkerWords = (
                 this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
             ).getItems();
             return this.linkerWords;
         },
-        clear() {
+        clear(): void {
             (this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>).clear();
             this.linkerWords = [];
         },

@@ -60,7 +60,7 @@ export default defineComponent({
         return { faGoogle };
     },
     methods: {
-        async handleClick() {
+        async handleClick(): Promise<void> {
             try {
                 const user = await GoogleAuth.signIn();
                 await this.persistUser(user);
@@ -69,7 +69,7 @@ export default defineComponent({
                 await Toast.present(error.message || `Something went wrong!`);
             }
         },
-        async persistUser(user: User) {
+        async persistUser(user: User): Promise<void> {
             const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
             await NativeStorage.setAuthorizedUser(persistedUser as User);
         },

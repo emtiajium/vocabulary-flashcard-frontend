@@ -32,13 +32,13 @@ export default defineComponent({
         };
     },
     methods: {
-        getExamples() {
+        getExamples(): string[] {
             this.examples = (
                 this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
             ).getItems();
             return this.examples;
         },
-        clear() {
+        clear(): void {
             (this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>).clear();
             this.examples = [];
         },

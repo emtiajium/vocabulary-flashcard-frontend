@@ -35,13 +35,13 @@ export default defineComponent({
         };
     },
     methods: {
-        getGenericNotes() {
+        getGenericNotes(): string[] {
             this.genericNotes = (
                 this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
             ).getItems();
             return this.genericNotes;
         },
-        clear() {
+        clear(): void {
             (this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>).clear();
             this.genericNotes = [];
         },
