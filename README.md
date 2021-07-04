@@ -50,8 +50,6 @@
 
 ➜ Add `android:usesCleartextTraffic="true"` within `<application />` at `/android/app/src/main/AndroidManifest.xml`
 
-➜ **Optional** Replace `<color name="ic_launcher_background">#FFFFFF</color>"` with `<color name="ic_launcher_background">#2E8B57</color>` at `/android/app/src/main/res/values/ic_launcher_background.xml`
-
 ➜ Replace  `minSdkVersion = 21"` with `minSdkVersion = 23` at `/android/variables.gradle`
 
 ➜ Add `<string name="server_client_id">***-***.apps.googleusercontent.com</string>` at `/android/app/src/main/res/values/strings.xml`
@@ -77,4 +75,5 @@
 
 ## Change Log
 
+-   `0.1.1`: Cohort + Menubar + Sign out
 -   `0.1.0`: User creation with Google authentication + Basic vocabulary functionalities 
