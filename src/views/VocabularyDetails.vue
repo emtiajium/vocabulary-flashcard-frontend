@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <firecracker-header
-            :header-title="$route.params.word"
+            :header-title="$route.params.word || ''"
             content-id="vocabulary-details"
             menu-id="vocabulary-details-menu"
         />
