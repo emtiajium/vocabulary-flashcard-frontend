@@ -32,14 +32,7 @@
                 </ion-item>
                 <ion-item v-if="!isLoading">
                     <ion-button color="success" @click="onAddingDefinition">
-                        <view v-if="!definitions.length">
-                            <font-awesome-icon :icon="faPlusCircle" />
-                        </view>
-                        <view v-if="definitions.length">
-                            <font-awesome-icon :icon="faPlusCircle" />
-                            <span class="ion-padding-start" />
-                            <font-awesome-icon :icon="faPlusCircle" />
-                        </view>
+                        <font-awesome-icon :icon="faPlusCircle" />
                     </ion-button>
                 </ion-item>
 
