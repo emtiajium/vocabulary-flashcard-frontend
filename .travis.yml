@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+    - 14.15.4
+install:
+    - npm install
+script:
+    # Prettier
+    - npm run format:check
+    # ESLint
+    - npm run lint:check
+    # Automated Test
+    - npm run test:unit
+    - npm run test:e2e
+    # Build
+    - npm run serve:android:anew
