@@ -33,6 +33,7 @@
         "@fortawesome/free-regular-svg-icons": "^5.15.3",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/vue-fontawesome": "^3.0.0-4",
+        "@ionic/cli": "^6.16.3",
         "@ionic/core": "^5.6.9",
         "@ionic/storage": "^3.0.4",
         "@ionic/vue": "^5.4.0",
