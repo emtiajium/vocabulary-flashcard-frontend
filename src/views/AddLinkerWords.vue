@@ -1,6 +1,6 @@
 <template>
     <ion-item lines="none">
-        <ion-card-title>Linker Words</ion-card-title>
+        <ion-card-title>Relatable Words</ion-card-title>
     </ion-item>
     <ion-item lines="none">
         <div class="form-text">
