@@ -60,7 +60,9 @@
 
 ## Launcher icon generator
 
-➜ Visit [here](https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html)
+➜ Square + Round: Visit [here](https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html)
+
+➜ Foreground: Visit [here](https://easyappicon.com/)
 
 ## Deploy the web app to the Google Firebase Hosting
 
