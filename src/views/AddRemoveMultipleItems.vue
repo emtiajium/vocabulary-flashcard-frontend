@@ -26,6 +26,8 @@
                                 @click="onAddMoreItem"
                             >
                                 <font-awesome-icon :icon="faPlusCircle" />
+                                <span class="ion-padding-start" />
+                                <font-awesome-icon :icon="faPlusCircle" />
                             </ion-button>
                             <ion-button
                                 v-show="items.length > 0 && items[index]?.length > 0"
