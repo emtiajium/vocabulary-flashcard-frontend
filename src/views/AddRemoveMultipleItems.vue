@@ -25,7 +25,7 @@
                                 color="success"
                                 @click="onAddMoreItem"
                             >
-                                <font-awesome-icon :icon="faPlusCircle" />
+                                <span class="material-icons"> plus_one </span>
                             </ion-button>
                             <ion-button
                                 v-show="items.length > 0 && items[index]?.length > 0"
@@ -48,7 +48,7 @@ import { IonTextarea, IonItem, IonButton, IonGrid, IonRow, IonCol } from '@ionic
 import { v4 as uuidV4 } from 'uuid';
 import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'AddRemoveMultipleItems',
@@ -65,7 +65,6 @@ export default defineComponent({
     data() {
         const placeholderItems = _.fill(_.times(this.existingItems?.length || 1), uuidV4());
         return {
-            faPlusCircle,
             faMinusCircle,
             placeholderItems,
             items: (this.existingItems || []) as string[],
