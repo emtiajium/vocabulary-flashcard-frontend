@@ -18,7 +18,7 @@
             </ion-infinite-scroll>
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                <ion-fab-button @click="$router.push('/add-vocabulary')">
+                <ion-fab-button @click="$router.push('/vocabulary/create')">
                     <font-awesome-icon :icon="faPlus" />
                 </ion-fab-button>
             </ion-fab>

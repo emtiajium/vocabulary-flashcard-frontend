@@ -27,7 +27,7 @@
 
                 <ion-col size="4" class="center">
                     <ion-item lines="none">
-                        <ion-button color="warning" @click="$router.push(`/edit-vocabulary/${vocabulary.id}`)">
+                        <ion-button color="warning" @click="$router.push(`/vocabulary/update/${vocabulary.id}`)">
                             <font-awesome-icon :icon="faPencilAlt" />
                         </ion-button>
                     </ion-item>
@@ -91,7 +91,7 @@ export default defineComponent({
     },
     methods: {
         async seeMore(id: string, word: string): Promise<void> {
-            await this.$router.push(`/vocabulary/${id}/${word}`);
+            await this.$router.push(`/vocabulary/read/${id}/${word}`);
         },
         async presentAlertConfirm(vocabulary: Vocabulary): Promise<void> {
             await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"?`, async () => {

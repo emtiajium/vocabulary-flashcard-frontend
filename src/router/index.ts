@@ -34,22 +34,22 @@ const routes: Array<RouteRecordRaw> = [
         redirect: '/authenticated-home',
     },
     {
-        path: '/add-vocabulary',
+        path: '/vocabulary/create',
         name: 'AddVocabulary',
         component: AddVocabulary,
     },
     {
-        path: '/edit-vocabulary/:id',
+        path: '/vocabulary/update/:id',
         name: 'EditVocabulary',
         component: AddVocabulary,
     },
     {
-        path: '/vocabulary/:id/:word',
+        path: '/vocabulary/read/:id/:word',
         name: 'DisplayVocabulary',
         component: Vocabulary,
     },
     {
-        path: '/cohort',
+        path: '/cohort/read',
         name: 'Cohort',
         component: Cohort,
     },

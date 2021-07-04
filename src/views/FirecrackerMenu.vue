@@ -14,7 +14,7 @@
                     <font-awesome-icon :icon="faBook" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Vocabularies </ion-label>
                 </ion-item>
-                <ion-item button @click="navigate('/cohort')">
+                <ion-item button @click="navigate('/cohort/read')">
                     <font-awesome-icon :icon="faUsers" class="menu-icon" />
                     <ion-label class="ion-padding-start"> My Cohort </ion-label>
                 </ion-item>
