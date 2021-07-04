@@ -1,5 +1,5 @@
 {
-    "appId": "com.emtiajium.ielts.gibberish.android",
+    "appId": "com.emtiajium.firecracker.vocab.practice",
     "appName": "Firecracker Vocab Practice",
     "webDir": "dist",
     "bundledWebRuntime": false,
