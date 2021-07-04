@@ -19,7 +19,7 @@
 
             <ion-card v-if="isReady && cohort.users.length > 1">
                 <ion-card-content>
-                    <ion-card-title> {{ cohort.name }} </ion-card-title>
+                    <ion-card-title class="display-flex ion-justify-content-center"> {{ cohort.name }} </ion-card-title>
                 </ion-card-content>
             </ion-card>
 
