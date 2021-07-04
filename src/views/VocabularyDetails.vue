@@ -71,7 +71,7 @@
                     <hr v-if="vocabulary.definitions.length && vocabulary.linkerWords.length" class="solid" />
 
                     <view v-if="vocabulary.linkerWords.length">
-                        <strong>Linker Words</strong>
+                        <strong>Relatable Words</strong>
                         <br />
                         <br />
                         <ul>

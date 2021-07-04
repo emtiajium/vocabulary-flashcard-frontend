@@ -22,7 +22,7 @@
 
 ###### Create your configuration and edit
 
-➜ `config.json.text` > `config.json`
+➜ `config.json.text` -> `config.json`
 
 ➜ `capacitor.config.json.text` -> `capacitor.config.json` 
 
