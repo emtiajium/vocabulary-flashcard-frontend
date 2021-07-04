@@ -8,7 +8,7 @@
 
 ➜ Add Firebase to the Android project
 
-> [OAuth 2.0 Client ID](https://console.cloud.google.com/)
+> [OAuth 2.0 Client ID: Web client (auto created by Google Service)](https://console.cloud.google.com/)
 
 > Enable Google Sign-In in the Firebase console
 
