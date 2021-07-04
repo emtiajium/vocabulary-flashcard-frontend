@@ -70,7 +70,7 @@ export default defineComponent({
             // Something is wrong!
             this.$router.back();
         },
-        async onClickIcon(): void | Promise<void> {
+        async onClickIcon(): Promise<void> {
             if (this.type === 'MENU') {
                 await this.openMenu();
             } else {

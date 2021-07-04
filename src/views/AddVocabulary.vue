@@ -244,7 +244,7 @@ export default defineComponent({
         setIsDraft(isDraft: boolean): void {
             this.isDraft = isDraft;
         },
-        async onAddingDefinition(): void {
+        async onAddingDefinition(): Promise<void> {
             if (!this.word) {
                 await Toast.present(`Please insert the word before adding the definition`);
             } else {
