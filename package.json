@@ -4,6 +4,8 @@
     "private": true,
     "description": "Firecracker Vocab Practice",
     "scripts": {
+        "create:capacitor.config": "node -r fs -e \"fs.copyFileSync('capacitor.config.json.text', 'capacitor.config.json', fs.constants.COPYFILE_EXCL)\"",
+        "create:config": "node -r fs -e \"fs.copyFileSync('config.json.text', 'config.json', fs.constants.COPYFILE_EXCL)\"",
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
         "test:unit": "vue-cli-service test:unit",
