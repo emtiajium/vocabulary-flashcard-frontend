@@ -14,7 +14,7 @@
             <view class="container">
                 <ion-grid class="display-grid ion-align-items-center">
                     <ion-row class="ion-justify-content-center">
-                        <font-awesome-icon :icon="faFingerprint" class="fa-fingerprint-extra" />
+                        <img src="/assets/icon/icon.png" alt="Logo" class="logo-extra" />
                     </ion-row>
                     <ion-row class="ion-justify-content-center">
                         <ion-button @click="handleClick">
@@ -38,7 +38,6 @@ import Toast from '@/utils/Toast';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { faFingerprint } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'SignIn',
@@ -58,7 +57,7 @@ export default defineComponent({
         await GoogleAuth.load();
     },
     data() {
-        return { faGoogle, faFingerprint };
+        return { faGoogle };
     },
     methods: {
         async handleClick() {
@@ -86,8 +85,7 @@ export default defineComponent({
 .display-grid {
     display: grid;
 }
-.fa-fingerprint-extra {
-    font-size: 70pt;
-    color: #2e8b57;
+.logo-extra {
+    width: 60%;
 }
 </style>
