@@ -79,54 +79,54 @@ http://ionicframework.com/docs/theming/ */
 /** customization by Emtiaj start */
 
 ion-content {
-    --ion-background-color: #FFFFFF;
+    --ion-background-color: #ffffff;
 }
 
 ion-toggle {
-    --background: #D0F0C0;
-    --background-checked: #D0F0C0;
-    --handle-background-checked: #2E8B57;
+    --background: #d0f0c0;
+    --background-checked: #d0f0c0;
+    --handle-background-checked: #2e8b57;
 }
 
 ion-toolbar {
-    --background: #2E8B57;
-    --color: #FFFFFF;
+    --background: #2e8b57;
+    --color: #ffffff;
 }
 
 ion-button {
-    --background: #2E8B57;
-    --ion-color-primary: #2E8B57;
-    --ion-color-success: #2E8B57;
-    --ion-color-warning: #50C878;
-    --ion-color-danger: #D0F0C0;
-    --ion-color-dark: #444C38;
-    --ion-color-warning-contrast: #FFFFFF;
-    --ion-color-danger-contrast: #2E2E2E;
+    --background: #2e8b57;
+    --ion-color-primary: #2e8b57;
+    --ion-color-success: #2e8b57;
+    --ion-color-warning: #50c878;
+    --ion-color-danger: #d0f0c0;
+    --ion-color-dark: #444c38;
+    --ion-color-warning-contrast: #ffffff;
+    --ion-color-danger-contrast: #2e2e2e;
 }
 
 ion-card {
-    --background: #EFFAE9;
+    --background: #effae9;
 }
 
 ion-card-title {
-    --color: #444C38;
+    --color: #444c38;
 }
 
 ion-item {
-    --background: #EFFAE9;
-    --ion-item-color: #444C38;
+    --background: #effae9;
+    --ion-item-color: #444c38;
 }
 
 ion-fab-button {
-    --background: #2E8B57;
+    --background: #2e8b57;
 }
 
 ion-spinner {
-    --ion-color-primary: #2E8B57;
+    --ion-color-primary: #2e8b57;
 }
 
 .ion-activatable {
-    --ion-color-primary: #2E8B57;
+    --ion-color-primary: #2e8b57;
 }
 
 /** customization by Emtiaj end */
