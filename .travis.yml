@@ -8,5 +8,3 @@ script:
     - npm run format:check
     # ESLint
     - npm run lint:check
-    # Build
-    - npm run serve:android:anew
