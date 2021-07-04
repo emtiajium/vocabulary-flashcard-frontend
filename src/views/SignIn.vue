@@ -88,4 +88,9 @@ export default defineComponent({
 .logo-extra {
     width: 60%;
 }
+@media only screen and (min-device-width: 480px) {
+    .logo-extra {
+        width: 35%;
+    }
+}
 </style>
