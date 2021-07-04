@@ -8,8 +8,5 @@ script:
     - npm run format:check
     # ESLint
     - npm run lint:check
-    # Automated Test
-    - npm run test:unit
-    - npm run test:e2e
     # Build
     - npm run serve:android:anew
