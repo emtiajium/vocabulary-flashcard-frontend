@@ -19,7 +19,7 @@
                     <ion-row class="ion-justify-content-center">
                         <ion-button @click="handleClick">
                             <font-awesome-icon :icon="faGoogle" />
-                            <ion-text class="ion-padding-start capitalize">Continue with Google</ion-text>
+                            <ion-text class="ion-padding-start">Continue with Google</ion-text>
                         </ion-button>
                     </ion-row>
                 </ion-grid>
@@ -86,11 +86,13 @@ export default defineComponent({
     display: grid;
 }
 .logo-extra {
-    width: 60%;
+    width: 45%;
+    transform: rotate(240deg);
 }
 @media only screen and (min-device-width: 480px) {
     .logo-extra {
-        width: 20%;
+        width: 13%;
+        transform: rotate(240deg);
     }
 }
 </style>
