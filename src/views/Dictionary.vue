@@ -1,5 +1,5 @@
 <template>
-    <view :fullscreen="true">
+    <view>
         <ion-card>
             <ion-card-header>
                 <ion-card-title> Definition in renowned dictionary </ion-card-title>
@@ -80,7 +80,6 @@ export default defineComponent({
 @media only screen and (min-device-width: 480px) {
     .dictionary-logo-extra {
         width: 50%;
-        border-radius: 50%;
     }
 }
 </style>
