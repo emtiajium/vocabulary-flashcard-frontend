@@ -127,6 +127,8 @@
                     </view>
                 </ion-card-content>
             </ion-card>
+
+            <dictionary v-if="!isLoading && Object.keys(vocabulary).length" :word="vocabulary.word" />
         </ion-content>
     </ion-page>
 </template>
@@ -140,10 +142,12 @@ import { useRoute } from 'vue-router';
 import Spinner from '@/views/Spinner.vue';
 import EmptyContainer from '@/views/EmptyContainer.vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import Dictionary from '@/views/Dictionary.vue';
 
 export default defineComponent({
     name: 'VocabularyDetails',
     components: {
+        Dictionary,
         FirecrackerHeader,
         Spinner,
         EmptyContainer,
