@@ -48,11 +48,12 @@
 
 ➜ Open the project (`/android`) in Android Studio
 
-➜ Add `android:usesCleartextTraffic="true"` within `<application />` at `/android/app/src/main/AndroidManifest.xml`
+➜ Replace few generated files
+> Add `android:usesCleartextTraffic="true"` within `<application />` at `./android/app/src/main/AndroidManifest.xml`
 
-➜ Replace  `minSdkVersion = 21"` with `minSdkVersion = 23` at `/android/variables.gradle`
+> Replace  `minSdkVersion = 21` with `minSdkVersion = 23` at `./android/variables.gradle`
 
-➜ Add `<string name="server_client_id">***-***.apps.googleusercontent.com</string>` at `/android/app/src/main/res/values/strings.xml`
+> Add `<string name="server_client_id">***-***.apps.googleusercontent.com</string>` at `./android/app/src/main/res/values/strings.xml`
 
 ➜ Sync project with gradle files
 
@@ -77,6 +78,10 @@
 > capacitor.config.json
 
 ➜ `npm run deploy:firebase`
+
+## Publish the app to the Google Play Store
+
+➜ TO BE ADDED
 
 ## Change Log
 
