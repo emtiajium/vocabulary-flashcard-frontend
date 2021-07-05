@@ -7,7 +7,6 @@
 ➜ <https://github.com/emtiajium/ielts-gibberish>
 
 ➜ Add Firebase to the Android project
-
 > [OAuth 2.0 Client ID: Web client (auto created by Google Service)](https://console.cloud.google.com/)
 
 > Enable Google Sign-In in the Firebase console
@@ -37,7 +36,6 @@
 ###### Run the web app natively on Android
 
 ➜ Read [these](https://facebook.github.io/react-native/docs/running-on-device.html) and execute three task given below
-
 > Enable Debugging over USB
 
 > Plug in your device via USB
@@ -59,7 +57,7 @@
 
 ➜ Shift + F10
 
-## Launcher icon generator
+## Launcher icon and splash screen generator
 
 ➜ Square + Round: Visit [here](https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html)
 
