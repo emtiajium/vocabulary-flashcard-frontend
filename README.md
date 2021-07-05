@@ -65,8 +65,8 @@
 
 ➜ Foreground: Visit [here](https://easyappicon.com/)
 
-➜ Splash screen: Visit [here](https://www.fotor.com/)
-> `cordova-res android`
+➜ Splash screen: Visit [here](https://romannurik.github.io/AndroidAssetStudio/nine-patches.html)
+> Draw the stretchable patches and content area manually. See details from [here](https://developer.android.com/studio/write/draw9patch)
 
 ## Deploy the web app to the Google Firebase Hosting
 
