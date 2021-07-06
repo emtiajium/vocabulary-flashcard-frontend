@@ -29,7 +29,7 @@ export default defineComponent({
         if (user) {
             // get the user info from the server
             // as cohort can be updated anytime by the super admin
-            user = await HttpHandler.get<User>(`/v1/users/${user.username}`);
+            user = await HttpHandler.get<User>(`/v1/users/self`);
             await NativeStorage.setAuthorizedUser(user);
             await this.$router.push('/authenticated-home');
         } else {
