@@ -1,6 +1,6 @@
 import { IsPositive, Max, Min } from 'class-validator';
 
-export const pageSize = 50;
+export const pageSize = 10;
 
 export default class Pagination {
     @IsPositive()
