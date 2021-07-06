@@ -30,7 +30,6 @@
 import { IonContent, IonPage, IonFab, IonFabButton, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
-import NativeStorage from '@/utils/NativeStorage';
 import SearchResult from '@/domains/SearchResult';
 import Vocabulary from '@/domains/Vocabulary';
 import VocabularySearch from '@/domains/VocabularySearch';
@@ -56,10 +55,9 @@ export default defineComponent({
         FontAwesomeIcon,
     },
     data() {
-        return { faPlus, cohortId: '', vocabularies: [] as Vocabulary[], pageNumber: 1, isDisabled: false };
+        return { faPlus, vocabularies: [] as Vocabulary[], pageNumber: 1, isDisabled: false };
     },
     async mounted() {
-        this.cohortId = await NativeStorage.getCohortId();
         await this.renderVocabularies();
     },
     methods: {
@@ -76,7 +74,6 @@ export default defineComponent({
 
         async findVocabularies(): Promise<SearchResult<Vocabulary>> {
             const vocabularySearch: VocabularySearch = {
-                cohortId: this.cohortId,
                 pagination: {
                     pageSize: 10,
                     pageNumber: this.pageNumber,
