@@ -76,7 +76,6 @@ import {
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import HttpHandler from '../utils/HttpHandler';
-import NativeStorage from '../utils/NativeStorage';
 
 export default defineComponent({
     name: 'Cohort',
@@ -101,8 +100,7 @@ export default defineComponent({
         };
     },
     async mounted() {
-        const cohortId = await NativeStorage.getCohortId();
-        this.cohort = (await HttpHandler.get<Cohort>(`/v1/cohorts/${cohortId}`)) as Cohort;
+        this.cohort = (await HttpHandler.get<Cohort>(`/v1/cohorts/self`)) as Cohort;
         this.isReady = true;
     },
 });
