@@ -92,7 +92,6 @@ export default defineComponent({
 @media only screen and (min-device-width: 480px) {
     .logo-extra {
         width: 13%;
-        transform: rotate(240deg);
     }
 }
 </style>
