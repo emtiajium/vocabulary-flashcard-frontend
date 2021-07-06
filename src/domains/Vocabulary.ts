@@ -7,12 +7,12 @@ import {
     IsNotEmpty,
     IsOptional,
     IsString,
+    IsUrl,
     IsUUID,
     ValidateIf,
     ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import IsArrayContainsOnlyUrl from '@/validators/IsArrayContainsOnlyUrl';
 
 export default class Vocabulary {
     @IsUUID()
@@ -21,9 +21,8 @@ export default class Vocabulary {
     id: string;
 
     @IsUUID()
-    @IsNotEmpty()
-    @IsDefined()
-    cohortId: string;
+    @IsOptional()
+    cohortId?: string;
 
     @IsString()
     @IsNotEmpty()
@@ -42,7 +41,7 @@ export default class Vocabulary {
     genericNotes?: string[];
 
     @ValidateIf((vocabulary) => !!vocabulary.genericExternalLinks)
-    @IsArrayContainsOnlyUrl()
+    @IsUrl(undefined, { each: true })
     @IsArray()
     @IsOptional()
     genericExternalLinks?: string[];
