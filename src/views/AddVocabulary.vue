@@ -143,7 +143,6 @@ import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import Vocabulary from '@/domains/Vocabulary';
 import { v4 as uuidV4 } from 'uuid';
-import NativeStorage from '@/utils/NativeStorage';
 import AddLinkerWords from '@/views/AddLinkerWords.vue';
 import AddGenericNotes from '@/views/AddGenericNotes.vue';
 import AddGenericExternalLinks from '@/views/AddGenericExternalLinks.vue';
@@ -295,10 +294,9 @@ export default defineComponent({
             this.mode = Mode.DEFINITION_UPDATE;
             this.setCurrentPage(PageType.ADD_DEFINITION);
         },
-        async getVocabularyPayload(): Promise<Vocabulary> {
+        getVocabularyPayload(): Vocabulary {
             const vocabulary = new Vocabulary();
             vocabulary.id = this.id;
-            vocabulary.cohortId = await NativeStorage.getCohortId();
             vocabulary.word = this.word;
             vocabulary.definitions = this.definitions;
             vocabulary.linkerWords = (
@@ -321,7 +319,7 @@ export default defineComponent({
         },
         async persist(): Promise<void> {
             try {
-                const vocabulary = await this.getVocabularyPayload();
+                const vocabulary = this.getVocabularyPayload();
                 this.validatePayload(vocabulary);
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
                 this.clear();
