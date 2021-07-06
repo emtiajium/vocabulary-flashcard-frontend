@@ -61,7 +61,7 @@
                                     <li>
                                         <a :href="externalLink" target="_blank">
                                             <span>
-                                                Browser the link
+                                                Browse the link
                                                 <font-awesome-icon :icon="faExternalLinkAlt" />
                                             </span>
                                         </a>
@@ -125,7 +125,7 @@
                                 <li>
                                     <a :href="genericExternalLink" target="_blank">
                                         <span>
-                                            Browser the link
+                                            Browse the link
                                             <font-awesome-icon :icon="faExternalLinkAlt" />
                                         </span>
                                     </a>
