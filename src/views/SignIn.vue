@@ -70,7 +70,7 @@ export default defineComponent({
             }
         },
         async persistUser(user: User): Promise<void> {
-            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
+            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user, true);
             await NativeStorage.setAuthorizedUser(persistedUser as User);
         },
     },
@@ -87,7 +87,6 @@ export default defineComponent({
 }
 .logo-extra {
     width: 45%;
-    transform: rotate(240deg);
 }
 @media only screen and (min-device-width: 480px) {
     .logo-extra {
