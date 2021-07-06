@@ -8,7 +8,7 @@
                             <font-awesome-icon v-if="type === 'MENU'" :icon="faBars" />
                             <font-awesome-icon v-if="type === 'BACK'" :icon="faArrowLeft" />
                         </ion-menu-button>
-                        <ion-title>{{ headerTitle }}</ion-title>
+                        <ion-title class="overflowed-content">{{ headerTitle }}</ion-title>
                     </ion-col>
                 </ion-row>
             </ion-grid>
