@@ -1,5 +1,7 @@
 import Axios, { AxiosError } from 'axios';
 
+type RequestConfig = Record<string, unknown>;
+
 export default class AxiosAdapter {
     static handleError(error: AxiosError): void {
         if (Array.isArray(error?.response?.data?.message)) {
@@ -8,12 +10,14 @@ export default class AxiosAdapter {
         throw new Error(error.response?.data.message);
     }
 
-    static async post<TPayload, UResponse>(url: string, payload: TPayload): Promise<UResponse> {
+    static async post<TPayload, UResponse>(
+        url: string,
+        payload: TPayload,
+        requestConfig: RequestConfig,
+    ): Promise<UResponse> {
         let response;
         try {
-            const axiosResponse = await Axios.post(url, payload, {
-                headers: { 'content-type': 'application/json' },
-            });
+            const axiosResponse = await Axios.post(url, payload, requestConfig);
             response = axiosResponse.data;
         } catch (error) {
             throw AxiosAdapter.handleError(error);
@@ -21,12 +25,10 @@ export default class AxiosAdapter {
         return response;
     }
 
-    static async get<TResponse>(url: string): Promise<TResponse> {
+    static async get<TResponse>(url: string, requestConfig: RequestConfig): Promise<TResponse> {
         let response;
         try {
-            const axiosResponse = await Axios.get(url, {
-                headers: { 'content-type': 'application/json' },
-            });
+            const axiosResponse = await Axios.get(url, requestConfig);
             response = axiosResponse.data;
         } catch (error) {
             throw AxiosAdapter.handleError(error);
@@ -34,11 +36,9 @@ export default class AxiosAdapter {
         return response;
     }
 
-    static async delete(url: string): Promise<void> {
+    static async delete(url: string, requestConfig: RequestConfig): Promise<void> {
         try {
-            await Axios.delete(url, {
-                headers: { 'content-type': 'application/json' },
-            });
+            await Axios.delete(url, requestConfig);
         } catch (error) {
             throw AxiosAdapter.handleError(error);
         }
