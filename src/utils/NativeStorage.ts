@@ -37,6 +37,11 @@ export default class NativeStorage {
         return user.cohortId as string;
     }
 
+    static async getUserId(): Promise<string> {
+        const user = await NativeStorage.getAuthorizedUser();
+        return user.id as string;
+    }
+
     static async setAuthorizedUser(user: User): Promise<void> {
         await (
             await NativeStorage.getStorage()
