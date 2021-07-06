@@ -4,7 +4,7 @@
 
         <ion-content :fullscreen="true" id="vocabulary-list">
             <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
-                <vocabulary :vocabulary="vocabulary" :delete-vocabulary="deleteVocabulary" />
+                <minified-vocabulary :vocabulary="vocabulary" :delete-vocabulary="deleteVocabulary" />
             </view>
 
             <ion-infinite-scroll
@@ -45,7 +45,7 @@ type IonInfiniteScrollType = Components.IonInfiniteScroll;
 export default defineComponent({
     name: 'VocabularyList',
     components: {
-        Vocabulary: MinifiedVocabulary,
+        MinifiedVocabulary,
         FirecrackerHeader,
         IonContent,
         IonPage,

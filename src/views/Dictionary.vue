@@ -2,7 +2,7 @@
     <view>
         <ion-card>
             <ion-card-header>
-                <ion-card-title> Definition in renowned dictionary </ion-card-title>
+                <ion-card-title> Definition in the renowned dictionary </ion-card-title>
             </ion-card-header>
         </ion-card>
         <ion-grid>
