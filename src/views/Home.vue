@@ -8,6 +8,8 @@ import Spinner from '@/views/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { useBackButton, useIonRouter } from '@ionic/vue';
 import { App } from '@capacitor/app';
+import HttpHandler from '@/utils/HttpHandler';
+import User from '@/domains/User';
 
 export default defineComponent({
     name: 'Home',
@@ -23,8 +25,12 @@ export default defineComponent({
         });
     },
     async mounted() {
-        const user = await NativeStorage.getAuthorizedUser();
+        let user = await NativeStorage.getAuthorizedUser();
         if (user) {
+            // get the user info from the server
+            // as cohort can be updated anytime by the super admin
+            user = await HttpHandler.get<User>(`/v1/users/${user.username}`);
+            await NativeStorage.setAuthorizedUser(user);
             await this.$router.push('/authenticated-home');
         } else {
             await this.$router.push('/sign-in');
