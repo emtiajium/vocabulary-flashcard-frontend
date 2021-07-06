@@ -129,6 +129,10 @@ ion-spinner {
     --ion-color-primary: #2e8b57;
 }
 
+a {
+    --ion-color-primary: #2e8b57;
+}
+
 /** customization by Emtiaj end */
 
 @media (prefers-color-scheme: dark) {

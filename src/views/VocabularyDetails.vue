@@ -59,7 +59,12 @@
                             <ul>
                                 <view v-for="(externalLink, index2) in definition.externalLinks" :key="index2">
                                     <li>
-                                        <a :href="externalLink" target="_blank">{{ externalLink }}</a>
+                                        <a :href="externalLink" target="_blank">
+                                            <span>
+                                                Browser the link
+                                                <font-awesome-icon :icon="faExternalLinkAlt" />
+                                            </span>
+                                        </a>
                                         <br />
                                         <br />
                                     </li>
@@ -118,7 +123,12 @@
                                 :key="genericExternalLinkIndex"
                             >
                                 <li>
-                                    <a :href="genericExternalLink" target="_blank">{{ genericExternalLink }}</a>
+                                    <a :href="genericExternalLink" target="_blank">
+                                        <span>
+                                            Browser the link
+                                            <font-awesome-icon :icon="faExternalLinkAlt" />
+                                        </span>
+                                    </a>
                                     <br />
                                     <br />
                                 </li>
@@ -143,6 +153,8 @@ import Spinner from '@/views/Spinner.vue';
 import EmptyContainer from '@/views/EmptyContainer.vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import Dictionary from '@/views/Dictionary.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'VocabularyDetails',
@@ -155,6 +167,7 @@ export default defineComponent({
         IonContent,
         IonCard,
         IonCardContent,
+        FontAwesomeIcon,
     },
     data() {
         return {
@@ -162,6 +175,7 @@ export default defineComponent({
             vocabulary: {} as Vocabulary,
             showDefaultMessage: false,
             defaultMessage: `Looks like you haven't added anything yet!`,
+            faExternalLinkAlt,
         };
     },
     async mounted() {
