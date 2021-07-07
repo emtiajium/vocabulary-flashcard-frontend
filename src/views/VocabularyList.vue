@@ -21,6 +21,15 @@
                 <minified-vocabulary :vocabulary="vocabulary" :delete-vocabulary="deleteVocabulary" />
             </view>
 
+            <view v-if="isDisabled && vocabularies.length > 0">
+                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
+                    <span class="ion-text-center"> Congrats! You have scrolled down to the last vocabulary! </span>
+                </ion-card-subtitle>
+                <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                    <font-awesome-icon :icon="faThumbsUp" class="loaded-all-icon" />
+                </view>
+            </view>
+
             <ion-infinite-scroll
                 @ionInfinite="renderVocabularies($event)"
                 threshold="100px"
@@ -62,7 +71,7 @@ import VocabularySearch from '@/domains/VocabularySearch';
 import { Components } from '@ionic/core/components';
 import MinifiedVocabulary from '@/views/MinifiedVocabulary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
@@ -93,6 +102,7 @@ export default defineComponent({
             pageSize: 10,
             isDisabled: false,
             isCompletedInitialRequest: false,
+            faThumbsUp,
         };
     },
     async mounted() {
@@ -141,4 +151,9 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.loaded-all-icon {
+    font-size: 60pt;
+    color: #2e8b57;
+}
+</style>
