@@ -20,7 +20,9 @@
                         </view>
 
                         <ion-item v-if="vocabulary.definitions.length > 2" lines="none">
-                            <ion-card-subtitle> ... ... </ion-card-subtitle>
+                            <ion-card-subtitle>
+                                <font-awesome-icon :icon="faEllipsisH" />
+                            </ion-card-subtitle>
                         </ion-item>
                     </ion-card-content>
                 </ion-col>
@@ -63,7 +65,7 @@ import {
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTrashAlt, faPencilAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPencilAlt, faExpandAlt, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import Alert from '@/utils/Alert';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
@@ -87,7 +89,7 @@ export default defineComponent({
     },
     props: ['vocabulary', 'deleteVocabulary'],
     data() {
-        return { faTrashAlt, faPencilAlt, faExpandAlt };
+        return { faTrashAlt, faPencilAlt, faExpandAlt, faEllipsisH };
     },
     methods: {
         async seeMore(id: string, word: string): Promise<void> {
