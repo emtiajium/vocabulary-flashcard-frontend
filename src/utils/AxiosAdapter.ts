@@ -4,6 +4,9 @@ type RequestConfig = Record<string, unknown>;
 
 export default class AxiosAdapter {
     static handleError(error: AxiosError): void {
+        if (error.message === 'Network Error') {
+            throw new Error(`Looks like something is wrong with your network. Please try later.`);
+        }
         if (Array.isArray(error?.response?.data?.message)) {
             throw new Error(error.response?.data.message[0]);
         }
