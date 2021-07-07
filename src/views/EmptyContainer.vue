@@ -1,10 +1,10 @@
 <template>
     <view>
-        <view class="empty-container ion-justify-content-center">
+        <view class="display-flex ion-justify-content-center">
             <ion-label class="empty-container-message">{{ message }}</ion-label>
         </view>
         <br />
-        <view class="empty-container ion-justify-content-center">
+        <view class="display-flex ion-justify-content-center">
             <font-awesome-icon :icon="faMehBlank" class="fa-meh-blank-extra" />
         </view>
     </view>
@@ -32,9 +32,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.empty-container {
-    display: flex;
-}
 .empty-container-message {
     font-size: 12pt;
 }
