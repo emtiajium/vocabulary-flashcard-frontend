@@ -8,22 +8,23 @@
                 </ion-card-content>
             </ion-card>
 
-            <ion-card v-if="isReady && cohort.users.length === 1">
+            <network-error v-if="isNetworkError && isReady" />
+
+            <ion-card v-if="isReady && !isNetworkError && isTheUserAlone()">
                 <ion-card-content>
                     <empty-container
-                        v-if="isReady && cohort.users.length === 1"
                         message="Looks like you are the only member of your group. Please let us know if you would like to create your own group."
                     />
                 </ion-card-content>
             </ion-card>
 
-            <ion-card v-if="isReady && cohort.users.length > 1">
+            <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()">
                 <ion-card-content>
                     <ion-card-title class="display-flex ion-justify-content-center"> {{ cohort.name }} </ion-card-title>
                 </ion-card-content>
             </ion-card>
 
-            <view v-if="isReady && cohort.users.length > 1">
+            <view v-if="isReady && !isNetworkError && !isTheUserAlone()">
                 <view v-for="user in cohort.users" :key="user.username">
                     <ion-card>
                         <ion-card-content>
@@ -75,11 +76,13 @@ import {
     IonCol,
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
-import HttpHandler from '../utils/HttpHandler';
+import NetworkError from '@/views/NetworkError.vue';
+import HttpHandler from '@/utils/HttpHandler';
 
 export default defineComponent({
     name: 'Cohort',
     components: {
+        NetworkError,
         FirecrackerHeader,
         EmptyContainer,
         Spinner,
@@ -96,12 +99,23 @@ export default defineComponent({
     data() {
         return {
             isReady: false,
+            isNetworkError: false,
             cohort: {} as Cohort,
         };
     },
     async mounted() {
-        this.cohort = (await HttpHandler.get<Cohort>(`/v1/cohorts/self`)) as Cohort;
+        try {
+            this.cohort = (await HttpHandler.get<Cohort>(`/v1/cohorts/self`)) as Cohort;
+            this.isNetworkError = false;
+        } catch (error) {
+            this.isNetworkError = true;
+        }
         this.isReady = true;
+    },
+    methods: {
+        isTheUserAlone(): boolean {
+            return this.cohort?.users?.length === 1;
+        },
     },
 });
 </script>
