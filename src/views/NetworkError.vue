@@ -31,7 +31,7 @@ export default defineComponent({
 
 <style scoped>
 .network-error-icon {
-    font-size: 60pt;
+    font-size: 50pt;
     color: #50c878;
 }
 </style>
