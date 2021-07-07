@@ -32,16 +32,16 @@ export default class NativeStorage {
         return NativeStorage.getByKey<User>(NativeStorageKey.AUTHORIZED_USER);
     }
 
-    static async getUserId(): Promise<string> {
+    static async getJwtToken(): Promise<string> {
         const user = await NativeStorage.getAuthorizedUser();
-        return user.id as string;
+        return user.jwToken as string;
     }
 
     static async setAuthorizedUser(user: User): Promise<void> {
         await (
             await NativeStorage.getStorage()
         ).set(NativeStorageKey.AUTHORIZED_USER, {
-            id: user?.id,
+            jwToken: user?.jwToken,
             username: user?.username,
             firstname: user?.firstname,
             lastname: user?.lastname,

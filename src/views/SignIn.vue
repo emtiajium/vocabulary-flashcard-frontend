@@ -69,9 +69,9 @@ export default defineComponent({
                 await Toast.present(error.message || `Something went wrong!`);
             }
         },
-        async persistUser(user: User): Promise<void> {
-            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user, true);
-            await NativeStorage.setAuthorizedUser(persistedUser as User);
+        async persistUser(googleUser: User): Promise<void> {
+            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, googleUser, true);
+            await NativeStorage.setAuthorizedUser({ ...persistedUser, jwToken: googleUser.jwToken } as User);
         },
     },
 });

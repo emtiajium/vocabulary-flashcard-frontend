@@ -1,5 +1,5 @@
 export default class User {
-    email?: string;
+    jwToken?: string;
 
     username?: string;
 

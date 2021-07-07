@@ -25,7 +25,7 @@ export default class GoogleAuthorization {
         // Instead, use the account's ID, which you can get on the client with getBasicProfile().getId(),
         // and on the backend from the sub claim of the ID token.
         return {
-            email: googleUser.email,
+            jwToken: googleUser.authentication.idToken,
             username: googleUser.email,
             firstname: googleUser.givenName,
             lastname: googleUser.familyName,
