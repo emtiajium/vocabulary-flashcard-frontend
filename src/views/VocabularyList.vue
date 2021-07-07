@@ -3,7 +3,7 @@
         <firecracker-header header-title="Vocabularies" content-id="vocabulary-list" menu-id="vocabulary-list-menu" />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-card v-if="isCompletedInitialRequest && vocabularies.length === 0">
+            <ion-card v-if="isCompletedInitialRequest && totalVocabularies === 0 && !isNetworkError">
                 <ion-card-content>
                     <ion-card-subtitle class="display-flex ion-justify-content-center">
                         Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
@@ -29,6 +29,8 @@
                     <font-awesome-icon :icon="faThumbsUp" class="loaded-all-icon" />
                 </view>
             </view>
+
+            <network-error v-if="isNetworkError" />
 
             <ion-infinite-scroll
                 @ionInfinite="renderVocabularies($event)"
@@ -73,12 +75,14 @@ import MinifiedVocabulary from '@/views/MinifiedVocabulary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlus, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import NetworkError from '@/views/NetworkError.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 
 export default defineComponent({
     name: 'VocabularyList',
     components: {
+        NetworkError,
         MinifiedVocabulary,
         FirecrackerHeader,
         IonContent,
@@ -103,6 +107,8 @@ export default defineComponent({
             isDisabled: false,
             isCompletedInitialRequest: false,
             faThumbsUp,
+            isNetworkError: false,
+            totalVocabularies: 0,
         };
     },
     async mounted() {
@@ -112,6 +118,7 @@ export default defineComponent({
     methods: {
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findVocabularies();
+            this.totalVocabularies = total;
             this.vocabularies = this.vocabularies.concat(results);
             this.pageNumber += 1;
             this.isDisabled = this.vocabularies.length >= total;
@@ -128,10 +135,18 @@ export default defineComponent({
                     pageNumber: this.pageNumber,
                 },
             };
-            return (await HttpHandler.post<VocabularySearch, SearchResult<Vocabulary>>(
-                '/v1/vocabularies/search',
-                vocabularySearch,
-            )) as SearchResult<Vocabulary>;
+            let searchResult;
+            try {
+                searchResult = await HttpHandler.post<VocabularySearch, SearchResult<Vocabulary>>(
+                    '/v1/vocabularies/search',
+                    vocabularySearch,
+                );
+                this.isNetworkError = false;
+            } catch (error) {
+                this.isNetworkError = true;
+                searchResult = { results: [], total: this.totalVocabularies };
+            }
+            return searchResult as SearchResult<Vocabulary>;
         },
 
         deleteVocabulary(id: string): void {
@@ -143,6 +158,7 @@ export default defineComponent({
                 '/v1/vocabularies/bootstrap',
                 undefined,
             );
+            this.isNetworkError = false;
             this.vocabularies = results;
             this.pageNumber = Number.parseInt((total / this.pageSize).toString(), 10) + 1;
             this.isDisabled = true;
