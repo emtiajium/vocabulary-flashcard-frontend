@@ -25,12 +25,12 @@ export default defineComponent({
         });
     },
     async mounted() {
-        let user = await NativeStorage.getAuthorizedUser();
-        if (user) {
+        const localUser = await NativeStorage.getAuthorizedUser();
+        if (localUser) {
             // get the user info from the server
             // as cohort can be updated anytime by the super admin
-            user = await HttpHandler.get<User>(`/v1/users/self`);
-            await NativeStorage.setAuthorizedUser(user);
+            const user = await HttpHandler.get<User>(`/v1/users/self`);
+            await NativeStorage.setAuthorizedUser({ ...user, jwToken: localUser.jwToken });
             await this.$router.push('/authenticated-home');
         } else {
             await this.$router.push('/sign-in');
