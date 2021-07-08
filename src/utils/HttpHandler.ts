@@ -10,7 +10,7 @@ export default class HttpHandler {
             'content-type': 'application/json',
         };
         if (!isPublic) {
-            requestConfig.Authorization = `Bearer ${await NativeStorage.getJwtToken()}`;
+            requestConfig.Authorization = `Bearer ${await NativeStorage.getJwToken()}`;
         }
         return { headers: requestConfig };
     }

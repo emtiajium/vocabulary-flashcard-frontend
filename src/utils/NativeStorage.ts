@@ -40,7 +40,7 @@ export default class NativeStorage {
         return NativeStorage.getByKey<User>(NativeStorageKey.AUTHORIZED_USER);
     }
 
-    static async getJwtToken(): Promise<string> {
+    static async getJwToken(): Promise<string> {
         const user = await NativeStorage.getAuthorizedUser();
         return user.jwToken as string;
     }
