@@ -83,6 +83,7 @@
 
 ## Change Log
 
+-   `0.1.3`: Network error notification
 -   `0.1.2`: Authentication using JWT + Functionality to populate a new app user with few vocabularies 
 -   `0.1.1`: Cohort + Menubar + Sign out
 -   `0.1.0`: User creation with Google authentication + Basic vocabulary functionalities 
