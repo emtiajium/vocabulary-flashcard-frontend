@@ -60,4 +60,9 @@ export default class NativeStorage {
     static async removeAuthorizedUser(): Promise<void> {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
     }
+
+    static async resetAuthorizedUser(user: User): Promise<void> {
+        await NativeStorage.removeAuthorizedUser();
+        await NativeStorage.setAuthorizedUser(user);
+    }
 }

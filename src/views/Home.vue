@@ -33,7 +33,7 @@ export default defineComponent({
                 // get the user info from the server
                 // as cohort can be updated anytime by the super admin
                 const user = await HttpHandler.get<User>(`/v1/users/self`);
-                await NativeStorage.setAuthorizedUser({ ...user, jwToken: localUser.jwToken });
+                await NativeStorage.resetAuthorizedUser({ ...user, jwToken: localUser.jwToken });
                 await this.$router.push('/authenticated-home');
             } else {
                 await this.$router.push('/sign-in');
