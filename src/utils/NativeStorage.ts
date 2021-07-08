@@ -2,6 +2,7 @@ import { Drivers, Storage } from '@ionic/storage';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import NativeStorageKey from '@/domains/NativeStorageKey';
 import User from '@/domains/User';
+import { Device } from '@capacitor/device';
 
 let storage: Storage;
 
@@ -13,13 +14,20 @@ export default class NativeStorage {
 
     static async createStorageIfNotExist(): Promise<void> {
         if (!storage) {
-            // IndexedDB: Web app
-            // SQLite: Native app
-            storage = new Storage({
+            const driver = [];
+            const { platform } = await Device.getInfo();
+            if (platform !== 'web') {
                 // eslint-disable-next-line no-underscore-dangle
-                driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB],
+                driver.push(CordovaSQLiteDriver._driver);
+            } else {
+                driver.push(Drivers.IndexedDB);
+            }
+            storage = new Storage({
+                driverOrder: driver,
             });
-            await storage.defineDriver(CordovaSQLiteDriver);
+            if (platform !== 'web') {
+                await storage.defineDriver(CordovaSQLiteDriver);
+            }
             await storage.create();
         }
     }
