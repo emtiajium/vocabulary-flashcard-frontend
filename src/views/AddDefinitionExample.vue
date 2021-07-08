@@ -1,29 +1,34 @@
 <template>
-    <ion-item lines="none">
-        <ion-card-title>Examples</ion-card-title>
-    </ion-item>
-    <ion-item lines="none">
-        <div class="form-text">Usage of the word in a sentence</div>
-    </ion-item>
-    <view v-if="!$props.existingExamples">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
-    </view>
-    <view v-if="$props.existingExamples">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingExamples" />
-    </view>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Examples</ion-card-title>
+            <ion-card-subtitle>Usage of the word in a sentence</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <add-remove-multiple-items v-if="!$props.existingExamples" ref="AddRemoveMultipleItemsRef" />
+            <add-remove-multiple-items
+                v-if="$props.existingExamples"
+                ref="AddRemoveMultipleItemsRef"
+                :existing-items="existingExamples"
+            />
+        </ion-card-content>
+    </ion-card>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonCardTitle } from '@ionic/vue';
+import { IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent } from '@ionic/vue';
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
     name: 'AddDefinitionExample',
     components: {
         AddRemoveMultipleItems,
+        IonCard,
         IonCardTitle,
-        IonItem,
+        IonCardSubtitle,
+        IonCardHeader,
+        IonCardContent,
     },
     props: ['existingExamples'],
     data() {

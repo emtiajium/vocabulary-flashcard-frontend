@@ -6,60 +6,68 @@
         <ion-content :fullscreen="true" id="add-vocabulary">
             <spinner v-if="isLoading" />
 
-            <ion-card v-if="!isLoading">
-                <ion-item lines="none">
-                    <ion-card-title>Word</ion-card-title>
-                </ion-item>
-                <ion-item lines="none">
-                    <div class="form-text">
-                        A word, an idiom, even a prepositional phrase and most importantly whatever you wish to insert
-                    </div>
-                </ion-item>
-                <ion-item>
-                    <ion-textarea
-                        autoGrow="true"
-                        inputmode="text"
-                        :value="word"
-                        @keyup="setWord($event.target.value)"
-                    ></ion-textarea>
-                </ion-item>
-
-                <ion-item lines="none">
-                    <ion-card-title>Definition</ion-card-title>
-                </ion-item>
-                <ion-item lines="none">
-                    <div class="form-text">An explanation of what a word means</div>
-                </ion-item>
-                <ion-item v-if="!isLoading">
-                    <ion-button color="success" @click="onAddingDefinition">
-                        <view v-if="!definitions.length">
-                            <font-awesome-icon :icon="faPlusCircle" />
-                        </view>
-                        <view v-if="definitions.length">
-                            <span class="material-icons"> plus_one </span>
-                        </view>
-                    </ion-button>
-                </ion-item>
-
-                <view v-if="!isLoading">
-                    <view v-show="definitions.length" v-for="(definition, index) in definitions" :key="definition.id">
-                        <ion-item lines="none">
-                            <ion-label color="dark" class="capitalize ion-text-nowrap">
-                                {{ definition.meaning }}
-                            </ion-label>
-                        </ion-item>
+            <view v-if="!isLoading">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>Word</ion-card-title>
+                        <ion-card-subtitle>
+                            A word, an idiom, even a prepositional phrase and most importantly whatever you wish to
+                            insert
+                        </ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
                         <ion-item>
-                            <ion-item-group>
-                                <ion-button color="warning" @click="updateDefinition(index)">
-                                    <font-awesome-icon :icon="faPencilAlt" />
-                                </ion-button>
-                                <ion-button color="danger" @click="removeDefinition(index)">
-                                    <font-awesome-icon :icon="faMinusCircle" />
-                                </ion-button>
-                            </ion-item-group>
+                            <ion-textarea
+                                autoGrow="true"
+                                inputmode="text"
+                                :value="word"
+                                @keyup="setWord($event.target.value)"
+                            />
                         </ion-item>
-                    </view>
-                </view>
+                    </ion-card-content>
+                </ion-card>
+
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title> Definition </ion-card-title>
+                        <ion-card-subtitle> An explanation of what a word means </ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-item v-if="!isLoading" lines="none">
+                            <ion-button color="success" @click="onAddingDefinition">
+                                <view v-if="!definitions.length">
+                                    <font-awesome-icon :icon="faPlusCircle" />
+                                </view>
+                                <view v-if="definitions.length">
+                                    <span class="material-icons"> plus_one </span>
+                                </view>
+                            </ion-button>
+                        </ion-item>
+                        <view v-if="!isLoading">
+                            <view
+                                v-show="definitions.length"
+                                v-for="(definition, index) in definitions"
+                                :key="definition.id"
+                            >
+                                <ion-item lines="none">
+                                    <ion-label color="dark" class="capitalize ion-text-nowrap">
+                                        {{ definition.meaning }}
+                                    </ion-label>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-item-group>
+                                        <ion-button color="warning" @click="updateDefinition(index)">
+                                            <font-awesome-icon :icon="faPencilAlt" />
+                                        </ion-button>
+                                        <ion-button color="danger" @click="removeDefinition(index)">
+                                            <font-awesome-icon :icon="faMinusCircle" />
+                                        </ion-button>
+                                    </ion-item-group>
+                                </ion-item>
+                            </view>
+                        </view>
+                    </ion-card-content>
+                </ion-card>
 
                 <view v-if="isInCreationMode()">
                     <add-linker-words ref="AddLinkerWordsRef" />
@@ -76,15 +84,17 @@
                     />
                 </view>
 
-                <ion-item lines="none">
-                    <ion-card-title>Is Draft</ion-card-title>
-                </ion-item>
-                <ion-item lines="none">
-                    <div class="form-text">It is possible to save a vocabulary without a definition in draft mode</div>
-                </ion-item>
-                <ion-item lines="none">
-                    <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)"></ion-toggle>
-                </ion-item>
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title> Is Draft </ion-card-title>
+                        <ion-card-subtitle>
+                            It is possible to save a vocabulary without a definition in draft mode
+                        </ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)" />
+                    </ion-card-content>
+                </ion-card>
 
                 <ion-grid>
                     <ion-row>
@@ -96,7 +106,7 @@
                         </ion-col>
                     </ion-row>
                 </ion-grid>
-            </ion-card>
+            </view>
         </ion-content>
     </ion-page>
 
@@ -138,6 +148,9 @@ import {
     IonRow,
     IonCol,
     IonCardTitle,
+    IonCardSubtitle,
+    IonCardHeader,
+    IonCardContent,
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
@@ -191,7 +204,10 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonCol,
+        IonCardHeader,
         IonCardTitle,
+        IonCardSubtitle,
+        IonCardContent,
         FontAwesomeIcon,
     },
     data() {

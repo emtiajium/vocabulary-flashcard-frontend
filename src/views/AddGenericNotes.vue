@@ -1,32 +1,37 @@
 <template>
-    <ion-item lines="none">
-        <ion-card-title>Generic Notes</ion-card-title>
-    </ion-item>
-    <ion-item lines="none">
-        <div class="form-text">
-            Any gibberish note can be put here, for example, the origin of the word, synonym, antonym, pronunciation,
-            etc
-        </div>
-    </ion-item>
-    <view v-if="$props.existingGenericNotes">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericNotes" />
-    </view>
-    <view v-if="!$props.existingGenericNotes">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
-    </view>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Generic Notes</ion-card-title>
+            <ion-card-subtitle>
+                Any gibberish note can be put here, for example, the origin of the word, synonym, antonym,
+                pronunciation, etc
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <add-remove-multiple-items
+                v-if="$props.existingGenericNotes"
+                ref="AddRemoveMultipleItemsRef"
+                :existing-items="existingGenericNotes"
+            />
+            <add-remove-multiple-items v-if="!$props.existingGenericNotes" ref="AddRemoveMultipleItemsRef" />
+        </ion-card-content>
+    </ion-card>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonCardTitle } from '@ionic/vue';
+import { IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent } from '@ionic/vue';
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
     name: 'AddGenericNotes',
     components: {
         AddRemoveMultipleItems,
+        IonCard,
         IonCardTitle,
-        IonItem,
+        IonCardSubtitle,
+        IonCardHeader,
+        IonCardContent,
     },
     props: ['existingGenericNotes'],
     data() {

@@ -1,32 +1,37 @@
 <template>
-    <ion-item lines="none">
-        <ion-card-title>Relatable Words</ion-card-title>
-    </ion-item>
-    <ion-item lines="none">
-        <div class="form-text">
-            Any related vocabulary can be inserted here. For example, if the word is <strong>Zenith</strong>, I can put
-            <strong>Pinnacle</strong> here
-        </div>
-    </ion-item>
-    <view v-if="$props.existingLinkerWords">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="linkerWords" />
-    </view>
-    <view v-if="!$props.existingLinkerWords">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
-    </view>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Relatable Words</ion-card-title>
+            <ion-card-subtitle>
+                Any related vocabulary can be inserted here. For example, if the word is <strong>Zenith</strong>, I can
+                put <strong>Pinnacle</strong> here
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <add-remove-multiple-items
+                v-if="$props.existingLinkerWords"
+                ref="AddRemoveMultipleItemsRef"
+                :existing-items="linkerWords"
+            />
+            <add-remove-multiple-items v-if="!$props.existingLinkerWords" ref="AddRemoveMultipleItemsRef" />
+        </ion-card-content>
+    </ion-card>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonCardTitle } from '@ionic/vue';
+import { IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent } from '@ionic/vue';
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
     name: 'AddLinkerWords',
     components: {
         AddRemoveMultipleItems,
+        IonCard,
         IonCardTitle,
-        IonItem,
+        IonCardSubtitle,
+        IonCardHeader,
+        IonCardContent,
     },
     props: ['existingLinkerWords'],
     data() {

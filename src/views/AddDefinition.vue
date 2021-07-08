@@ -9,56 +9,56 @@
 
         <ion-content :fullscreen="true" id="add-definition">
             <ion-card>
-                <ion-item lines="none">
+                <ion-card-header>
                     <ion-card-title>Meaning</ion-card-title>
-                </ion-item>
-                <ion-item lines="none">
-                    <div class="form-text">An idea or a thing that a word represents</div>
-                </ion-item>
+                    <ion-card-subtitle>An idea or a thing that a word represents</ion-card-subtitle>
+                </ion-card-header>
 
-                <ion-item v-if="!$props.definition">
-                    <ion-textarea
-                        autoGrow="true"
-                        inputmode="text"
-                        :value="meaning"
-                        @keyup="setMeaning($event.target.value)"
-                    />
-                </ion-item>
-                <ion-item v-if="$props.definition">
-                    <ion-textarea
-                        autoGrow="true"
-                        inputmode="text"
-                        :value="definition.meaning"
-                        @keyup="setMeaning($event.target.value)"
-                    />
-                </ion-item>
-
-                <view v-if="!$props.definition">
-                    <add-definition-example ref="AddDefinitionExampleRef" />
-                    <add-definition-notes ref="AddDefinitionNotesRef" />
-                    <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
-                </view>
-
-                <view v-if="$props.definition">
-                    <add-definition-example ref="AddDefinitionExampleRef" :existing-examples="definition.examples" />
-                    <add-definition-notes ref="AddDefinitionNotesRef" :existing-notes="definition.notes" />
-                    <add-definition-external-links
-                        ref="AddDefinitionExternalLinksRef"
-                        :existing-external-links="definition.externalLinks"
-                    />
-                </view>
-
-                <ion-grid>
-                    <ion-row>
-                        <ion-col size="6">
-                            <ion-button color="warning" expand="block" @click="back">Cancel</ion-button>
-                        </ion-col>
-                        <ion-col size="6">
-                            <ion-button color="success" expand="block" @click="persist">Save</ion-button>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+                <ion-card-content>
+                    <ion-item>
+                        <ion-textarea
+                            v-if="!$props.definition"
+                            autoGrow="true"
+                            inputmode="text"
+                            :value="meaning"
+                            @keyup="setMeaning($event.target.value)"
+                        />
+                        <ion-textarea
+                            v-if="$props.definition"
+                            autoGrow="true"
+                            inputmode="text"
+                            :value="definition.meaning"
+                            @keyup="setMeaning($event.target.value)"
+                        />
+                    </ion-item>
+                </ion-card-content>
             </ion-card>
+
+            <view v-if="!$props.definition">
+                <add-definition-example ref="AddDefinitionExampleRef" />
+                <add-definition-notes ref="AddDefinitionNotesRef" />
+                <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
+            </view>
+
+            <view v-if="$props.definition">
+                <add-definition-example ref="AddDefinitionExampleRef" :existing-examples="definition.examples" />
+                <add-definition-notes ref="AddDefinitionNotesRef" :existing-notes="definition.notes" />
+                <add-definition-external-links
+                    ref="AddDefinitionExternalLinksRef"
+                    :existing-external-links="definition.externalLinks"
+                />
+            </view>
+
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="6">
+                        <ion-button color="warning" expand="block" @click="back">Cancel</ion-button>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-button color="success" expand="block" @click="persist">Save</ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-content>
     </ion-page>
 </template>
@@ -66,15 +66,18 @@
 <script lang="ts">
 import {
     IonContent,
-    IonItem,
     IonPage,
     IonButton,
     IonCard,
+    IonCardHeader,
     IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
     IonGrid,
     IonRow,
     IonCol,
     IonTextarea,
+    IonItem,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import AddDefinitionExample from '@/views/AddDefinitionExample.vue';
@@ -96,14 +99,17 @@ export default defineComponent({
         AddDefinitionExample,
         IonContent,
         IonPage,
-        IonCardTitle,
-        IonItem,
-        IonButton,
         IonCard,
+        IonCardHeader,
+        IonCardTitle,
+        IonCardSubtitle,
+        IonCardContent,
+        IonButton,
         IonGrid,
         IonRow,
         IonCol,
         IonTextarea,
+        IonItem,
     },
     props: ['word', 'vocabularyId', 'definition', 'afterAddingDefinition', 'onCancellingAddingDefinition'],
     data() {

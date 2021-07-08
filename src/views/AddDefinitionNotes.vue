@@ -1,31 +1,36 @@
 <template>
-    <ion-item lines="none">
-        <ion-card-title>Notes</ion-card-title>
-    </ion-item>
-    <ion-item lines="none">
-        <div class="form-text">
-            It can be a ninja technique to memorize the meaning, a personal relatable incident, etc
-        </div>
-    </ion-item>
-    <view v-if="!$props.existingNotes">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" />
-    </view>
-    <view v-if="$props.existingNotes">
-        <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingNotes" />
-    </view>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Notes</ion-card-title>
+            <ion-card-subtitle>
+                It can be a ninja technique to memorize the meaning, a personal relatable incident, etc
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <add-remove-multiple-items v-if="!$props.existingNotes" ref="AddRemoveMultipleItemsRef" />
+            <add-remove-multiple-items
+                v-if="$props.existingNotes"
+                ref="AddRemoveMultipleItemsRef"
+                :existing-items="existingNotes"
+            />
+        </ion-card-content>
+    </ion-card>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonCardTitle } from '@ionic/vue';
+import { IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent } from '@ionic/vue';
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
     name: 'AddDefinitionNotes',
     components: {
         AddRemoveMultipleItems,
+        IonCard,
         IonCardTitle,
-        IonItem,
+        IonCardSubtitle,
+        IonCardHeader,
+        IonCardContent,
     },
     props: ['existingNotes'],
     data() {
