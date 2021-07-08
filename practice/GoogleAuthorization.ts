@@ -26,7 +26,7 @@ class GoogleAuthorization {
 
     private elementId: string;
 
-    async init(elementId: string) {
+    async init(elementId: string): Promise<void> {
         const deviceInfo = await Device.getInfo();
         if (deviceInfo.platform === 'web') {
             this.elementId = elementId;
@@ -59,7 +59,7 @@ class GoogleAuthorization {
     };
 
     onGoogleApiLoad(): void {
-        window.onGoogleApiLoad = () => {
+        window.onGoogleApiLoad = (): void => {
             window.gapi.load('auth2', () => {
                 this.auth2 = window.gapi.auth2.init({
                     client_id: Config.plugins.GoogleAuth.serverClientId,
@@ -82,7 +82,6 @@ class GoogleAuthorization {
         // Instead, use the account's ID, which you can get on the client with getBasicProfile().getId(),
         // and on the backend from the sub claim of the ID token.
         return {
-            email: profile.getEmail(),
             username: profile.getEmail(),
             firstname: profile.getGivenName(),
             lastname: profile.getFamilyName(),
