@@ -1,11 +1,12 @@
 import Axios, { AxiosError } from 'axios';
+import MessageDB from '@/utils/MessageDB';
 
 type RequestConfig = Record<string, unknown>;
 
 export default class AxiosAdapter {
     static handleError(error: AxiosError): void {
         if (error.message === 'Network Error') {
-            throw new Error(`Looks like something is wrong with your network. Please try later.`);
+            throw new Error(MessageDB.networkError);
         }
         if (Array.isArray(error?.response?.data?.message)) {
             throw new Error(error.response?.data.message[0]);

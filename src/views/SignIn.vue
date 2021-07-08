@@ -38,6 +38,7 @@ import Toast from '@/utils/Toast';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import MessageDB from '@/utils/MessageDB';
 
 export default defineComponent({
     name: 'SignIn',
@@ -66,7 +67,7 @@ export default defineComponent({
                 await this.persistUser(user);
                 await this.$router.push('/authenticated-home');
             } catch (error) {
-                await Toast.present(error.message || `Something went wrong!`);
+                await Toast.present(MessageDB.networkError);
             }
         },
         async persistUser(googleUser: User): Promise<void> {

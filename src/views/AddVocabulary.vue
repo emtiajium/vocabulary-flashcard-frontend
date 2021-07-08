@@ -155,6 +155,7 @@ import Spinner from '@/views/Spinner.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlusCircle, faMinusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import MessageDB from '@/utils/MessageDB';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -226,14 +227,20 @@ export default defineComponent({
     },
     methods: {
         async getAndSetExistingVocabulary(vocabularyId: string): Promise<void> {
-            const vocabulary = (await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${vocabularyId}`)) as Vocabulary;
-            this.id = vocabulary.id;
-            this.word = vocabulary.word;
-            this.definitions = vocabulary.definitions as Definition[];
-            this.linkerWords = vocabulary.linkerWords as string[];
-            this.genericNotes = vocabulary.genericNotes as string[];
-            this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
-            this.isDraft = vocabulary.isDraft;
+            try {
+                const vocabulary = (await HttpHandler.get<Vocabulary>(
+                    `/v1/vocabularies/${vocabularyId}`,
+                )) as Vocabulary;
+                this.id = vocabulary.id;
+                this.word = vocabulary.word;
+                this.definitions = vocabulary.definitions as Definition[];
+                this.linkerWords = vocabulary.linkerWords as string[];
+                this.genericNotes = vocabulary.genericNotes as string[];
+                this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
+                this.isDraft = vocabulary.isDraft;
+            } catch {
+                await Promise.all([Toast.present(MessageDB.networkError), this.$router.back()]);
+            }
         },
         setWord(word: string): void {
             this.word = word.trim();

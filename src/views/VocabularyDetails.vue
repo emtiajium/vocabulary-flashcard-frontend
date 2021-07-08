@@ -155,6 +155,8 @@ import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import Dictionary from '@/views/Dictionary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import Toast from '@/utils/Toast';
+import MessageDB from '@/utils/MessageDB';
 
 export default defineComponent({
     name: 'VocabularyDetails',
@@ -179,16 +181,21 @@ export default defineComponent({
         };
     },
     async mounted() {
-        this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${useRoute().params.id}`);
-        if (
-            !this.vocabulary.definitions?.length &&
-            !this.vocabulary.linkerWords?.length &&
-            !this.vocabulary.genericNotes?.length &&
-            !this.vocabulary.genericExternalLinks?.length
-        ) {
-            this.showDefaultMessage = true;
+        try {
+            this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${useRoute().params.id}`);
+            if (
+                !this.vocabulary.definitions?.length &&
+                !this.vocabulary.linkerWords?.length &&
+                !this.vocabulary.genericNotes?.length &&
+                !this.vocabulary.genericExternalLinks?.length
+            ) {
+                this.showDefaultMessage = true;
+            }
+        } catch {
+            await Promise.all([Toast.present(MessageDB.networkError), this.$router.back()]);
+        } finally {
+            this.isLoading = false;
         }
-        this.isLoading = false;
     },
     beforeUnmount() {
         this.showDefaultMessage = false;

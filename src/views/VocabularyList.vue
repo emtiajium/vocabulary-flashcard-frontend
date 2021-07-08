@@ -154,14 +154,18 @@ export default defineComponent({
         },
 
         async bootstrap(): Promise<void> {
-            const { results, total } = await HttpHandler.post<undefined, SearchResult<Vocabulary>>(
-                '/v1/vocabularies/bootstrap',
-                undefined,
-            );
-            this.isNetworkError = false;
-            this.vocabularies = results;
-            this.pageNumber = Number.parseInt((total / this.pageSize).toString(), 10) + 1;
-            this.isDisabled = true;
+            try {
+                const { results, total } = await HttpHandler.post<undefined, SearchResult<Vocabulary>>(
+                    '/v1/vocabularies/bootstrap',
+                    undefined,
+                );
+                this.isNetworkError = false;
+                this.vocabularies = results;
+                this.pageNumber = Number.parseInt((total / this.pageSize).toString(), 10) + 1;
+                this.isDisabled = true;
+            } catch {
+                this.isNetworkError = true;
+            }
         },
     },
 });
