@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import AuthenticatedHome from '@/views/AuthenticatedHome.vue';
 import Home from '@/views/Home.vue';
 import AddVocabulary from '@/views/AddVocabulary.vue';
 import Vocabulary from '@/views/VocabularyDetails.vue';
 import SignIn from '@/views/SignIn.vue';
 import Cohort from '@/views/Cohort.vue';
+import VocabularyList from '@/views/VocabularyList.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -26,12 +26,12 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/authenticated-home',
         name: 'AuthenticatedHome',
-        component: AuthenticatedHome,
+        redirect: '/vocabularies',
     },
     {
         path: '/vocabularies',
         name: 'Vocabularies',
-        redirect: '/authenticated-home',
+        component: VocabularyList,
     },
     {
         path: '/vocabulary/create',
