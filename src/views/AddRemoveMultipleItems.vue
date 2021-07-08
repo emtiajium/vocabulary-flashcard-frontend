@@ -2,18 +2,17 @@
     <view v-for="(item, index) in placeholderItems" :key="item">
         <ion-grid>
             <ion-row>
-                <ion-col size="8">
+                <ion-col size="7">
                     <ion-item>
                         <ion-textarea
                             autoGrow="true"
                             inputmode="text"
                             :value="items[index] || ''"
                             @keyup="insertItem($event.target.value, index)"
-                        >
-                        </ion-textarea>
+                        />
                     </ion-item>
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="5">
                     <ion-row class="action-buttons">
                         <ion-item lines="none">
                             <ion-button
