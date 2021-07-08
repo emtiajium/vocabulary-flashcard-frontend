@@ -6,51 +6,52 @@ import Vocabulary from '@/views/VocabularyDetails.vue';
 import SignIn from '@/views/SignIn.vue';
 import Cohort from '@/views/Cohort.vue';
 import VocabularyList from '@/views/VocabularyList.vue';
+import Route from '@/domains/Route';
 
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        name: 'Root',
+        name: Route.Root,
         redirect: '/home',
     },
     {
         path: '/home',
-        name: 'Home',
+        name: Route.Home,
         component: Home,
     },
     {
         path: '/sign-in',
-        name: 'SignIn',
+        name: Route.SignIn,
         component: SignIn,
     },
     {
         path: '/authenticated-home',
-        name: 'AuthenticatedHome',
+        name: Route.AuthenticatedHome,
         redirect: '/vocabularies',
     },
     {
         path: '/vocabularies',
-        name: 'Vocabularies',
+        name: Route.Vocabularies,
         component: VocabularyList,
     },
     {
         path: '/vocabulary/create',
-        name: 'AddVocabulary',
+        name: Route.AddVocabulary,
         component: AddVocabulary,
     },
     {
         path: '/vocabulary/update/:id',
-        name: 'EditVocabulary',
+        name: Route.EditVocabulary,
         component: AddVocabulary,
     },
     {
         path: '/vocabulary/read/:id/:word',
-        name: 'DisplayVocabulary',
+        name: Route.DisplayVocabulary,
         component: Vocabulary,
     },
     {
         path: '/cohort/read',
-        name: 'DisplayCohort',
+        name: Route.DisplayCohort,
         component: Cohort,
     },
 ];
