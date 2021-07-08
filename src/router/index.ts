@@ -7,6 +7,8 @@ import SignIn from '@/views/SignIn.vue';
 import Cohort from '@/views/Cohort.vue';
 import VocabularyList from '@/views/VocabularyList.vue';
 import Route from '@/domains/Route';
+import * as _ from 'lodash';
+import NativeStorage from '@/utils/NativeStorage';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -59,6 +61,23 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
+});
+
+router.beforeEach(async (to, from, next): Promise<void> => {
+    if (
+        _.includes([Route.AddVocabulary, Route.EditVocabulary], from.name) &&
+        !(await NativeStorage.getShouldReloadVocabularies())
+    ) {
+        // when a vocabulary has been added or updated
+        // SHOULD_RELOAD_VOCABULARIES is set to true
+        // so we need to set is false when either cancel button has been pressed
+        // or back button has been pressed
+        await NativeStorage.setShouldReloadVocabularies(false);
+    }
+    if (!_.includes([Route.AddVocabulary, Route.EditVocabulary], from.name)) {
+        await NativeStorage.setShouldReloadVocabularies(false);
+    }
+    next();
 });
 
 export default router;

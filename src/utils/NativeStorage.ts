@@ -65,4 +65,14 @@ export default class NativeStorage {
         await NativeStorage.removeAuthorizedUser();
         await NativeStorage.setAuthorizedUser(user);
     }
+
+    static async setShouldReloadVocabularies(shouldReloadVocabularies: boolean): Promise<void> {
+        await (
+            await NativeStorage.getStorage()
+        ).set(NativeStorageKey.SHOULD_RELOAD_VOCABULARIES, shouldReloadVocabularies);
+    }
+
+    static async getShouldReloadVocabularies(): Promise<boolean> {
+        return NativeStorage.getByKey<boolean>(NativeStorageKey.SHOULD_RELOAD_VOCABULARIES);
+    }
 }

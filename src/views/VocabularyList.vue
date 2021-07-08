@@ -77,6 +77,7 @@ import { faPlus, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import Route from '@/domains/Route';
+import NativeStorage from '@/utils/NativeStorage';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 
@@ -130,7 +131,7 @@ export default defineComponent({
             this.totalVocabularies = 0;
         },
         async reload(): Promise<void> {
-            if (this.$route.name === Route.Vocabularies) {
+            if (this.$route.name === Route.Vocabularies && (await NativeStorage.getShouldReloadVocabularies())) {
                 this.clean();
                 await this.renderVocabularies();
                 this.isCompletedInitialRequest = true;

@@ -170,6 +170,7 @@ import { faPlusCircle, faMinusCircle, faPencilAlt } from '@fortawesome/free-soli
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import MessageDB from '@/utils/MessageDB';
 import Route from '@/domains/Route';
+import NativeStorage from '@/utils/NativeStorage';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -366,6 +367,7 @@ export default defineComponent({
                 this.validatePayload(vocabulary);
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
                 this.clear();
+                await NativeStorage.setShouldReloadVocabularies(true);
                 await this.$router.push(`/vocabularies`);
             } catch (error) {
                 await Toast.present(error.message);
