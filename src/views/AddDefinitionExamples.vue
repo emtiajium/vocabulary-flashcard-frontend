@@ -21,7 +21,7 @@ import { IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent }
 import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
-    name: 'AddDefinitionExample',
+    name: 'AddDefinitionExamples',
     components: {
         AddRemoveMultipleItems,
         IonCard,

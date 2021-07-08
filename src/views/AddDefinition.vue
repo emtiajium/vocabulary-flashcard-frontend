@@ -35,13 +35,13 @@
             </ion-card>
 
             <view v-if="!$props.definition">
-                <add-definition-example ref="AddDefinitionExampleRef" />
+                <add-definition-examples ref="AddDefinitionExamplesRef" />
                 <add-definition-notes ref="AddDefinitionNotesRef" />
                 <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
             </view>
 
             <view v-if="$props.definition">
-                <add-definition-example ref="AddDefinitionExampleRef" :existing-examples="definition.examples" />
+                <add-definition-examples ref="AddDefinitionExamplesRef" :existing-examples="definition.examples" />
                 <add-definition-notes ref="AddDefinitionNotesRef" :existing-notes="definition.notes" />
                 <add-definition-external-links
                     ref="AddDefinitionExternalLinksRef"
@@ -80,7 +80,7 @@ import {
     IonItem,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import AddDefinitionExample from '@/views/AddDefinitionExample.vue';
+import AddDefinitionExamples from '@/views/AddDefinitionExamples.vue';
 import AddDefinitionNotes from '@/views/AddDefinitionNotes.vue';
 import AddDefinitionExternalLinks from '@/views/AddDefinitionExternalLinks.vue';
 import Definition from '@/domains/Definition';
@@ -96,7 +96,7 @@ export default defineComponent({
         FirecrackerHeader,
         AddDefinitionExternalLinks,
         AddDefinitionNotes,
-        AddDefinitionExample,
+        AddDefinitionExamples,
         IonContent,
         IonPage,
         IonCard,
@@ -133,7 +133,7 @@ export default defineComponent({
             definition.vocabularyId = this.vocabularyId;
             definition.meaning = this.meaning;
             definition.examples = (
-                this.$refs.AddDefinitionExampleRef as InstanceType<typeof AddDefinitionExample>
+                this.$refs.AddDefinitionExamplesRef as InstanceType<typeof AddDefinitionExamples>
             ).getExamples();
             definition.notes = (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).getNotes();
             definition.externalLinks = (
@@ -153,7 +153,7 @@ export default defineComponent({
         },
         clear(): void {
             this.setMeaning('');
-            (this.$refs.AddDefinitionExampleRef as InstanceType<typeof AddDefinitionExample>).clear();
+            (this.$refs.AddDefinitionExamplesRef as InstanceType<typeof AddDefinitionExamples>).clear();
             (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).clear();
             (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
         },
