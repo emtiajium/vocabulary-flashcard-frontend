@@ -7,7 +7,7 @@ import SignIn from '@/views/SignIn.vue';
 import Cohort from '@/views/Cohort.vue';
 import VocabularyList from '@/views/VocabularyList.vue';
 
-const routes: Array<RouteRecordRaw> = [
+const routes: RouteRecordRaw[] = [
     {
         path: '/',
         name: 'Root',
@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/cohort/read',
-        name: 'Cohort',
+        name: 'DisplayCohort',
         component: Cohort,
     },
 ];
