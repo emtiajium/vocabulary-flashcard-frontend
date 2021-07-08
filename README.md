@@ -55,7 +55,7 @@
 
 ➜ Sync project with gradle files
 
-➜ Shift + F10
+➜ Run the app
 
 ## Launcher icon and splash screen generator
 
