@@ -156,6 +156,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlusCircle, faMinusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import MessageDB from '@/utils/MessageDB';
+import Route from '@/domains/Route';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -212,20 +213,39 @@ export default defineComponent({
             faPencilAlt,
         };
     },
+    watch: {
+        '$route.name': 'reload',
+    },
     async mounted() {
-        const routeParameters = useRoute().params;
-        if (routeParameters?.id) {
-            this.headerTitle = 'Edit Vocabulary';
-            await this.getAndSetExistingVocabulary(routeParameters.id as string);
-            this.mode = Mode.VOCABULARY_UPDATE;
-            this.isLoading = false;
-        } else {
+        await this.init();
+    },
+    methods: {
+        async init(): Promise<void> {
+            const routeParameters = useRoute().params;
+            if (routeParameters?.id) {
+                await this.loadEditView();
+            } else {
+                this.loadAddView();
+            }
+        },
+        loadAddView(): void {
             this.headerTitle = 'Add Vocabulary';
             this.mode = Mode.VOCABULARY_CREATE;
             this.isLoading = false;
-        }
-    },
-    methods: {
+        },
+        async loadEditView(): Promise<void> {
+            this.headerTitle = 'Edit Vocabulary';
+            await this.getAndSetExistingVocabulary(this.$route.params.id as string);
+            this.mode = Mode.VOCABULARY_UPDATE;
+            this.isLoading = false;
+        },
+        async reload(): Promise<void> {
+            if (this.$route.name === Route.EditVocabulary) {
+                await this.loadEditView();
+            } else if (this.$route.name === Route.AddVocabulary) {
+                this.loadAddView();
+            }
+        },
         async getAndSetExistingVocabulary(vocabularyId: string): Promise<void> {
             try {
                 const vocabulary = (await HttpHandler.get<Vocabulary>(

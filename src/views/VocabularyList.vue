@@ -76,6 +76,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlus, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
+import Route from '@/domains/Route';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 
@@ -111,11 +112,30 @@ export default defineComponent({
             totalVocabularies: 0,
         };
     },
+    watch: {
+        '$route.name': 'reload',
+    },
     async mounted() {
         await this.renderVocabularies();
         this.isCompletedInitialRequest = true;
     },
     methods: {
+        clean(): void {
+            this.vocabularies = [] as Vocabulary[];
+            this.pageNumber = 1;
+            this.pageSize = 10;
+            this.isDisabled = false;
+            this.isCompletedInitialRequest = false;
+            this.isNetworkError = false;
+            this.totalVocabularies = 0;
+        },
+        async reload(): Promise<void> {
+            if (this.$route.name === Route.Vocabularies) {
+                this.clean();
+                await this.renderVocabularies();
+                this.isCompletedInitialRequest = true;
+            }
+        },
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findVocabularies();
             this.totalVocabularies = total;
