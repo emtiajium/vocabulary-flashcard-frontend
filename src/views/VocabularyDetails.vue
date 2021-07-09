@@ -162,6 +162,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
+import Route from '@/domains/Route';
 
 export default defineComponent({
     name: 'VocabularyDetails',
@@ -188,26 +189,44 @@ export default defineComponent({
             faExternalLinkAlt,
         };
     },
+    watch: {
+        '$route.name': 'reload',
+    },
     async mounted() {
-        try {
-            this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${useRoute().params.id}`);
-            if (
-                !this.vocabulary.definitions?.length &&
-                !this.vocabulary.linkerWords?.length &&
-                !this.vocabulary.genericNotes?.length &&
-                !this.vocabulary.genericExternalLinks?.length
-            ) {
-                this.showDefaultMessage = true;
-            }
-        } catch {
-            await Promise.all([Toast.present(MessageDB.networkError), this.$router.back()]);
-        } finally {
-            this.isLoading = false;
-        }
+        await this.init();
     },
     beforeUnmount() {
-        this.showDefaultMessage = false;
-        this.vocabulary = {} as Vocabulary;
+        this.clean();
+    },
+    methods: {
+        async init(): Promise<void> {
+            try {
+                this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${useRoute().params.id}`);
+                if (
+                    !this.vocabulary.definitions?.length &&
+                    !this.vocabulary.linkerWords?.length &&
+                    !this.vocabulary.genericNotes?.length &&
+                    !this.vocabulary.genericExternalLinks?.length
+                ) {
+                    this.showDefaultMessage = true;
+                }
+            } catch {
+                await Promise.all([Toast.present(MessageDB.networkError), this.$router.back()]);
+            } finally {
+                this.isLoading = false;
+            }
+        },
+        async reload(): Promise<void> {
+            if (this.$route.name === Route.DisplayVocabulary) {
+                this.clean();
+                await this.init();
+            }
+        },
+        clean(): void {
+            this.isLoading = true;
+            this.vocabulary = {} as Vocabulary;
+            this.showDefaultMessage = false;
+        },
     },
 });
 </script>
