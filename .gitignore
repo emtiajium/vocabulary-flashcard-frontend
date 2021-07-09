@@ -31,7 +31,9 @@ npm-debug.log*
 /www
 
 config.json
+config.prod.json
 capacitor.config.json
+capacitor.config.prod.json
 
 android
 android-replacer
