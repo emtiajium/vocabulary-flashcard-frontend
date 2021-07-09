@@ -13,6 +13,8 @@
 
 > [Add test users](https://console.cloud.google.com/apis/credentials/consent)
 
+> Add fingerprint in the Firebase console
+
 ###### Clone the repo and install all dependencies
 
 ➜ `git clone git@bitbucket.org:sheenab/ielts-gibberish-android.git`
