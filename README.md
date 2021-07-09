@@ -11,6 +11,8 @@
 
 > Enable Google Sign-In in the Firebase console
 
+> [Add test users](https://console.cloud.google.com/apis/credentials/consent)
+
 ###### Clone the repo and install all dependencies
 
 ➜ `git clone git@bitbucket.org:sheenab/ielts-gibberish-android.git`
