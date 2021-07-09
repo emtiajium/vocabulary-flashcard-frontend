@@ -14,9 +14,9 @@
 > [Add test users](https://console.cloud.google.com/apis/credentials/consent)
 
 ➜ Add SHA1 fingerprint in the Firebase console
-> `keytool -genkey -v -keystore ~/.android/debug.keystore`
+> `keytool -genkey -v -keystore ~/.android/debug.keystore -alias <an-alias>`
 
-> `keytool -list -v -keystore ~/.android/debug.keystore`
+> `keytool -list -v -keystore ~/.android/debug.keystore -alias <an-alias>`
 
 ###### Clone the repo and install all dependencies
 
