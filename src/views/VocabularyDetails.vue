@@ -9,76 +9,77 @@
         <ion-content :fullscreen="true" id="vocabulary-details">
             <spinner v-if="isLoading" />
 
-            <ion-card v-if="!isLoading && Object.keys(vocabulary).length">
-                <ion-card-content>
-                    <empty-container v-if="showDefaultMessage" :message="defaultMessage" />
+            <view v-if="!isLoading && Object.keys(vocabulary).length">
+                <empty-container v-if="showDefaultMessage" :message="defaultMessage" />
 
-                    <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
-                        <span>
-                            {{ definitionIndex === 0 ? 'Meaning of' : 'Another Meaning of' }}
-                            <strong>{{ vocabulary.word }}</strong>
-                        </span>
-                        <hr class="solid" />
+                <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
+                    <ion-card>
+                        <ion-card-header>
+                            <ion-card-title>
+                                <span>
+                                    {{ definitionIndex === 0 ? 'Meaning of' : 'Another Meaning of' }}
+                                    <strong> {{ vocabulary.word }} </strong>
+                                </span>
+                            </ion-card-title>
+                            <ion-card-subtitle>
+                                <span class="capitalize"> {{ definition.meaning }} </span>
+                            </ion-card-subtitle>
+                        </ion-card-header>
 
-                        <span class="capitalize">{{ definition.meaning }}</span>
-                        <br />
-                        <br />
+                        <ion-card-content>
+                            <ion-card-title> Examples </ion-card-title>
+                            <ul>
+                                <view v-for="(example, exampleIndex) in definition.examples" :key="exampleIndex">
+                                    <li>
+                                        <span class="capitalize"> {{ example }} </span>
+                                        <br />
+                                        <br />
+                                    </li>
+                                </view>
+                            </ul>
 
-                        <strong>Examples</strong>
-                        <br />
-                        <br />
-                        <ul>
-                            <view v-for="(example, index) in definition.examples" :key="index">
-                                <li>
-                                    <span class="capitalize">{{ example }}</span>
-                                    <br />
-                                    <br />
-                                </li>
+                            <view v-if="definition.notes.length">
+                                <ion-card-title> Notes </ion-card-title>
+                                <ul>
+                                    <view v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
+                                        <li>
+                                            <span class="capitalize"> {{ note }} </span>
+                                            <br />
+                                            <br />
+                                        </li>
+                                    </view>
+                                </ul>
                             </view>
-                        </ul>
 
-                        <view v-if="definition.notes.length">
-                            <strong>Notes</strong>
-                            <br />
-                            <br />
-                            <ul>
-                                <view v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
-                                    <li>
-                                        <span class="capitalize">{{ note }}</span>
-                                        <br />
-                                        <br />
-                                    </li>
-                                </view>
-                            </ul>
-                        </view>
+                            <view v-if="definition.externalLinks.length">
+                                <ion-card-header> External Links </ion-card-header>
+                                <ul>
+                                    <view
+                                        v-for="(externalLink, externalLinkIndex) in definition.externalLinks"
+                                        :key="externalLinkIndex"
+                                    >
+                                        <li>
+                                            <a :href="externalLink" target="_blank">
+                                                <span>
+                                                    Browse the link
+                                                    <font-awesome-icon :icon="faExternalLinkAlt" />
+                                                </span>
+                                            </a>
+                                            <br />
+                                            <br />
+                                        </li>
+                                    </view>
+                                </ul>
+                            </view>
+                        </ion-card-content>
+                    </ion-card>
+                </view>
 
-                        <view v-if="definition.externalLinks.length">
-                            <strong>External Links</strong>
-                            <br />
-                            <br />
-                            <ul>
-                                <view v-for="(externalLink, index2) in definition.externalLinks" :key="index2">
-                                    <li>
-                                        <a :href="externalLink" target="_blank">
-                                            <span>
-                                                Browse the link
-                                                <font-awesome-icon :icon="faExternalLinkAlt" />
-                                            </span>
-                                        </a>
-                                        <br />
-                                        <br />
-                                    </li>
-                                </view>
-                            </ul>
-                        </view>
-                    </view>
-
-                    <hr v-if="vocabulary.definitions.length && vocabulary.linkerWords.length" class="solid" />
-
-                    <view v-if="vocabulary.linkerWords.length">
-                        <strong>Relatable Words</strong>
-                        <br />
-                        <br />
+                <ion-card v-if="vocabulary.linkerWords.length">
+                    <ion-card-header>
+                        <ion-card-title> Relatable Words </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
                         <ul>
                             <view
                                 v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords"
@@ -91,12 +92,14 @@
                                 </li>
                             </view>
                         </ul>
-                    </view>
+                    </ion-card-content>
+                </ion-card>
 
-                    <view v-if="vocabulary.genericNotes.length">
-                        <strong>Generic Notes</strong>
-                        <br />
-                        <br />
+                <ion-card v-if="vocabulary.genericNotes.length">
+                    <ion-card-header>
+                        <ion-card-title> Generic Notes </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
                         <ul>
                             <view
                                 v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
@@ -109,12 +112,14 @@
                                 </li>
                             </view>
                         </ul>
-                    </view>
+                    </ion-card-content>
+                </ion-card>
 
-                    <view v-if="vocabulary.genericExternalLinks.length">
-                        <strong>Generic External Links</strong>
-                        <br />
-                        <br />
+                <ion-card v-if="vocabulary.genericExternalLinks.length">
+                    <ion-card-header>
+                        <ion-card-title> Generic External Links </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
                         <ul>
                             <view
                                 v-for="(
@@ -134,9 +139,9 @@
                                 </li>
                             </view>
                         </ul>
-                    </view>
-                </ion-card-content>
-            </ion-card>
+                    </ion-card-content>
+                </ion-card>
+            </view>
 
             <dictionary v-if="!isLoading && Object.keys(vocabulary).length" :word="vocabulary.word" />
         </ion-content>
@@ -145,7 +150,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, IonCard, IonCardContent } from '@ionic/vue';
+import { IonPage, IonContent, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import { useRoute } from 'vue-router';
@@ -170,6 +175,9 @@ export default defineComponent({
         IonCard,
         IonCardContent,
         FontAwesomeIcon,
+        IonCardHeader,
+        IonCardTitle,
+        IonCardSubtitle,
     },
     data() {
         return {
@@ -204,10 +212,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-hr.solid {
-    border-top: 2px solid #2e8b57;
-    margin-left: -20px;
-    margin-right: -20px;
-}
-</style>
+<style scoped></style>
