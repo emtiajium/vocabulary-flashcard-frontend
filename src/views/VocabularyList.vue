@@ -1,9 +1,20 @@
 <template>
     <ion-page>
-        <firecracker-header header-title="Vocabularies" content-id="vocabulary-list" menu-id="vocabulary-list-menu" />
+        <firecracker-header
+            header-title="Vocabularies"
+            content-id="vocabulary-list"
+            menu-id="vocabulary-list-menu"
+            enableSearching="true"
+            searchPlaceholder="Type at least 3 characters"
+            :setSearchKeyword="setSearchKeyword"
+        />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-card v-if="isCompletedInitialRequest && vocabularies.length === 0 && !isNetworkError">
+            <ion-card
+                v-if="
+                    isCompletedInitialRequest && vocabularies.length === 0 && !searchKeyword.length && !isNetworkError
+                "
+            >
                 <ion-card-content>
                     <ion-card-subtitle class="display-flex ion-justify-content-center ion-text-center">
                         Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
@@ -17,16 +28,33 @@
                 </ion-card-content>
             </ion-card>
 
+            <view v-if="isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError">
+                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
+                    <span class="ion-text-center">
+                        {{ `No vocabularies were found for "${searchKeyword}"` }}
+                    </span>
+                </ion-card-subtitle>
+                <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                    <span class="material-icons searching-result-zero-icon"> manage_search </span>
+                </view>
+            </view>
+
             <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
                 <minified-vocabulary :vocabulary="vocabulary" :delete-vocabulary="deleteVocabulary" />
             </view>
 
             <view v-if="isDisabled && vocabularies.length > 0">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-                    <span class="ion-text-center"> Congrats! You have viewed the last vocabulary! </span>
+                    <span class="ion-text-center">
+                        {{
+                            vocabularies.length > 10
+                                ? `Congrats! You have viewed the last vocabulary!`
+                                : `Looks like there is no vocabulary left for you to be displayed.`
+                        }}
+                    </span>
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faThumbsUp" class="loaded-all-icon" />
+                    <font-awesome-icon :icon="faGlassCheers" class="loaded-all-icon" />
                 </view>
             </view>
 
@@ -73,7 +101,7 @@ import VocabularySearch from '@/domains/VocabularySearch';
 import { Components } from '@ionic/core/components';
 import MinifiedVocabulary from '@/views/MinifiedVocabulary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPlus, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import Route from '@/domains/Route';
@@ -108,8 +136,9 @@ export default defineComponent({
             pageSize: 10,
             isDisabled: false,
             isCompletedInitialRequest: false,
-            faThumbsUp,
+            faGlassCheers,
             isNetworkError: false,
+            searchKeyword: '',
         };
     },
     watch: {
@@ -127,6 +156,7 @@ export default defineComponent({
             this.isDisabled = false;
             this.isCompletedInitialRequest = false;
             this.isNetworkError = false;
+            this.searchKeyword = '';
         },
         async reload(): Promise<void> {
             if (this.$route.name === Route.Vocabularies && (await NativeStorage.getShouldReloadVocabularies())) {
@@ -148,6 +178,7 @@ export default defineComponent({
 
         async findVocabularies(): Promise<SearchResult<Vocabulary>> {
             const vocabularySearch: VocabularySearch = {
+                searchKeyword: this.searchKeyword,
                 pagination: {
                     pageSize: this.pageSize,
                     pageNumber: this.pageNumber,
@@ -185,12 +216,26 @@ export default defineComponent({
                 this.isNetworkError = true;
             }
         },
+
+        async setSearchKeyword(searchKeyword: string): Promise<void> {
+            this.searchKeyword = searchKeyword;
+            const searchKeywordLength = searchKeyword.length;
+            if (searchKeywordLength === 0 || searchKeywordLength > 2) {
+                this.pageNumber = 1;
+                this.vocabularies = [] as Vocabulary[];
+                await this.renderVocabularies();
+            }
+        },
     },
 });
 </script>
 
 <style scoped>
 .loaded-all-icon {
+    font-size: 60pt;
+    color: #2e8b57;
+}
+.searching-result-zero-icon {
     font-size: 60pt;
     color: #2e8b57;
 }
