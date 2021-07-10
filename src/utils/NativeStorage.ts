@@ -75,4 +75,9 @@ export default class NativeStorage {
     static async getShouldReloadVocabularies(): Promise<boolean> {
         return NativeStorage.getByKey<boolean>(NativeStorageKey.SHOULD_RELOAD_VOCABULARIES);
     }
+
+    static async isAuthenticated(): Promise<boolean> {
+        const user = await NativeStorage.getAuthorizedUser();
+        return user && Object.keys(user).length > 0;
+    }
 }

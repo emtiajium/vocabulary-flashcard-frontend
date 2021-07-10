@@ -64,7 +64,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next): Promise<void> => {
-    if (
+    const isAuthenticated = await NativeStorage.isAuthenticated();
+    if (!isAuthenticated && to.name !== Route.SignIn) {
+        next(`/sign-in`);
+    } else if (!isAuthenticated && to.name === Route.SignIn) {
+        next();
+    } else if (
         _.includes([Route.AddVocabulary, Route.EditVocabulary], from.name) &&
         !(await NativeStorage.getShouldReloadVocabularies())
     ) {
@@ -73,11 +78,13 @@ router.beforeEach(async (to, from, next): Promise<void> => {
         // so we need to set is false when either cancel button has been pressed
         // or back button has been pressed
         await NativeStorage.setShouldReloadVocabularies(false);
-    }
-    if (!_.includes([Route.AddVocabulary, Route.EditVocabulary], from.name)) {
+        next();
+    } else if (!_.includes([Route.AddVocabulary, Route.EditVocabulary], from.name)) {
         await NativeStorage.setShouldReloadVocabularies(false);
+        next();
+    } else {
+        next();
     }
-    next();
 });
 
 export default router;
