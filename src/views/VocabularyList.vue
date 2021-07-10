@@ -23,7 +23,7 @@
 
             <view v-if="isDisabled && vocabularies.length > 0">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-                    <span class="ion-text-center"> Congrats! You have scrolled down to the last vocabulary! </span>
+                    <span class="ion-text-center"> Congrats! You have viewed the last vocabulary! </span>
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faThumbsUp" class="loaded-all-icon" />
