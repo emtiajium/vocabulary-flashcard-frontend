@@ -3,7 +3,7 @@
         <firecracker-header header-title="Vocabularies" content-id="vocabulary-list" menu-id="vocabulary-list-menu" />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-card v-if="isCompletedInitialRequest && totalVocabularies === 0 && !isNetworkError">
+            <ion-card v-if="isCompletedInitialRequest && vocabularies.length === 0 && !isNetworkError">
                 <ion-card-content>
                     <ion-card-subtitle class="display-flex ion-justify-content-center">
                         Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
@@ -110,7 +110,6 @@ export default defineComponent({
             isCompletedInitialRequest: false,
             faThumbsUp,
             isNetworkError: false,
-            totalVocabularies: 0,
         };
     },
     watch: {
@@ -128,7 +127,6 @@ export default defineComponent({
             this.isDisabled = false;
             this.isCompletedInitialRequest = false;
             this.isNetworkError = false;
-            this.totalVocabularies = 0;
         },
         async reload(): Promise<void> {
             if (this.$route.name === Route.Vocabularies && (await NativeStorage.getShouldReloadVocabularies())) {
@@ -139,7 +137,6 @@ export default defineComponent({
         },
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findVocabularies();
-            this.totalVocabularies = total;
             this.vocabularies = this.vocabularies.concat(results);
             this.pageNumber += 1;
             this.isDisabled = this.vocabularies.length >= total;
@@ -165,7 +162,7 @@ export default defineComponent({
                 this.isNetworkError = false;
             } catch (error) {
                 this.isNetworkError = true;
-                searchResult = { results: [], total: this.totalVocabularies };
+                searchResult = { results: [], total: 0 };
             }
             return searchResult as SearchResult<Vocabulary>;
         },
