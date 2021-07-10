@@ -5,7 +5,7 @@
         <ion-content :fullscreen="true" id="vocabulary-list">
             <ion-card v-if="isCompletedInitialRequest && vocabularies.length === 0 && !isNetworkError">
                 <ion-card-content>
-                    <ion-card-subtitle class="display-flex ion-justify-content-center">
+                    <ion-card-subtitle class="display-flex ion-justify-content-center ion-text-center">
                         Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
                         All you need is to click the button below and wait a bit!
                     </ion-card-subtitle>
