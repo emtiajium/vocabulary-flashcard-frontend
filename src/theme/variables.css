@@ -133,6 +133,12 @@ a {
     --ion-color-primary: #2e8b57;
 }
 
+ion-searchbar {
+    --ion-text-color: #ffffff;
+    --ion-color-step-600: #ffffff;
+    --ion-color-primary: #ffffff;
+}
+
 /** customization by Emtiaj end */
 
 @media (prefers-color-scheme: dark) {
