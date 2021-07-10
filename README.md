@@ -90,6 +90,7 @@
 
 ## Change Log
 
+-   `0.1.4`: Vocabulary searching functionality
 -   `0.1.3`: Network error notification
 -   `0.1.2`: Authentication using JWT + Functionality to populate a new app user with few vocabularies 
 -   `0.1.1`: Cohort + Menubar + Sign out
