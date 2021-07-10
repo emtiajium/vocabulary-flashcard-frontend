@@ -10,11 +10,7 @@
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-card
-                v-if="
-                    isCompletedInitialRequest && vocabularies.length === 0 && !searchKeyword.length && !isNetworkError
-                "
-            >
+            <ion-card v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError">
                 <ion-card-content>
                     <ion-card-subtitle class="display-flex ion-justify-content-center ion-text-center">
                         Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
@@ -22,7 +18,7 @@
                     </ion-card-subtitle>
                     <view class="display-flex ion-justify-content-end">
                         <ion-item lines="none">
-                            <ion-button @click="bootstrap">Fetch</ion-button>
+                            <ion-button @click="bootstrap"> Fetch </ion-button>
                         </ion-item>
                     </view>
                 </ion-card-content>
@@ -135,7 +131,7 @@ export default defineComponent({
             pageNumber: 1,
             pageSize: 10,
             isDisabled: false,
-            isCompletedInitialRequest: false,
+            allQuietOnTheWesternFront: false,
             faGlassCheers,
             isNetworkError: false,
             searchKeyword: '',
@@ -146,7 +142,9 @@ export default defineComponent({
     },
     async mounted() {
         await this.renderVocabularies();
-        this.isCompletedInitialRequest = true;
+        if (this.pageNumber === 1 && !this.isNetworkError && !this.vocabularies.length) {
+            this.allQuietOnTheWesternFront = true;
+        }
     },
     methods: {
         clean(): void {
@@ -154,7 +152,7 @@ export default defineComponent({
             this.pageNumber = 1;
             this.pageSize = 10;
             this.isDisabled = false;
-            this.isCompletedInitialRequest = false;
+            this.allQuietOnTheWesternFront = false;
             this.isNetworkError = false;
             this.searchKeyword = '';
         },
@@ -162,7 +160,6 @@ export default defineComponent({
             if (this.$route.name === Route.Vocabularies && (await NativeStorage.getShouldReloadVocabularies())) {
                 this.clean();
                 await this.renderVocabularies();
-                this.isCompletedInitialRequest = true;
             }
         },
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
