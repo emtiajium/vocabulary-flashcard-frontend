@@ -40,7 +40,9 @@
                 <ion-col size="4">
                     <ion-card
                         button="true"
-                        :href="`https://www.oxfordlearnersdictionaries.com/definition/english/${word.toLowerCase()}_1?q=${word.toLowerCase()}`"
+                        :href="`https://www.oxfordlearnersdictionaries.com/definition/english/${word
+                            .toLowerCase()
+                            .replace(' ', '-')}_1?q=${word.toLowerCase().replace(' ', '+')}`"
                         target="_blank"
                     >
                         <ion-card-content class="display-flex ion-justify-content-center ion-padding">
