@@ -3,8 +3,8 @@
         <ion-card-header>
             <ion-card-title>Relatable Words</ion-card-title>
             <ion-card-subtitle>
-                Any related vocabularies can be inserted here. And a relation can have various aspects, for example, it
-                can be a synonym, an antonym, etc. Therefore, if the word is <strong>Zenith</strong>,
+                Any related vocabularies can be inserted here. And a relationship can have various aspects, for example,
+                it can be a synonym, an antonym, etc. Therefore, if the word is <strong>Zenith</strong>,
                 <strong>Pinnacle</strong> can be put here
             </ion-card-subtitle>
         </ion-card-header>
