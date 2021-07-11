@@ -1,7 +1,7 @@
 <template>
     <view>
         <view class="display-flex ion-justify-content-center">
-            <ion-label class="empty-container-message">{{ message }}</ion-label>
+            <ion-label class="empty-container-message ion-text-center"> {{ message }} </ion-label>
         </view>
         <br />
         <view class="display-flex ion-justify-content-center">
