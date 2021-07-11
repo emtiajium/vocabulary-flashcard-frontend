@@ -10,9 +10,9 @@
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-card v-if="allQuietOnTheWesternFront && !isNetworkError">
+            <ion-card v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError">
                 <ion-card-content>
-                    <ion-card-subtitle class="display-flex ion-justify-content-center ion-text-center">
+                    <ion-card-subtitle class="ion-text-center">
                         Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
                         All you need is to click the button below and wait a bit! And FYI, you may remove those later.
                     </ion-card-subtitle>
@@ -64,8 +64,7 @@
                 id="infinite-scroll"
                 :disabled="isDisabled"
             >
-                <ion-infinite-scroll-content loading-spinner="lines" loading-text="Loading more ...">
-                </ion-infinite-scroll-content>
+                <ion-infinite-scroll-content loading-spinner="lines" loading-text="Loading more ..." />
             </ion-infinite-scroll>
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
