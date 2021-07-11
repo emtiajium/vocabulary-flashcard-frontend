@@ -142,9 +142,6 @@ export default defineComponent({
     },
     async mounted() {
         await this.renderVocabularies();
-        if (this.pageNumber === 1 && !this.isNetworkError && !this.vocabularies.length) {
-            this.allQuietOnTheWesternFront = true;
-        }
     },
     methods: {
         clean(): void {
@@ -165,11 +162,18 @@ export default defineComponent({
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findVocabularies();
             this.vocabularies = this.vocabularies.concat(results);
+            this.handleShowingFetchingFewVocabularies();
             this.pageNumber += 1;
             this.isDisabled = this.vocabularies.length >= total;
             if (event?.target) {
                 ((event as CustomEvent).target as unknown as IonInfiniteScrollType).disabled = this.isDisabled;
                 await ((event as CustomEvent).target as unknown as IonInfiniteScrollType).complete();
+            }
+        },
+
+        handleShowingFetchingFewVocabularies(): void {
+            if (this.pageNumber === 1 && !this.vocabularies.length) {
+                this.allQuietOnTheWesternFront = true;
             }
         },
 
