@@ -14,7 +14,7 @@
                 <ion-card-content>
                     <ion-card-subtitle class="display-flex ion-justify-content-center ion-text-center">
                         Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
-                        All you need is to click the button below and wait a bit!
+                        All you need is to click the button below and wait a bit! And FYI, you may remove those later.
                     </ion-card-subtitle>
                     <view class="display-flex ion-justify-content-end">
                         <ion-item lines="none">
