@@ -210,6 +210,7 @@ export default defineComponent({
                     undefined,
                 );
                 this.isNetworkError = false;
+                this.allQuietOnTheWesternFront = false;
                 this.vocabularies = results;
                 this.pageNumber = Number.parseInt((total / this.pageSize).toString(), 10) + 1;
                 this.isDisabled = true;
