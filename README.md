@@ -86,7 +86,15 @@
 
 ## Publish the app to the Google Play Store
 
-➜ TO BE ADDED
+➜ Set configs for the production
+
+➜ Set application version information (`versionCode`, `versionName`) at `./android/app/build.gradle`
+
+➜ Generate a signed app bundle
+> <https://developer.android.com/studio/publish/app-signing>
+
+➜ Follow the steps mentioned at [here](https://youtu.be/5GHT4QtotE4)
+
 
 ## Change Log
 
