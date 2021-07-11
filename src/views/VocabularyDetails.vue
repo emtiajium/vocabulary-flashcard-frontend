@@ -52,7 +52,7 @@
                             </view>
 
                             <view v-if="definition.externalLinks.length">
-                                <ion-card-header> External Links </ion-card-header>
+                                <ion-card-title> External Links </ion-card-title>
                                 <ul>
                                     <view
                                         v-for="(externalLink, externalLinkIndex) in definition.externalLinks"
@@ -86,7 +86,7 @@
                                 :key="linkerWordIndex"
                             >
                                 <li>
-                                    <span class="capitalize">{{ linkerWord }}</span>
+                                    <span class="capitalize"> {{ linkerWord }} </span>
                                     <br />
                                     <br />
                                 </li>
@@ -106,7 +106,7 @@
                                 :key="genericNotesIndex"
                             >
                                 <li>
-                                    <span class="capitalize">{{ genericNote }}</span>
+                                    <span class="capitalize"> {{ genericNote }} </span>
                                     <br />
                                     <br />
                                 </li>
