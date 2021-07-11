@@ -206,6 +206,9 @@ export default defineComponent({
 
         deleteVocabulary(id: string): void {
             this.vocabularies = this.vocabularies.filter(({ id: vocabularyId }) => id !== vocabularyId);
+            if (!this.vocabularies.length) {
+                this.allQuietOnTheWesternFront = true;
+            }
         },
 
         async bootstrap(): Promise<void> {
