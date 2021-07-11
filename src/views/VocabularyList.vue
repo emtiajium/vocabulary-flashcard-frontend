@@ -4,7 +4,7 @@
             header-title="Vocabularies"
             content-id="vocabulary-list"
             menu-id="vocabulary-list-menu"
-            enableSearching="true"
+            :enableSearching="true"
             searchPlaceholder="Type at least 3 characters"
             :setSearchKeyword="setSearchKeyword"
         />
