@@ -4,9 +4,9 @@
             <div class="profile ion-padding-bottom">
                 <img :src="profilePictureUrl" alt="Avatar" class="rounded-circle ion-padding" width="100" />
                 <div class="ion-padding-start">
-                    <strong class="item-text ion-text-capitalize">{{ fullName }}</strong>
+                    <strong class="item-text ion-text-capitalize"> {{ fullName }} </strong>
                     <br />
-                    <span class="ion-padding-top item-text">{{ username }}</span>
+                    <span class="ion-padding-top item-text"> {{ username }} </span>
                 </div>
             </div>
             <ion-list>

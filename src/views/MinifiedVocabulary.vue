@@ -4,7 +4,7 @@
             <ion-row>
                 <ion-col size="8" @click="seeMore(vocabulary.id, vocabulary.word)">
                     <ion-card-header>
-                        <ion-card-title class="capitalize">{{ vocabulary.word }}</ion-card-title>
+                        <ion-card-title class="capitalize"> {{ vocabulary.word }} </ion-card-title>
                     </ion-card-header>
 
                     <ion-card-content>
@@ -14,7 +14,7 @@
                         <view v-if="vocabulary.definitions.length">
                             <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
                                 <ion-item lines="none">
-                                    <ion-label class="capitalize">{{ definition.meaning }}</ion-label>
+                                    <ion-label class="capitalize"> {{ definition.meaning }} </ion-label>
                                 </ion-item>
                             </view>
                         </view>
