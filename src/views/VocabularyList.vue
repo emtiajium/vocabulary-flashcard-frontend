@@ -10,7 +10,7 @@
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-card v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError">
+            <ion-card v-if="allQuietOnTheWesternFront && !isNetworkError">
                 <ion-card-content>
                     <ion-card-subtitle class="display-flex ion-justify-content-center ion-text-center">
                         Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
@@ -23,6 +23,8 @@
                     </view>
                 </ion-card-content>
             </ion-card>
+
+            <spinner v-if="showSpinner" />
 
             <view v-if="isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
@@ -102,12 +104,14 @@ import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import Route from '@/domains/Route';
 import NativeStorage from '@/utils/NativeStorage';
+import Spinner from '@/views/Spinner.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 
 export default defineComponent({
     name: 'VocabularyList',
     components: {
+        Spinner,
         NetworkError,
         MinifiedVocabulary,
         FirecrackerHeader,
@@ -126,6 +130,7 @@ export default defineComponent({
     },
     data() {
         return {
+            showSpinner: false,
             faPlus,
             vocabularies: [] as Vocabulary[],
             pageNumber: 1,
@@ -172,7 +177,7 @@ export default defineComponent({
         },
 
         handleShowingFetchingFewVocabularies(): void {
-            if (this.pageNumber === 1 && !this.vocabularies.length) {
+            if (this.pageNumber === 1 && !this.searchKeyword.length && !this.vocabularies.length) {
                 this.allQuietOnTheWesternFront = true;
             }
         },
@@ -205,17 +210,20 @@ export default defineComponent({
 
         async bootstrap(): Promise<void> {
             try {
+                this.showSpinner = true;
                 const { results, total } = await HttpHandler.post<undefined, SearchResult<Vocabulary>>(
                     '/v1/vocabularies/bootstrap',
                     undefined,
                 );
-                this.isNetworkError = false;
                 this.allQuietOnTheWesternFront = false;
+                this.isNetworkError = false;
                 this.vocabularies = results;
                 this.pageNumber = Number.parseInt((total / this.pageSize).toString(), 10) + 1;
                 this.isDisabled = true;
             } catch {
                 this.isNetworkError = true;
+            } finally {
+                this.showSpinner = false;
             }
         },
 
