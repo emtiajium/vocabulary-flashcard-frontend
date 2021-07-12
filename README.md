@@ -26,7 +26,7 @@
 
 ➜ `npm install`
 
-###### Create your configuration and edit
+###### Create and edit your configuration
 
 ➜ `config.json.text` -> `config.json`
 
