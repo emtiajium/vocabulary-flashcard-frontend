@@ -96,7 +96,7 @@
 > [App Bundles: Everything to know about Play App Signing](https://youtu.be/odv_1fxt9BI)
 
 ➜ Do an internal testing
-> [App Bundles: Everything to know about Play App Signing](https://youtu.be/vAEAZPU7w-I)
+> [App Bundles: Testing bundles with bundle tool and the Play Console](https://youtu.be/vAEAZPU7w-I)
 
 ## Change Log
 
