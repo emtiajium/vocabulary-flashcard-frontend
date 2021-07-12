@@ -86,20 +86,17 @@
 
 ## Publish the app to the Google Play Store
 
+➜ [Watch it](https://youtu.be/5GHT4QtotE4)
+
 ➜ Set configs for the production
 
 ➜ Set application version information (`versionCode`, `versionName`) at `./android/app/build.gradle`
 
-* Create the keystore
-* Generate `certificate.pem` and `encryptedPrivateKey`
-* Create the `.jks` file using Android Studio
-* Create the upload key certificate as PEM file
-
-➜ Generate a signed app bundle
-> <https://developer.android.com/studio/publish/app-signing>
-
-➜ Follow the steps mentioned at [here](https://youtu.be/5GHT4QtotE4)
+➜ Generate a signed app bundle 
 > [App Bundles: Everything to know about Play App Signing](https://youtu.be/odv_1fxt9BI)
+
+➜ Do an internal testing
+> [App Bundles: Everything to know about Play App Signing](https://youtu.be/vAEAZPU7w-I)
 
 ## Change Log
 
