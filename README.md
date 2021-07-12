@@ -42,12 +42,7 @@
 
 ###### Run the web app natively on Android
 
-➜ Read [these](https://facebook.github.io/react-native/docs/running-on-device.html) and execute three task given below
-> Enable Debugging over USB
-
-> Plug in your device via USB
-
-> Connect to the development server
+➜ Read [these](https://facebook.github.io/react-native/docs/running-on-device.html) and `Enable Debugging over USB`, `Plug in your device via USB`, `Connect to the development server`
 
 ➜ `npm run serve:android:anew`
 
@@ -77,10 +72,7 @@
 
 ➜ Install [Firebase CLI](https://firebase.google.com/docs/cli)
 
-➜ Set config for the production
-> config.json
-
-> capacitor.config.json
+➜ Set configs (`config.json`, `capacitor.config.json`) for the production
 
 ➜ `npm run deploy:firebase`
 
