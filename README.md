@@ -14,7 +14,7 @@
 > [Add test users](https://console.cloud.google.com/apis/credentials/consent)
 
 ➜ Add SHA1 fingerprint in the Firebase console
-> `keytool -genkey -v -keystore ~/.android/debug.keystore -alias <an-alias>`
+> `keytool -genkey -v -keystore ~/.android/debug.keystore -alias <an-alias> -validity 9125`
 
 > `keytool -list -v -keystore ~/.android/debug.keystore -alias <an-alias>`
 
@@ -90,16 +90,26 @@
 
 ➜ Set application version information (`versionCode`, `versionName`) at `./android/app/build.gradle`
 
+* Create the keystore
+* Generate `certificate.pem` and `encryptedPrivateKey`
+* Create the `.jks` file using Android Studio
+* Create the upload key certificate as PEM file
+
 ➜ Generate a signed app bundle
 > <https://developer.android.com/studio/publish/app-signing>
 
 ➜ Follow the steps mentioned at [here](https://youtu.be/5GHT4QtotE4)
-
+> [App Bundles: Everything to know about Play App Signing](https://youtu.be/odv_1fxt9BI)
 
 ## Change Log
 
+-   `0.1.5`: Last minute fixation for the release
 -   `0.1.4`: Vocabulary searching functionality
 -   `0.1.3`: Network error notification
 -   `0.1.2`: Authentication using JWT + Functionality to populate a new app user with few vocabularies 
 -   `0.1.1`: Cohort + Menubar + Sign out
 -   `0.1.0`: User creation with Google authentication + Basic vocabulary functionalities 
+
+## Release Log
+
+-   `1`: `0.1.5`
