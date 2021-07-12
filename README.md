@@ -86,7 +86,7 @@
 
 ## Publish the app to the Google Play Store
 
-➜ [Watch it](https://youtu.be/5GHT4QtotE4)
+➜ Watch [it](https://youtu.be/5GHT4QtotE4) to have the idea of publishing the app
 
 ➜ Set configs for the production
 
