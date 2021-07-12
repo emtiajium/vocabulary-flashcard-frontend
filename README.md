@@ -48,7 +48,7 @@
 
 ➜ Open the project (`/android`) in Android Studio
 
-➜ Replace few generated files
+➜ Modify few generated files
 > Add `android:usesCleartextTraffic="true"` within `<application />` at `./android/app/src/main/AndroidManifest.xml`
 
 > Replace  `minSdkVersion = 21` with `minSdkVersion = 23` at `./android/variables.gradle`
