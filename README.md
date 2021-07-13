@@ -91,10 +91,10 @@
 ➜ Import the certificate into the key store
 > `keytool -importcert -alias <an-alias> -keystore <keystore-name>.keystore -file <app-signing-key-certificate>`
 
-> Verify the fingerprint: `keytool -printcert -jarfile app-release.aab`
-
 ➜ Generate the signed app bundle 
 > [App Bundles: Everything to know about Play App Signing](https://youtu.be/odv_1fxt9BI)
+ 
+> Verify the fingerprint: `keytool -printcert -jarfile app-release.aab`
 
 ➜ Do an internal testing
 > [App Bundles: Testing bundles with bundle tool and the Play Console](https://youtu.be/vAEAZPU7w-I)
