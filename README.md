@@ -80,14 +80,20 @@
 
 ➜ Set configs for the production
 
+➜ Check and double-check the configurations
+
 ➜ Set application version information (`versionCode`, `versionName`) at `./android/app/build.gradle`
 
 ➜ Download app signing key certificate from Google Play console
 
+➜ Add SHA1 fingerprint (from the `App signing key certificate`) in the Firebase console
+
 ➜ Import the certificate into the key store
 > `keytool -importcert -alias <an-alias> -keystore <keystore-name>.keystore -file <app-signing-key-certificate>`
 
-➜ Generate a signed app bundle 
+> Verify the fingerprint: `keytool -printcert -jarfile app-release.aab`
+
+➜ Generate the signed app bundle 
 > [App Bundles: Everything to know about Play App Signing](https://youtu.be/odv_1fxt9BI)
 
 ➜ Do an internal testing
@@ -97,7 +103,7 @@
 
 ## Change Log
 
--   `0.1.5`: Last minute fixation for the release
+-   `0.1.5`: Instruction to publish + Last minute fixation for the release
 -   `0.1.4`: Vocabulary searching functionality
 -   `0.1.3`: Network error notification
 -   `0.1.2`: Authentication using JWT + Functionality to populate a new app user with few vocabularies 
@@ -106,4 +112,6 @@
 
 ## Release Log
 
--   `1`: `0.1.5`
+-   `3`: `0.1.5`
+-   `2`: Test release II
+-   `1`: Test release I
