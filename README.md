@@ -84,7 +84,7 @@
 
 ➜ Set application version information (`versionCode`, `versionName`) at `./android/app/build.gradle`
 
-➜ Download upload key certificate from Google Play console
+➜ Download the upload key certificate from Google Play console
 
 ➜ Import the certificate into the key store
 > `keytool -importcert -alias <an-alias> -keystore <keystore-name>.keystore -file <Upload key certificate>`
