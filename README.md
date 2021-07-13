@@ -92,7 +92,9 @@
 
 > [App Bundles: Everything to know about Play App Signing](https://youtu.be/odv_1fxt9BI)
 
-➜ Add SHA1 fingerprint (from the `App signing key certificate`) in the Firebase console
+➜ Add SHA1 fingerprint in the Firebase console
+
+> `keytool -list -alias <an-alias> -keystore <keystore-path/keystore-name>.keystore -v`
 
 ➜ Do an internal testing
 
