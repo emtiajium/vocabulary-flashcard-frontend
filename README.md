@@ -84,17 +84,17 @@
 
 ➜ Set application version information (`versionCode`, `versionName`) at `./android/app/build.gradle`
 
-➜ Download app signing key certificate from Google Play console
-
-➜ Add SHA1 fingerprint (from the `App signing key certificate`) in the Firebase console
+➜ Download upload key certificate from Google Play console
 
 ➜ Import the certificate into the key store
-> `keytool -importcert -alias <an-alias> -keystore <keystore-name>.keystore -file <app-signing-key-certificate>`
+> `keytool -importcert -alias <an-alias> -keystore <keystore-name>.keystore -file <Upload key certificate>`
 
 ➜ Generate the signed app bundle 
 > [App Bundles: Everything to know about Play App Signing](https://youtu.be/odv_1fxt9BI)
  
 > Verify the fingerprint: `keytool -printcert -jarfile app-release.aab`
+
+➜ Add SHA1 fingerprint (from the `App signing key certificate`) in the Firebase console
 
 ➜ Do an internal testing
 > [App Bundles: Testing bundles with bundle tool and the Play Console](https://youtu.be/vAEAZPU7w-I)
