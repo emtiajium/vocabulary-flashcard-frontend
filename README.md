@@ -14,7 +14,7 @@
 
 ➜ Enable Google Sign-In in the Firebase console and add SHA1 fingerprint in the Firebase console
 
-> `keytool -genkey -alias <an-alias> -keyalg RSA -validity 18250 -keystore ~/.android/debug.keystore -v`
+> `keytool -genkey -alias <an-alias> -keyalg RSA -validity 9125 -keystore ~/.android/debug.keystore -v`
 
 > `keytool -list -alias <an-alias> -keystore ~/.android/debug.keystore -v`
 
