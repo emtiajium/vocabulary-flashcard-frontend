@@ -1,5 +1,5 @@
 {
-    "appId": "com.emtiajium.firecracker.vocab.practice",
+    "appId": "com.emtiajium.firecracker.collaborative.vocab.practice
     "appName": "Firecracker Vocab Practice",
     "webDir": "dist",
     "bundledWebRuntime": false,
