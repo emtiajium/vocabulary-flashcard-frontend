@@ -151,6 +151,7 @@ import {
     IonCardSubtitle,
     IonCardHeader,
     IonCardContent,
+    useBackButton,
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
@@ -171,6 +172,7 @@ import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import MessageDB from '@/utils/MessageDB';
 import Route from '@/domains/Route';
 import NativeStorage from '@/utils/NativeStorage';
+import Alert from '@/utils/Alert';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -183,6 +185,8 @@ enum Mode {
     DEFINITION_CREATE = 'DEFINITION_CREATE',
     DEFINITION_UPDATE = 'DEFINITION_UPDATE',
 }
+
+type ProcessNextHandler = () => void | Promise<void>;
 
 export default defineComponent({
     name: 'AddVocabulary',
@@ -234,6 +238,9 @@ export default defineComponent({
         '$route.name': 'reload',
     },
     async mounted() {
+        useBackButton(1, async (processNextHandler) => {
+            await this.notifyUnsavedVocabulary(processNextHandler);
+        });
         await this.init();
     },
     methods: {
@@ -384,9 +391,24 @@ export default defineComponent({
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
             (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
         },
-        back(): void {
-            this.clear();
-            this.$router.back();
+        async back(): Promise<void> {
+            await this.notifyUnsavedVocabulary(async () => {
+                this.clear();
+                this.$router.back();
+            });
+        },
+        async notifyUnsavedVocabulary(handler: ProcessNextHandler): Promise<void> {
+            if (!this.word.trim()) {
+                await handler();
+            } else {
+                await Alert.presentAlertConfirm(
+                    '',
+                    'You have an unsaved vocabulary that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
+                    async () => {
+                        return Promise.resolve(handler());
+                    },
+                );
+            }
         },
     },
 });
