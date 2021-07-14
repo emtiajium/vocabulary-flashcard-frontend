@@ -89,6 +89,11 @@ import { validateSync } from 'class-validator';
 import Toast from '@/utils/Toast';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import { isArrayOfStringEqual } from '@/utils/is-equal';
+import Alert from '@/utils/Alert';
+import * as _ from 'lodash';
+
+type ProcessNextHandler = () => void | Promise<void>;
 
 export default defineComponent({
     name: 'AddDefinition',
@@ -115,30 +120,41 @@ export default defineComponent({
     data() {
         return {
             meaning: '',
+            pristineDefinition: {} as Definition,
         };
     },
     mounted() {
-        this.meaning = this.$props.definition?.meaning || '';
+        if (this.$props.definition) {
+            // https://v3.vuejs.org/guide/reactivity.html
+            // https://v3.vuejs.org/api/basic-reactivity.html
+            // otherwise isDirty() won't work
+            this.pristineDefinition = _.cloneDeep(this.$props.definition) as Definition;
+            this.meaning = this.pristineDefinition.meaning;
+        }
     },
     methods: {
-        getAddButtonLabel(itemsLength: number): string {
-            return itemsLength ? 'Add More' : 'Add';
-        },
         setMeaning(meaning: string): void {
             this.meaning = meaning.trim();
+        },
+        getExamples(): string[] {
+            return (this.$refs.AddDefinitionExamplesRef as InstanceType<typeof AddDefinitionExamples>).getExamples();
+        },
+        getNotes(): string[] {
+            return (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).getNotes();
+        },
+        getExternalLinks(): string[] {
+            return (
+                this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>
+            ).getExternalLinks();
         },
         getDefinitionPayload(): Definition {
             const definition = new Definition();
             definition.id = this.definition?.id || uuidV4();
             definition.vocabularyId = this.vocabularyId;
             definition.meaning = this.meaning;
-            definition.examples = (
-                this.$refs.AddDefinitionExamplesRef as InstanceType<typeof AddDefinitionExamples>
-            ).getExamples();
-            definition.notes = (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).getNotes();
-            definition.externalLinks = (
-                this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>
-            ).getExternalLinks();
+            definition.examples = this.getExamples();
+            definition.notes = this.getNotes();
+            definition.externalLinks = this.getExternalLinks();
             return definition;
         },
         async persist(): Promise<void> {
@@ -157,9 +173,52 @@ export default defineComponent({
             (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).clear();
             (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
         },
-        back(): void {
-            this.clear();
-            this.onCancellingAddingDefinition();
+        async back(): Promise<void> {
+            await this.notifyUnsavedDefinition(() => {
+                this.clear();
+                this.onCancellingAddingDefinition();
+            });
+        },
+        isMeaningGetsDirty(): boolean {
+            return !_.isEmpty(this.pristineDefinition)
+                ? this.meaning !== this.pristineDefinition.meaning
+                : this.meaning.length > 0;
+        },
+        isExamplesGetDirty(): boolean {
+            return !_.isEmpty(this.pristineDefinition)
+                ? isArrayOfStringEqual(this.getExamples(), this.pristineDefinition.examples as string[])
+                : this.getExamples().length > 0;
+        },
+        isNotesGetDirty(): boolean {
+            return !_.isEmpty(this.pristineDefinition)
+                ? isArrayOfStringEqual(this.getNotes(), this.pristineDefinition.notes as string[])
+                : this.getNotes().length > 0;
+        },
+        isExternalLinksGetDirty(): boolean {
+            return !_.isEmpty(this.pristineDefinition)
+                ? isArrayOfStringEqual(this.getExternalLinks(), this.pristineDefinition.externalLinks as string[])
+                : this.getExternalLinks().length > 0;
+        },
+        isDirty(): boolean {
+            return (
+                this.isMeaningGetsDirty() ||
+                this.isExamplesGetDirty() ||
+                this.isNotesGetDirty() ||
+                this.isExternalLinksGetDirty()
+            );
+        },
+        async notifyUnsavedDefinition(handler: ProcessNextHandler): Promise<void> {
+            if (!this.isDirty()) {
+                await handler();
+            } else {
+                await Alert.presentAlertConfirm(
+                    '',
+                    'You have an unsaved definition that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
+                    async () => {
+                        return Promise.resolve(handler());
+                    },
+                );
+            }
         },
     },
 });
