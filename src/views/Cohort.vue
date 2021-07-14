@@ -11,10 +11,14 @@
             <network-error v-if="isNetworkError && isReady" />
 
             <ion-card v-if="isReady && !isNetworkError && isTheUserAlone()">
-                <ion-card-content>
-                    <empty-container
-                        message="Looks like you are the only member of your group. Please let us know if you would like to create your own group."
-                    />
+                <ion-card-header>
+                    <ion-card-subtitle class="ion-text-center">
+                        Looks like you are the only member of your group. Please let us know if you would like to create
+                        your own group.
+                    </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content class="display-flex ion-justify-content-center">
+                    <img src="/assets/icon/diversity.svg" alt="Cohort" class="empty-cohort-icon" />
                 </ion-card-content>
             </ion-card>
 
@@ -63,7 +67,6 @@
 import { defineComponent } from 'vue';
 import Spinner from '@/views/Spinner.vue';
 import Cohort from '@/domains/Cohort';
-import EmptyContainer from '@/views/EmptyContainer.vue';
 import {
     IonCard,
     IonCardContent,
@@ -74,6 +77,7 @@ import {
     IonGrid,
     IonRow,
     IonCol,
+    IonCardHeader,
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
@@ -85,11 +89,11 @@ export default defineComponent({
     components: {
         NetworkError,
         FirecrackerHeader,
-        EmptyContainer,
         Spinner,
         IonPage,
         IonContent,
         IonCard,
+        IonCardHeader,
         IonCardContent,
         IonCardTitle,
         IonCardSubtitle,
@@ -144,5 +148,8 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+}
+.empty-cohort-icon {
+    max-width: 15%;
 }
 </style>
