@@ -64,8 +64,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next): Promise<void> => {
+    const isValidRoute = _.includes(_.map(routes, 'name'), to.name);
     const isAuthenticated = await NativeStorage.isAuthenticated();
-    if (!isAuthenticated && to.name !== Route.SignIn) {
+    if (!isValidRoute || (!isAuthenticated && to.name !== Route.SignIn)) {
         next(`/sign-in`);
     } else if (!isAuthenticated && to.name === Route.SignIn) {
         next();
