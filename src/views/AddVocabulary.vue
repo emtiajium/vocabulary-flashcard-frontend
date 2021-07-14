@@ -278,7 +278,7 @@ export default defineComponent({
                 const vocabulary = (await HttpHandler.get<Vocabulary>(
                     `/v1/vocabularies/${vocabularyId}`,
                 )) as Vocabulary;
-                this.pristineVocabulary = _.cloneDeep(vocabulary);
+                this.pristineVocabulary = _.cloneDeep(vocabulary) as Vocabulary;
                 this.id = vocabulary.id;
                 this.word = vocabulary.word;
                 this.definitions = vocabulary.definitions as Definition[];
@@ -427,7 +427,7 @@ export default defineComponent({
             if (this.isInCreationMode()) {
                 isDirty = this.linkerWords.length > 0;
             } else if (this.isInUpdateMode()) {
-                isDirty = isArrayOfStringEqual(this.linkerWords, this.pristineVocabulary.linkerWords);
+                isDirty = isArrayOfStringEqual(this.linkerWords, this.pristineVocabulary.linkerWords as string[]);
             }
             return isDirty;
         },
@@ -436,7 +436,7 @@ export default defineComponent({
             if (this.isInCreationMode()) {
                 isDirty = this.genericNotes.length > 0;
             } else if (this.isInUpdateMode()) {
-                isDirty = isArrayOfStringEqual(this.genericNotes, this.pristineVocabulary.genericNotes);
+                isDirty = isArrayOfStringEqual(this.genericNotes, this.pristineVocabulary.genericNotes as string[]);
             }
             return isDirty;
         },
@@ -445,7 +445,10 @@ export default defineComponent({
             if (this.isInCreationMode()) {
                 isDirty = this.genericExternalLinks.length > 0;
             } else if (this.isInUpdateMode()) {
-                isDirty = isArrayOfStringEqual(this.genericExternalLinks, this.pristineVocabulary.genericExternalLinks);
+                isDirty = isArrayOfStringEqual(
+                    this.genericExternalLinks,
+                    this.pristineVocabulary.genericExternalLinks as string[],
+                );
             }
             return isDirty;
         },
