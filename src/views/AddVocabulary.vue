@@ -394,6 +394,7 @@ export default defineComponent({
             (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
             (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
+            this.pristineVocabulary = {} as Vocabulary;
         },
         async back(): Promise<void> {
             await this.notifyUnsavedVocabulary(async () => {

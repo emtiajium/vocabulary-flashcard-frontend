@@ -172,6 +172,7 @@ export default defineComponent({
             (this.$refs.AddDefinitionExamplesRef as InstanceType<typeof AddDefinitionExamples>).clear();
             (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).clear();
             (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
+            this.pristineDefinition = {} as Definition;
         },
         async back(): Promise<void> {
             await this.notifyUnsavedDefinition(() => {
