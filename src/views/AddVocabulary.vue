@@ -173,6 +173,8 @@ import MessageDB from '@/utils/MessageDB';
 import Route from '@/domains/Route';
 import NativeStorage from '@/utils/NativeStorage';
 import Alert from '@/utils/Alert';
+import * as _ from 'lodash';
+import { isArrayOfStringEqual, isArrayOfObjectEqual } from '@/utils/is-equal';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -232,6 +234,7 @@ export default defineComponent({
             faPlusCircle,
             faMinusCircle,
             faPencilAlt,
+            pristineVocabulary: {} as Vocabulary,
         };
     },
     watch: {
@@ -275,6 +278,7 @@ export default defineComponent({
                 const vocabulary = (await HttpHandler.get<Vocabulary>(
                     `/v1/vocabularies/${vocabularyId}`,
                 )) as Vocabulary;
+                this.pristineVocabulary = _.cloneDeep(vocabulary);
                 this.id = vocabulary.id;
                 this.word = vocabulary.word;
                 this.definitions = vocabulary.definitions as Definition[];
@@ -397,8 +401,65 @@ export default defineComponent({
                 this.$router.back();
             });
         },
+        isWordGetsDirty(): boolean {
+            let isDirty = false;
+            if (this.isInCreationMode()) {
+                isDirty = this.word.length > 0;
+            } else if (this.isInUpdateMode()) {
+                isDirty = this.word !== this.pristineVocabulary.word;
+            }
+            return isDirty;
+        },
+        isDefinitionsGetDirty(): boolean {
+            let isDirty = false;
+            if (this.isInCreationMode()) {
+                isDirty = this.definitions.length > 0;
+            } else if (this.isInUpdateMode()) {
+                isDirty = isArrayOfObjectEqual<Definition>(
+                    this.definitions,
+                    this.pristineVocabulary.definitions as Definition[],
+                );
+            }
+            return isDirty;
+        },
+        isLinkerWordsGetDirty(): boolean {
+            let isDirty = false;
+            if (this.isInCreationMode()) {
+                isDirty = this.linkerWords.length > 0;
+            } else if (this.isInUpdateMode()) {
+                isDirty = isArrayOfStringEqual(this.linkerWords, this.pristineVocabulary.linkerWords);
+            }
+            return isDirty;
+        },
+        isGenericNotesGetDirty(): boolean {
+            let isDirty = false;
+            if (this.isInCreationMode()) {
+                isDirty = this.genericNotes.length > 0;
+            } else if (this.isInUpdateMode()) {
+                isDirty = isArrayOfStringEqual(this.genericNotes, this.pristineVocabulary.genericNotes);
+            }
+            return isDirty;
+        },
+        isGenericExternalLinksGetDirty(): boolean {
+            let isDirty = false;
+            if (this.isInCreationMode()) {
+                isDirty = this.genericExternalLinks.length > 0;
+            } else if (this.isInUpdateMode()) {
+                isDirty = isArrayOfStringEqual(this.genericExternalLinks, this.pristineVocabulary.genericExternalLinks);
+            }
+            return isDirty;
+        },
+        isDirty(): boolean {
+            return (
+                this.isWordGetsDirty() ||
+                this.isDefinitionsGetDirty() ||
+                this.isLinkerWordsGetDirty() ||
+                this.isGenericNotesGetDirty() ||
+                this.isGenericExternalLinksGetDirty()
+            );
+        },
         async notifyUnsavedVocabulary(handler: ProcessNextHandler): Promise<void> {
-            if (!this.word.trim()) {
+            if (!this.isDirty()) {
                 await handler();
             } else {
                 await Alert.presentAlertConfirm(
