@@ -65,7 +65,7 @@ export default defineComponent({
             try {
                 const user = await GoogleAuth.signIn();
                 await this.persistUser(user);
-                await this.$router.push('/authenticated-home');
+                await this.$router.replace('/authenticated-home');
             } catch (error) {
                 await Toast.present(MessageDB.networkError);
             }
