@@ -4,7 +4,7 @@
             <div class="profile ion-padding-bottom">
                 <img :src="profilePictureUrl" alt="Avatar" class="rounded-circle ion-padding" width="100" />
                 <div class="ion-padding-start">
-                    <strong class="item-text ion-text-capitalize"> {{ fullName }} </strong>
+                    <strong class="item-text ion-text-capitalize"> {{ name }} </strong>
                     <br />
                     <span class="ion-padding-top item-text"> {{ username }} </span>
                 </div>
@@ -49,7 +49,7 @@ export default defineComponent({
         return {
             profilePictureUrl: '',
             username: '',
-            fullName: '',
+            name: '',
             faBook,
             faUsers,
             faSignOutAlt,
@@ -60,7 +60,7 @@ export default defineComponent({
         this.profilePictureUrl =
             user.profilePictureUrl || `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`;
         this.username = user.username as string;
-        this.fullName = `${user.firstname?.trim()} ${(user.lastname || '').trim()}`.trim();
+        this.name = user.name as string;
     },
     methods: {
         async openMenu(): Promise<void> {

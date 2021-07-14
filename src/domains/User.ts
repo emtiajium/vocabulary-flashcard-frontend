@@ -7,6 +7,8 @@ export default class User {
 
     lastname?: string;
 
+    name?: string;
+
     profilePictureUrl?: string;
 
     id?: string;

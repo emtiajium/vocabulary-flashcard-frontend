@@ -51,8 +51,7 @@ export default class NativeStorage {
         ).set(NativeStorageKey.AUTHORIZED_USER, {
             jwToken: user?.jwToken,
             username: user?.username,
-            firstname: user?.firstname,
-            lastname: user?.lastname,
+            name: user?.name,
             profilePictureUrl: user?.profilePictureUrl,
         });
     }

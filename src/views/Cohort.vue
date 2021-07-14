@@ -43,7 +43,7 @@
                                     </ion-col>
                                     <ion-col size="8" class="profile-info">
                                         <ion-card-subtitle class="ion-text-capitalize">
-                                            {{ `${user.firstname.trim()} ${(user.lastname || '').trim()}`.trim() }}
+                                            {{ user.name }}
                                         </ion-card-subtitle>
                                         <ion-card-subtitle class="ion-padding-top">
                                             {{ user.username }}
