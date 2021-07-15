@@ -176,7 +176,7 @@ import Alert from '@/utils/Alert';
 import * as _ from 'lodash';
 import { isArrayOfStringEqual, isArrayOfObjectEqual } from '@/utils/is-equal';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
-import BackButtonUnsubscribeHandler from '@/domains/BackButtonUnsubscribeHandler';
+import { BackButtonUnsubscribeHandler, ProcessNextHandler } from '@/domains/Handlers';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -189,8 +189,6 @@ enum Mode {
     DEFINITION_CREATE = 'DEFINITION_CREATE',
     DEFINITION_UPDATE = 'DEFINITION_UPDATE',
 }
-
-type ProcessNextHandler = () => void | Promise<void>;
 
 export default defineComponent({
     name: 'AddVocabulary',
@@ -247,7 +245,6 @@ export default defineComponent({
         this.backButtonUnsubscribeHandler = useBackButton(
             BackButtonHandlerPriority.ADD_VOCABULARY,
             async (processNextHandler) => {
-                console.log('useBackButton | Add vocabulary');
                 await this.notifyUnsavedVocabulary(() => {
                     processNextHandler();
                 });
