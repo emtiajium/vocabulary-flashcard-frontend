@@ -242,17 +242,24 @@ export default defineComponent({
         '$route.name': 'reload',
     },
     async mounted() {
-        this.backButtonUnsubscribeHandler = useBackButton(
-            BackButtonHandlerPriority.ADD_VOCABULARY,
-            async (processNextHandler) => {
-                await this.notifyUnsavedVocabulary(() => {
-                    processNextHandler();
-                });
-            },
-        );
+        this.subscribeToHardwareBackButtonListener();
         await this.init();
     },
+    beforeUnmount() {
+        this.clear();
+    },
     methods: {
+        subscribeToHardwareBackButtonListener(): void {
+            this.unsubscribeBackButtonListener();
+            this.backButtonUnsubscribeHandler = useBackButton(
+                BackButtonHandlerPriority.ADD_VOCABULARY,
+                async (processNextHandler) => {
+                    await this.notifyUnsavedVocabulary(() => {
+                        processNextHandler();
+                    });
+                },
+            );
+        },
         async init(): Promise<void> {
             const routeParameters = useRoute().params;
             if (routeParameters?.id) {
@@ -273,6 +280,7 @@ export default defineComponent({
             this.isLoading = false;
         },
         async reload(): Promise<void> {
+            this.subscribeToHardwareBackButtonListener();
             if (this.$route.name === Route.EditVocabulary) {
                 await this.loadEditView();
             } else if (this.$route.name === Route.AddVocabulary) {
@@ -392,7 +400,9 @@ export default defineComponent({
             }
         },
         unsubscribeBackButtonListener(): void {
-            this.backButtonUnsubscribeHandler.unregister();
+            if (!_.isEmpty(this.backButtonUnsubscribeHandler)) {
+                this.backButtonUnsubscribeHandler.unregister();
+            }
         },
         clear(): void {
             this.id = uuidV4();
@@ -405,6 +415,7 @@ export default defineComponent({
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
             (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
             this.pristineVocabulary = {} as Vocabulary;
+            this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
         },
         async back(): Promise<void> {
             await this.notifyUnsavedVocabulary(async () => {
@@ -482,7 +493,7 @@ export default defineComponent({
                     'You have an unsaved vocabulary that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
                     async () => {
                         this.unsubscribeBackButtonListener();
-                        return Promise.resolve(handler());
+                        await handler();
                     },
                 );
             }

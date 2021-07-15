@@ -133,11 +133,18 @@ export default defineComponent({
             this.pristineDefinition = _.cloneDeep(this.$props.definition) as Definition;
             this.meaning = this.pristineDefinition.meaning;
         }
-        this.backButtonUnsubscribeHandler = useBackButton(BackButtonHandlerPriority.ADD_DEFINITION, async () => {
-            await this.back();
-        });
+        this.subscribeToHardwareBackButtonListener();
+    },
+    beforeUnmount() {
+        this.clear();
     },
     methods: {
+        subscribeToHardwareBackButtonListener(): void {
+            this.unsubscribeBackButtonListener();
+            this.backButtonUnsubscribeHandler = useBackButton(BackButtonHandlerPriority.ADD_DEFINITION, async () => {
+                await this.back();
+            });
+        },
         setMeaning(meaning: string): void {
             this.meaning = meaning.trim();
         },
@@ -174,7 +181,9 @@ export default defineComponent({
             }
         },
         unsubscribeBackButtonListener(): void {
-            this.backButtonUnsubscribeHandler.unregister();
+            if (!_.isEmpty(this.backButtonUnsubscribeHandler)) {
+                this.backButtonUnsubscribeHandler.unregister();
+            }
         },
         clear(): void {
             this.setMeaning('');
@@ -182,6 +191,7 @@ export default defineComponent({
             (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).clear();
             (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
             this.pristineDefinition = {} as Definition;
+            this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
         },
         async back(): Promise<void> {
             await this.notifyUnsavedDefinition(() => {
