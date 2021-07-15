@@ -85,6 +85,7 @@ ion-content {
 ion-toggle {
     --background: #d0f0c0;
     --background-checked: #d0f0c0;
+    --handle-background: #50c878;
     --handle-background-checked: #2e8b57;
 }
 
