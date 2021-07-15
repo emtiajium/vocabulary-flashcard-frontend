@@ -175,6 +175,8 @@ import NativeStorage from '@/utils/NativeStorage';
 import Alert from '@/utils/Alert';
 import * as _ from 'lodash';
 import { isArrayOfStringEqual, isArrayOfObjectEqual } from '@/utils/is-equal';
+import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
+import BackButtonUnsubscribeHandler from '@/domains/BackButtonUnsubscribeHandler';
 
 enum PageType {
     ADD_VOCABULARY = 'ADD_VOCABULARY',
@@ -235,15 +237,22 @@ export default defineComponent({
             faMinusCircle,
             faPencilAlt,
             pristineVocabulary: {} as Vocabulary,
+            backButtonUnsubscribeHandler: {} as BackButtonUnsubscribeHandler,
         };
     },
     watch: {
         '$route.name': 'reload',
     },
     async mounted() {
-        useBackButton(1, async (processNextHandler) => {
-            await this.notifyUnsavedVocabulary(processNextHandler);
-        });
+        this.backButtonUnsubscribeHandler = useBackButton(
+            BackButtonHandlerPriority.ADD_VOCABULARY,
+            async (processNextHandler) => {
+                console.log('useBackButton | Add vocabulary');
+                await this.notifyUnsavedVocabulary(() => {
+                    processNextHandler();
+                });
+            },
+        );
         await this.init();
     },
     methods: {
@@ -379,10 +388,14 @@ export default defineComponent({
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
                 this.clear();
                 await NativeStorage.setShouldReloadVocabularies(true);
+                this.unsubscribeBackButtonListener();
                 await this.$router.push(`/vocabularies`);
             } catch (error) {
                 await Toast.present(error.message);
             }
+        },
+        unsubscribeBackButtonListener(): void {
+            this.backButtonUnsubscribeHandler.unregister();
         },
         clear(): void {
             this.id = uuidV4();
@@ -464,12 +477,14 @@ export default defineComponent({
         },
         async notifyUnsavedVocabulary(handler: ProcessNextHandler): Promise<void> {
             if (!this.isDirty()) {
+                this.unsubscribeBackButtonListener();
                 await handler();
             } else {
                 await Alert.presentAlertConfirm(
                     '',
                     'You have an unsaved vocabulary that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
                     async () => {
+                        this.unsubscribeBackButtonListener();
                         return Promise.resolve(handler());
                     },
                 );

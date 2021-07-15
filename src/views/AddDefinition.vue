@@ -78,6 +78,7 @@ import {
     IonCol,
     IonTextarea,
     IonItem,
+    useBackButton,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import AddDefinitionExamples from '@/views/AddDefinitionExamples.vue';
@@ -92,6 +93,8 @@ import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import { isArrayOfStringEqual } from '@/utils/is-equal';
 import Alert from '@/utils/Alert';
 import * as _ from 'lodash';
+import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
+import BackButtonUnsubscribeHandler from '@/domains/BackButtonUnsubscribeHandler';
 
 type ProcessNextHandler = () => void | Promise<void>;
 
@@ -121,6 +124,7 @@ export default defineComponent({
         return {
             meaning: '',
             pristineDefinition: {} as Definition,
+            backButtonUnsubscribeHandler: {} as BackButtonUnsubscribeHandler,
         };
     },
     mounted() {
@@ -131,6 +135,15 @@ export default defineComponent({
             this.pristineDefinition = _.cloneDeep(this.$props.definition) as Definition;
             this.meaning = this.pristineDefinition.meaning;
         }
+        this.backButtonUnsubscribeHandler = useBackButton(
+            BackButtonHandlerPriority.ADD_DEFINITION,
+            async (processNextHandler) => {
+                console.log('useBackButton | Add definition');
+                await this.notifyUnsavedDefinition(() => {
+                    processNextHandler();
+                });
+            },
+        );
     },
     methods: {
         setMeaning(meaning: string): void {
@@ -163,9 +176,13 @@ export default defineComponent({
             if (errors.length) {
                 await Toast.present(ValidationErrorTransform.transform(errors)[0]);
             } else {
+                this.unsubscribeBackButtonListener();
                 this.afterAddingDefinition(definition);
                 this.clear();
             }
+        },
+        unsubscribeBackButtonListener(): void {
+            this.backButtonUnsubscribeHandler.unregister();
         },
         clear(): void {
             this.setMeaning('');
@@ -210,12 +227,14 @@ export default defineComponent({
         },
         async notifyUnsavedDefinition(handler: ProcessNextHandler): Promise<void> {
             if (!this.isDirty()) {
+                this.unsubscribeBackButtonListener();
                 await handler();
             } else {
                 await Alert.presentAlertConfirm(
                     '',
                     'You have an unsaved definition that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
                     async () => {
+                        this.unsubscribeBackButtonListener();
                         return Promise.resolve(handler());
                     },
                 );
