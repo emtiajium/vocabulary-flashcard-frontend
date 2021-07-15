@@ -10,6 +10,7 @@ import { useBackButton, useIonRouter } from '@ionic/vue';
 import { App } from '@capacitor/app';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
+import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 
 export default defineComponent({
     name: 'Home',
@@ -18,7 +19,7 @@ export default defineComponent({
     },
     setup() {
         const ionRouter = useIonRouter();
-        useBackButton(-1, () => {
+        useBackButton(BackButtonHandlerPriority.HOME, () => {
             if (!ionRouter.canGoBack()) {
                 App.exitApp();
             }
