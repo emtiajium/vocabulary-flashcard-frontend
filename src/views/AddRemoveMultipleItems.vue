@@ -7,6 +7,7 @@
                         <ion-textarea
                             autoGrow="true"
                             inputmode="text"
+                            autocapitalize="sentences"
                             :value="items[index] || ''"
                             @keyup="insertItem($event.target.value, index)"
                         />

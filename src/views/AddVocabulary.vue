@@ -20,6 +20,7 @@
                             <ion-textarea
                                 autoGrow="true"
                                 inputmode="text"
+                                autocapitalize="sentences"
                                 :value="word"
                                 @keyup="setWord($event.target.value)"
                             />

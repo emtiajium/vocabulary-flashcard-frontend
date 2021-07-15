@@ -20,6 +20,7 @@
                             v-if="!$props.definition"
                             autoGrow="true"
                             inputmode="text"
+                            autocapitalize="sentences"
                             :value="meaning"
                             @keyup="setMeaning($event.target.value)"
                         />
