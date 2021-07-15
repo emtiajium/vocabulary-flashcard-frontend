@@ -280,10 +280,14 @@ export default defineComponent({
             this.isLoading = false;
         },
         async reload(): Promise<void> {
-            this.subscribeToHardwareBackButtonListener();
+            if (!_.includes([Route.AddVocabulary, Route.EditVocabulary], this.$route.name)) {
+                this.unsubscribeBackButtonListener();
+            }
             if (this.$route.name === Route.EditVocabulary) {
+                this.subscribeToHardwareBackButtonListener();
                 await this.loadEditView();
             } else if (this.$route.name === Route.AddVocabulary) {
+                this.subscribeToHardwareBackButtonListener();
                 this.loadAddView();
             }
         },
@@ -393,7 +397,6 @@ export default defineComponent({
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
                 this.clear();
                 await NativeStorage.setShouldReloadVocabularies(true);
-                this.unsubscribeBackButtonListener();
                 await this.$router.push(`/vocabularies`);
             } catch (error) {
                 await Toast.present(error.message);
@@ -416,6 +419,7 @@ export default defineComponent({
             (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
             this.pristineVocabulary = {} as Vocabulary;
             this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
+            this.unsubscribeBackButtonListener();
         },
         async back(): Promise<void> {
             await this.notifyUnsavedVocabulary(async () => {

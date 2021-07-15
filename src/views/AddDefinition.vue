@@ -175,7 +175,6 @@ export default defineComponent({
             if (errors.length) {
                 await Toast.present(ValidationErrorTransform.transform(errors)[0]);
             } else {
-                this.unsubscribeBackButtonListener();
                 this.afterAddingDefinition(definition);
                 this.clear();
             }
@@ -192,6 +191,7 @@ export default defineComponent({
             (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
             this.pristineDefinition = {} as Definition;
             this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
+            this.unsubscribeBackButtonListener();
         },
         async back(): Promise<void> {
             await this.notifyUnsavedDefinition(() => {
