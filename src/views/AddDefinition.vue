@@ -94,9 +94,7 @@ import { isArrayOfStringEqual } from '@/utils/is-equal';
 import Alert from '@/utils/Alert';
 import * as _ from 'lodash';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
-import BackButtonUnsubscribeHandler from '@/domains/BackButtonUnsubscribeHandler';
-
-type ProcessNextHandler = () => void | Promise<void>;
+import { BackButtonUnsubscribeHandler, ProcessNextHandler } from '@/domains/Handlers';
 
 export default defineComponent({
     name: 'AddDefinition',
@@ -135,15 +133,9 @@ export default defineComponent({
             this.pristineDefinition = _.cloneDeep(this.$props.definition) as Definition;
             this.meaning = this.pristineDefinition.meaning;
         }
-        this.backButtonUnsubscribeHandler = useBackButton(
-            BackButtonHandlerPriority.ADD_DEFINITION,
-            async (processNextHandler) => {
-                console.log('useBackButton | Add definition');
-                await this.notifyUnsavedDefinition(() => {
-                    processNextHandler();
-                });
-            },
-        );
+        this.backButtonUnsubscribeHandler = useBackButton(BackButtonHandlerPriority.ADD_DEFINITION, async () => {
+            await this.back();
+        });
     },
     methods: {
         setMeaning(meaning: string): void {
