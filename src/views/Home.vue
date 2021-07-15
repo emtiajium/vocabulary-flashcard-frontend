@@ -28,7 +28,7 @@ export default defineComponent({
         try {
             const localUser = await NativeStorage.getAuthorizedUser();
             if (localUser) {
-                await this.$router.push('/authenticated-home');
+                await this.$router.replace('/authenticated-home');
             } else {
                 await this.$router.push('/sign-in');
             }
