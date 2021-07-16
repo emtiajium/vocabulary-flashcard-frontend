@@ -37,6 +37,6 @@ export default defineComponent({
 }
 .fa-meh-blank-extra {
     font-size: 80pt;
-    color: #2e8b57;
+    color: var(--ion-color-primary);
 }
 </style>

@@ -87,12 +87,12 @@ export default defineComponent({
 
 <style scoped>
 .profile {
-    background-color: #2e8b57;
+    background-color: var(--ion-color-primary);
 }
 .item-text {
     color: #ffffff;
 }
 .menu-icon {
-    color: #2e8b57;
+    color: var(--ion-color-primary);
 }
 </style>

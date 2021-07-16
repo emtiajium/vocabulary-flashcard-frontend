@@ -245,10 +245,10 @@ export default defineComponent({
 <style scoped>
 .loaded-all-icon {
     font-size: 60pt;
-    color: #2e8b57;
+    color: var(--ion-color-primary);
 }
 .searching-result-zero-icon {
     font-size: 60pt;
-    color: #2e8b57;
+    color: var(--ion-color-primary);
 }
 </style>
