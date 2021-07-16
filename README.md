@@ -104,6 +104,7 @@
 
 ## Change Log
 
+-   `0.1.9`: Generic placeholder for the input fields
 -   `0.1.8`: Dark mode 
 -   `0.1.7`: (Android) Hardware back-button bug fixation
 -   `0.1.6`: Confirmation before navigating back + Auto capitalization for the input fields
