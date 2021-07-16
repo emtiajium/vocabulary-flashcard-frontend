@@ -1,8 +1,8 @@
 <template>
     <ion-card>
         <ion-card-header>
-            <ion-card-title>Examples</ion-card-title>
-            <ion-card-subtitle>Usage of the word in a sentence</ion-card-subtitle>
+            <ion-card-title> Examples </ion-card-title>
+            <ion-card-subtitle> Usage of the word in a sentence </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
             <add-remove-multiple-items v-if="!$props.existingExamples" ref="AddRemoveMultipleItemsRef" />

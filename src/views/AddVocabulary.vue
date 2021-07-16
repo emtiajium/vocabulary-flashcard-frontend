@@ -21,6 +21,7 @@
                                 autoGrow="true"
                                 inputmode="text"
                                 autocapitalize="sentences"
+                                placeholder="Type something"
                                 :value="word"
                                 @keyup="setWord($event.target.value)"
                             />

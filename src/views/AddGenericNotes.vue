@@ -1,7 +1,7 @@
 <template>
     <ion-card>
         <ion-card-header>
-            <ion-card-title>Generic Notes</ion-card-title>
+            <ion-card-title> Generic Notes </ion-card-title>
             <ion-card-subtitle>
                 Any gibberish note can be put here, for example, the origin of the word, synonym, antonym,
                 pronunciation, etc

@@ -8,6 +8,7 @@
                             autoGrow="true"
                             inputmode="text"
                             autocapitalize="sentences"
+                            placeholder="Type something"
                             :value="items[index] || ''"
                             @keyup="insertItem($event.target.value, index)"
                         />

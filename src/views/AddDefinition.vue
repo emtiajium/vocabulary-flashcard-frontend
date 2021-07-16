@@ -10,8 +10,8 @@
         <ion-content :fullscreen="true" id="add-definition">
             <ion-card>
                 <ion-card-header>
-                    <ion-card-title>Meaning</ion-card-title>
-                    <ion-card-subtitle>An idea or a thing that a word represents</ion-card-subtitle>
+                    <ion-card-title> Meaning </ion-card-title>
+                    <ion-card-subtitle> An idea or a thing that a word represents </ion-card-subtitle>
                 </ion-card-header>
 
                 <ion-card-content>
@@ -21,6 +21,7 @@
                             autoGrow="true"
                             inputmode="text"
                             autocapitalize="sentences"
+                            placeholder="Type something"
                             :value="meaning"
                             @keyup="setMeaning($event.target.value)"
                         />
@@ -53,10 +54,10 @@
             <ion-grid>
                 <ion-row>
                     <ion-col size="6">
-                        <ion-button color="warning" expand="block" @click="back">Cancel</ion-button>
+                        <ion-button color="warning" expand="block" @click="back"> Cancel </ion-button>
                     </ion-col>
                     <ion-col size="6">
-                        <ion-button color="success" expand="block" @click="persist">Save</ion-button>
+                        <ion-button color="success" expand="block" @click="persist"> Save </ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>

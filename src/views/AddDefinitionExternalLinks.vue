@@ -1,7 +1,7 @@
 <template>
     <ion-card>
         <ion-card-header>
-            <ion-card-title>External Links</ion-card-title>
+            <ion-card-title> External Links </ion-card-title>
             <ion-card-subtitle>
                 Any link can be inserted here, for example, if you found a new word while you were viewing a Quora post
                 or a blog then you can put the link here

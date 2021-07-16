@@ -1,7 +1,7 @@
 <template>
     <ion-card>
         <ion-card-header>
-            <ion-card-title>Notes</ion-card-title>
+            <ion-card-title> Notes </ion-card-title>
             <ion-card-subtitle>
                 It can be a ninja technique to memorize the meaning, a personal relatable incident, etc
             </ion-card-subtitle>
