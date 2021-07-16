@@ -31,7 +31,7 @@ export default defineComponent({
             if (localUser) {
                 await this.$router.replace('/authenticated-home');
             } else {
-                await this.$router.push('/sign-in');
+                await this.$router.replace('/sign-in');
             }
         } catch (error) {
             await Promise.all([Toast.present(MessageDB.genericError), this.$router.push('/sign-in')]);
