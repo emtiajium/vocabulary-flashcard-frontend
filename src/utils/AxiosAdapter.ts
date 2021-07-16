@@ -4,7 +4,7 @@ import MessageDB from '@/utils/MessageDB';
 type RequestConfig = Record<string, unknown>;
 
 export default class AxiosAdapter {
-    static handleError(error: AxiosError): void {
+    static throwProcessedError(error: AxiosError): void {
         if (error.message === 'Network Error') {
             throw new Error(MessageDB.networkError);
         }
@@ -27,7 +27,7 @@ export default class AxiosAdapter {
             const axiosResponse = await Axios.post(url, payload, requestConfig);
             response = axiosResponse.data;
         } catch (error) {
-            throw AxiosAdapter.handleError(error);
+            AxiosAdapter.throwProcessedError(error);
         }
         return response;
     }
@@ -38,7 +38,7 @@ export default class AxiosAdapter {
             const axiosResponse = await Axios.get(url, requestConfig);
             response = axiosResponse.data;
         } catch (error) {
-            throw AxiosAdapter.handleError(error);
+            AxiosAdapter.throwProcessedError(error);
         }
         return response;
     }
@@ -47,7 +47,7 @@ export default class AxiosAdapter {
         try {
             await Axios.delete(url, requestConfig);
         } catch (error) {
-            throw AxiosAdapter.handleError(error);
+            AxiosAdapter.throwProcessedError(error);
         }
     }
 }
