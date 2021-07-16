@@ -29,7 +29,18 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText, IonButton, IonGrid, IonRow } from '@ionic/vue';
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    IonText,
+    IonButton,
+    IonGrid,
+    IonRow,
+    useBackButton,
+} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import GoogleAuth from '@/utils/GoogleAuthorization';
 import User from '@/domains/User';
@@ -39,6 +50,8 @@ import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import MessageDB from '@/utils/MessageDB';
+import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
+import { App } from '@capacitor/app';
 
 export default defineComponent({
     name: 'SignIn',
@@ -53,6 +66,11 @@ export default defineComponent({
         FontAwesomeIcon,
         IonGrid,
         IonRow,
+    },
+    setup() {
+        useBackButton(BackButtonHandlerPriority.SIGN_IN, () => {
+            App.exitApp();
+        });
     },
     async mounted() {
         await GoogleAuth.load();
