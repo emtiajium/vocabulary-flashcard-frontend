@@ -102,6 +102,7 @@
 
 ## Change Log
 
+-   `0.1.7`: (Android) Hardware back-button bug fixation
 -   `0.1.6`: Confirmation before navigating back + Auto capitalization for the input fields
 -   `0.1.5`: Instruction to publish + Last minute fixation for the release
 -   `0.1.4`: Vocabulary searching functionality
