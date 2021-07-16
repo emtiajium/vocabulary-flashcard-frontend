@@ -90,6 +90,8 @@
 
 > [App Bundles: Everything to know about Play App Signing](https://youtu.be/odv_1fxt9BI)
 
+> Keep the generated Keystore and the passwords in a secret place. Don't lose it, never, ever! 
+
 ➜ Add SHA1 fingerprint in the Firebase console
 
 > `keytool -list -alias <an-alias> -keystore <keystore-path/keystore-name>.keystore -v`
@@ -102,6 +104,7 @@
 
 ## Change Log
 
+-   `0.1.8`: Dark mode 
 -   `0.1.7`: (Android) Hardware back-button bug fixation
 -   `0.1.6`: Confirmation before navigating back + Auto capitalization for the input fields
 -   `0.1.5`: Instruction to publish + Last minute fixation for the release
