@@ -30,7 +30,7 @@
 
                 <ion-card>
                     <ion-card-header>
-                        <ion-card-title> Definition </ion-card-title>
+                        <ion-card-title> Definitions </ion-card-title>
                         <ion-card-subtitle> An explanation of what a word means </ion-card-subtitle>
                     </ion-card-header>
                     <ion-card-content>
