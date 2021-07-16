@@ -9,7 +9,7 @@
             <view v-if="!isLoading">
                 <ion-card>
                     <ion-card-header>
-                        <ion-card-title>Word</ion-card-title>
+                        <ion-card-title> Word </ion-card-title>
                         <ion-card-subtitle>
                             A word, an idiom, even a prepositional phrase and most importantly whatever you wish to
                             insert
@@ -117,8 +117,8 @@
             <add-definition
                 :word="word"
                 :vocabularyId="id"
-                :afterAddingDefinition="afterAddingDefinition"
-                :onCancellingAddingDefinition="onCancellingAddingDefinition"
+                :after-adding-definition="afterAddingDefinition"
+                :on-cancelling-adding-definition="onCancellingAddingDefinition"
             />
         </view>
         <view v-if="isInDefinitionUpdateMode()">
@@ -126,8 +126,8 @@
                 :word="word"
                 :vocabularyId="id"
                 :definition="goingToBeUpdatedDefinition"
-                :afterAddingDefinition="afterUpdatingDefinition"
-                :onCancellingAddingDefinition="onCancellingAddingDefinition"
+                :after-adding-definition="afterUpdatingDefinition"
+                :on-cancelling-adding-definition="onCancellingAddingDefinition"
             />
         </view>
     </ion-page>
