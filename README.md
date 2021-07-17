@@ -118,6 +118,7 @@
 
 ## Release Log
 
+-   `4`: `0.1.10`
 -   `3`: `0.1.5`
 -   `2`: Test release II
 -   `1`: Test release I

@@ -14,7 +14,7 @@
         "lint:check": "vue-cli-service lint",
         "format": "prettier --write \"public/*.html\" \"src/**/*.{css,ts,vue}\" \"tests/**/*.{js,ts}\" \"tests/**/*.{js,ts}\"",
         "format:check": "prettier --check \"public/*.html\" \"src/**/*.{css,ts,vue}\" \"tests/**/*.{js,ts}\"",
-        "serve:android:anew": "rm -rf android/ && ionic build --prod && npx cap add android && npx cap sync android",
+        "serve:android:anew": "rm -rf android/ && ionic build --prod --release && npx cap add android && npx cap sync android",
         "deploy:firebase": "npm run build && firebase deploy --only hosting",
         "replace-generated-android-files": "bash ./replace-generated-android-files.sh"
     },
