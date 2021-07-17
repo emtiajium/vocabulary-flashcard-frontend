@@ -192,6 +192,7 @@ export default defineComponent({
         };
     },
     watch: {
+        // TODO try Ionic framework lifecycle hook(s)
         '$route.name': 'reload',
     },
     async mounted() {
