@@ -64,7 +64,7 @@
                 id="infinite-scroll"
                 :disabled="isDisabled"
             >
-                <ion-infinite-scroll-content loading-spinner="lines" loading-text="Loading more ..." />
+                <spinner />
             </ion-infinite-scroll>
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -83,7 +83,6 @@ import {
     IonFab,
     IonFabButton,
     IonInfiniteScroll,
-    IonInfiniteScrollContent,
     IonCard,
     IonCardContent,
     IonCardSubtitle,
@@ -119,7 +118,6 @@ export default defineComponent({
         IonFab,
         IonFabButton,
         IonInfiniteScroll,
-        IonInfiniteScrollContent,
         FontAwesomeIcon,
         IonCard,
         IonCardContent,
