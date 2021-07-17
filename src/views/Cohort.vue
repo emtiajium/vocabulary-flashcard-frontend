@@ -2,11 +2,7 @@
     <ion-page>
         <firecracker-header header-title="My Cohort" content-id="cohort" menu-id="cohort-menu" />
         <ion-content id="cohort">
-            <ion-card v-if="!isReady">
-                <ion-card-content>
-                    <spinner />
-                </ion-card-content>
-            </ion-card>
+            <spinner v-if="!isReady" />
 
             <network-error v-if="isNetworkError && isReady" />
 
