@@ -104,6 +104,7 @@
 
 ## Change Log
 
+-   `0.1.10`: Identical spinner for the whole app
 -   `0.1.9`: Generic placeholder for the input fields + Changed icon for the network error
 -   `0.1.8`: Dark mode 
 -   `0.1.7`: (Android) Hardware back-button bug fixation
