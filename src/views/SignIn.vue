@@ -52,6 +52,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import MessageDB from '@/utils/MessageDB';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { App } from '@capacitor/app';
+import * as _ from 'lodash';
 
 export default defineComponent({
     name: 'SignIn',
@@ -89,7 +90,7 @@ export default defineComponent({
             }
         },
         async persistUser(googleUser: User): Promise<void> {
-            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, googleUser, true);
+            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, _.omit(googleUser, 'jwToken'), true);
             await NativeStorage.setAuthorizedUser({ ...persistedUser, jwToken: googleUser.jwToken } as User);
         },
     },
