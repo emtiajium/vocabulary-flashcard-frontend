@@ -78,6 +78,7 @@ import {
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import HttpHandler from '@/utils/HttpHandler';
+import Route from '@/domains/Route';
 
 export default defineComponent({
     name: 'Cohort',
@@ -103,11 +104,11 @@ export default defineComponent({
             cohort: {} as Cohort,
         };
     },
-    async ionViewDidEnter() {
-        await this.init();
+    watch: {
+        '$route.name': 'reload',
     },
-    ionViewWillLeave() {
-        this.clean();
+    async mounted() {
+        await this.init();
     },
     methods: {
         async init(): Promise<void> {
@@ -116,12 +117,17 @@ export default defineComponent({
                 this.isNetworkError = false;
             } catch (error) {
                 this.isNetworkError = true;
-            } finally {
-                this.isReady = true;
             }
+            this.isReady = true;
         },
         isTheUserAlone(): boolean {
             return this.cohort?.users?.length === 1;
+        },
+        async reload(): Promise<void> {
+            if (this.$route.name === Route.DisplayCohort) {
+                this.clean();
+                await this.init();
+            }
         },
         clean(): void {
             this.isReady = false;
