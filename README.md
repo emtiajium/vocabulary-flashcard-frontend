@@ -96,11 +96,13 @@
 
 > `keytool -list -alias <an-alias> -keystore <keystore-path/keystore-name>.keystore -v`
 
+➜ Navigate to the [OAuth consent screen](https://console.cloud.google.com/) and publish the app
+
 ➜ Do an internal testing
 
 > [App Bundles: Testing bundles with bundle tool and the Play Console](https://youtu.be/vAEAZPU7w-I)
 
-➜ Publish!
+➜ Publish the app on Google Play Store!
 
 ## Change Log
 
