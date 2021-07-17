@@ -117,8 +117,9 @@ export default defineComponent({
                 this.isNetworkError = false;
             } catch (error) {
                 this.isNetworkError = true;
+            } finally {
+                this.isReady = true;
             }
-            this.isReady = true;
         },
         isTheUserAlone(): boolean {
             return this.cohort?.users?.length === 1;
