@@ -145,10 +145,13 @@ export default defineComponent({
         '$route.name': 'reload',
     },
     async mounted() {
+        this.showSpinner = true;
         await this.renderVocabularies();
+        this.showSpinner = false;
     },
     methods: {
         clean(): void {
+            this.showSpinner = false;
             this.vocabularies = [] as Vocabulary[];
             this.pageNumber = 1;
             this.pageSize = 10;
@@ -160,7 +163,9 @@ export default defineComponent({
         async reload(): Promise<void> {
             if (this.$route.name === Route.Vocabularies && (await NativeStorage.getShouldReloadVocabularies())) {
                 this.clean();
+                this.showSpinner = true;
                 await this.renderVocabularies();
+                this.showSpinner = false;
             }
         },
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
