@@ -146,13 +146,29 @@
             </view>
 
             <dictionary v-if="!isLoading && Object.keys(vocabulary).length" :word="vocabulary.word" />
+
+            <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-hide">
+                <ion-fab-button color="warning" @click="$router.push(`/vocabulary/update/${vocabulary.id}`)">
+                    <font-awesome-icon :icon="faPencilAlt" />
+                </ion-fab-button>
+            </ion-fab>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle } from '@ionic/vue';
+import {
+    IonPage,
+    IonContent,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonFab,
+    IonFabButton,
+} from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import { useRoute } from 'vue-router';
@@ -161,7 +177,7 @@ import EmptyContainer from '@/views/EmptyContainer.vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import Dictionary from '@/views/Dictionary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
 import Route from '@/domains/Route';
@@ -181,6 +197,8 @@ export default defineComponent({
         IonCardHeader,
         IonCardTitle,
         IonCardSubtitle,
+        IonFab,
+        IonFabButton,
     },
     data() {
         return {
@@ -189,6 +207,7 @@ export default defineComponent({
             showDefaultMessage: false,
             defaultMessage: `Looks like you haven't added anything yet!`,
             faExternalLinkAlt,
+            faPencilAlt,
         };
     },
     watch: {
