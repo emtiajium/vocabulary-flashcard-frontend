@@ -70,16 +70,6 @@ router.beforeEach(async (to, from, next): Promise<void> => {
         next(`/sign-in`);
     } else if (!isAuthenticated && to.name === Route.SignIn) {
         next();
-    } else if (
-        _.includes([Route.AddVocabulary, Route.EditVocabulary], from.name) &&
-        !(await NativeStorage.getShouldReloadVocabularies())
-    ) {
-        // when a vocabulary has been added or updated
-        // SHOULD_RELOAD_VOCABULARIES is set to true
-        // so we need to set is false when either cancel button has been pressed
-        // or back button has been pressed
-        await NativeStorage.setShouldReloadVocabularies(false);
-        next();
     } else if (!_.includes([Route.AddVocabulary, Route.EditVocabulary], from.name)) {
         await NativeStorage.setShouldReloadVocabularies(false);
         next();

@@ -493,14 +493,14 @@ export default defineComponent({
         async notifyUnsavedVocabulary(handler: ProcessNextHandler): Promise<void> {
             if (!this.isDirty()) {
                 this.unsubscribeBackButtonListener();
-                await handler();
+                await Promise.all([handler(), NativeStorage.setShouldReloadVocabularies(false)]);
             } else {
                 await Alert.presentAlertConfirm(
                     '',
                     'You have an unsaved vocabulary that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
                     async () => {
                         this.unsubscribeBackButtonListener();
-                        await handler();
+                        await Promise.all([handler(), NativeStorage.setShouldReloadVocabularies(false)]);
                     },
                 );
             }
