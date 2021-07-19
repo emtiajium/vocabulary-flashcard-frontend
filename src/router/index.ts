@@ -71,7 +71,8 @@ router.beforeEach(async (to, from, next): Promise<void> => {
     } else if (!isAuthenticated && to.name === Route.SignIn) {
         next();
     } else if (!_.includes([Route.AddVocabulary, Route.EditVocabulary], from.name)) {
-        await NativeStorage.setShouldReloadVocabularies(false);
+        // do not need to wait for the response
+        NativeStorage.setShouldReloadVocabularies(false).finally();
         next();
     } else {
         next();
