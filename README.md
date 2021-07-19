@@ -106,6 +106,7 @@
 
 ## Change Log
 
+-   `0.1.11`: Edit button at the vocabulary details page + Fixed copy-paste issue
 -   `0.1.10`: Identical spinner for the whole app
 -   `0.1.9`: Generic placeholder for the input fields + Changed icon for the network error
 -   `0.1.8`: Dark mode
@@ -120,6 +121,7 @@
 
 ## Release Log
 
+-   `5`: `0.1.11`
 -   `4`: `0.1.10`
 -   `3`: `0.1.5`
 -   `2`: Test release II
