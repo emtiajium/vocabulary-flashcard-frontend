@@ -10,7 +10,7 @@
                             autocapitalize="sentences"
                             placeholder="Type something"
                             :value="items[index] || ''"
-                            @keyup="insertItem($event.target.value, index)"
+                            @ionChange="insertItem($event.target.value, index)"
                         />
                     </ion-item>
                 </ion-col>

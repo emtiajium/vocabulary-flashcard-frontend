@@ -17,22 +17,12 @@
                 <ion-card-content>
                     <ion-item>
                         <ion-textarea
-                            v-if="!$props.definition"
                             autoGrow="true"
                             inputmode="text"
                             autocapitalize="sentences"
                             placeholder="Type something"
-                            :value="meaning"
-                            @keyup="setMeaning($event.target.value)"
-                        />
-                        <ion-textarea
-                            v-if="$props.definition"
-                            autoGrow="true"
-                            inputmode="text"
-                            autocapitalize="sentences"
-                            placeholder="Type something"
-                            :value="definition.meaning"
-                            @keyup="setMeaning($event.target.value)"
+                            :value="$props.definition ? definition.meaning : meaning"
+                            @ionChange="setMeaning($event.target.value)"
                         />
                     </ion-item>
                 </ion-card-content>
