@@ -78,11 +78,11 @@
                 </view>
 
                 <view v-if="isInUpdateMode()">
-                    <add-linker-words ref="AddLinkerWordsRef" :existingLinkerWords="linkerWords" />
-                    <add-generic-notes ref="AddGenericNotesRef" :existingGenericNotes="genericNotes" />
+                    <add-linker-words ref="AddLinkerWordsRef" :existing-linker-words="linkerWords" />
+                    <add-generic-notes ref="AddGenericNotesRef" :existing-generic-notes="genericNotes" />
                     <add-generic-external-links
                         ref="AddGenericExternalLinksRef"
-                        :existingGenericExternalLinks="genericExternalLinks"
+                        :existing-generic-external-links="genericExternalLinks"
                     />
                 </view>
 

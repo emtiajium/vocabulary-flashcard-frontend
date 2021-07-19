@@ -29,6 +29,8 @@
                             v-if="$props.definition"
                             autoGrow="true"
                             inputmode="text"
+                            autocapitalize="sentences"
+                            placeholder="Type something"
                             :value="definition.meaning"
                             @keyup="setMeaning($event.target.value)"
                         />
