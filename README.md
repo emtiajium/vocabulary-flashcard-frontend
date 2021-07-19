@@ -84,6 +84,8 @@
 
 ➜ Check and double-check the configurations
 
+➜ `npm run serve:android:anew:prod && npm run replace-generated-android-files`
+
 ➜ Set application version information (`versionCode`, `versionName`) at `./android/app/build.gradle`
 
 ➜ Generate the signed app bundle
