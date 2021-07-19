@@ -121,6 +121,7 @@
 
 ## Release Log
 
+-   `6`: `0.1.11` (Same as the previous one because I forgot to change the local server)
 -   `5`: `0.1.11`
 -   `4`: `0.1.10`
 -   `3`: `0.1.5`
