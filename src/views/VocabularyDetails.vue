@@ -147,7 +147,7 @@
 
             <dictionary v-if="!isLoading && Object.keys(vocabulary).length" :word="vocabulary.word" />
 
-            <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-hide">
+            <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                 <ion-fab-button color="warning" @click="$router.push(`/vocabulary/update/${vocabulary.id}`)">
                     <font-awesome-icon :icon="faPencilAlt" />
                 </ion-fab-button>
@@ -171,7 +171,6 @@ import {
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
-import { useRoute } from 'vue-router';
 import Spinner from '@/views/Spinner.vue';
 import EmptyContainer from '@/views/EmptyContainer.vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
@@ -223,7 +222,7 @@ export default defineComponent({
     methods: {
         async init(): Promise<void> {
             try {
-                this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${useRoute().params.id}`);
+                this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${this.$route.params.id}`);
                 if (
                     !this.vocabulary.definitions?.length &&
                     !this.vocabulary.linkerWords?.length &&
