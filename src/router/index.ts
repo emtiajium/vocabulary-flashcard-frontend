@@ -9,6 +9,7 @@ import VocabularyList from '@/views/VocabularyList.vue';
 import Route from '@/domains/Route';
 import * as _ from 'lodash';
 import NativeStorage from '@/utils/NativeStorage';
+import DictionaryPage from '@/views/DictionaryPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -50,6 +51,11 @@ const routes: RouteRecordRaw[] = [
         path: '/vocabulary/read/:id/:word',
         name: Route.DisplayVocabulary,
         component: Vocabulary,
+    },
+    {
+        path: '/dictionary/:word',
+        name: Route.Dictionary,
+        component: DictionaryPage,
     },
     {
         path: '/cohort/read',

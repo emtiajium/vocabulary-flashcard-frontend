@@ -8,6 +8,7 @@ enum Route {
     EditVocabulary = 'EditVocabulary',
     DisplayVocabulary = 'DisplayVocabulary',
     DisplayCohort = 'DisplayCohort',
+    Dictionary = 'Dictionary',
 }
 
 export default Route;
