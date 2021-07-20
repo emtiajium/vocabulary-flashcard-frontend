@@ -67,6 +67,10 @@
                 <spinner />
             </ion-infinite-scroll>
 
+            <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
+                <spinner />
+            </ion-refresher>
+
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                 <ion-fab-button @click="$router.push('/vocabulary/create')">
                     <font-awesome-icon :icon="faPlus" />
@@ -88,6 +92,7 @@ import {
     IonCardSubtitle,
     IonButton,
     IonItem,
+    IonRefresher,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
@@ -105,6 +110,7 @@ import NativeStorage from '@/utils/NativeStorage';
 import Spinner from '@/views/Spinner.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
+type IonRefresherType = Components.IonRefresher;
 
 export default defineComponent({
     name: 'VocabularyList',
@@ -124,6 +130,7 @@ export default defineComponent({
         IonCardSubtitle,
         IonButton,
         IonItem,
+        IonRefresher,
     },
     data() {
         return {
@@ -159,14 +166,20 @@ export default defineComponent({
             this.isNetworkError = false;
             this.searchKeyword = '';
         },
+
         async reload(): Promise<void> {
             if (this.$route.name === Route.Vocabularies && (await NativeStorage.getShouldReloadVocabularies())) {
-                this.clean();
-                this.showSpinner = true;
-                await this.renderVocabularies();
-                this.showSpinner = false;
+                await this.refresh();
             }
         },
+
+        async refresh(): Promise<void> {
+            this.clean();
+            this.showSpinner = true;
+            await this.renderVocabularies();
+            this.showSpinner = false;
+        },
+
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findVocabularies();
             this.vocabularies = this.vocabularies.concat(results);
@@ -177,6 +190,11 @@ export default defineComponent({
                 ((event as CustomEvent).target as unknown as IonInfiniteScrollType).disabled = this.isDisabled;
                 await ((event as CustomEvent).target as unknown as IonInfiniteScrollType).complete();
             }
+        },
+
+        async doRefresh(event: CustomEvent): Promise<void> {
+            await this.refresh();
+            await ((event as CustomEvent).target as unknown as IonRefresherType).complete();
         },
 
         handleShowingFetchingFewVocabularies(): void {
