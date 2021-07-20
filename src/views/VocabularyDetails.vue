@@ -82,18 +82,16 @@
                         <ion-card-title> Relatable Words </ion-card-title>
                     </ion-card-header>
                     <ion-card-content>
-                        <ul>
-                            <view
-                                v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords"
-                                :key="linkerWordIndex"
-                            >
-                                <li>
-                                    <span class="capitalize"> {{ linkerWord }} </span>
-                                    <br />
-                                    <br />
-                                </li>
-                            </view>
-                        </ul>
+                        <view v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords" :key="linkerWordIndex">
+                            <ion-button color="light" mode="ios" @click="$router.push(`/dictionary/${linkerWord}`)">
+                                <ion-chip class="linker-word-chip">
+                                    <span class="ion-padding-end overflowed-content">
+                                        {{ linkerWord }}
+                                    </span>
+                                    <font-awesome-icon :icon="faExternalLinkAlt" class="linker-word-icon" />
+                                </ion-chip>
+                            </ion-button>
+                        </view>
                     </ion-card-content>
                 </ion-card>
 
@@ -168,6 +166,8 @@ import {
     IonCardSubtitle,
     IonFab,
     IonFabButton,
+    IonButton,
+    IonChip,
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
@@ -198,6 +198,8 @@ export default defineComponent({
         IonCardSubtitle,
         IonFab,
         IonFabButton,
+        IonButton,
+        IonChip,
     },
     data() {
         return {
@@ -252,4 +254,19 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.ion-color-light {
+    --ion-color-base: var(--firecracker-card-background) !important;
+    --ion-color-base-rgb: var(--firecracker-card-background-rgb) !important;
+    --ion-color-contrast: var(--firecracker-card-background-contrast) !important;
+    --ion-color-contrast-rgb: var(--firecracker-card-background-contrast-rgb) !important;
+    --ion-color-shade: var(--firecracker-card-background-shade) !important;
+    --ion-color-tint: var(--firecracker-card-background-tint) !important;
+}
+.linker-word-chip {
+    max-width: 20em;
+}
+.linker-word-icon {
+    color: var(--ion-color-primary);
+}
+</style>
