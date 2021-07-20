@@ -77,6 +77,13 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-background-color: #ffffff;
     --background: #2e8b57;
+
+    --firecracker-card-background: #effae9;
+    --firecracker-card-background-rgb: 239, 250, 233;
+    --firecracker-card-background-contrast: #000000;
+    --firecracker-card-background-contrast-rgb: 0, 0, 0;
+    --firecracker-card-background-shade: #d2dccd;
+    --firecracker-card-background-tint: #f1fbeb;
 }
 
 @media (prefers-color-scheme: light) {
@@ -91,7 +98,7 @@ http://ionicframework.com/docs/theming/ */
     }
 
     ion-card {
-        --background: #effae9;
+        --background: var(--firecracker-card-background);
     }
 
     ion-card-title {
