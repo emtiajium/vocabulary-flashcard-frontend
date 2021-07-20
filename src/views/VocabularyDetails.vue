@@ -83,7 +83,7 @@
                     </ion-card-header>
                     <ion-card-content>
                         <view v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords" :key="linkerWordIndex">
-                            <ion-button color="light" mode="ios" @click="$router.push(`/dictionary/${linkerWord}`)">
+                            <ion-button color="lightest" mode="ios" @click="$router.push(`/dictionary/${linkerWord}`)">
                                 <ion-chip class="linker-word-chip">
                                     <span class="ion-padding-end overflowed-content">
                                         {{ linkerWord }}
@@ -255,14 +255,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.ion-color-light {
-    --ion-color-base: var(--firecracker-card-background) !important;
-    --ion-color-base-rgb: var(--firecracker-card-background-rgb) !important;
-    --ion-color-contrast: var(--firecracker-card-background-contrast) !important;
-    --ion-color-contrast-rgb: var(--firecracker-card-background-contrast-rgb) !important;
-    --ion-color-shade: var(--firecracker-card-background-shade) !important;
-    --ion-color-tint: var(--firecracker-card-background-tint) !important;
-}
 .linker-word-chip {
     max-width: 20em;
 }
