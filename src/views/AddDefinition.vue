@@ -184,8 +184,8 @@ export default defineComponent({
             (this.$refs.AddDefinitionNotesRef as InstanceType<typeof AddDefinitionNotes>).clear();
             (this.$refs.AddDefinitionExternalLinksRef as InstanceType<typeof AddDefinitionExternalLinks>).clear();
             this.pristineDefinition = {} as Definition;
-            this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
             this.unsubscribeBackButtonListener();
+            this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
         },
         async back(): Promise<void> {
             await this.notifyUnsavedDefinition(() => {

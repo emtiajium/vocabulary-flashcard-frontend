@@ -421,8 +421,8 @@ export default defineComponent({
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
             (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
             this.pristineVocabulary = {} as Vocabulary;
-            this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
             this.unsubscribeBackButtonListener();
+            this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
         },
         async back(): Promise<void> {
             await this.notifyUnsavedVocabulary(async () => {
