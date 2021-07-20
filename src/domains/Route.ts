@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 enum Route {
     Root = 'Root',
     SignIn = 'SignIn',
@@ -12,3 +14,7 @@ enum Route {
 }
 
 export default Route;
+
+export function isHome(route: string): boolean {
+    return _.includes([Route.Root, Route.SignIn, Route.Home, Route.AuthenticatedHome, Route.Vocabularies], route);
+}

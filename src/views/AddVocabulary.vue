@@ -400,7 +400,8 @@ export default defineComponent({
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
                 this.clear();
                 await NativeStorage.setShouldReloadVocabularies(true);
-                await this.$router.push(`/vocabularies`);
+                // replace instead of push so that this route won't be appeared (hardware back-button)
+                await this.$router.replace(`/vocabularies`);
             } catch (error) {
                 await Toast.present(error.message);
             }
