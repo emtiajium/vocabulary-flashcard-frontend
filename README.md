@@ -108,6 +108,7 @@
 
 ## Change Log
 
+-   `0.1.12`: Linker words view in dictionaries + Refreshing functionality in vocabulary list page
 -   `0.1.11`: Edit button at the vocabulary details page + Fixed copy-paste issue
 -   `0.1.10`: Identical spinner for the whole app
 -   `0.1.9`: Generic placeholder for the input fields + Changed icon for the network error
@@ -123,6 +124,7 @@
 
 ## Release Log
 
+-   `7`: `0.1.12`
 -   `6`: `0.1.11` (Same as the previous one because I forgot to change the local server)
 -   `5`: `0.1.11`
 -   `4`: `0.1.10`
