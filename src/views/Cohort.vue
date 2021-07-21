@@ -78,7 +78,6 @@ import {
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import HttpHandler from '@/utils/HttpHandler';
-import Route from '@/domains/Route';
 
 export default defineComponent({
     name: 'Cohort',
@@ -104,12 +103,11 @@ export default defineComponent({
             cohort: {} as Cohort,
         };
     },
-    watch: {
-        // TODO try Ionic framework lifecycle hook(s)
-        '$route.name': 'reload',
-    },
-    async mounted() {
+    async ionViewDidEnter() {
         await this.init();
+    },
+    ionViewWillLeave() {
+        this.clean();
     },
     methods: {
         async init(): Promise<void> {
@@ -124,12 +122,6 @@ export default defineComponent({
         },
         isTheUserAlone(): boolean {
             return this.cohort?.users?.length === 1;
-        },
-        async reload(): Promise<void> {
-            if (this.$route.name === Route.DisplayCohort) {
-                this.clean();
-                await this.init();
-            }
         },
         clean(): void {
             this.isReady = false;
