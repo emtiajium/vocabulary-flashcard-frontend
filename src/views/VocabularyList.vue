@@ -41,7 +41,7 @@
                 <minified-vocabulary :vocabulary="vocabulary" :delete-vocabulary="deleteVocabulary" />
             </view>
 
-            <view v-if="isDisabled && vocabularies.length > 0">
+            <view v-if="isDisabled && vocabularies.length > 0 && !isNetworkError">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
                     <span class="ion-text-center">
                         {{
