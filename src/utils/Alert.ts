@@ -31,4 +31,14 @@ export default class Alert {
 
         await alert.present();
     }
+
+    static async presentButtonLessAlert(header: string, message: string): Promise<void> {
+        const alert = await alertController.create({
+            header,
+            message,
+            buttons: [],
+        });
+
+        await alert.present();
+    }
 }

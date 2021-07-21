@@ -12,6 +12,10 @@ import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { isHome } from '@/domains/Route';
+import HttpHandler from '@/utils/HttpHandler';
+import Android from '@/domains/Android';
+import Alert from '@/utils/Alert';
+import { Device } from '@capacitor/device';
 
 export default defineComponent({
     name: 'Home',
@@ -21,6 +25,7 @@ export default defineComponent({
     async mounted() {
         this.subscribeToHardwareBackButtonListener();
         await this.init();
+        this.notifyAboutAvailableUpdate().finally();
     },
     methods: {
         subscribeToHardwareBackButtonListener(): void {
@@ -41,6 +46,23 @@ export default defineComponent({
                 }
             } catch (error) {
                 await Promise.all([Toast.present(MessageDB.genericError), this.$router.push('/sign-in')]);
+            }
+        },
+        async notifyAboutAvailableUpdate(): Promise<void> {
+            try {
+                const { platform } = await Device.getInfo();
+                if (platform === 'android') {
+                    const { build: versionCode } = await App.getInfo();
+                    const { versionCode: latestVersionCode } = await HttpHandler.get<Android>(`/v1/androids`);
+                    if (Number.parseInt(versionCode, 10) < latestVersionCode) {
+                        Alert.presentButtonLessAlert(
+                            '',
+                            'There is a newer version available for download! Please update the app by visiting the Google Play Store.',
+                        ).finally();
+                    }
+                }
+            } catch {
+                // do nothing
             }
         },
     },
