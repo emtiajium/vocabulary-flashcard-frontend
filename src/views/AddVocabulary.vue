@@ -166,13 +166,11 @@ import Definition from '@/domains/Definition';
 import AddDefinition from '@/views/AddDefinition.vue';
 import { validateSync } from 'class-validator';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
-import { useRoute } from 'vue-router';
 import Spinner from '@/views/Spinner.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlusCircle, faMinusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import MessageDB from '@/utils/MessageDB';
-import Route from '@/domains/Route';
 import NativeStorage from '@/utils/NativeStorage';
 import Alert from '@/utils/Alert';
 import * as _ from 'lodash';
@@ -240,15 +238,10 @@ export default defineComponent({
             backButtonUnsubscribeHandler: {} as BackButtonUnsubscribeHandler,
         };
     },
-    watch: {
-        // TODO try Ionic framework lifecycle hook(s)
-        '$route.name': 'reload',
-    },
-    async mounted() {
-        this.subscribeToHardwareBackButtonListener();
+    async ionViewDidEnter() {
         await this.init();
     },
-    beforeUnmount() {
+    ionViewWillLeave() {
         this.clear();
     },
     methods: {
@@ -264,7 +257,8 @@ export default defineComponent({
             );
         },
         async init(): Promise<void> {
-            const routeParameters = useRoute().params;
+            this.subscribeToHardwareBackButtonListener();
+            const routeParameters = this.$route.params;
             if (routeParameters?.id) {
                 await this.loadEditView();
             } else {
@@ -281,18 +275,6 @@ export default defineComponent({
             await this.getAndSetExistingVocabulary(this.$route.params.id as string);
             this.mode = Mode.VOCABULARY_UPDATE;
             this.isLoading = false;
-        },
-        async reload(): Promise<void> {
-            if (!_.includes([Route.AddVocabulary, Route.EditVocabulary], this.$route.name)) {
-                this.unsubscribeBackButtonListener();
-            }
-            if (this.$route.name === Route.EditVocabulary) {
-                this.subscribeToHardwareBackButtonListener();
-                await this.loadEditView();
-            } else if (this.$route.name === Route.AddVocabulary) {
-                this.subscribeToHardwareBackButtonListener();
-                this.loadAddView();
-            }
         },
         async getAndSetExistingVocabulary(vocabularyId: string): Promise<void> {
             try {
