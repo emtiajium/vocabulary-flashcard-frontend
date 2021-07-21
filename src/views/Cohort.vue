@@ -6,7 +6,7 @@
 
             <network-error v-if="isNetworkError && isReady" />
 
-            <ion-card v-if="isReady && !isNetworkError && isTheUserAlone()">
+            <view v-if="isReady && !isNetworkError && isTheUserAlone()">
                 <ion-card-header>
                     <ion-card-subtitle class="ion-text-center">
                         Looks like you are the only member of your group. Please let us know if you would like to create
@@ -16,7 +16,7 @@
                 <ion-card-content class="display-flex ion-justify-content-center">
                     <img src="/assets/icon/diversity.svg" alt="Cohort" class="empty-cohort-icon" />
                 </ion-card-content>
-            </ion-card>
+            </view>
 
             <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()">
                 <ion-card-content>
