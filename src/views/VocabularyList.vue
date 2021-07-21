@@ -105,7 +105,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlus, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
-import Route from '@/domains/Route';
 import NativeStorage from '@/utils/NativeStorage';
 import Spinner from '@/views/Spinner.vue';
 
@@ -146,14 +145,15 @@ export default defineComponent({
             searchKeyword: '',
         };
     },
-    watch: {
-        // TODO try Ionic framework lifecycle hook(s)
-        '$route.name': 'reload',
-    },
     async mounted() {
         this.showSpinner = true;
         await this.renderVocabularies();
         this.showSpinner = false;
+    },
+    async ionViewDidEnter() {
+        if (await NativeStorage.getShouldReloadVocabularies()) {
+            await this.refresh();
+        }
     },
     methods: {
         clean(): void {
@@ -165,12 +165,6 @@ export default defineComponent({
             this.allQuietOnTheWesternFront = false;
             this.isNetworkError = false;
             this.searchKeyword = '';
-        },
-
-        async reload(): Promise<void> {
-            if (this.$route.name === Route.Vocabularies && (await NativeStorage.getShouldReloadVocabularies())) {
-                await this.refresh();
-            }
         },
 
         async refresh(): Promise<void> {
