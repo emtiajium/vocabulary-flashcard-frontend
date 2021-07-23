@@ -8,14 +8,12 @@
                     </ion-card-header>
 
                     <ion-card-content>
-                        <ion-item v-if="!vocabulary.definitions.length" lines="none">
-                            <ion-card-subtitle> No definition has been added yet! </ion-card-subtitle>
-                        </ion-item>
+                        <ion-card-subtitle v-if="!vocabulary.definitions.length">
+                            No definition has been added yet!
+                        </ion-card-subtitle>
                         <view v-if="vocabulary.definitions.length">
                             <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
-                                <ion-item lines="none">
-                                    <ion-label class="capitalize"> {{ definition.meaning }} </ion-label>
-                                </ion-item>
+                                <ion-label class="capitalize"> {{ definition.meaning }} </ion-label>
                             </view>
                         </view>
 
@@ -57,7 +55,6 @@ import {
     IonCardSubtitle,
     IonCardContent,
     IonButton,
-    IonItem,
     IonLabel,
     IonGrid,
     IonRow,
@@ -81,7 +78,6 @@ export default defineComponent({
         IonCardContent,
         IonButton,
         FontAwesomeIcon,
-        IonItem,
         IonLabel,
         IonGrid,
         IonRow,

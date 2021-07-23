@@ -10,9 +10,7 @@
             <spinner v-if="isLoading" />
 
             <view v-if="!isLoading && Object.keys(vocabulary).length">
-                <ion-card v-if="showDefaultMessage" class="ion-padding">
-                    <empty-container :message="defaultMessage" />
-                </ion-card>
+                <empty-container v-if="showDefaultMessage" class="ion-padding" :message="defaultMessage" />
 
                 <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
                     <ion-card>
