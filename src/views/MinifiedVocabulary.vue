@@ -59,6 +59,7 @@ import {
     IonGrid,
     IonRow,
     IonCol,
+    IonItem,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -82,6 +83,7 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonCol,
+        IonItem,
     },
     props: ['vocabulary', 'deleteVocabulary'],
     data() {
