@@ -76,7 +76,7 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-light-tint: #f5f6f9;
 
     --ion-background-color: #ffffff;
-    --background: #2e8b57;
+    --background: var(--ion-color-primary);
 
     /* https://ionicframework.com/docs/theming/colors#new-color-creator */
 
@@ -90,12 +90,12 @@ http://ionicframework.com/docs/theming/ */
 
 @media (prefers-color-scheme: light) {
     ion-toggle {
-        --handle-background: #50c878;
-        --handle-background-checked: #2e8b57;
+        --handle-background: var(--ion-color-warning);
+        --handle-background-checked: var(--ion-color-primary);
     }
 
     ion-toolbar {
-        --background: #2e8b57;
+        --background: var(--ion-color-primary);
         --color: #ffffff;
     }
 
@@ -104,12 +104,12 @@ http://ionicframework.com/docs/theming/ */
     }
 
     ion-card-title {
-        --color: #444c38;
+        --color: var(--ion-color-dark);
     }
 
     ion-item {
-        --background: #effae9;
-        --ion-item-color: #444c38;
+        --background: var(--ion-color-lightest);
+        --ion-item-color: var(--ion-color-dark);
     }
 
     ion-searchbar {
