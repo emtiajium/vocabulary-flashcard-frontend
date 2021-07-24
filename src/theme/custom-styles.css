@@ -1,6 +1,9 @@
 .display-flex {
     display: flex;
 }
+.display-flow-root {
+    display: flow-root;
+}
 .capitalize::first-letter {
     text-transform: capitalize;
 }
