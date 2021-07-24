@@ -13,34 +13,49 @@
                         </ion-card-subtitle>
                         <view v-if="vocabulary.definitions.length">
                             <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
-                                <ion-label class="capitalize"> {{ definition.meaning }} </ion-label>
+                                <ion-label class="capitalize display-flow-root overflowed-content">
+                                    {{ definition.meaning }}
+                                </ion-label>
                             </view>
                         </view>
 
-                        <ion-item v-if="vocabulary.definitions.length > 2" lines="none">
-                            <ion-card-subtitle>
-                                <font-awesome-icon :icon="faEllipsisH" />
-                            </ion-card-subtitle>
-                        </ion-item>
+                        <ion-card-subtitle v-if="vocabulary.definitions.length > 2">
+                            <font-awesome-icon :icon="faEllipsisH" />
+                        </ion-card-subtitle>
                     </ion-card-content>
                 </ion-col>
 
                 <ion-col size="4" class="center">
-                    <ion-item lines="none">
-                        <ion-button color="warning" @click="$router.push(`/vocabulary/update/${vocabulary.id}`)">
-                            <font-awesome-icon :icon="faPencilAlt" />
-                        </ion-button>
-                    </ion-item>
-                    <ion-item lines="none">
-                        <ion-button color="danger" @click="presentAlertConfirm(vocabulary)">
-                            <font-awesome-icon :icon="faTrashAlt" />
-                        </ion-button>
-                    </ion-item>
-                    <ion-item lines="none">
-                        <ion-button color="success" @click="seeMore(vocabulary.id, vocabulary.word)">
-                            <font-awesome-icon :icon="faExpandAlt" />
-                        </ion-button>
-                    </ion-item>
+                    <ion-button
+                        fill="outline"
+                        size="small"
+                        shape="round"
+                        :strong="true"
+                        color="primary"
+                        @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
+                    >
+                        <font-awesome-icon :icon="faPencilAlt" />
+                    </ion-button>
+                    <ion-button
+                        fill="outline"
+                        size="small"
+                        shape="round"
+                        :strong="true"
+                        color="warning"
+                        @click="presentAlertConfirm(vocabulary)"
+                    >
+                        <font-awesome-icon :icon="faTrashAlt" />
+                    </ion-button>
+                    <ion-button
+                        fill="outline"
+                        size="small"
+                        shape="round"
+                        :strong="true"
+                        color="fern-green"
+                        @click="seeMore(vocabulary.id, vocabulary.word)"
+                    >
+                        <font-awesome-icon :icon="faExpandAlt" />
+                    </ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -59,7 +74,6 @@ import {
     IonGrid,
     IonRow,
     IonCol,
-    IonItem,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -83,7 +97,6 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonCol,
-        IonItem,
     },
     props: ['vocabulary', 'deleteVocabulary'],
     data() {
