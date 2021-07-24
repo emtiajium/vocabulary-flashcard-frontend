@@ -26,8 +26,11 @@ import '@/theme/variables.css';
 import '@/theme/material-icons.css';
 import '@/theme/custom-styles.css';
 
+import { setThemeBasedOnSystem } from '@/utils/dark-mode';
+
 const app = createApp(App).use(IonicVue).use(router);
 
 router.isReady().then(() => {
     app.mount('#app');
+    setThemeBasedOnSystem().finally();
 });
