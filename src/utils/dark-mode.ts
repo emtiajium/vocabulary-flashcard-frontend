@@ -11,6 +11,14 @@ export function setLightMode(): void {
     document.body.classList.add('light');
 }
 
+export function setMode(mode: 'light' | 'dark'): void {
+    if (mode === 'light') {
+        setLightMode();
+    } else {
+        setDarkMode();
+    }
+}
+
 export async function setThemeBasedOnSystem(): Promise<void> {
     try {
         const { platform } = await Device.getInfo();
@@ -20,12 +28,22 @@ export async function setThemeBasedOnSystem(): Promise<void> {
                 const { value: isDarkModeEnabled } = await ThemeDetection.isDarkModeEnabled();
                 if (isDarkModeEnabled) {
                     setDarkMode();
-                } else {
-                    setLightMode();
                 }
             }
         }
     } catch {
         setLightMode();
     }
+}
+
+export function subscribeToModeChanges(): void {
+    const prefersDark = window.matchMedia(`(prefers-color-scheme: dark)`);
+    prefersDark.addListener((mediaQuery) => {
+        setMode(mediaQuery.matches ? 'dark' : 'light');
+    });
+}
+
+export async function initTheme(): Promise<void> {
+    setThemeBasedOnSystem().finally();
+    subscribeToModeChanges();
 }
