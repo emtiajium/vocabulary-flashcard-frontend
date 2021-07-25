@@ -96,7 +96,7 @@ export default defineComponent({
         async signOut(): Promise<void> {
             await NativeStorage.removeAuthorizedUser();
             await menuController.close();
-            await this.$router.push('/sign-in');
+            await this.$router.replace('/sign-in');
         },
         onChangeThemeMode(isDark: boolean): void {
             setThemeMode(isDark ? 'dark' : 'light');
