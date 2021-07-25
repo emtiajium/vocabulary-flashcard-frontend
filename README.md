@@ -94,7 +94,7 @@
 
 > Keep the generated Keystore and the passwords in a secret place. Don't lose it, never, ever!
 
-➜ Add SHA1 fingerprint in the Firebase console
+➜ Add fingerprint in the Firebase console
 
 > `keytool -list -alias <an-alias> -keystore <keystore-path/keystore-name>.keystore -v`
 
@@ -108,6 +108,7 @@
 
 ## Change Log
 
+-   `0.1.14`: Functionality for toggling dark mode + A bit of UI changes
 -   `0.1.13`: Newer version available alert + Used Ionic lifecycle hooks
 -   `0.1.12`: Linker words view in dictionaries + Refreshing functionality in vocabulary list page
 -   `0.1.11`: Edit button at the vocabulary details page + Fixed copy-paste issue
@@ -125,6 +126,7 @@
 
 ## Release Log
 
+-   `9`: `0.1.14`
 -   `8`: `0.1.13`
 -   `7`: `0.1.12`
 -   `6`: `0.1.11` (Same as the previous one because I forgot to change the local server)
