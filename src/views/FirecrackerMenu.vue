@@ -38,7 +38,7 @@ import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonTog
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignOutAlt, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { setThemeMode } from '@/utils/dark-mode';
+import { setExternalHandler, setThemeMode } from '@/utils/dark-mode';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -66,6 +66,7 @@ export default defineComponent({
     },
     async mounted() {
         await Promise.all([this.initUser(), this.initTheme()]);
+        setExternalHandler(this.changeThemeMode);
     },
     methods: {
         async initUser(): Promise<void> {
@@ -100,6 +101,9 @@ export default defineComponent({
         },
         onChangeThemeMode(isDark: boolean): void {
             setThemeMode(isDark ? 'dark' : 'light');
+        },
+        changeThemeMode(isDark: boolean): void {
+            this.isDark = isDark;
         },
     },
 });

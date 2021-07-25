@@ -2,15 +2,31 @@ import { Device } from '@capacitor/device';
 import { ThemeDetection } from '@ionic-native/theme-detection';
 import NativeStorage from '@/utils/NativeStorage';
 
+type ExternalHandler = (value: boolean) => void;
+
+let externalHandler: ExternalHandler;
+
+export function setExternalHandler(handler: ExternalHandler): void {
+    externalHandler = handler;
+}
+
+function executeExternalHandler(isDark: boolean): void {
+    if (externalHandler) {
+        externalHandler(isDark);
+    }
+}
+
 export function setDarkMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('dark');
+    executeExternalHandler(true);
     NativeStorage.setThemeMode('dark').finally();
 }
 
 export function setLightMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('light');
+    executeExternalHandler(false);
     NativeStorage.setThemeMode('light').finally();
 }
 
