@@ -1,23 +1,23 @@
 .display-flex {
     display: flex;
 }
+
 .display-flow-root {
     display: flow-root;
 }
+
 .capitalize::first-letter {
     text-transform: capitalize;
 }
-.form-text {
-    margin-top: 0.25rem;
-    font-size: 0.875rem;
-    color: #6c757d;
-}
+
 .rounded-circle {
     border-radius: 50%;
 }
+
 a {
     text-decoration: none;
 }
+
 .overflowed-content {
     white-space: nowrap;
     overflow: hidden;
