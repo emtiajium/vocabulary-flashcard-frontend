@@ -79,4 +79,12 @@ export default class NativeStorage {
         const user = await NativeStorage.getAuthorizedUser();
         return user && Object.keys(user).length > 0;
     }
+
+    static async setThemeMode(mode: string): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.THEME_MODE, mode);
+    }
+
+    static async getThemeMode(): Promise<string> {
+        return NativeStorage.getByKey<string>(NativeStorageKey.THEME_MODE);
+    }
 }

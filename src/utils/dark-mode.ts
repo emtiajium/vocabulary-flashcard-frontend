@@ -1,17 +1,20 @@
 import { Device } from '@capacitor/device';
 import { ThemeDetection } from '@ionic-native/theme-detection';
+import NativeStorage from '@/utils/NativeStorage';
 
 export function setDarkMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('dark');
+    NativeStorage.setThemeMode('dark').finally();
 }
 
 export function setLightMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('light');
+    NativeStorage.setThemeMode('light').finally();
 }
 
-export function setMode(mode: 'light' | 'dark'): void {
+export function setThemeMode(mode: 'light' | 'dark'): void {
     if (mode === 'light') {
         setLightMode();
     } else {
@@ -28,6 +31,9 @@ export async function setThemeBasedOnSystem(): Promise<void> {
                 const { value: isDarkModeEnabled } = await ThemeDetection.isDarkModeEnabled();
                 if (isDarkModeEnabled) {
                     setDarkMode();
+                } else {
+                    // (CSS class) setting is unnecessary but this method will also modify the native storage's value
+                    setLightMode();
                 }
             }
         }
@@ -37,9 +43,10 @@ export async function setThemeBasedOnSystem(): Promise<void> {
 }
 
 export function subscribeToModeChanges(): void {
+    // does not work for Samsung M31
     const prefersDark = window.matchMedia(`(prefers-color-scheme: dark)`);
     prefersDark.addListener((mediaQuery) => {
-        setMode(mediaQuery.matches ? 'dark' : 'light');
+        setThemeMode(mediaQuery.matches ? 'dark' : 'light');
     });
 }
 

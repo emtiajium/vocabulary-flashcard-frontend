@@ -18,6 +18,11 @@
                     <font-awesome-icon :icon="faUsers" class="menu-icon" />
                     <ion-label class="ion-padding-start"> My Cohort </ion-label>
                 </ion-item>
+                <ion-item>
+                    <font-awesome-icon :icon="faMoon" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Toggle Dark Theme </ion-label>
+                    <ion-toggle slot="end" :checked="isDark" @ionChange="onChangeThemeMode($event.detail.checked)" />
+                </ion-item>
                 <ion-item button @click="signOut">
                     <font-awesome-icon :icon="faSignOutAlt" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Sign Out </ion-label>
@@ -29,10 +34,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel } from '@ionic/vue';
+import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonToggle } from '@ionic/vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBook, faUsers, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faUsers, faSignOutAlt, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { setThemeMode } from '@/utils/dark-mode';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -43,6 +49,7 @@ export default defineComponent({
         IonMenu,
         IonLabel,
         FontAwesomeIcon,
+        IonToggle,
     },
     props: ['contentId', 'menuId'],
     data() {
@@ -53,16 +60,26 @@ export default defineComponent({
             faBook,
             faUsers,
             faSignOutAlt,
+            faMoon,
+            isDark: false,
         };
     },
     async mounted() {
-        const user = await NativeStorage.getAuthorizedUser();
-        this.profilePictureUrl =
-            user.profilePictureUrl || `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`;
-        this.username = user.username as string;
-        this.name = user.name as string;
+        await Promise.all([this.initUser(), this.initTheme()]);
     },
     methods: {
+        async initUser(): Promise<void> {
+            const user = await NativeStorage.getAuthorizedUser();
+            this.profilePictureUrl =
+                user.profilePictureUrl ||
+                `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`;
+            this.username = user.username as string;
+            this.name = user.name as string;
+        },
+        async initTheme(): Promise<void> {
+            const mode = await NativeStorage.getThemeMode();
+            this.isDark = mode === 'dark';
+        },
         async openMenu(): Promise<void> {
             await menuController.enable(true, this.menuId);
             await menuController.open(this.menuId);
@@ -80,6 +97,9 @@ export default defineComponent({
             await NativeStorage.removeAuthorizedUser();
             await menuController.close();
             await this.$router.push('/sign-in');
+        },
+        onChangeThemeMode(isDark: boolean): void {
+            setThemeMode(isDark ? 'dark' : 'light');
         },
     },
 });
