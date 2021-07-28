@@ -146,7 +146,22 @@
             <dictionary v-if="!isLoading && Object.keys(vocabulary).length" :word="vocabulary.word" />
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                <ion-fab-button color="warning" @click="$router.push(`/vocabulary/update/${vocabulary.id}`)">
+                <ion-fab-button
+                    v-show="finishedCheckingIntoLeitnerBox"
+                    size="small"
+                    color="lightest"
+                    @click="insertIntoLeitnerBox"
+                >
+                    <span class="material-icons heart-icon">
+                        {{ isInLeitnerBox ? 'favorite' : 'favorite_border' }}
+                    </span>
+                </ion-fab-button>
+                <span class="ion-margin-top" />
+                <ion-fab-button
+                    size="small"
+                    color="warning"
+                    @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
+                >
                     <font-awesome-icon :icon="faPencilAlt" />
                 </ion-fab-button>
             </ion-fab>
@@ -208,6 +223,8 @@ export default defineComponent({
             defaultMessage: `Looks like you haven't added anything yet!`,
             faExternalLinkAlt,
             faPencilAlt,
+            finishedCheckingIntoLeitnerBox: false,
+            isInLeitnerBox: false,
         };
     },
     async ionViewDidEnter() {
@@ -218,6 +235,9 @@ export default defineComponent({
     },
     methods: {
         async init(): Promise<void> {
+            await Promise.all([this.loadVocabulary(), this.checkIntoLeitnerBox()]);
+        },
+        async loadVocabulary(): Promise<void> {
             try {
                 this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${this.$route.params.id}`);
                 if (
@@ -234,10 +254,35 @@ export default defineComponent({
                 this.isLoading = false;
             }
         },
+        async checkIntoLeitnerBox(): Promise<void> {
+            try {
+                this.isInLeitnerBox = await HttpHandler.get<boolean>(
+                    `/v1/leitner-systems/exists/user/${this.$route.params.id}`,
+                );
+            } catch {
+                // be silent
+            } finally {
+                this.finishedCheckingIntoLeitnerBox = true;
+            }
+        },
+        async insertIntoLeitnerBox(): Promise<void> {
+            try {
+                await HttpHandler.post<undefined, void>(
+                    `/v1/leitner-systems/start/${this.$route.params.id}`,
+                    undefined,
+                );
+                this.isInLeitnerBox = true;
+                await Toast.present(`You will find this vocabulary in the first Leitner box.`);
+            } catch (error) {
+                await Toast.present(error.message);
+            }
+        },
         clean(): void {
             this.isLoading = true;
             this.vocabulary = {} as Vocabulary;
             this.showDefaultMessage = false;
+            this.finishedCheckingIntoLeitnerBox = false;
+            this.isInLeitnerBox = false;
         },
     },
 });
@@ -248,6 +293,9 @@ export default defineComponent({
     max-width: 20em;
 }
 .linker-word-icon {
+    color: var(--ion-color-primary);
+}
+.heart-icon {
     color: var(--ion-color-primary);
 }
 </style>
