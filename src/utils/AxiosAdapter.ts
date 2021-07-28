@@ -8,11 +8,11 @@ export default class AxiosAdapter {
         if (error.message === 'Network Error') {
             throw new Error(MessageDB.networkError);
         }
-        if (Array.isArray(error.response?.data?.message)) {
-            throw new Error(error.response?.data.message[0]);
-        }
         if (error.response?.status === 500) {
             throw new Error(MessageDB.genericError);
+        }
+        if (Array.isArray(error.response?.data?.message)) {
+            throw new Error(error.response?.data.message[0]);
         }
         throw new Error(error.response?.data.message);
     }
