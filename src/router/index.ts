@@ -10,6 +10,7 @@ import Route from '@/domains/Route';
 import * as _ from 'lodash';
 import NativeStorage from '@/utils/NativeStorage';
 import DictionaryPage from '@/views/DictionaryPage.vue';
+import LeitnerSystems from '@/views/LeitnerSystems.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -61,6 +62,11 @@ const routes: RouteRecordRaw[] = [
         path: '/cohort/read',
         name: Route.DisplayCohort,
         component: Cohort,
+    },
+    {
+        path: '/leitner-systems',
+        name: Route.LeitnerSystems,
+        component: LeitnerSystems,
     },
 ];
 

@@ -11,6 +11,7 @@ enum Route {
     DisplayVocabulary = 'DisplayVocabulary',
     DisplayCohort = 'DisplayCohort',
     Dictionary = 'Dictionary',
+    LeitnerSystems = 'LeitnerSystems',
 }
 
 export default Route;

@@ -18,6 +18,10 @@
                     <font-awesome-icon :icon="faUsers" class="menu-icon" />
                     <ion-label class="ion-padding-start"> My Cohort </ion-label>
                 </ion-item>
+                <ion-item button @click="navigate('/leitner-systems')">
+                    <font-awesome-icon :icon="faBoxes" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Leitner Boxes </ion-label>
+                </ion-item>
                 <ion-item>
                     <font-awesome-icon :icon="faMoon" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Toggle Dark Theme </ion-label>
@@ -37,7 +41,7 @@ import { defineComponent } from 'vue';
 import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonToggle } from '@ionic/vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBook, faUsers, faSignOutAlt, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faUsers, faSignOutAlt, faMoon, faBoxes } from '@fortawesome/free-solid-svg-icons';
 import { setExternalHandler, setThemeMode } from '@/utils/dark-mode';
 
 export default defineComponent({
@@ -62,6 +66,7 @@ export default defineComponent({
             faSignOutAlt,
             faMoon,
             isDark: false,
+            faBoxes,
         };
     },
     async mounted() {
