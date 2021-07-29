@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import NativeStorage from '@/utils/NativeStorage';
 import DictionaryPage from '@/views/DictionaryPage.vue';
 import LeitnerSystems from '@/views/LeitnerSystems.vue';
+import LeitnerBoxItems from '@/views/LeitnerBoxItems.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -67,6 +68,11 @@ const routes: RouteRecordRaw[] = [
         path: '/leitner-systems',
         name: Route.LeitnerSystems,
         component: LeitnerSystems,
+    },
+    {
+        path: '/leitner-box/items/:box',
+        name: Route.LeitnerBoxItems,
+        component: LeitnerBoxItems,
     },
 ];
 

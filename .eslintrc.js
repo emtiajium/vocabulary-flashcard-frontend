@@ -45,7 +45,7 @@ module.exports = {
             },
         },
         {
-            files: ['src/views/VocabularyList.vue'],
+            files: ['src/views/VocabularyList.vue', 'src/views/LeitnerBoxItems.vue'],
             rules: {
                 'no-param-reassign': 'off',
                 'no-unused-expressions': 'off',

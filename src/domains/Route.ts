@@ -12,6 +12,7 @@ enum Route {
     DisplayCohort = 'DisplayCohort',
     Dictionary = 'Dictionary',
     LeitnerSystems = 'LeitnerSystems',
+    LeitnerBoxItems = 'LeitnerBoxItems',
 }
 
 export default Route;
