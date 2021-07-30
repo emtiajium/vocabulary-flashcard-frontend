@@ -230,6 +230,7 @@ export default defineComponent({
             if (!this.isLastBox()) {
                 try {
                     await HttpHandler.put(`/v1/leitner-systems/forward/${vocabularyId}`);
+                    await Toast.present(`The vocabulary has been moved forward`);
                     await this.refresh();
                 } catch (error) {
                     await Toast.present(error.message);
@@ -241,6 +242,7 @@ export default defineComponent({
             if (!this.isFirstBox()) {
                 try {
                     await HttpHandler.put(`/v1/leitner-systems/backward/${vocabularyId}`);
+                    await Toast.present(`The vocabulary has been moved backward`);
                     await this.refresh();
                 } catch (error) {
                     await Toast.present(error.message);
