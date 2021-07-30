@@ -36,6 +36,7 @@
                                         :strong="true"
                                         color="warning"
                                         :disabled="isFirstBox"
+                                        @click="moveBackward(boxItem.vocabularyId)"
                                     >
                                         <font-awesome-icon :icon="faThumbsDown" />
                                     </ion-button>
@@ -47,6 +48,8 @@
                                         shape="round"
                                         :strong="true"
                                         color="primary"
+                                        :disabled="!isLastBox"
+                                        @click="moveForward(boxItem.vocabularyId)"
                                     >
                                         <font-awesome-icon :icon="faThumbsUp" />
                                     </ion-button>
@@ -110,6 +113,7 @@ import Spinner from '@/views/Spinner.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExpandAlt, faThumbsUp, faThumbsDown, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
+import Toast from '@/utils/Toast';
 
 interface Payload {
     pagination: Pagination;
@@ -216,6 +220,30 @@ export default defineComponent({
 
         isFirstBox(): boolean {
             return Number.parseInt(this.$route.params.box.toString(), 10) === 1;
+        },
+
+        isLastBox(): boolean {
+            return Number.parseInt(this.$route.params.box.toString(), 10) === 5;
+        },
+
+        async moveForward(vocabularyId: string): Promise<void> {
+            if (!this.isLastBox()) {
+                try {
+                    await HttpHandler.put(`/v1/leitner-systems/forward/${vocabularyId}`);
+                } catch (error) {
+                    await Toast.present(error.message);
+                }
+            }
+        },
+
+        async moveBackward(vocabularyId: string): Promise<void> {
+            if (!this.isFirstBox()) {
+                try {
+                    await HttpHandler.put(`/v1/leitner-systems/backward/${vocabularyId}`);
+                } catch (error) {
+                    await Toast.present(error.message);
+                }
+            }
         },
     },
 });
