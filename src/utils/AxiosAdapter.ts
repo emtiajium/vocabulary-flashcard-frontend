@@ -50,4 +50,12 @@ export default class AxiosAdapter {
             AxiosAdapter.throwProcessedError(error);
         }
     }
+
+    static async put(url: string, requestConfig: RequestConfig): Promise<void> {
+        try {
+            await Axios.put(url, requestConfig);
+        } catch (error) {
+            AxiosAdapter.throwProcessedError(error);
+        }
+    }
 }

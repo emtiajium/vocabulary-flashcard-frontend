@@ -34,4 +34,8 @@ export default class HttpHandler {
     static async delete(url: string): Promise<void> {
         await AxiosAdapter.delete(HttpHandler.getCompleteUrl(url), await HttpHandler.getRequestConfig());
     }
+
+    static async put(url: string): Promise<void> {
+        await AxiosAdapter.put(HttpHandler.getCompleteUrl(url), await HttpHandler.getRequestConfig());
+    }
 }
