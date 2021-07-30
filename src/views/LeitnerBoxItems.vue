@@ -10,7 +10,7 @@
 
             <view v-if="allQuietOnTheWesternFront && !isNetworkError">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding ion-text-center">
-                    All Quiet on the Western Front".
+                    "All Quiet on the Western Front"
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faGlassCheers" class="firecracker-icon" />
@@ -230,6 +230,7 @@ export default defineComponent({
             if (!this.isLastBox()) {
                 try {
                     await HttpHandler.put(`/v1/leitner-systems/forward/${vocabularyId}`);
+                    await this.refresh();
                 } catch (error) {
                     await Toast.present(error.message);
                 }
@@ -240,6 +241,7 @@ export default defineComponent({
             if (!this.isFirstBox()) {
                 try {
                     await HttpHandler.put(`/v1/leitner-systems/backward/${vocabularyId}`);
+                    await this.refresh();
                 } catch (error) {
                     await Toast.present(error.message);
                 }

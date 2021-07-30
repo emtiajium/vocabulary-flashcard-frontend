@@ -53,7 +53,7 @@ export default class AxiosAdapter {
 
     static async put(url: string, requestConfig: RequestConfig): Promise<void> {
         try {
-            await Axios.put(url, requestConfig);
+            await Axios.put(url, undefined, requestConfig);
         } catch (error) {
             AxiosAdapter.throwProcessedError(error);
         }
