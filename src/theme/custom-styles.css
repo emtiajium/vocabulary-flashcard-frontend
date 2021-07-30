@@ -23,3 +23,8 @@ a {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+ion-card.transparent {
+    --background: var(--ion-background-color);
+    box-shadow: unset;
+}

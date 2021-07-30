@@ -12,6 +12,7 @@
                         button="true"
                         :href="`https://dictionary.cambridge.org/dictionary/english/${word.toLowerCase()}`"
                         target="_blank"
+                        class="transparent"
                     >
                         <ion-card-content class="display-flex ion-justify-content-center ion-padding">
                             <img
@@ -27,6 +28,7 @@
                         button="true"
                         :href="`https://www.merriam-webster.com/dictionary/${word.toLowerCase()}`"
                         target="_blank"
+                        class="transparent"
                     >
                         <ion-card-content class="display-flex ion-justify-content-center ion-padding">
                             <img
@@ -44,6 +46,7 @@
                             .toLowerCase()
                             .replace(' ', '-')}_1?q=${word.toLowerCase().replace(' ', '+')}`"
                         target="_blank"
+                        class="transparent"
                     >
                         <ion-card-content class="display-flex ion-justify-content-center ion-padding">
                             <img src="/assets/icon/oxford.png" alt="Oxford Dictionary" class="dictionary-logo-extra" />

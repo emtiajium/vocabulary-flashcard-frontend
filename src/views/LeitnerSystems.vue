@@ -5,14 +5,14 @@
             <ion-grid>
                 <ion-row>
                     <ion-col size="6">
-                        <ion-card :button="true" class="box" @click="navigate(1)">
+                        <ion-card :button="true" class="transparent" @click="navigate(1)">
                             <ion-card-content class="display-flex ion-justify-content-center ion-padding">
                                 <font-awesome-icon :icon="faBoxOpen" class="opened-box-icon" />
                             </ion-card-content>
                         </ion-card>
                     </ion-col>
                     <ion-col size="6">
-                        <ion-card :button="true" class="box" @click="navigate(2)">
+                        <ion-card :button="true" class="transparent" @click="navigate(2)">
                             <ion-card-content class="display-flex ion-justify-content-center ion-padding">
                                 <font-awesome-icon :icon="faBoxOpen" class="opened-box-icon" />
                             </ion-card-content>
@@ -21,14 +21,14 @@
                 </ion-row>
                 <ion-row>
                     <ion-col size="6">
-                        <ion-card :button="true" class="box" @click="navigate(3)">
+                        <ion-card :button="true" class="transparent" @click="navigate(3)">
                             <ion-card-content class="display-flex ion-justify-content-center ion-padding">
                                 <font-awesome-icon :icon="faBoxOpen" class="opened-box-icon" />
                             </ion-card-content>
                         </ion-card>
                     </ion-col>
                     <ion-col size="6">
-                        <ion-card :button="true" class="box" @click="navigate(4)">
+                        <ion-card :button="true" class="transparent" @click="navigate(4)">
                             <ion-card-content class="display-flex ion-justify-content-center ion-padding">
                                 <font-awesome-icon :icon="faBoxOpen" class="opened-box-icon" />
                             </ion-card-content>
@@ -38,7 +38,7 @@
                 <ion-row>
                     <ion-col size="3" />
                     <ion-col size="6">
-                        <ion-card :button="true" class="box" @click="navigate(5)">
+                        <ion-card :button="true" class="transparent" @click="navigate(5)">
                             <ion-card-content class="display-flex ion-justify-content-center ion-padding">
                                 <font-awesome-icon :icon="faBoxOpen" class="opened-box-icon" />
                             </ion-card-content>
@@ -88,9 +88,5 @@ export default defineComponent({
 .opened-box-icon {
     font-size: 60pt;
     color: var(--ion-color-primary);
-}
-ion-card.box {
-    --background: var(--ion-background-color);
-    box-shadow: unset;
 }
 </style>
