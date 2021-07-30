@@ -6,17 +6,99 @@
             menu-id="leitner-box-items-menu"
         />
         <ion-content :fullscreen="true" id="leitner-box-items">
-            <spinner v-if="showSpinner" />
-            <view v-for="boxItem in boxItems" :key="boxItem.vocabularyId">
-                {{ boxItem.word }}
+            <spinner v-if="showSpinner && !isNetworkError" />
+
+            <view v-if="allQuietOnTheWesternFront && !isNetworkError">
+                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
+                    <span class="ion-text-center"> Looks like "All Quiet on the Western Front". </span>
+                </ion-card-subtitle>
+                <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-icon" />
+                </view>
             </view>
+
+            <view v-for="boxItem in boxItems" :key="boxItem.vocabularyId">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title class="display-flex ion-justify-content-center capitalize">
+                            {{ boxItem.word }}
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="3" />
+                                <ion-col size="2">
+                                    <ion-button
+                                        fill="outline"
+                                        size="small"
+                                        shape="round"
+                                        :strong="true"
+                                        color="warning"
+                                    >
+                                        <font-awesome-icon :icon="faThumbsDown" />
+                                    </ion-button>
+                                </ion-col>
+                                <ion-col size="2">
+                                    <ion-button
+                                        fill="outline"
+                                        size="small"
+                                        shape="round"
+                                        :strong="true"
+                                        color="primary"
+                                    >
+                                        <font-awesome-icon :icon="faThumbsUp" />
+                                    </ion-button>
+                                </ion-col>
+                                <ion-col size="2">
+                                    <ion-button
+                                        fill="outline"
+                                        size="small"
+                                        shape="round"
+                                        :strong="true"
+                                        color="fern-green"
+                                        @click="seeMore(boxItem.vocabularyId, boxItem.word)"
+                                    >
+                                        <font-awesome-icon :icon="faExpandAlt" />
+                                    </ion-button>
+                                </ion-col>
+                                <ion-col size="3" />
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </view>
+
+            <network-error v-if="isNetworkError" />
+
+            <ion-infinite-scroll
+                @ionInfinite="renderBoxItems($event)"
+                threshold="100px"
+                id="infinite-scroll"
+                :disabled="isDisabled"
+            >
+                <spinner />
+            </ion-infinite-scroll>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
+import {
+    IonContent,
+    IonPage,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonInfiniteScroll,
+    IonCardContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonButton,
+    IonCardSubtitle,
+} from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
 import SearchResult from '@/domains/SearchResult';
@@ -24,6 +106,9 @@ import HttpHandler from '@/utils/HttpHandler';
 import Pagination from '@/domains/Pagination';
 import { Components } from '@ionic/core/components';
 import Spinner from '@/views/Spinner.vue';
+import NetworkError from '@/views/NetworkError.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faExpandAlt, faThumbsUp, faThumbsDown, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
 
 interface Payload {
     pagination: Pagination;
@@ -36,8 +121,20 @@ export default defineComponent({
     components: {
         FirecrackerHeader,
         Spinner,
+        NetworkError,
         IonContent,
         IonPage,
+        IonCard,
+        IonCardHeader,
+        IonCardTitle,
+        IonCardSubtitle,
+        IonInfiniteScroll,
+        IonCardContent,
+        IonGrid,
+        IonRow,
+        IonCol,
+        IonButton,
+        FontAwesomeIcon,
     },
     data() {
         return {
@@ -48,6 +145,10 @@ export default defineComponent({
             isDisabled: false,
             allQuietOnTheWesternFront: false,
             isNetworkError: false,
+            faExpandAlt,
+            faThumbsUp,
+            faThumbsDown,
+            faGlassCheers,
         };
     },
     async ionViewDidEnter() {
@@ -89,6 +190,9 @@ export default defineComponent({
 
         async renderBoxItems(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findBoxItems();
+            if (this.pageNumber === 1 && !total) {
+                this.allQuietOnTheWesternFront = true;
+            }
             this.boxItems = this.boxItems.concat(results);
             this.pageNumber += 1;
             this.isDisabled = this.boxItems.length >= total;
@@ -104,8 +208,17 @@ export default defineComponent({
             await this.renderBoxItems();
             this.showSpinner = false;
         },
+
+        async seeMore(id: string, word: string): Promise<void> {
+            await this.$router.push(`/vocabulary/read/${id}/${word}`);
+        },
     },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.firecracker-icon {
+    font-size: 60pt;
+    color: var(--ion-color-primary);
+}
+</style>
