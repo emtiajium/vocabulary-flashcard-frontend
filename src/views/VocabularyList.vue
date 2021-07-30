@@ -228,6 +228,7 @@ export default defineComponent({
 
         deleteVocabulary(id: string): void {
             this.vocabularies = this.vocabularies.filter(({ id: vocabularyId }) => id !== vocabularyId);
+            this.totalVocabularies -= 1;
             if (!this.vocabularies.length) {
                 this.allQuietOnTheWesternFront = true;
             }
