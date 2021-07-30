@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <firecracker-header
-            header-title="Leitner Boxes"
+            :header-title="`Box ${$route.params.box}`"
             content-id="leitner-box-items"
             menu-id="leitner-box-items-menu"
         />
@@ -9,8 +9,8 @@
             <spinner v-if="showSpinner && !isNetworkError" />
 
             <view v-if="allQuietOnTheWesternFront && !isNetworkError">
-                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-                    <span class="ion-text-center"> Looks like "All Quiet on the Western Front". </span>
+                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding ion-text-center">
+                    All Quiet on the Western Front".
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faGlassCheers" class="firecracker-icon" />
@@ -35,6 +35,7 @@
                                         shape="round"
                                         :strong="true"
                                         color="warning"
+                                        :disabled="isFirstBox"
                                     >
                                         <font-awesome-icon :icon="faThumbsDown" />
                                     </ion-button>
@@ -211,6 +212,10 @@ export default defineComponent({
 
         async seeMore(id: string, word: string): Promise<void> {
             await this.$router.push(`/vocabulary/read/${id}/${word}`);
+        },
+
+        isFirstBox(): boolean {
+            return Number.parseInt(this.$route.params.box.toString(), 10) === 1;
         },
     },
 });
