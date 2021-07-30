@@ -76,6 +76,10 @@
                     <font-awesome-icon :icon="faPlus" />
                 </ion-fab-button>
             </ion-fab>
+
+            <ion-fab v-if="totalVocabularies > 0" vertical="center" horizontal="start" slot="fixed">
+                <ion-fab-button color="warning" :disabled="true" size="small"> {{ totalVocabularies }} </ion-fab-button>
+            </ion-fab>
         </ion-content>
     </ion-page>
 </template>
@@ -143,6 +147,7 @@ export default defineComponent({
             faGlassCheers,
             isNetworkError: false,
             searchKeyword: '',
+            totalVocabularies: 0,
         };
     },
     async mounted() {
@@ -165,6 +170,7 @@ export default defineComponent({
             this.allQuietOnTheWesternFront = false;
             this.isNetworkError = false;
             this.searchKeyword = '';
+            this.totalVocabularies = 0;
         },
 
         async refresh(): Promise<void> {
@@ -212,6 +218,7 @@ export default defineComponent({
                     vocabularySearch,
                 );
                 this.isNetworkError = false;
+                this.totalVocabularies = searchResult.total;
             } catch (error) {
                 this.isNetworkError = true;
                 searchResult = { results: [], total: 0 };
@@ -238,6 +245,7 @@ export default defineComponent({
                 this.vocabularies = results;
                 this.pageNumber = Number.parseInt((total / this.pageSize).toString(), 10) + 1;
                 this.isDisabled = true;
+                this.totalVocabularies = total;
             } catch {
                 this.isNetworkError = true;
             } finally {
