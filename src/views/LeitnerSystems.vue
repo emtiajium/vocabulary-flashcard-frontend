@@ -2,6 +2,7 @@
     <ion-page>
         <firecracker-header header-title="Leitner Boxes" content-id="leitner-boxes" menu-id="leitner-boxes-menu" />
         <ion-content :fullscreen="true" id="leitner-boxes">
+            <leitner-systems-flow />
             <ion-grid>
                 <ion-row>
                     <ion-col size="6">
@@ -40,12 +41,14 @@ import { defineComponent } from 'vue';
 import { IonContent, IonPage, IonGrid, IonRow, IonCol } from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import LeitnerSingleBox from '@/views/LeitnerSingleBox.vue';
+import LeitnerSystemsFlow from '@/views/LeitnerSystemsFlow.vue';
 
 export default defineComponent({
     name: 'LeitnerSystems',
     components: {
         FirecrackerHeader,
         LeitnerSingleBox,
+        LeitnerSystemsFlow,
         IonContent,
         IonPage,
         IonGrid,
