@@ -1,5 +1,5 @@
 <template>
-    <ion-card :button="true" class="transparent" @click="navigate(box)">
+    <ion-card :button="true" class="transparent" @click="navigate">
         <ion-card-content>
             <ion-grid>
                 <ion-row class="display-flex ion-justify-content-center">
