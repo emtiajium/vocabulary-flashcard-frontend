@@ -2,31 +2,38 @@
     <ion-page>
         <firecracker-header header-title="Leitner Boxes" content-id="leitner-boxes" menu-id="leitner-boxes-menu" />
         <ion-content :fullscreen="true" id="leitner-boxes">
-            <ion-grid>
-                <view v-for="placeholderItem in placeholderItems" :key="placeholderItem">
-                    <ion-row>
-                        <ion-col size="6">
-                            <ion-card :button="true" class="transparent" @click="navigate(placeholderItem)">
-                                <ion-card-content class="display-flex ion-justify-content-center ion-padding">
+            <view v-for="placeholderItem in placeholderItems" :key="placeholderItem">
+                <ion-card :button="true" class="transparent" @click="navigate(placeholderItem)">
+                    <ion-card-content class="display-flex ion-justify-content-center ion-padding">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="12" class="display-flex ion-justify-content-center">
                                     <img src="/assets/icon/empty-box.svg" alt="Leitner Box" class="opened-box-icon" />
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-                        <ion-col size="6">
-                            <ion-card :button="false" class="transparent">
-                                <ion-card-content class="display-flex ion-justify-content-center ion-padding">
-                                    <spinner v-if="!count.length || typeof count[placeholderItem] === 'undefined'" />
+                                </ion-col>
+                            </ion-row>
+                            <ion-row class="divider">
+                                <ion-col size="6" class="display-flex ion-justify-content-start padding-left-10">
+                                    <ion-card-title>
+                                        {{ mappedBoxWithDays[`BOX_${placeholderItem}`] }}
+                                    </ion-card-title>
+                                </ion-col>
+                                <ion-col size="6">
+                                    <spinner
+                                        v-if="!count.length || typeof count[placeholderItem] === 'undefined'"
+                                        class="display-flex ion-justify-content-end padding-right-10"
+                                    />
                                     <ion-card-title
                                         v-if="count.length && typeof count[placeholderItem] !== 'undefined'"
+                                        class="display-flex ion-justify-content-end padding-right-10"
                                     >
                                         {{ count[placeholderItem] }}
                                     </ion-card-title>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-                    </ion-row>
-                </view>
-            </ion-grid>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </view>
         </ion-content>
     </ion-page>
 </template>
@@ -54,6 +61,13 @@ export default defineComponent({
     },
     data() {
         return {
+            mappedBoxWithDays: {
+                BOX_1: 'Day 1',
+                BOX_2: 'Day 2',
+                BOX_3: 'Day 4',
+                BOX_4: 'Day 7',
+                BOX_5: 'Storage',
+            },
             placeholderItems: [1, 2, 3, 4, 5],
             count: [] as number[],
         };
@@ -75,10 +89,9 @@ export default defineComponent({
 
         async countBoxesItem(): Promise<void> {
             await Promise.all(
-                [1, 2, 3, 4, 5].map((box) => {
+                this.placeholderItems.map((box) => {
                     return this.countBoxItem(box).then((count) => {
                         this.count[box] = count;
-                        console.log('this.count', this.count);
                     });
                 }),
             ).catch();
@@ -93,11 +106,51 @@ export default defineComponent({
 
 <style scoped>
 .opened-box-icon {
-    max-width: 50%;
+    max-width: 30%;
 }
+
 @media only screen and (min-device-width: 480px) {
     .opened-box-icon {
         width: 15%;
     }
+}
+
+.divider {
+    border-bottom: 1px solid #ced0d4;
+    padding-bottom: 5px;
+}
+
+.ion-padding-top {
+    --ion-padding: 0px;
+}
+
+.ion-padding-bottom {
+    --ion-padding: 0px;
+}
+
+ion-card {
+    margin-inline: unset;
+}
+
+ion-grid {
+    padding-inline-start: 0px;
+    padding-inline-end: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+ion-col {
+    padding-inline-start: 0px;
+    padding-inline-end: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.padding-left-10 {
+    padding-left: 10px;
+}
+
+.padding-right-10 {
+    padding-right: 10px;
 }
 </style>
