@@ -6,15 +6,11 @@
                     <img src="/assets/icon/empty-box.svg" alt="Leitner Box" class="opened-box-icon" />
                 </ion-row>
                 <ion-row class="display-flex ion-justify-content-center">
-                    <ion-card-subtitle>
-                        {{ mappedBoxWithDays[`BOX_${box}`] }}
-                    </ion-card-subtitle>
+                    <ion-card-subtitle> {{ mappedBoxWithDays[`BOX_${box}`] }} Box </ion-card-subtitle>
                 </ion-row>
                 <ion-row class="display-flex ion-justify-content-center">
-                    <spinner v-if="!count.length || typeof count[box] === 'undefined'" />
-                    <ion-card-subtitle v-if="count.length && typeof count[box] !== 'undefined'">
-                        {{ count[box] }} Vocab
-                    </ion-card-subtitle>
+                    <spinner v-if="count === -1" />
+                    <ion-card-subtitle v-if="count !== -1"> {{ count }} Vocab </ion-card-subtitle>
                 </ion-row>
             </ion-grid>
         </ion-card-content>
@@ -26,6 +22,7 @@ import { defineComponent } from 'vue';
 import { IonCard, IonCardContent, IonCardSubtitle, IonGrid, IonRow } from '@ionic/vue';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import Spinner from '@/views/Spinner.vue';
+import HttpHandler from '@/utils/HttpHandler';
 
 export default defineComponent({
     name: 'LeitnerSingleBox',
@@ -37,11 +34,31 @@ export default defineComponent({
         IonGrid,
         IonRow,
     },
-    props: ['count', 'box', 'navigate'],
+    props: ['box'],
     data() {
         return {
+            count: -1,
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
         };
+    },
+    mounted() {
+        this.countBoxItem();
+    },
+    beforeUnmount() {
+        this.count = -1;
+    },
+    methods: {
+        async countBoxItem(): Promise<void> {
+            HttpHandler.get<number>(`/v1/leitner-systems/items/count/${this.box}`)
+                .then((count) => {
+                    this.count = count;
+                })
+                .catch();
+        },
+
+        async navigate(): Promise<void> {
+            await this.$router.push(`/leitner-box/items/${this.box}`);
+        },
     },
 });
 </script>
