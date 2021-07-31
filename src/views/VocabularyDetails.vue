@@ -194,6 +194,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExternalLinkAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
+import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 
 export default defineComponent({
     name: 'VocabularyDetails',
@@ -272,7 +273,7 @@ export default defineComponent({
                     undefined,
                 );
                 this.isInLeitnerBox = true;
-                await Toast.present(`You will find this vocabulary in the first Leitner box.`);
+                await Toast.present(`You will find this vocabulary in the ${MappedLeitnerBoxWithDays.BOX_1} box.`);
             } catch (error) {
                 await Toast.present(error.message);
             }

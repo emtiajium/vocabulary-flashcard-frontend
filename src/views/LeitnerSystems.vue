@@ -44,6 +44,7 @@ import { IonContent, IonPage, IonCard, IonCardContent, IonGrid, IonRow, IonCol, 
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Spinner from '@/views/Spinner.vue';
+import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 
 export default defineComponent({
     name: 'LeitnerSystems',
@@ -61,13 +62,7 @@ export default defineComponent({
     },
     data() {
         return {
-            mappedBoxWithDays: {
-                BOX_1: 'Day 1',
-                BOX_2: 'Day 2',
-                BOX_3: 'Day 4',
-                BOX_4: 'Day 7',
-                BOX_5: 'Storage',
-            },
+            mappedBoxWithDays: MappedLeitnerBoxWithDays,
             placeholderItems: [1, 2, 3, 4, 5],
             count: [] as number[],
         };

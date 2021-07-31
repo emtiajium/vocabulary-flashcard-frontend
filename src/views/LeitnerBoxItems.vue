@@ -63,7 +63,7 @@
                                         color="fern-green"
                                         @click="seeMore(boxItem.vocabularyId, boxItem.word)"
                                     >
-                                        <font-awesome-icon :icon="faExpandAlt" />
+                                        <font-awesome-icon :icon="faUnlockAlt" />
                                     </ion-button>
                                 </ion-col>
                                 <ion-col size="3" />
@@ -112,8 +112,9 @@ import { Components } from '@ionic/core/components';
 import Spinner from '@/views/Spinner.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faExpandAlt, faThumbsUp, faThumbsDown, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
+import { faUnlockAlt, faThumbsUp, faThumbsDown, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/utils/Toast';
+import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 
 interface Payload {
     pagination: Pagination;
@@ -150,7 +151,7 @@ export default defineComponent({
             isDisabled: false,
             allQuietOnTheWesternFront: false,
             isNetworkError: false,
-            faExpandAlt,
+            faUnlockAlt,
             faThumbsUp,
             faThumbsDown,
             faGlassCheers,
@@ -230,7 +231,13 @@ export default defineComponent({
             if (!this.isLastBox()) {
                 try {
                     await HttpHandler.put(`/v1/leitner-systems/forward/${vocabularyId}`);
-                    await Toast.present(`The vocabulary has been moved forward`);
+                    await Toast.present(
+                        `The vocabulary has been moved to ${
+                            MappedLeitnerBoxWithDays[
+                                `BOX_${Number.parseInt(this.$route.params.box.toString(), 10) + 1}`
+                            ]
+                        } box`,
+                    );
                     await this.refresh();
                 } catch (error) {
                     await Toast.present(error.message);
@@ -242,7 +249,13 @@ export default defineComponent({
             if (!this.isFirstBox()) {
                 try {
                     await HttpHandler.put(`/v1/leitner-systems/backward/${vocabularyId}`);
-                    await Toast.present(`The vocabulary has been moved backward`);
+                    await Toast.present(
+                        `The vocabulary has been moved to ${
+                            MappedLeitnerBoxWithDays[
+                                `BOX_${Number.parseInt(this.$route.params.box.toString(), 10) - 1}`
+                            ]
+                        } box`,
+                    );
                     await this.refresh();
                 } catch (error) {
                     await Toast.present(error.message);
