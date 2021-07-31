@@ -22,12 +22,12 @@
                                         v-if="!count.length || typeof count[placeholderItem] === 'undefined'"
                                         class="display-flex ion-justify-content-end padding-right-10"
                                     />
-                                    <ion-card-title
+                                    <ion-card-subtitle
                                         v-if="count.length && typeof count[placeholderItem] !== 'undefined'"
                                         class="display-flex ion-justify-content-end padding-right-10"
                                     >
-                                        {{ count[placeholderItem] }}
-                                    </ion-card-title>
+                                        {{ count[placeholderItem] }} Vocab
+                                    </ion-card-subtitle>
                                 </ion-col>
                             </ion-row>
                         </ion-grid>
@@ -40,7 +40,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonContent, IonPage, IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardTitle } from '@ionic/vue';
+import {
+    IonContent,
+    IonPage,
+    IonCard,
+    IonCardContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonCardTitle,
+    IonCardSubtitle,
+} from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Spinner from '@/views/Spinner.vue';
@@ -59,6 +69,7 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonCol,
+        IonCardSubtitle,
     },
     data() {
         return {
@@ -101,7 +112,7 @@ export default defineComponent({
 
 <style scoped>
 .opened-box-icon {
-    max-width: 30%;
+    max-width: 20%;
 }
 
 @media only screen and (min-device-width: 480px) {
