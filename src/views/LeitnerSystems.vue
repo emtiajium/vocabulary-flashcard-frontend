@@ -11,7 +11,7 @@
                                     <img src="/assets/icon/empty-box.svg" alt="Leitner Box" class="opened-box-icon" />
                                 </ion-col>
                             </ion-row>
-                            <ion-row class="divider">
+                            <ion-row :class="placeholderItem !== 5 ? 'divider' : ''">
                                 <ion-col size="6" class="display-flex ion-justify-content-start padding-left-10">
                                     <ion-card-title>
                                         {{ mappedBoxWithDays[`BOX_${placeholderItem}`] }}
@@ -117,7 +117,7 @@ export default defineComponent({
 
 .divider {
     border-bottom: 1px solid #ced0d4;
-    padding-bottom: 5px;
+    padding-bottom: 8px;
 }
 
 .ion-padding-top {
