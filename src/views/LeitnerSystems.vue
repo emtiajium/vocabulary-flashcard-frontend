@@ -9,7 +9,7 @@
                         methods available to overcome this difficulty. One of these is Leitner System.
                     </ion-card-subtitle>
                     <ion-card-subtitle v-show="seeLess"> ... See More </ion-card-subtitle>
-                    <ion-card-subtitle v-show="!seeLess">
+                    <ion-card-subtitle v-show="!seeLess" class="ion-padding-top">
                         Sebastian Leitner, a German journalist, proposed this method based on the principle of spaced
                         repetition in which items can be repetitively reviewed until the learner gets fully satisfied.
                     </ion-card-subtitle>
