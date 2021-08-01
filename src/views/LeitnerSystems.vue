@@ -5,23 +5,23 @@
             <ion-card :button="true" class="description-margin" @click="toggle">
                 <ion-card-content>
                     <ion-card-subtitle>
-                        People often struggle to memorize vocabulary for a good amount of time. Fortunately, there are
-                        several ways to overcome this.
+                        People often struggle to memorize vocabulary in the long run. Fortunately, there are several
+                        methods available to overcome this difficulty. One of these is Leitner System.
                     </ion-card-subtitle>
                     <ion-card-subtitle v-show="seeLess"> ... See More </ion-card-subtitle>
                     <ion-card-subtitle v-show="!seeLess">
-                        Sebastian Leitner, a German journalist, implemented a system based on the principle of spaced
-                        repetition in which an item is repetitively reviewed until the learner gets fully satisfied.
+                        Sebastian Leitner, a German journalist, proposed this method based on the principle of spaced
+                        repetition in which items can be repetitively reviewed until the learner gets fully satisfied.
                     </ion-card-subtitle>
                     <leitner-systems-flow v-show="!seeLess" />
                     <ion-card-subtitle v-show="!seeLess">
-                        In this system, there are several boxes. If you wish to remember a newfound vocab, move the word
-                        into the first box. Review it the next day and either move it to the next one if you remember
-                        the meaning or keep it within the box. In this way, review the items within the second box. Move
-                        it back to the previous box if you forget the definitions but if everything is okay, then
-                        forward it to the next box. You have already read the same vocabulary for two days. Take a rest
-                        for a day and review it on the third day. Review it on the fourth day. Move it forward or
-                        backwards and again on the seventh day, review it again.
+                        In this method, there are several boxes. If you wish to remember a newfound vocab, move the word
+                        into the first box. Review it the next day, either move it to the next one if you remember the
+                        meaning or keep it within the box. In this way, review the items in the second box. Move it back
+                        to the previous box if you forget the definitions but if everything is okay, then forward it to
+                        the next box. As you have already read the same vocabulary for two days, take a rest for the
+                        next day. Review it on the fourth day and move it forward or backwards. Then on the seventh day,
+                        review it again.
                     </ion-card-subtitle>
                 </ion-card-content>
             </ion-card>
