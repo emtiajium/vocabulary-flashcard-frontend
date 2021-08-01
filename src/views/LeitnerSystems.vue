@@ -2,7 +2,7 @@
     <ion-page>
         <firecracker-header header-title="Leitner Boxes" content-id="leitner-boxes" menu-id="leitner-boxes-menu" />
         <ion-content :fullscreen="true" id="leitner-boxes">
-            <ion-card :button="true" class="no-margin" @click="toggle">
+            <ion-card :button="true" class="description-margin" @click="toggle">
                 <ion-card-content>
                     <ion-card-subtitle>
                         People often struggle to memorize vocabulary for a good amount of time. Fortunately, there are
@@ -94,8 +94,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.no-margin {
+.description-margin {
     margin: unset;
     margin-inline: unset;
+    margin-bottom: 10px;
 }
 </style>
