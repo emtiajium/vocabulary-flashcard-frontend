@@ -6,6 +6,7 @@
             menu-id="vocabulary-list-menu"
             :enableSearching="true"
             searchPlaceholder="Type at least 3 characters"
+            :searchKeyword="searchKeyword"
             :setSearchKeyword="setSearchKeyword"
         />
 
