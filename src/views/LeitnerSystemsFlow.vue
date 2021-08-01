@@ -5,7 +5,7 @@
             x="0px"
             y="0px"
             width="360px"
-            height="250px"
+            height="200px"
             viewBox="-17.16 -35.952 460 250"
         >
             <defs></defs>
