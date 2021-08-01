@@ -108,6 +108,7 @@
 
 ## Change Log
 
+-   `0.2.0`: Leitner systems
 -   `0.1.14`: Functionality for toggling dark mode + A bit of UI changes
 -   `0.1.13`: Newer version available alert + Used Ionic lifecycle hooks
 -   `0.1.12`: Linker words view in dictionaries + Refreshing functionality in vocabulary list page
@@ -126,6 +127,7 @@
 
 ## Release Log
 
+-   `10`: `0.2.0`
 -   `9`: `0.1.14`
 -   `8`: `0.1.13`
 -   `7`: `0.1.12`
