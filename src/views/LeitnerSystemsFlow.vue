@@ -203,6 +203,26 @@
             >
                 I forgot
             </text>
+            <text
+                transform="rotate(90 156.67187500000003,89.64843750000001) "
+                font-family="'MyriadPro-Bold'"
+                font-size="24"
+                y="98.154839"
+                x="151"
+                fill="#4f7942"
+            >
+                *
+            </text>
+            <text
+                transform="rotate(90 249.34375,90.93750000000003) "
+                font-family="'MyriadPro-Bold'"
+                font-size="24"
+                y="101.4375"
+                x="235"
+                fill="#4f7942"
+            >
+                **
+            </text>
         </svg>
     </view>
 </template>
