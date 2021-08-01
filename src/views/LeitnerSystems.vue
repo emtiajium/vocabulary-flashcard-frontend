@@ -28,20 +28,20 @@
             <ion-grid>
                 <ion-row>
                     <ion-col size="6">
-                        <leitner-single-box :box="1" />
+                        <leitner-single-box :box="1" :count="count[1]" />
                     </ion-col>
                     <ion-col size="6">
-                        <leitner-single-box :box="2" />
+                        <leitner-single-box :box="2" :count="count[2]" />
                     </ion-col>
                 </ion-row>
             </ion-grid>
             <ion-grid>
                 <ion-row>
                     <ion-col size="6">
-                        <leitner-single-box :box="3" />
+                        <leitner-single-box :box="3" :count="count[3]" />
                     </ion-col>
                     <ion-col size="6">
-                        <leitner-single-box :box="4" />
+                        <leitner-single-box :box="4" :count="count[4]" />
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -49,7 +49,7 @@
                 <ion-row>
                     <ion-col size="3" />
                     <ion-col size="6">
-                        <leitner-single-box :box="5" />
+                        <leitner-single-box :box="5" :count="count[5]" />
                     </ion-col>
                     <ion-col size="3" />
                 </ion-row>
@@ -64,6 +64,7 @@ import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonCardSubtitle, IonCardC
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import LeitnerSingleBox from '@/views/LeitnerSingleBox.vue';
 import LeitnerSystemsFlow from '@/views/LeitnerSystemsFlow.vue';
+import HttpHandler from '@/utils/HttpHandler';
 
 export default defineComponent({
     name: 'LeitnerSystems',
@@ -83,11 +84,37 @@ export default defineComponent({
     data() {
         return {
             seeLess: true,
+            placeholderItems: [1, 2, 3, 4, 5],
+            count: [-1, -1, -1, -1, -1, -1] as number[],
         };
+    },
+    async ionViewDidEnter() {
+        await this.countBoxesItem();
+    },
+    ionViewWillLeave() {
+        this.clean();
     },
     methods: {
         toggle(): void {
             this.seeLess = !this.seeLess;
+        },
+
+        async countBoxItem(box: number): Promise<number> {
+            return HttpHandler.get<number>(`/v1/leitner-systems/items/count/${box}`);
+        },
+
+        async countBoxesItem(): Promise<void> {
+            await Promise.all(
+                this.placeholderItems.map((box) => {
+                    return this.countBoxItem(box).then((count) => {
+                        this.count[box] = count;
+                    });
+                }),
+            ).catch();
+        },
+
+        clean(): void {
+            this.count = [-1, -1, -1, -1, -1, -1];
         },
     },
 });

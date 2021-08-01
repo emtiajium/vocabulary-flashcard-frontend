@@ -22,7 +22,6 @@ import { defineComponent } from 'vue';
 import { IonCard, IonCardContent, IonCardSubtitle, IonGrid, IonRow } from '@ionic/vue';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import Spinner from '@/views/Spinner.vue';
-import HttpHandler from '@/utils/HttpHandler';
 
 export default defineComponent({
     name: 'LeitnerSingleBox',
@@ -34,28 +33,13 @@ export default defineComponent({
         IonGrid,
         IonRow,
     },
-    props: ['box'],
+    props: ['box', 'count'],
     data() {
         return {
-            count: -1,
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
         };
     },
-    mounted() {
-        this.countBoxItem();
-    },
-    beforeUnmount() {
-        this.count = -1;
-    },
     methods: {
-        async countBoxItem(): Promise<void> {
-            HttpHandler.get<number>(`/v1/leitner-systems/items/count/${this.box}`)
-                .then((count) => {
-                    this.count = count;
-                })
-                .catch();
-        },
-
         async navigate(): Promise<void> {
             await this.$router.push(`/leitner-box/items/${this.box}`);
         },
