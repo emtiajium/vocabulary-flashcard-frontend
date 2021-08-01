@@ -40,7 +40,8 @@
 
 ###### Run the web app natively on Android
 
-➜ Read [these](https://facebook.github.io/react-native/docs/running-on-device.html) and `Enable Debugging over USB`, `Plug in your device via USB`, `Connect to the development server`
+➜ Read [these](https://facebook.github.io/react-native/docs/running-on-device.html) and `Enable Debugging over USB`
+, `Plug in your device via USB`, `Connect to the development server`
 
 ➜ `npm run serve:android:anew`
 
@@ -108,6 +109,7 @@
 
 ## Change Log
 
+-   `0.2.1`: Fixed bug related to Leitner system
 -   `0.2.0`: Leitner systems
 -   `0.1.14`: Functionality for toggling dark mode + A bit of UI changes
 -   `0.1.13`: Newer version available alert + Used Ionic lifecycle hooks
@@ -127,6 +129,7 @@
 
 ## Release Log
 
+-   `11`: `0.2.1`
 -   `10`: `0.2.0`
 -   `9`: `0.1.14`
 -   `8`: `0.1.13`
