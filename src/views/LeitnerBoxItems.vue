@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <firecracker-header
-            :header-title="mappedBoxWithDays[`BOX_${$route.params.box}`] || ''"
+            :header-title="`${mappedBoxWithDays[`BOX_${$route.params.box}`]} Box` || ''"
             content-id="leitner-box-items"
             menu-id="leitner-box-items-menu"
         />
