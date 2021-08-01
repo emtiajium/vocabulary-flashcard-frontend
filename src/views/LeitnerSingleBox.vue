@@ -1,6 +1,6 @@
 <template>
-    <ion-card :button="true" class="transparent" @click="navigate">
-        <ion-card-content>
+    <ion-card :button="true" class="transparent no-margin" @click="navigate">
+        <ion-card-content class="no-padding">
             <ion-grid>
                 <ion-row class="display-flex ion-justify-content-center">
                     <img src="/assets/icon/empty-box.svg" alt="Leitner Box" class="opened-box-icon" />
@@ -65,12 +65,21 @@ export default defineComponent({
 
 <style scoped>
 .opened-box-icon {
-    max-width: 80%;
+    max-width: 65%;
 }
 
 @media only screen and (min-device-width: 480px) {
     .opened-box-icon {
         width: 20%;
     }
+}
+
+.no-margin {
+    margin: unset;
+}
+
+.no-padding {
+    padding-top: unset;
+    padding-bottom: unset;
 }
 </style>
