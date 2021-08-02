@@ -109,7 +109,7 @@
 
 ## Change Log
 
--   `0.2.2`: Fixed bug (move backward button was being disabled all time)
+-   `0.2.2`: Fixed bug (move backward button was being disabled all time) + Fixed button alignment
 -   `0.2.1`: Fixed bug related to Leitner system
 -   `0.2.0`: Leitner systems
 -   `0.1.14`: Functionality for toggling dark mode + A bit of UI changes
