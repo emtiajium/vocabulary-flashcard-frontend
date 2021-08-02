@@ -48,7 +48,7 @@
                                         shape="round"
                                         :strong="true"
                                         color="primary"
-                                        :disabled="!isLastBox()"
+                                        :disabled="isLastBox()"
                                         @click="moveForward(boxItem.vocabularyId)"
                                     >
                                         <font-awesome-icon :icon="faThumbsUp" />
