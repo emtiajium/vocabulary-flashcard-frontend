@@ -28,33 +28,33 @@
                         <ion-grid>
                             <ion-row>
                                 <ion-col size="3" />
-                                <ion-col size="2">
+                                <ion-col size="2" class="display-flex ion-justify-content-end">
                                     <ion-button
                                         fill="outline"
                                         size="small"
                                         shape="round"
                                         :strong="true"
                                         color="warning"
-                                        :disabled="isFirstBox"
+                                        :disabled="isFirstBox()"
                                         @click="moveBackward(boxItem.vocabularyId)"
                                     >
                                         <font-awesome-icon :icon="faThumbsDown" />
                                     </ion-button>
                                 </ion-col>
-                                <ion-col size="2">
+                                <ion-col size="2" class="display-flex ion-justify-content-center">
                                     <ion-button
                                         fill="outline"
                                         size="small"
                                         shape="round"
                                         :strong="true"
                                         color="primary"
-                                        :disabled="!isLastBox"
+                                        :disabled="!isLastBox()"
                                         @click="moveForward(boxItem.vocabularyId)"
                                     >
                                         <font-awesome-icon :icon="faThumbsUp" />
                                     </ion-button>
                                 </ion-col>
-                                <ion-col size="2">
+                                <ion-col size="2" class="display-flex ion-justify-content-start">
                                     <ion-button
                                         fill="outline"
                                         size="small"
