@@ -18,7 +18,7 @@
 
 ###### Clone the repo and install all dependencies
 
-➜ `git clone git@bitbucket.org:sheenab/ielts-gibberish-android.git`
+➜ `git clone git@github.com:emtiajium/ielts-gibberish.git`
 
 ➜ `cd ielts-gibberish-android`
 
