@@ -32,20 +32,20 @@
                             size="small"
                             shape="round"
                             :strong="true"
-                            color="primary"
-                            @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
+                            color="warning"
+                            @click="presentAlertConfirm(vocabulary)"
                         >
-                            <font-awesome-icon :icon="faPencilAlt" />
+                            <font-awesome-icon :icon="faTrashAlt" />
                         </ion-button>
                         <ion-button
                             fill="outline"
                             size="small"
                             shape="round"
                             :strong="true"
-                            color="warning"
-                            @click="presentAlertConfirm(vocabulary)"
+                            color="primary"
+                            @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
                         >
-                            <font-awesome-icon :icon="faTrashAlt" />
+                            <font-awesome-icon :icon="faPencilAlt" />
                         </ion-button>
                     </ion-row>
                     <ion-row>
