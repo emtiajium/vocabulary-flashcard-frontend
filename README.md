@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.2.3`: No reloading after update + Box insertion from the vocab list page
 -   `0.2.2`: Fixed bug (move backward button was being disabled all time) + Fixed button alignment
 -   `0.2.1`: Fixed bug related to Leitner system
 -   `0.2.0`: Leitner systems
@@ -130,6 +131,7 @@
 
 ## Release Log
 
+-   `13`: `0.2.3`
 -   `12`: `0.2.2`
 -   `11`: `0.2.1`
 -   `10`: `0.2.0`
