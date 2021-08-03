@@ -194,7 +194,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExternalLinkAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
-import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
+import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
 
 export default defineComponent({
     name: 'VocabularyDetails',
@@ -267,16 +267,8 @@ export default defineComponent({
             }
         },
         async insertIntoLeitnerBox(): Promise<void> {
-            try {
-                await HttpHandler.post<undefined, void>(
-                    `/v1/leitner-systems/start/${this.$route.params.id}`,
-                    undefined,
-                );
-                this.isInLeitnerBox = true;
-                await Toast.present(`You will find this vocabulary in the ${MappedLeitnerBoxWithDays.BOX_1} box.`);
-            } catch (error) {
-                await Toast.present(error.message);
-            }
+            await LeitnerBoxItem.insertIntoLeitnerBox(`${this.$route.params.id}`);
+            this.isInLeitnerBox = true;
         },
         clean(): void {
             this.isLoading = true;

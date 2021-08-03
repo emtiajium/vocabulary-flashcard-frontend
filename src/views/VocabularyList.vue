@@ -39,7 +39,11 @@
             </view>
 
             <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
-                <minified-vocabulary :vocabulary="vocabulary" :delete-vocabulary="deleteVocabulary" />
+                <minified-vocabulary
+                    :vocabulary="vocabulary"
+                    :delete-vocabulary="deleteVocabulary"
+                    :update-leitner-box-existence="updateLeitnerBoxExistence"
+                />
             </view>
 
             <view v-if="isDisabled && vocabularies.length > 0 && !isNetworkError">
@@ -251,6 +255,15 @@ export default defineComponent({
                 this.vocabularies[this.vocabularies.findIndex((vocabulary) => vocabulary.id === updatedVocabulary.id)] =
                     updatedVocabulary;
                 NativeStorage.removeUpdatedVocabulary().finally();
+            } catch {
+                // I don't care about it!
+            }
+        },
+
+        updateLeitnerBoxExistence(id: string): void {
+            try {
+                this.vocabularies[this.vocabularies.findIndex((vocabulary) => vocabulary.id === id)].isInLeitnerBox =
+                    true;
             } catch {
                 // I don't care about it!
             }

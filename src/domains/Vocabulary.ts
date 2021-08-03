@@ -53,4 +53,7 @@ export default class Vocabulary {
     @IsBoolean()
     @IsDefined()
     isDraft: boolean;
+
+    @IsOptional()
+    isInLeitnerBox?: boolean;
 }

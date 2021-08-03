@@ -26,36 +26,52 @@
                 </ion-col>
 
                 <ion-col size="4" class="center">
-                    <ion-button
-                        fill="outline"
-                        size="small"
-                        shape="round"
-                        :strong="true"
-                        color="primary"
-                        @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
-                    >
-                        <font-awesome-icon :icon="faPencilAlt" />
-                    </ion-button>
-                    <ion-button
-                        fill="outline"
-                        size="small"
-                        shape="round"
-                        :strong="true"
-                        color="warning"
-                        @click="presentAlertConfirm(vocabulary)"
-                    >
-                        <font-awesome-icon :icon="faTrashAlt" />
-                    </ion-button>
-                    <ion-button
-                        fill="outline"
-                        size="small"
-                        shape="round"
-                        :strong="true"
-                        color="fern-green"
-                        @click="seeMore(vocabulary.id, vocabulary.word)"
-                    >
-                        <font-awesome-icon :icon="faExpandAlt" />
-                    </ion-button>
+                    <ion-row>
+                        <ion-button
+                            fill="outline"
+                            size="small"
+                            shape="round"
+                            :strong="true"
+                            color="primary"
+                            @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
+                        >
+                            <font-awesome-icon :icon="faPencilAlt" />
+                        </ion-button>
+                        <ion-button
+                            fill="outline"
+                            size="small"
+                            shape="round"
+                            :strong="true"
+                            color="warning"
+                            @click="presentAlertConfirm(vocabulary)"
+                        >
+                            <font-awesome-icon :icon="faTrashAlt" />
+                        </ion-button>
+                    </ion-row>
+                    <ion-row>
+                        <ion-button
+                            fill="clear"
+                            size="small"
+                            shape="round"
+                            :strong="true"
+                            color="fern-green"
+                            @click="insertIntoLeitnerBox"
+                        >
+                            <span class="material-icons">
+                                {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
+                            </span>
+                        </ion-button>
+                        <ion-button
+                            fill="outline"
+                            size="small"
+                            shape="round"
+                            :strong="true"
+                            color="fern-green"
+                            @click="seeMore(vocabulary.id, vocabulary.word)"
+                        >
+                            <font-awesome-icon :icon="faExpandAlt" />
+                        </ion-button>
+                    </ion-row>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -82,6 +98,7 @@ import Alert from '@/utils/Alert';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import Toast from '@/utils/Toast';
+import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
 
 export default defineComponent({
     name: 'MinifiedVocabulary',
@@ -98,7 +115,7 @@ export default defineComponent({
         IonRow,
         IonCol,
     },
-    props: ['vocabulary', 'deleteVocabulary'],
+    props: ['vocabulary', 'deleteVocabulary', 'updateLeitnerBoxExistence'],
     data() {
         return { faTrashAlt, faPencilAlt, faExpandAlt, faEllipsisH };
     },
@@ -113,6 +130,10 @@ export default defineComponent({
                     .catch((error) => Toast.present(error.message));
             });
         },
+        async insertIntoLeitnerBox(): Promise<void> {
+            await LeitnerBoxItem.insertIntoLeitnerBox(this.vocabulary.id);
+            this.updateLeitnerBoxExistence(this.vocabulary.id);
+        },
     },
 });
 </script>
@@ -121,7 +142,7 @@ export default defineComponent({
 .center {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: flex-end;
 }
 </style>
