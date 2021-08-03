@@ -383,7 +383,11 @@ export default defineComponent({
                 this.validatePayload(vocabulary);
                 await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
                 this.clear();
-                await NativeStorage.setShouldReloadVocabularies(true);
+                if (!this.$route.params?.id) {
+                    await NativeStorage.setShouldReloadVocabularies(true);
+                } else {
+                    await NativeStorage.setUpdatedVocabulary(_.cloneDeep(vocabulary));
+                }
                 // replace instead of push so that this route won't be appeared (hardware back-button)
                 await this.$router.replace(`/vocabularies`);
             } catch (error) {

@@ -3,6 +3,7 @@ import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import NativeStorageKey from '@/domains/NativeStorageKey';
 import User from '@/domains/User';
 import { Device } from '@capacitor/device';
+import Vocabulary from '@/domains/Vocabulary';
 
 let storage: Storage;
 
@@ -73,6 +74,18 @@ export default class NativeStorage {
 
     static async getShouldReloadVocabularies(): Promise<boolean> {
         return NativeStorage.getByKey<boolean>(NativeStorageKey.SHOULD_RELOAD_VOCABULARIES);
+    }
+
+    static async setUpdatedVocabulary(vocabulary: Vocabulary): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.UPDATED_VOCABULARY, vocabulary);
+    }
+
+    static async removeUpdatedVocabulary(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.UPDATED_VOCABULARY);
+    }
+
+    static async getUpdatedVocabulary(): Promise<Vocabulary> {
+        return NativeStorage.getByKey<Vocabulary>(NativeStorageKey.UPDATED_VOCABULARY);
     }
 
     static async isAuthenticated(): Promise<boolean> {

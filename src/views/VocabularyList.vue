@@ -112,6 +112,7 @@ import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import Spinner from '@/views/Spinner.vue';
+import * as _ from 'lodash';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -157,8 +158,18 @@ export default defineComponent({
         this.showSpinner = false;
     },
     async ionViewDidEnter() {
-        if (await NativeStorage.getShouldReloadVocabularies()) {
-            await this.refresh();
+        try {
+            const [shouldReload, updatedVocabulary] = await Promise.all([
+                NativeStorage.getShouldReloadVocabularies(),
+                NativeStorage.getUpdatedVocabulary(),
+            ]);
+            if (shouldReload) {
+                await this.refresh();
+            } else if (!_.isEmpty(updatedVocabulary)) {
+                this.updateVocabulary(updatedVocabulary);
+            }
+        } catch {
+            this.refresh().finally();
         }
     },
     methods: {
@@ -232,6 +243,16 @@ export default defineComponent({
             this.totalVocabularies -= 1;
             if (!this.vocabularies.length) {
                 this.allQuietOnTheWesternFront = true;
+            }
+        },
+
+        updateVocabulary(updatedVocabulary: Vocabulary): void {
+            try {
+                this.vocabularies[this.vocabularies.findIndex((vocabulary) => vocabulary.id === updatedVocabulary.id)] =
+                    updatedVocabulary;
+                NativeStorage.removeUpdatedVocabulary().finally();
+            } catch {
+                // I don't care about it!
             }
         },
 
