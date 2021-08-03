@@ -100,4 +100,16 @@ export default class NativeStorage {
     static async getThemeMode(): Promise<string> {
         return NativeStorage.getByKey<string>(NativeStorageKey.THEME_MODE);
     }
+
+    static async setLeitnerBoxExistence(vocabularyId: string): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.SET_LEITNER_BOX_EXISTENCE, vocabularyId);
+    }
+
+    static async removeLeitnerBoxExistence(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.SET_LEITNER_BOX_EXISTENCE);
+    }
+
+    static async getLeitnerBoxExistence(): Promise<string> {
+        return NativeStorage.getByKey<string>(NativeStorageKey.SET_LEITNER_BOX_EXISTENCE);
+    }
 }

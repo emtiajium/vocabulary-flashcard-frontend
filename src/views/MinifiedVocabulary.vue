@@ -98,7 +98,7 @@ import Alert from '@/utils/Alert';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import Toast from '@/utils/Toast';
-import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
+import LeitnerSystemService from '@/utils/LeitnerSystemService';
 
 export default defineComponent({
     name: 'MinifiedVocabulary',
@@ -131,7 +131,7 @@ export default defineComponent({
             });
         },
         async insertIntoLeitnerBox(): Promise<void> {
-            await LeitnerBoxItem.insertIntoLeitnerBox(this.vocabulary.id);
+            await LeitnerSystemService.insertIntoLeitnerBox(this.vocabulary.id);
             this.updateLeitnerBoxExistence(this.vocabulary.id);
         },
     },

@@ -194,7 +194,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExternalLinkAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
-import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
+import LeitnerSystemService from '@/utils/LeitnerSystemService';
 
 export default defineComponent({
     name: 'VocabularyDetails',
@@ -267,7 +267,7 @@ export default defineComponent({
             }
         },
         async insertIntoLeitnerBox(): Promise<void> {
-            await LeitnerBoxItem.insertIntoLeitnerBox(`${this.$route.params.id}`);
+            await LeitnerSystemService.insertIntoLeitnerBox(`${this.$route.params.id}`);
             this.isInLeitnerBox = true;
         },
         clean(): void {

@@ -161,20 +161,11 @@ export default defineComponent({
         await this.renderVocabularies();
         this.showSpinner = false;
     },
-    async ionViewDidEnter() {
-        try {
-            const [shouldReload, updatedVocabulary] = await Promise.all([
-                NativeStorage.getShouldReloadVocabularies(),
-                NativeStorage.getUpdatedVocabulary(),
-            ]);
-            if (shouldReload) {
-                await this.refresh();
-            } else if (!_.isEmpty(updatedVocabulary)) {
-                this.updateVocabulary(updatedVocabulary);
-            }
-        } catch {
-            this.refresh().finally();
-        }
+    ionViewDidEnter() {
+        // executing in parallel
+        this.assertRefreshList();
+        this.assertRefreshVocabulary();
+        this.assertRefreshIsInLeitnerBox();
     },
     methods: {
         clean(): void {
@@ -187,6 +178,37 @@ export default defineComponent({
             this.isNetworkError = false;
             this.searchKeyword = '';
             this.totalVocabularies = 0;
+        },
+
+        async assertRefreshList(): Promise<void> {
+            try {
+                const shouldReload = await NativeStorage.getShouldReloadVocabularies();
+                if (shouldReload) {
+                    this.refresh().finally();
+                }
+            } catch {
+                this.refresh().finally();
+            }
+        },
+
+        async assertRefreshVocabulary(): Promise<void> {
+            NativeStorage.getUpdatedVocabulary()
+                .then((updatedVocabulary) => {
+                    if (!_.isEmpty(updatedVocabulary)) {
+                        this.updateVocabulary(updatedVocabulary);
+                    }
+                })
+                .catch();
+        },
+
+        async assertRefreshIsInLeitnerBox(): Promise<void> {
+            NativeStorage.getLeitnerBoxExistence()
+                .then((leitnerBoxExistenceVocabId) => {
+                    if (leitnerBoxExistenceVocabId) {
+                        this.updateLeitnerBoxExistence(leitnerBoxExistenceVocabId);
+                    }
+                })
+                .catch();
         },
 
         async refresh(): Promise<void> {
@@ -242,6 +264,10 @@ export default defineComponent({
             return searchResult as SearchResult<Vocabulary>;
         },
 
+        findVocabIndex(id: string): number {
+            return this.vocabularies.findIndex((vocabulary) => vocabulary.id === id);
+        },
+
         deleteVocabulary(id: string): void {
             this.vocabularies = this.vocabularies.filter(({ id: vocabularyId }) => id !== vocabularyId);
             this.totalVocabularies -= 1;
@@ -252,8 +278,7 @@ export default defineComponent({
 
         updateVocabulary(updatedVocabulary: Vocabulary): void {
             try {
-                this.vocabularies[this.vocabularies.findIndex((vocabulary) => vocabulary.id === updatedVocabulary.id)] =
-                    updatedVocabulary;
+                this.vocabularies[this.findVocabIndex(updatedVocabulary.id)] = updatedVocabulary;
                 NativeStorage.removeUpdatedVocabulary().finally();
             } catch {
                 // I don't care about it!
@@ -262,8 +287,8 @@ export default defineComponent({
 
         updateLeitnerBoxExistence(id: string): void {
             try {
-                this.vocabularies[this.vocabularies.findIndex((vocabulary) => vocabulary.id === id)].isInLeitnerBox =
-                    true;
+                this.vocabularies[this.findVocabIndex(id)].isInLeitnerBox = true;
+                NativeStorage.removeLeitnerBoxExistence().finally();
             } catch {
                 // I don't care about it!
             }
