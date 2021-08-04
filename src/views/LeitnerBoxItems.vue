@@ -23,6 +23,17 @@
                         <ion-card-title class="display-flex ion-justify-content-center capitalize">
                             {{ boxItem.word }}
                         </ion-card-title>
+                        <ion-card-subtitle class="display-flex ion-justify-content-center capitalize">
+                            <ion-row>
+                                <font-awesome-icon :icon="faClock" class="firecracker-primary-colored-icon" />
+                                <ion-datetime
+                                    :value="boxItem.updatedAt"
+                                    display-format="MMMM DD, YYYY hh:mm A"
+                                    class="updated-at"
+                                    :disabled="true"
+                                />
+                            </ion-row>
+                        </ion-card-subtitle>
                     </ion-card-header>
                     <ion-card-content>
                         <ion-grid>
@@ -102,6 +113,7 @@ import {
     IonCol,
     IonButton,
     IonCardSubtitle,
+    IonDatetime,
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
@@ -113,6 +125,7 @@ import Spinner from '@/views/Spinner.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faUnlockAlt, faThumbsUp, faThumbsDown, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 import Toast from '@/utils/Toast';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 
@@ -141,6 +154,7 @@ export default defineComponent({
         IonCol,
         IonButton,
         FontAwesomeIcon,
+        IonDatetime,
     },
     data() {
         return {
@@ -156,6 +170,7 @@ export default defineComponent({
             faThumbsUp,
             faThumbsDown,
             faGlassCheers,
+            faClock,
             headerTitle: `${MappedLeitnerBoxWithDays[`BOX_${this.$route.params.box}`]} Box` || '',
         };
     },
@@ -272,5 +287,20 @@ export default defineComponent({
 .firecracker-icon {
     font-size: 60pt;
     color: var(--ion-color-primary);
+}
+
+.updated-at {
+    padding-top: unset;
+    padding-bottom: unset;
+    opacity: inherit;
+}
+
+ion-card-header {
+    padding-bottom: unset;
+}
+
+ion-card-content {
+    padding-top: unset;
+    padding-bottom: unset;
 }
 </style>
