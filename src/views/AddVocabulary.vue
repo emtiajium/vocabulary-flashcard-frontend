@@ -381,12 +381,20 @@ export default defineComponent({
             try {
                 const vocabulary = this.getVocabularyPayload();
                 this.validatePayload(vocabulary);
-                await HttpHandler.post<Vocabulary, Vocabulary>(`/v1/vocabularies`, vocabulary);
+                const persistedVocabulary = await HttpHandler.post<Vocabulary, Vocabulary>(
+                    `/v1/vocabularies`,
+                    vocabulary,
+                );
                 this.clear();
                 if (!this.$route.params?.id) {
                     await NativeStorage.setShouldReloadVocabularies(true);
                 } else {
-                    await NativeStorage.setUpdatedVocabulary(_.cloneDeep(vocabulary));
+                    await Promise.all([
+                        NativeStorage.setUpdatedVocabulary(_.cloneDeep(persistedVocabulary)),
+                        persistedVocabulary.isInLeitnerBox
+                            ? NativeStorage.setLeitnerBoxExistence(persistedVocabulary.id)
+                            : Promise.resolve(),
+                    ]);
                 }
                 // replace instead of push so that this route won't be appeared (hardware back-button)
                 await this.$router.replace(`/vocabularies`);
