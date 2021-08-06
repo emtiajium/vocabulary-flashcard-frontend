@@ -15,6 +15,9 @@
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faGlassCheers" class="firecracker-icon" />
                 </view>
+                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding ion-text-center">
+                    Items will only appear when it is the right time
+                </ion-card-subtitle>
             </view>
 
             <view v-for="boxItem in boxItems" :key="boxItem.vocabularyId">
