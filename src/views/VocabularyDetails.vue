@@ -147,13 +147,13 @@
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                 <ion-fab-button
-                    v-show="finishedCheckingIntoLeitnerBox"
+                    v-if="!isLoading && Object.keys(vocabulary).length"
                     size="small"
                     color="lightest"
                     @click="insertIntoLeitnerBox"
                 >
                     <span class="material-icons heart-icon">
-                        {{ isInLeitnerBox ? 'favorite' : 'favorite_border' }}
+                        {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
                     </span>
                 </ion-fab-button>
                 <span class="ion-margin-top" />
@@ -224,8 +224,6 @@ export default defineComponent({
             defaultMessage: `Looks like you haven't added anything yet!`,
             faExternalLinkAlt,
             faPencilAlt,
-            finishedCheckingIntoLeitnerBox: false,
-            isInLeitnerBox: false,
         };
     },
     async ionViewDidEnter() {
@@ -236,7 +234,7 @@ export default defineComponent({
     },
     methods: {
         async init(): Promise<void> {
-            await Promise.all([this.loadVocabulary(), this.checkIntoLeitnerBox()]);
+            await this.loadVocabulary();
         },
         async loadVocabulary(): Promise<void> {
             try {
@@ -255,27 +253,14 @@ export default defineComponent({
                 this.isLoading = false;
             }
         },
-        async checkIntoLeitnerBox(): Promise<void> {
-            try {
-                this.isInLeitnerBox = await HttpHandler.get<boolean>(
-                    `/v1/leitner-systems/exists/user/${this.$route.params.id}`,
-                );
-            } catch {
-                // be silent
-            } finally {
-                this.finishedCheckingIntoLeitnerBox = true;
-            }
-        },
         async insertIntoLeitnerBox(): Promise<void> {
             await LeitnerSystemService.insertIntoLeitnerBox(`${this.$route.params.id}`);
-            this.isInLeitnerBox = true;
+            this.vocabulary.isInLeitnerBox = true;
         },
         clean(): void {
             this.isLoading = true;
             this.vocabulary = {} as Vocabulary;
             this.showDefaultMessage = false;
-            this.finishedCheckingIntoLeitnerBox = false;
-            this.isInLeitnerBox = false;
         },
     },
 });
