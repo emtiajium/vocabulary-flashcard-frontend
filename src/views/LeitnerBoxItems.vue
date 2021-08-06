@@ -25,10 +25,17 @@
                         </ion-card-title>
                         <ion-card-subtitle class="display-flex ion-justify-content-center capitalize">
                             <ion-row>
+                                <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-colored-icon" />
+                                <ion-datetime
+                                    :value="boxItem.updatedAt"
+                                    display-format="MMMM DD, YYYY"
+                                    class="updated-at padding-right-10"
+                                    :disabled="true"
+                                />
                                 <font-awesome-icon :icon="faClock" class="firecracker-primary-colored-icon" />
                                 <ion-datetime
                                     :value="boxItem.updatedAt"
-                                    display-format="MMMM DD, YYYY hh:mm A"
+                                    display-format="hh:mm A"
                                     class="updated-at"
                                     :disabled="true"
                                 />
@@ -124,8 +131,14 @@ import { Components } from '@ionic/core/components';
 import Spinner from '@/views/Spinner.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faUnlockAlt, faThumbsUp, faThumbsDown, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
-import { faClock } from '@fortawesome/free-regular-svg-icons';
+import {
+    faUnlockAlt,
+    faThumbsUp,
+    faThumbsDown,
+    faGlassCheers,
+    faCalendarAlt,
+    faClock,
+} from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/utils/Toast';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 
@@ -171,6 +184,7 @@ export default defineComponent({
             faThumbsDown,
             faGlassCheers,
             faClock,
+            faCalendarAlt,
             headerTitle: `${MappedLeitnerBoxWithDays[`BOX_${this.$route.params.box}`]} Box` || '',
         };
     },
@@ -302,5 +316,9 @@ ion-card-header {
 ion-card-content {
     padding-top: unset;
     padding-bottom: unset;
+}
+
+.padding-right-10 {
+    padding-right: 10px;
 }
 </style>
