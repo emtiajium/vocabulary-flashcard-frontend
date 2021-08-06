@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.2.5`: Fixed leitner box existence bug within the minified card after update + Minor UI change for the box item
 -   `0.2.4`: Leitner Box insertion time
 -   `0.2.3`: No reloading after update + Box insertion from the vocab list page
 -   `0.2.2`: Fixed bug (move backward button was being disabled all time) + Fixed button alignment
@@ -132,6 +133,7 @@
 
 ## Release Log
 
+-   `15`: `0.2.5`
 -   `14`: `0.2.4`
 -   `13`: `0.2.3`
 -   `12`: `0.2.2`
