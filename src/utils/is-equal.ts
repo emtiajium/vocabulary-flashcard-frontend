@@ -11,3 +11,7 @@ export function isArrayOfObjectEqual<T>(firstPOJO: T[], secondPOJO: T[]): boolea
           })
         : true;
 }
+
+export function isObjectEqual<T>(firstPOJO: T, secondPOJO: T): boolean {
+    return _.isEqual(firstPOJO, secondPOJO);
+}
