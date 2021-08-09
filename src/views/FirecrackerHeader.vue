@@ -18,6 +18,7 @@
                         />
                         <ion-button
                             v-if="enableSettings"
+                            color="white"
                             size="small"
                             shape="round"
                             fill="clear"
