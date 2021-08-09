@@ -150,6 +150,7 @@
                     v-if="!isLoading && Object.keys(vocabulary).length"
                     size="small"
                     color="lightest"
+                    :disabled="disableBoxInsertionButton"
                     @click="insertIntoLeitnerBox"
                 >
                     <span class="material-icons heart-icon">
@@ -224,6 +225,7 @@ export default defineComponent({
             defaultMessage: `Looks like you haven't added anything yet!`,
             faExternalLinkAlt,
             faPencilAlt,
+            disableBoxInsertionButton: false,
         };
     },
     async ionViewDidEnter() {
@@ -254,7 +256,9 @@ export default defineComponent({
             }
         },
         async insertIntoLeitnerBox(): Promise<void> {
+            this.disableBoxInsertionButton = true;
             await LeitnerSystemService.insertIntoLeitnerBox(`${this.$route.params.id}`);
+            this.disableBoxInsertionButton = false;
             this.vocabulary.isInLeitnerBox = true;
         },
         clean(): void {

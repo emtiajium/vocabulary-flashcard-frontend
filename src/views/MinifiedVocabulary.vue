@@ -54,6 +54,7 @@
                             size="small"
                             shape="round"
                             :strong="true"
+                            :disabled="disableBoxInsertionButton"
                             color="fern-green"
                             @click="insertIntoLeitnerBox"
                         >
@@ -117,7 +118,7 @@ export default defineComponent({
     },
     props: ['vocabulary', 'deleteVocabulary', 'updateLeitnerBoxExistence'],
     data() {
-        return { faTrashAlt, faPencilAlt, faExpandAlt, faEllipsisH };
+        return { faTrashAlt, faPencilAlt, faExpandAlt, faEllipsisH, disableBoxInsertionButton: false };
     },
     methods: {
         async seeMore(id: string, word: string): Promise<void> {
@@ -131,7 +132,9 @@ export default defineComponent({
             });
         },
         async insertIntoLeitnerBox(): Promise<void> {
+            this.disableBoxInsertionButton = true;
             await LeitnerSystemService.insertIntoLeitnerBox(this.vocabulary.id);
+            this.disableBoxInsertionButton = false;
             this.updateLeitnerBoxExistence(this.vocabulary.id);
         },
     },
