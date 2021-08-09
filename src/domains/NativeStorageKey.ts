@@ -4,6 +4,7 @@ enum NativeStorageKey {
     UPDATED_VOCABULARY = 'UPDATED_VOCABULARY',
     THEME_MODE = 'THEME_MODE',
     SET_LEITNER_BOX_EXISTENCE = 'SET_LEITNER_BOX_EXISTENCE',
+    VOCAB_SORT = 'VOCAB_SORT',
 }
 
 export default NativeStorageKey;

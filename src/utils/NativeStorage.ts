@@ -4,6 +4,7 @@ import NativeStorageKey from '@/domains/NativeStorageKey';
 import User from '@/domains/User';
 import { Device } from '@capacitor/device';
 import Vocabulary from '@/domains/Vocabulary';
+import Sort from '@/domains/Sort';
 
 let storage: Storage;
 
@@ -111,5 +112,13 @@ export default class NativeStorage {
 
     static async getLeitnerBoxExistence(): Promise<string> {
         return NativeStorage.getByKey<string>(NativeStorageKey.SET_LEITNER_BOX_EXISTENCE);
+    }
+
+    static async setVocabSort(sort: Sort): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.VOCAB_SORT, sort);
+    }
+
+    static async getVocabSort(): Promise<Sort> {
+        return NativeStorage.getByKey<Sort>(NativeStorageKey.VOCAB_SORT);
     }
 }
