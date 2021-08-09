@@ -1,8 +1,8 @@
 <template>
     <view>
         <ion-card>
-            <ion-card-header>
-                <ion-card-title> Definition in the renowned dictionary </ion-card-title>
+            <ion-card-header class="label-block">
+                <ion-card-title class="ion-text-center"> Definition in the renowned dictionary </ion-card-title>
             </ion-card-header>
         </ion-card>
         <ion-grid>
@@ -86,5 +86,9 @@ export default defineComponent({
     .dictionary-logo-extra {
         width: 50%;
     }
+}
+.label-block {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 </style>
