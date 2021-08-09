@@ -106,7 +106,9 @@
                             </ion-button>
                         </ion-col>
                         <ion-col size="6">
-                            <ion-button color="success" expand="block" @click="persist"> Save </ion-button>
+                            <ion-button color="success" expand="block" :disabled="disableSaveButton" @click="persist">
+                                Save
+                            </ion-button>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -238,6 +240,7 @@ export default defineComponent({
             faPencilAlt,
             pristineVocabulary: {} as Vocabulary,
             backButtonUnsubscribeHandler: {} as BackButtonUnsubscribeHandler,
+            disableSaveButton: false,
         };
     },
     async ionViewDidEnter() {
@@ -381,6 +384,7 @@ export default defineComponent({
             try {
                 const vocabulary = this.getVocabularyPayload();
                 this.validatePayload(vocabulary);
+                this.disableSaveButton = true;
                 const persistedVocabulary = await HttpHandler.post<Vocabulary, Vocabulary>(
                     `/v1/vocabularies`,
                     vocabulary,
@@ -400,6 +404,8 @@ export default defineComponent({
                 await this.$router.replace(`/vocabularies`);
             } catch (error) {
                 await Toast.present(error.message);
+            } finally {
+                this.disableSaveButton = false;
             }
         },
         unsubscribeBackButtonListener(): void {
