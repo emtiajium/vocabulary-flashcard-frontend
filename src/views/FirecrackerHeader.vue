@@ -16,6 +16,16 @@
                             :value="searchKeyword"
                             @ionChange="onChangeSearchKeyword"
                         />
+                        <ion-button
+                            v-if="enableSettings"
+                            size="small"
+                            shape="round"
+                            fill="clear"
+                            class="settings-button"
+                            @click="modifySettings"
+                        >
+                            <font-awesome-icon :icon="faEllipsisV" />
+                        </ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -26,9 +36,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonMenuButton, IonSearchbar } from '@ionic/vue';
+import {
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonMenuButton,
+    IonSearchbar,
+    IonButton,
+} from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBars, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faArrowLeft, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerMenu from '@/views/FirecrackerMenu.vue';
 
 export default defineComponent({
@@ -44,6 +64,7 @@ export default defineComponent({
         FontAwesomeIcon,
         IonMenuButton,
         IonSearchbar,
+        IonButton,
     },
     props: {
         headerTitle: {
@@ -85,11 +106,24 @@ export default defineComponent({
                 // do nothing
             },
         },
+        enableSettings: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
+        modifySettings: {
+            type: Function,
+            required: false,
+            default: (): void => {
+                // do nothing
+            },
+        },
     },
     data() {
         return {
             faBars,
             faArrowLeft,
+            faEllipsisV,
         };
     },
     methods: {
@@ -119,5 +153,11 @@ ion-toolbar.sc-ion-searchbar-ios-h,
 ion-toolbar .sc-ion-searchbar-ios-h {
     padding-top: unset;
     padding-bottom: unset;
+}
+
+.settings-button {
+    font-size: 20px;
+    --padding-start: 0px;
+    --padding-end: 0px;
 }
 </style>

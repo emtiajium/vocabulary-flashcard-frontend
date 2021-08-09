@@ -4,10 +4,12 @@
             header-title="Vocabularies"
             content-id="vocabulary-list"
             menu-id="vocabulary-list-menu"
-            :enableSearching="true"
-            searchPlaceholder="Type at least 3 characters"
-            :searchKeyword="searchKeyword"
-            :setSearchKeyword="setSearchKeyword"
+            :enable-searching="true"
+            search-placeholder="Type at least 3 characters"
+            :search-keyword="searchKeyword"
+            :set-search-keyword="setSearchKeyword"
+            :enable-settings="true"
+            :modify-settings="modifySettings"
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
@@ -322,6 +324,10 @@ export default defineComponent({
                 this.vocabularies = [] as Vocabulary[];
                 await this.renderVocabularies();
             }
+        },
+
+        modifySettings(): void {
+            console.log('modifySettings');
         },
     },
 });
