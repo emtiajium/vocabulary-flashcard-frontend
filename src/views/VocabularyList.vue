@@ -9,7 +9,7 @@
             :search-keyword="searchKeyword"
             :set-search-keyword="setSearchKeyword"
             :enable-settings="true"
-            :modify-settings="modifySettings"
+            :modify-settings="onClosingSettingsPopover"
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
@@ -87,6 +87,45 @@
             <ion-fab v-if="totalVocabularies > 0" vertical="center" horizontal="start" slot="fixed">
                 <ion-fab-button color="warning" :disabled="true" size="small"> {{ totalVocabularies }} </ion-fab-button>
             </ion-fab>
+
+            <ion-popover
+                :is-open="isSettingsPopoverOpened"
+                css-class="settings-popover"
+                @didDismiss="onClosingSettingsPopover"
+            >
+                <ion-list lines="none">
+                    <ion-radio-group :value="selectedSort" @ionChange="onChangeSort($event)">
+                        <ion-list-header>
+                            <ion-label> Sort list </ion-label>
+                        </ion-list-header>
+
+                        <ion-item>
+                            <ion-label> Date created (newest first) </ion-label>
+                            <ion-radio slot="end" value="createdAt_DESC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Date created (oldest first) </ion-label>
+                            <ion-radio slot="end" value="createdAt_ASC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Date updated (newest first) </ion-label>
+                            <ion-radio slot="end" value="updatedAt_DESC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Date updated (oldest first) </ion-label>
+                            <ion-radio slot="end" value="updatedAt_ASC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Word (alphabetically first) </ion-label>
+                            <ion-radio slot="end" value="word_ASC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Word (alphabetically last) </ion-label>
+                            <ion-radio slot="end" value="word_DESC" />
+                        </ion-item>
+                    </ion-radio-group>
+                </ion-list>
+            </ion-popover>
         </ion-content>
     </ion-page>
 </template>
@@ -104,6 +143,12 @@ import {
     IonButton,
     IonItem,
     IonRefresher,
+    IonPopover,
+    IonLabel,
+    IonRadio,
+    IonRadioGroup,
+    IonList,
+    IonListHeader,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
@@ -119,6 +164,8 @@ import NetworkError from '@/views/NetworkError.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import Spinner from '@/views/Spinner.vue';
 import * as _ from 'lodash';
+import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
+import { isObjectEqual } from '@/utils/is-equal';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -142,6 +189,12 @@ export default defineComponent({
         IonButton,
         IonItem,
         IonRefresher,
+        IonPopover,
+        IonLabel,
+        IonRadio,
+        IonList,
+        IonRadioGroup,
+        IonListHeader,
     },
     data() {
         return {
@@ -156,10 +209,17 @@ export default defineComponent({
             isNetworkError: false,
             searchKeyword: '',
             totalVocabularies: 0,
+            isSettingsPopoverOpened: false,
+            selectedSort: `${SupportedSortFields.updatedAt}_${SortDirection.DESC}`,
+            sort: {
+                field: SupportedSortFields.updatedAt,
+                direction: SortDirection.DESC,
+            } as Sort,
         };
     },
     async mounted() {
         this.showSpinner = true;
+        await this.setSortStuff();
         await this.renderVocabularies();
         this.showSpinner = false;
     },
@@ -180,6 +240,19 @@ export default defineComponent({
             this.isNetworkError = false;
             this.searchKeyword = '';
             this.totalVocabularies = 0;
+            this.isSettingsPopoverOpened = false;
+            // no resetting of "sort"
+        },
+
+        async setSortStuff(): Promise<void> {
+            const selectedSort = await NativeStorage.getVocabSort();
+            if (!_.isEmpty(selectedSort)) {
+                this.selectedSort = `${selectedSort.field}_${selectedSort.direction}`;
+                this.sort = {
+                    field: selectedSort.field,
+                    direction: selectedSort.direction,
+                };
+            }
         },
 
         async assertRefreshList(): Promise<void> {
@@ -250,6 +323,7 @@ export default defineComponent({
                     pageSize: this.pageSize,
                     pageNumber: this.pageNumber,
                 },
+                sort: this.sort,
             };
             let searchResult;
             try {
@@ -326,8 +400,24 @@ export default defineComponent({
             }
         },
 
-        modifySettings(): void {
-            console.log('modifySettings');
+        async onClosingSettingsPopover(): Promise<void> {
+            this.isSettingsPopoverOpened = !this.isSettingsPopoverOpened;
+            if (
+                !this.isSettingsPopoverOpened &&
+                !isObjectEqual(_.cloneDeep(this.sort), (await NativeStorage.getVocabSort()) || {})
+            ) {
+                NativeStorage.setVocabSort(_.cloneDeep(this.sort)).finally();
+                await this.refresh();
+            }
+        },
+
+        onChangeSort(event: CustomEvent): void {
+            this.selectedSort = event.detail.value;
+            const [field, direction] = event.detail.value.split('_');
+            this.sort = {
+                field,
+                direction,
+            };
         },
     },
 });
@@ -341,5 +431,10 @@ export default defineComponent({
 .searching-result-zero-icon {
     font-size: 60pt;
     color: var(--ion-color-primary);
+}
+.settings-popover {
+    --width: 280px;
+    width: 280px;
+    position: unset;
 }
 </style>
