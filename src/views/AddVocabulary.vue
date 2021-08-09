@@ -400,8 +400,7 @@ export default defineComponent({
                             : Promise.resolve(),
                     ]);
                 }
-                // replace instead of push so that this route won't be appeared (hardware back-button)
-                await this.$router.replace(`/vocabularies`);
+                await this.$router.back();
             } catch (error) {
                 await Toast.present(error.message);
             } finally {
