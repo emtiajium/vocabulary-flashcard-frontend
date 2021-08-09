@@ -96,7 +96,7 @@
                 <ion-list lines="none">
                     <ion-radio-group :value="selectedSort" @ionChange="onChangeSort($event)">
                         <ion-list-header>
-                            <ion-label> Sort list </ion-label>
+                            <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
                         </ion-list-header>
 
                         <ion-item>
@@ -431,10 +431,5 @@ export default defineComponent({
 .searching-result-zero-icon {
     font-size: 60pt;
     color: var(--ion-color-primary);
-}
-.settings-popover {
-    --width: 280px;
-    width: 280px;
-    position: unset;
 }
 </style>

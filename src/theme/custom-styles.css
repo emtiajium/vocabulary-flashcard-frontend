@@ -32,3 +32,8 @@ ion-card.transparent {
 .firecracker-primary-colored-icon {
     color: var(--ion-color-primary);
 }
+
+.settings-popover {
+    --width: 280px;
+    position: unset;
+}
