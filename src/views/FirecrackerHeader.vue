@@ -133,6 +133,7 @@ export default defineComponent({
         },
         back(): void {
             // Something is wrong!
+            // Nothing is wrong, back button needs to be set outside the <IonMenuButton />
             this.$router.back();
         },
         async onClickIcon(): Promise<void> {
