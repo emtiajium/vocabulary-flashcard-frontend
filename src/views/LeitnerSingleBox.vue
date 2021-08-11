@@ -22,6 +22,7 @@ import { defineComponent } from 'vue';
 import { IonCard, IonCardContent, IonCardSubtitle, IonGrid, IonRow } from '@ionic/vue';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import Spinner from '@/views/Spinner.vue';
+import NativeStorage from '@/utils/NativeStorage';
 
 export default defineComponent({
     name: 'LeitnerSingleBox',
@@ -41,6 +42,7 @@ export default defineComponent({
     },
     methods: {
         async navigate(): Promise<void> {
+            await NativeStorage.setShouldReloadLeitnerItems();
             await this.$router.push(`/leitner-box/items/${this.box}`);
         },
     },

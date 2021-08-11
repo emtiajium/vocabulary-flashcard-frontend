@@ -111,19 +111,19 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {
-    IonContent,
-    IonPage,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonInfiniteScroll,
-    IonCardContent,
-    IonGrid,
-    IonRow,
-    IonCol,
     IonButton,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
     IonCardSubtitle,
+    IonCardTitle,
+    IonCol,
+    IonContent,
     IonDatetime,
+    IonGrid,
+    IonInfiniteScroll,
+    IonPage,
+    IonRow,
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
@@ -135,15 +135,17 @@ import Spinner from '@/views/Spinner.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-    faUnlockAlt,
-    faThumbsUp,
-    faThumbsDown,
-    faGlassCheers,
     faCalendarAlt,
     faClock,
+    faGlassCheers,
+    faThumbsDown,
+    faThumbsUp,
+    faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import Toast from '@/utils/Toast';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
+import * as _ from 'lodash';
+import NativeStorage from '@/utils/NativeStorage';
 
 interface Payload {
     pagination: Pagination;
@@ -173,7 +175,9 @@ export default defineComponent({
         IonDatetime,
     },
     data() {
+        const box = this.$route.params.box.toString();
         return {
+            box,
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
             boxItems: [] as LeitnerBoxItem[],
             showSpinner: false,
@@ -188,14 +192,15 @@ export default defineComponent({
             faGlassCheers,
             faClock,
             faCalendarAlt,
-            headerTitle: `${MappedLeitnerBoxWithDays[`BOX_${this.$route.params.box}`]} Box` || '',
+            headerTitle: `${MappedLeitnerBoxWithDays[`BOX_${box}`]} Box` || '',
         };
     },
     async ionViewDidEnter() {
-        await this.refresh();
-    },
-    ionViewWillLeave() {
-        this.clean();
+        if (!this.boxItems.length || this.isNetworkError || (await NativeStorage.getShouldReloadLeitnerItems())) {
+            await this.refresh();
+            NativeStorage.removeShouldReloadLeitnerItems().catch().finally();
+        }
+        this.assertRefreshWord().finally();
     },
     methods: {
         clean(): void {
@@ -214,26 +219,31 @@ export default defineComponent({
                     pageNumber: this.pageNumber,
                 },
             };
-            let boxItems;
+            let searchResult;
             try {
-                boxItems = await HttpHandler.post<Payload, SearchResult<LeitnerBoxItem>>(
-                    `/v1/leitner-systems/items/${this.$route.params.box}`,
+                searchResult = await HttpHandler.post<Payload, SearchResult<LeitnerBoxItem>>(
+                    `/v1/leitner-systems/items/${this.box}`,
                     payload,
                 );
                 this.isNetworkError = false;
             } catch {
                 this.isNetworkError = true;
-                boxItems = { results: [], total: 0 };
+                searchResult = { results: [], total: 0 };
             }
-            return boxItems as SearchResult<LeitnerBoxItem>;
+            return searchResult as SearchResult<LeitnerBoxItem>;
         },
 
         async renderBoxItems(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findBoxItems();
-            if (this.pageNumber === 1 && !total) {
+            if (!total) {
                 this.allQuietOnTheWesternFront = true;
             }
-            this.boxItems = this.boxItems.concat(results);
+            // workaround
+            // after moving an item to the next box
+            // this.refresh() is not being executed
+            // and as this.pageNumber is re-calculated
+            // there is a chance of getting an item that has been retrieved earlier
+            this.boxItems = _.uniqBy(this.boxItems.concat(results), 'vocabularyId');
             this.pageNumber += 1;
             this.isDisabled = this.boxItems.length >= total;
             if (event?.target) {
@@ -254,11 +264,11 @@ export default defineComponent({
         },
 
         isFirstBox(): boolean {
-            return Number.parseInt(this.$route.params.box.toString(), 10) === 1;
+            return Number.parseInt(this.box, 10) === 1;
         },
 
         isLastBox(): boolean {
-            return Number.parseInt(this.$route.params.box.toString(), 10) === 5;
+            return Number.parseInt(this.box, 10) === 5;
         },
 
         async moveForward(vocabularyId: string): Promise<void> {
@@ -267,12 +277,10 @@ export default defineComponent({
                     await HttpHandler.put(`/v1/leitner-systems/forward/${vocabularyId}`);
                     await Toast.present(
                         `The vocabulary has been moved to ${
-                            MappedLeitnerBoxWithDays[
-                                `BOX_${Number.parseInt(this.$route.params.box.toString(), 10) + 1}`
-                            ]
+                            MappedLeitnerBoxWithDays[`BOX_${Number.parseInt(this.box, 10) + 1}`]
                         } box`,
                     );
-                    await this.refresh();
+                    await this.onKickingOutItem(vocabularyId);
                 } catch (error) {
                     await Toast.present(error.message);
                 }
@@ -284,16 +292,43 @@ export default defineComponent({
                 try {
                     await HttpHandler.put(`/v1/leitner-systems/backward/${vocabularyId}`);
                     await Toast.present(
-                        `The vocabulary has been moved to ${
-                            MappedLeitnerBoxWithDays[
-                                `BOX_${Number.parseInt(this.$route.params.box.toString(), 10) - 1}`
-                            ]
+                        `The vocabulary has been moved back to ${
+                            MappedLeitnerBoxWithDays[`BOX_${Number.parseInt(this.box, 10) - 1}`]
                         } box`,
                     );
-                    await this.refresh();
+                    await this.onKickingOutItem(vocabularyId);
                 } catch (error) {
                     await Toast.present(error.message);
                 }
+            }
+        },
+
+        async onKickingOutItem(vocabularyId: string): Promise<void> {
+            this.boxItems = _.filter(this.boxItems, (boxItem) => {
+                return boxItem.vocabularyId !== vocabularyId;
+            });
+            if (this.pageNumber * this.pageSize > this.boxItems.length) {
+                this.pageNumber = this.pageNumber > 1 ? this.pageNumber - 1 : 1;
+                await this.renderBoxItems();
+            }
+        },
+
+        async assertRefreshWord(): Promise<void> {
+            NativeStorage.getUpdatedVocabulary()
+                .then((updatedVocabulary) => {
+                    if (!_.isEmpty(updatedVocabulary)) {
+                        this.updateWord(updatedVocabulary.id, updatedVocabulary.word);
+                    }
+                })
+                .catch();
+        },
+
+        updateWord(vocabularyId: string, word: string): void {
+            const itemIndex = _.findIndex(this.boxItems, (boxItem) => {
+                return boxItem.vocabularyId === vocabularyId;
+            });
+            if (itemIndex !== -1) {
+                this.boxItems[itemIndex].word = word;
             }
         },
     },

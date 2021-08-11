@@ -121,4 +121,16 @@ export default class NativeStorage {
     static async getVocabSort(): Promise<Sort> {
         return NativeStorage.getByKey<Sort>(NativeStorageKey.VOCAB_SORT);
     }
+
+    static async setShouldReloadLeitnerItems(): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.SHOULD_RELOAD_LEITNER_ITEMS, true);
+    }
+
+    static async getShouldReloadLeitnerItems(): Promise<boolean> {
+        return NativeStorage.getByKey<boolean>(NativeStorageKey.SHOULD_RELOAD_LEITNER_ITEMS);
+    }
+
+    static async removeShouldReloadLeitnerItems(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.SHOULD_RELOAD_LEITNER_ITEMS);
+    }
 }

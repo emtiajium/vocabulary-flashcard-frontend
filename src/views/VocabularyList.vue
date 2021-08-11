@@ -350,6 +350,7 @@ export default defineComponent({
             if (!this.vocabularies.length) {
                 this.allQuietOnTheWesternFront = true;
             }
+            // TODO need to handle pageNumber
         },
 
         updateVocabulary(updatedVocabulary: Vocabulary): void {
