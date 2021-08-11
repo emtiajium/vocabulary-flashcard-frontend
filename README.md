@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.3.1`: Prevented refreshing leitner items every time an item has been moved
 -   `0.3.0`: User preference for the vocab ordering
 -   `0.2.6`: Disabled all types of save button before receiving the response from the server + Other minor changes
 -   `0.2.5`: Fixed leitner box existence bug within the minified card after update + Minor UI change for the box item
@@ -135,6 +136,7 @@
 
 ## Release Log
 
+-   `18`: `0.3.1`
 -   `17`: `0.3.0`
 -   `16`: `0.2.6`
 -   `15`: `0.2.5`
