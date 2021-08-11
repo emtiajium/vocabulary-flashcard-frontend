@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <firecracker-header
-            :header-title="$route.params.word || ''"
+            :header-title="headerTitle"
             content-id="vocabulary-details"
             menu-id="vocabulary-details-menu"
         />
@@ -219,6 +219,7 @@ export default defineComponent({
     },
     data() {
         return {
+            headerTitle: this.$route.params.word || '',
             isLoading: true,
             vocabulary: {} as Vocabulary,
             showDefaultMessage: false,
@@ -241,6 +242,7 @@ export default defineComponent({
         async loadVocabulary(): Promise<void> {
             try {
                 this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${this.$route.params.id}`);
+                this.headerTitle = this.vocabulary.word;
                 if (
                     !this.vocabulary.definitions?.length &&
                     !this.vocabulary.linkerWords?.length &&
