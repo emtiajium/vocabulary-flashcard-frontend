@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <firecracker-header
-            header-title="Vocabulary"
+            header-title="Vocabularies"
             content-id="vocabulary-list"
             menu-id="vocabulary-list-menu"
             :enable-searching="true"
@@ -32,7 +32,7 @@
             <view v-if="isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
                     <span class="ion-text-center">
-                        {{ `No vocabulary were found for "${searchKeyword}"` }}
+                        {{ `No vocabularies were found for "${searchKeyword}"` }}
                     </span>
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
