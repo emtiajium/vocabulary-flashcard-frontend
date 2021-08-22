@@ -5,12 +5,7 @@
             <ion-card-subtitle> Usage of the word in a sentence </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items v-if="!$props.existingExamples" ref="AddRemoveMultipleItemsRef" />
-            <add-remove-multiple-items
-                v-if="$props.existingExamples"
-                ref="AddRemoveMultipleItemsRef"
-                :existing-items="existingExamples"
-            />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingExamples" />
         </ion-card-content>
     </ion-card>
 </template>

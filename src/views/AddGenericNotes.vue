@@ -8,12 +8,7 @@
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items
-                v-if="$props.existingGenericNotes"
-                ref="AddRemoveMultipleItemsRef"
-                :existing-items="existingGenericNotes"
-            />
-            <add-remove-multiple-items v-if="!$props.existingGenericNotes" ref="AddRemoveMultipleItemsRef" />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericNotes" />
         </ion-card-content>
     </ion-card>
 </template>

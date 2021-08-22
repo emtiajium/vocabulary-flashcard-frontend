@@ -7,12 +7,7 @@
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items v-if="!$props.existingNotes" ref="AddRemoveMultipleItemsRef" />
-            <add-remove-multiple-items
-                v-if="$props.existingNotes"
-                ref="AddRemoveMultipleItemsRef"
-                :existing-items="existingNotes"
-            />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingNotes" />
         </ion-card-content>
     </ion-card>
 </template>

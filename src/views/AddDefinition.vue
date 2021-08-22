@@ -28,20 +28,12 @@
                 </ion-card-content>
             </ion-card>
 
-            <view v-if="!$props.definition">
-                <add-definition-examples ref="AddDefinitionExamplesRef" />
-                <add-definition-notes ref="AddDefinitionNotesRef" />
-                <add-definition-external-links ref="AddDefinitionExternalLinksRef" />
-            </view>
-
-            <view v-if="$props.definition">
-                <add-definition-examples ref="AddDefinitionExamplesRef" :existing-examples="definition.examples" />
-                <add-definition-notes ref="AddDefinitionNotesRef" :existing-notes="definition.notes" />
-                <add-definition-external-links
-                    ref="AddDefinitionExternalLinksRef"
-                    :existing-external-links="definition.externalLinks"
-                />
-            </view>
+            <add-definition-examples ref="AddDefinitionExamplesRef" :existing-examples="definition?.examples" />
+            <add-definition-notes ref="AddDefinitionNotesRef" :existing-notes="definition?.notes" />
+            <add-definition-external-links
+                ref="AddDefinitionExternalLinksRef"
+                :existing-external-links="definition?.externalLinks"
+            />
 
             <ion-grid>
                 <ion-row>
@@ -111,7 +103,7 @@ export default defineComponent({
         IonTextarea,
         IonItem,
     },
-    props: ['word', 'vocabularyId', 'definition', 'afterAddingDefinition', 'onCancellingAddingDefinition'],
+    props: ['word', 'vocabularyId', 'definition', 'onComingBackToVocab', 'onCancellingAddingDefinition'],
     data() {
         return {
             meaning: '',
@@ -169,7 +161,7 @@ export default defineComponent({
             if (errors.length) {
                 await Toast.present(ValidationErrorTransform.transform(errors)[0]);
             } else {
-                this.afterAddingDefinition(definition);
+                this.onComingBackToVocab(definition);
                 this.clear();
             }
         },

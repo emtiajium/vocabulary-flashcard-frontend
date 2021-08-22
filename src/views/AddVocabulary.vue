@@ -71,20 +71,12 @@
                     </ion-card-content>
                 </ion-card>
 
-                <view v-if="isInCreationMode()">
-                    <add-linker-words ref="AddLinkerWordsRef" />
-                    <add-generic-notes ref="AddGenericNotesRef" />
-                    <add-generic-external-links ref="AddGenericExternalLinksRef" />
-                </view>
-
-                <view v-if="isInUpdateMode()">
-                    <add-linker-words ref="AddLinkerWordsRef" :existing-linker-words="linkerWords" />
-                    <add-generic-notes ref="AddGenericNotesRef" :existing-generic-notes="genericNotes" />
-                    <add-generic-external-links
-                        ref="AddGenericExternalLinksRef"
-                        :existing-generic-external-links="genericExternalLinks"
-                    />
-                </view>
+                <add-linker-words ref="AddLinkerWordsRef" :existing-linker-words="linkerWords" />
+                <add-generic-notes ref="AddGenericNotesRef" :existing-generic-notes="genericNotes" />
+                <add-generic-external-links
+                    ref="AddGenericExternalLinksRef"
+                    :existing-generic-external-links="genericExternalLinks"
+                />
 
                 <ion-card>
                     <ion-card-header>
@@ -118,23 +110,13 @@
 
     <!--https://v3.vuejs.org/guide/component-attrs.html#disabling-attribute-inheritance-->
     <ion-page v-bind="$attrs" v-if="isInDefinition()">
-        <view v-if="!isInDefinitionUpdateMode()">
-            <add-definition
-                :word="word"
-                :vocabularyId="id"
-                :after-adding-definition="afterAddingDefinition"
-                :on-cancelling-adding-definition="onCancellingAddingDefinition"
-            />
-        </view>
-        <view v-if="isInDefinitionUpdateMode()">
-            <add-definition
-                :word="word"
-                :vocabularyId="id"
-                :definition="goingToBeUpdatedDefinition"
-                :after-adding-definition="afterUpdatingDefinition"
-                :on-cancelling-adding-definition="onCancellingAddingDefinition"
-            />
-        </view>
+        <add-definition
+            :word="word"
+            :vocabulary-id="id"
+            :definition="goingToBeUpdatedDefinition"
+            :on-coming-back-to-vocab="onComingBackToVocab"
+            :on-cancelling-adding-definition="onCancellingAddingDefinition"
+        />
     </ion-page>
 </template>
 
@@ -183,15 +165,13 @@ import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { BackButtonUnsubscribeHandler, ProcessNextHandler } from '@/domains/Handlers';
 
 enum PageType {
-    ADD_VOCABULARY = 'ADD_VOCABULARY',
-    ADD_DEFINITION = 'ADD_DEFINITION',
+    VOCABULARY_CU = 'VOCABULARY_CU',
+    DEFINITION_CU = 'DEFINITION_CU',
 }
 
 enum Mode {
     VOCABULARY_CREATE = 'VOCABULARY_CREATE',
     VOCABULARY_UPDATE = 'VOCABULARY_UPDATE',
-    DEFINITION_CREATE = 'DEFINITION_CREATE',
-    DEFINITION_UPDATE = 'DEFINITION_UPDATE',
 }
 
 export default defineComponent({
@@ -224,6 +204,7 @@ export default defineComponent({
     data() {
         return {
             isLoading: true,
+            currentPage: PageType.VOCABULARY_CU,
             mode: '',
             headerTitle: '',
             id: uuidV4(),
@@ -233,7 +214,6 @@ export default defineComponent({
             genericExternalLinks: [] as string[],
             isDraft: false,
             definitions: [] as Definition[],
-            currentPage: PageType.ADD_VOCABULARY,
             goingToBeUpdatedDefinition: {} as Definition,
             faPlusCircle,
             faMinusCircle,
@@ -308,41 +288,33 @@ export default defineComponent({
             if (!this.word) {
                 await Toast.present(`Please insert the word before adding the definition`);
             } else {
-                this.setCurrentPage(PageType.ADD_DEFINITION);
+                this.resetGoingToBeUpdatedDefinition();
+                this.setCurrentPage(PageType.DEFINITION_CU);
             }
         },
         setCurrentPage(currentPage: PageType): void {
             this.currentPage = currentPage;
         },
         isInDefinition(): boolean {
-            return this.currentPage === PageType.ADD_DEFINITION;
-        },
-        isInDefinitionCreationMode(): boolean {
-            return this.mode === Mode.DEFINITION_CREATE;
-        },
-        isInDefinitionUpdateMode(): boolean {
-            return this.mode === Mode.DEFINITION_UPDATE;
+            return this.currentPage === PageType.DEFINITION_CU;
         },
         isInCreationMode(): boolean {
-            return this.mode === Mode.VOCABULARY_CREATE || this.isInDefinitionCreationMode();
+            return this.mode === Mode.VOCABULARY_CREATE;
         },
         isInUpdateMode(): boolean {
-            return this.mode === Mode.VOCABULARY_UPDATE || this.isInDefinitionUpdateMode();
+            return this.mode === Mode.VOCABULARY_UPDATE;
         },
         afterAddingDefinition(definition: Definition): void {
             this.insertDefinition(definition);
-            this.setCurrentPage(PageType.ADD_VOCABULARY);
         },
         afterUpdatingDefinition(definition: Definition): void {
             this.definitions[this.definitions.findIndex(({ id }) => definition.id === id)] = definition as Definition;
-            this.setCurrentPage(PageType.ADD_VOCABULARY);
         },
         onCancellingAddingDefinition(): void {
-            this.setCurrentPage(PageType.ADD_VOCABULARY);
+            this.setCurrentPage(PageType.VOCABULARY_CU);
         },
         insertDefinition(definition: Definition): void {
             this.definitions.push(definition);
-            this.mode = Mode.DEFINITION_CREATE;
         },
         removeDefinition(removableIndex: number): void {
             this.definitions = this.definitions.filter((definition, index) => index !== removableIndex);
@@ -352,10 +324,12 @@ export default defineComponent({
                 (definition, index) => index === updatableIndex,
             ) as Definition;
         },
+        resetGoingToBeUpdatedDefinition(): void {
+            this.goingToBeUpdatedDefinition = {} as Definition;
+        },
         updateDefinition(updatableIndex: number): void {
             this.setGoingToBeUpdatedDefinition(updatableIndex);
-            this.mode = Mode.DEFINITION_UPDATE;
-            this.setCurrentPage(PageType.ADD_DEFINITION);
+            this.setCurrentPage(PageType.DEFINITION_CU);
         },
         getVocabularyPayload(): Vocabulary {
             const vocabulary = new Vocabulary();
@@ -390,7 +364,7 @@ export default defineComponent({
                     vocabulary,
                 );
                 this.clear();
-                if (!this.$route.params?.id) {
+                if (this.isInCreationMode()) {
                     await NativeStorage.setShouldReloadVocabularies(true);
                 } else {
                     await Promise.all([
@@ -417,7 +391,8 @@ export default defineComponent({
             this.word = '';
             this.isDraft = false;
             this.definitions = [] as Definition[];
-            this.currentPage = PageType.ADD_VOCABULARY;
+            this.currentPage = PageType.VOCABULARY_CU;
+            this.mode = '';
             this.goingToBeUpdatedDefinition = {} as Definition;
             (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();

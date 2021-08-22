@@ -9,12 +9,7 @@
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items
-                v-if="$props.existingLinkerWords"
-                ref="AddRemoveMultipleItemsRef"
-                :existing-items="linkerWords"
-            />
-            <add-remove-multiple-items v-if="!$props.existingLinkerWords" ref="AddRemoveMultipleItemsRef" />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="linkerWords" />
         </ion-card-content>
     </ion-card>
 </template>

@@ -5,12 +5,7 @@
             <ion-card-subtitle> Any external link can be inserted here </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items
-                v-if="$props.existingGenericExternalLinks"
-                ref="AddRemoveMultipleItemsRef"
-                :existing-items="existingGenericExternalLinks"
-            />
-            <add-remove-multiple-items v-if="!$props.existingGenericExternalLinks" ref="AddRemoveMultipleItemsRef" />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericExternalLinks" />
         </ion-card-content>
     </ion-card>
 </template>

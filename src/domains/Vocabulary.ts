@@ -13,6 +13,7 @@ import {
     ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import * as _ from 'lodash';
 
 export default class Vocabulary {
     @IsUUID()
@@ -29,7 +30,7 @@ export default class Vocabulary {
     @IsDefined()
     word: string;
 
-    @ValidateIf((vocabulary) => vocabulary.isDraft === false)
+    @ValidateIf((vocabulary) => vocabulary.isDraft === false || !_.isEmpty(vocabulary.definitions))
     @ValidateNested({ each: true })
     @ArrayNotEmpty()
     @IsArray()

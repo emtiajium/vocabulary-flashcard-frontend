@@ -8,12 +8,7 @@
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items v-if="!$props.existingExternalLinks" ref="AddRemoveMultipleItemsRef" />
-            <add-remove-multiple-items
-                v-if="$props.existingExternalLinks"
-                ref="AddRemoveMultipleItemsRef"
-                :existing-items="existingExternalLinks"
-            />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingExternalLinks" />
         </ion-card-content>
     </ion-card>
 </template>

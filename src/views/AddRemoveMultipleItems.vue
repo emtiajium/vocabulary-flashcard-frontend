@@ -64,11 +64,12 @@ export default defineComponent({
     },
     props: ['existingItems'],
     data() {
-        const placeholderItems = _.fill(_.times(this.existingItems?.length || 1), uuidV4());
+        const isEmpty = _.isEmpty(this.existingItems);
+        const placeholderItems = _.fill(_.times(isEmpty ? 1 : this.existingItems.length), uuidV4());
         return {
             faMinusCircle,
             placeholderItems,
-            items: (this.existingItems || []) as string[],
+            items: (!isEmpty ? this.existingItems : []) as string[],
         };
     },
     methods: {
