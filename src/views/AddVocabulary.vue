@@ -310,6 +310,7 @@ export default defineComponent({
             } else {
                 this.afterAddingDefinition(definition);
             }
+            this.setCurrentPage(PageType.VOCABULARY_CU);
         },
         afterAddingDefinition(definition: Definition): void {
             this.insertDefinition(definition);
