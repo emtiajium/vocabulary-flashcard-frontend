@@ -304,6 +304,13 @@ export default defineComponent({
         isInUpdateMode(): boolean {
             return this.mode === Mode.VOCABULARY_UPDATE;
         },
+        onComingBackToVocab(definition: Definition): void {
+            if (this.definitions.findIndex(({ id }) => definition.id === id) !== -1) {
+                this.afterUpdatingDefinition(definition);
+            } else {
+                this.afterAddingDefinition(definition);
+            }
+        },
         afterAddingDefinition(definition: Definition): void {
             this.insertDefinition(definition);
         },

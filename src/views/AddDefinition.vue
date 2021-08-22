@@ -112,7 +112,7 @@ export default defineComponent({
         };
     },
     mounted() {
-        if (this.$props.definition) {
+        if (!_.isEmpty(this.$props.definition)) {
             // https://v3.vuejs.org/guide/reactivity.html
             // https://v3.vuejs.org/api/basic-reactivity.html
             // otherwise isDirty() won't work
