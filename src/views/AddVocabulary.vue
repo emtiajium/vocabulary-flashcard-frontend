@@ -400,7 +400,7 @@ export default defineComponent({
             this.isDraft = false;
             this.definitions = [] as Definition[];
             this.currentPage = PageType.VOCABULARY_CU;
-            this.mode = '';
+            // Do not reset "mode"
             this.goingToBeUpdatedDefinition = {} as Definition;
             (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
             (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
