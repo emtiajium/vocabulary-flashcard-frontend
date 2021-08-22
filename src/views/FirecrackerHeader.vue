@@ -6,7 +6,6 @@
                     <ion-col size="12" class="display-flex">
                         <ion-menu-button @click="onClickIcon">
                             <font-awesome-icon v-if="type === 'MENU'" :icon="faBars" />
-                            <font-awesome-icon v-if="type === 'BACK'" :icon="faArrowLeft" />
                         </ion-menu-button>
                         <ion-title v-if="!enableSearching" class="overflowed-content"> {{ headerTitle }} </ion-title>
                         <ion-searchbar
@@ -155,11 +154,14 @@ ion-toolbar.sc-ion-searchbar-ios-h,
 ion-toolbar .sc-ion-searchbar-ios-h {
     padding-top: unset;
     padding-bottom: unset;
+    padding-right: unset;
 }
 
 .settings-button {
     font-size: 20px;
-    --padding-start: 0px;
-    --padding-end: 0px;
+    --padding-start: 8px;
+    --padding-end: 8px;
+    width: 40px;
+    height: 40px;
 }
 </style>
