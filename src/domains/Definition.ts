@@ -32,12 +32,14 @@ export default class Definition {
     @IsDefined()
     examples?: string[];
 
+    @ValidateIf((definition) => !!definition.notes?.length)
+    @IsNotEmpty({ each: true })
     @IsArray()
     @IsOptional()
     notes?: string[];
 
-    @ValidateIf((definition) => !!definition.externalLinks)
-    @IsUrl(undefined, { each: true })
+    @ValidateIf((definition) => !!definition.externalLinks?.length)
+    @IsUrl(undefined, { each: true, message: `Each external link must be an URL address` })
     @IsArray()
     @IsOptional()
     externalLinks?: string[];

@@ -37,16 +37,20 @@ export default class Vocabulary {
     @Type(() => Definition)
     definitions?: Definition[];
 
+    @ValidateIf((vocabulary) => !!vocabulary.genericNotes?.length)
+    @IsNotEmpty({ each: true })
     @IsArray()
     @IsOptional()
     genericNotes?: string[];
 
-    @ValidateIf((vocabulary) => !!vocabulary.genericExternalLinks)
-    @IsUrl(undefined, { each: true })
+    @ValidateIf((vocabulary) => !!vocabulary.genericExternalLinks?.length)
+    @IsUrl(undefined, { each: true, message: `Each generic external link must be an URL address` })
     @IsArray()
     @IsOptional()
     genericExternalLinks?: string[];
 
+    @ValidateIf((vocabulary) => !!vocabulary.genericNotes?.length)
+    @IsNotEmpty({ each: true })
     @IsArray()
     @IsOptional()
     linkerWords?: string[];
