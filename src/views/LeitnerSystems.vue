@@ -18,10 +18,10 @@
                         In this method, there are several boxes. If you wish to remember a newfound vocab, move the word
                         into the first box. Review it the next day, either move it to the next one if you remember the
                         meaning or keep it within the box. In this way, review the items in the second box. Move it back
-                        to the previous box if you forget the definitions but if everything is okay, then forward it to
-                        the next box. As you have already read the same vocabulary for two days, take a rest for the
-                        next day. Review it on the fourth day and move it forward or backwards. Then on the seventh day,
-                        review it again.
+                        to the previous box if you forget the definitions but if everything is okay, forward it to the
+                        next box. As you have already read the same vocabulary for two days, rest for the next day.
+                        Review it on the fourth day and move it forward or backwards. Then on the seventh day, review it
+                        again.
                     </ion-card-subtitle>
                 </ion-card-content>
             </ion-card>
