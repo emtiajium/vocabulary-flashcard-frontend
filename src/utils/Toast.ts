@@ -5,6 +5,7 @@ export default class Toast {
         const toast = await toastController.create({
             message,
             duration: 2000,
+            color: 'warning',
         });
         await toast.present();
     }
