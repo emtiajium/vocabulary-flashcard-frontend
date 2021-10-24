@@ -288,6 +288,7 @@ export default defineComponent({
             if (!this.word) {
                 await Toast.present(`Please insert the word before adding the definition`);
             } else {
+                this.setPartialPayload();
                 this.resetGoingToBeUpdatedDefinition();
                 this.setCurrentPage(PageType.DEFINITION_CU);
             }
@@ -336,23 +337,31 @@ export default defineComponent({
             this.goingToBeUpdatedDefinition = {} as Definition;
         },
         updateDefinition(updatableIndex: number): void {
+            this.setPartialPayload();
             this.setGoingToBeUpdatedDefinition(updatableIndex);
             this.setCurrentPage(PageType.DEFINITION_CU);
         },
+        setPartialPayload(): void {
+            this.linkerWords = (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).getLinkerWords();
+            this.genericNotes = (
+                this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>
+            ).getGenericNotes();
+            this.genericExternalLinks = (
+                this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>
+            ).getGenericExternalLinks();
+        },
         getVocabularyPayload(): Vocabulary {
+            // a work-around to persist linker words, generic notes and generic links
+            // when these 3 props have been added after navigating back from the definition view
+            // or when this vocab doesn't have any definition
+            this.setPartialPayload();
             const vocabulary = new Vocabulary();
             vocabulary.id = this.id;
             vocabulary.word = this.word;
             vocabulary.definitions = this.definitions;
-            vocabulary.linkerWords = (
-                this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>
-            ).getLinkerWords();
-            vocabulary.genericNotes = (
-                this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>
-            ).getGenericNotes();
-            vocabulary.genericExternalLinks = (
-                this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>
-            ).getGenericExternalLinks();
+            vocabulary.linkerWords = this.linkerWords;
+            vocabulary.genericNotes = this.genericNotes;
+            vocabulary.genericExternalLinks = this.genericExternalLinks;
             vocabulary.isDraft = this.isDraft;
             return vocabulary;
         },
@@ -399,6 +408,9 @@ export default defineComponent({
             this.word = '';
             this.isDraft = false;
             this.definitions = [] as Definition[];
+            this.linkerWords = [] as string[];
+            this.genericNotes = [] as string[];
+            this.genericExternalLinks = [] as string[];
             this.currentPage = PageType.VOCABULARY_CU;
             // Do not reset "mode"
             this.goingToBeUpdatedDefinition = {} as Definition;
