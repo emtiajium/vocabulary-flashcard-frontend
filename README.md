@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.3.5`: Fixed the bug of displaying multiple identical items while searching by applying debouncing
 -   `0.3.4`: Fixed bugs + Changed the toast's color to paris green
 -   `0.3.3`: Version `0.3.2` prevented reloading of vocab list after adding a new one. Fixed!
 -   `0.3.2`: Fixed vocab CU related bugs + improved vocab ordering preference icon's UI
