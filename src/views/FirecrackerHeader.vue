@@ -13,7 +13,7 @@
                             mode="ios"
                             :placeholder="searchPlaceholder"
                             :value="searchKeyword"
-                            @ionChange="onChangeSearchKeyword"
+                            @ionChange="debouncedOnChangeSearchKeyword"
                         />
                         <ion-button
                             v-if="enableSettings"
@@ -50,6 +50,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBars, faArrowLeft, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerMenu from '@/views/FirecrackerMenu.vue';
+import * as _ from 'lodash';
 
 export default defineComponent({
     name: 'FirecrackerHeader',
@@ -124,7 +125,15 @@ export default defineComponent({
             faBars,
             faArrowLeft,
             faEllipsisV,
+            debouncedOnChangeSearchKeyword: (() => {
+                // this block's purpose is to pacify es-lint
+                // no-empty-function
+            }) as ReturnType<typeof _.debounce>,
         };
+    },
+    mounted() {
+        const oneSecondInMilliseconds = 1000;
+        this.debouncedOnChangeSearchKeyword = _.debounce(this.onChangeSearchKeyword, oneSecondInMilliseconds);
     },
     methods: {
         async openMenu(): Promise<void> {
