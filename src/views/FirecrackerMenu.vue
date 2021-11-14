@@ -20,7 +20,7 @@
                 </ion-item>
                 <ion-item button @click="navigate('/leitner-systems')">
                     <font-awesome-icon :icon="faBoxOpen" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Leitner Boxes </ion-label>
+                    <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                 </ion-item>
                 <ion-item>
                     <font-awesome-icon :icon="faMoon" class="menu-icon" />

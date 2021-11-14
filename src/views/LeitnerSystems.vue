@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <firecracker-header header-title="Leitner Boxes" content-id="leitner-boxes" menu-id="leitner-boxes-menu" />
+        <firecracker-header header-title="My Flashcards" content-id="leitner-boxes" menu-id="leitner-boxes-menu" />
         <ion-content :fullscreen="true" id="leitner-boxes">
             <ion-card :button="true" class="description-margin" @click="toggle">
                 <ion-card-content>
@@ -15,13 +15,13 @@
                     </ion-card-subtitle>
                     <leitner-systems-flow v-show="!seeLess" />
                     <ion-card-subtitle v-show="!seeLess">
-                        In this method, there are several boxes. If you wish to remember a newfound vocab, move the word
-                        into the first box. Review it the next day, either move it to the next one if you remember the
-                        meaning or keep it within the box. In this way, review the items in the second box. Move it back
-                        to the previous box if you forget the definitions but if everything is okay, forward it to the
-                        next box. As you have already read the same vocabulary for two days, rest for the next day.
-                        Review it on the fourth day and move it forward or backwards. Then on the seventh day, review it
-                        again.
+                        In this method, there are several boxes containing flashcards. If you wish to remember a newly
+                        introduced vocab, move the word into the first box. Review it the next day, either move it to
+                        the next one if you remember the meaning or keep it within the box. In this way, review the
+                        items in the second box. Move it back to the previous box if you forget the definitions, but
+                        forward it to the next box if everything is okay. As you have already read the same vocabulary
+                        for two days, rest for the next day. Review it on the fourth day and move it forward or
+                        backwards. Then on the seventh day, review it again.
                     </ion-card-subtitle>
                 </ion-card-content>
             </ion-card>
