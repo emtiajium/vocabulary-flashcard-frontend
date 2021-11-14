@@ -109,7 +109,7 @@
 
 ## Change Log
 
--   `0.3.7`: Changed leitner system to flashcards
+-   `0.3.7`: Renamed leitner system to flashcards (header, menu option, message)
 -   `0.3.6`: Changed the helping message of the generic notes
 -   `0.3.5`: Fixed the bug of displaying multiple identical items while searching by applying debouncing
 -   `0.3.4`: Fixed bugs + Changed the toast's color to paris green
