@@ -40,7 +40,7 @@
 
 ###### Run the web app natively on Android
 
-➜ Read [these](https://facebook.github.io/react-native/docs/running-on-device.html) and `Enable Debugging over USB`
+➜ Read [these](https://reactnative.dev/docs/0.65/running-on-device) and `Enable Debugging over USB`
 , `Plug in your device via USB`, `Connect to the development server`
 
 ➜ `npm run serve:android:anew`
