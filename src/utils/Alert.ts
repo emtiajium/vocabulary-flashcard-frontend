@@ -8,20 +8,24 @@ export default class Alert {
         message: string,
         proceedHandler: Handler,
         changedMindHandler: Handler = Promise.resolve,
+        buttonLabels: Record<string, string> = {
+            cancel: 'No',
+            agree: 'Yes',
+        },
     ): Promise<void> {
         const alert = await alertController.create({
             header,
             message,
             buttons: [
                 {
-                    text: 'No',
+                    text: buttonLabels.cancel,
                     role: 'cancel',
                     handler: async (): Promise<void> => {
                         await changedMindHandler();
                     },
                 },
                 {
-                    text: 'Yes',
+                    text: buttonLabels.agree,
                     handler: async (): Promise<void> => {
                         await proceedHandler();
                     },

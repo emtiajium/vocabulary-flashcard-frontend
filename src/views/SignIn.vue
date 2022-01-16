@@ -16,8 +16,16 @@
                     <ion-row class="ion-justify-content-center">
                         <ion-button @click="handleClick">
                             <font-awesome-icon :icon="faGoogle" />
-                            <ion-text class="ion-padding-start">Continue with Google</ion-text>
+                            <ion-text class="ion-padding-start"> Continue with Google </ion-text>
                         </ion-button>
+                    </ion-row>
+                    <ion-row class="ion-justify-content-center">
+                        <ion-text>
+                            By creating your account you agree with our
+                            <a href="https://app.firecrackervocabulary.com/privacy-policy" target="_blank">
+                                Privacy Policy
+                            </a>
+                        </ion-text>
                     </ion-row>
                 </ion-grid>
             </view>
@@ -40,6 +48,7 @@ import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { App } from '@capacitor/app';
 import * as _ from 'lodash';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import Alert from '@/utils/Alert';
 
 export default defineComponent({
     name: 'SignIn',
@@ -66,6 +75,22 @@ export default defineComponent({
     },
     methods: {
         async handleClick(): Promise<void> {
+            await Alert.presentAlertConfirm(
+                '',
+                `"Firecracker Vocab Practice" collects your name, email address, and photo just for the displaying purpose. And for your kind information, we don't sell or share those with any third party.`,
+                async () => {
+                    return this.handleSignIn();
+                },
+                async () => {
+                    return true;
+                },
+                {
+                    cancel: 'Deny',
+                    agree: 'Accept',
+                },
+            );
+        },
+        async handleSignIn(): Promise<void> {
             try {
                 const user = await GoogleAuth.signIn();
                 await this.persistUser(user);
