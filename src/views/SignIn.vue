@@ -9,9 +9,9 @@
 
         <ion-content :fullscreen="true" id="sign-in">
             <view class="container">
-                <ion-grid class="display-grid ion-align-items-center">
+                <ion-grid class="display-grid">
                     <ion-row class="ion-justify-content-center">
-                        <img src="/assets/icon/icon.png" alt="Logo" class="logo-extra" />
+                        <intro />
                     </ion-row>
                     <ion-row class="ion-justify-content-center">
                         <ion-button @click="handleClick">
@@ -49,11 +49,13 @@ import { App } from '@capacitor/app';
 import * as _ from 'lodash';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import Alert from '@/utils/Alert';
+import Intro from '@/views/Intro.vue';
 
 export default defineComponent({
     name: 'SignIn',
     components: {
         FirecrackerHeader,
+        Intro,
         IonContent,
         IonPage,
         IonText,
