@@ -21,9 +21,9 @@
                     </ion-row>
                     <ion-row class="ion-justify-content-center ion-padding">
                         <ion-text class="privacy-text">
-                            By creating your account you agree with our
+                            By creating your account, you agree with our
                             <a href="https://app.firecrackervocabulary.com/privacy-policy" target="_blank">
-                                Privacy Policy
+                                Privacy Policy.
                             </a>
                         </ion-text>
                     </ion-row>
