@@ -96,7 +96,9 @@ export default defineComponent({
                 await this.persistUser(user);
                 await this.$router.replace('/authenticated-home');
             } catch (error) {
-                await Toast.present(MessageDB.networkError);
+                if (error.error !== 'popup_closed_by_user') {
+                    await Toast.present(MessageDB.networkError);
+                }
             }
         },
         async persistUser(googleUser: User): Promise<void> {
