@@ -1,16 +1,13 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-title>
-                    <ion-text class="ion-text-center">
-                        <h3>Firecracker Vocab Practice</h3>
-                    </ion-text>
-                </ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <firecracker-header
+            type="MENU"
+            header-title="Firecracker Vocab Practice"
+            content-id="sign-in"
+            menu-id="sign-in-menu"
+        />
 
-        <ion-content :fullscreen="true">
+        <ion-content :fullscreen="true" id="sign-in">
             <view class="container">
                 <ion-grid class="display-grid ion-align-items-center">
                     <ion-row class="ion-justify-content-center">
@@ -29,18 +26,7 @@
 </template>
 
 <script lang="ts">
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    IonText,
-    IonButton,
-    IonGrid,
-    IonRow,
-    useBackButton,
-} from '@ionic/vue';
+import { IonContent, IonPage, IonText, IonButton, IonGrid, IonRow, useBackButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import GoogleAuth from '@/utils/GoogleAuthorization';
 import User from '@/domains/User';
@@ -53,15 +39,14 @@ import MessageDB from '@/utils/MessageDB';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { App } from '@capacitor/app';
 import * as _ from 'lodash';
+import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 
 export default defineComponent({
     name: 'SignIn',
     components: {
+        FirecrackerHeader,
         IonContent,
-        IonHeader,
         IonPage,
-        IonTitle,
-        IonToolbar,
         IonText,
         IonButton,
         FontAwesomeIcon,

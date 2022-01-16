@@ -13,6 +13,11 @@ enum Route {
     Dictionary = 'Dictionary',
     LeitnerSystems = 'LeitnerSystems',
     LeitnerBoxItems = 'LeitnerBoxItems',
+    PrivacyPolicy = 'PrivacyPolicy',
+}
+
+export enum PublicRoute {
+    PrivacyPolicy = 'PrivacyPolicy',
 }
 
 export default Route;

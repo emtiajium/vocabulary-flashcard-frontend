@@ -6,12 +6,13 @@ import Vocabulary from '@/views/VocabularyDetails.vue';
 import SignIn from '@/views/SignIn.vue';
 import Cohort from '@/views/Cohort.vue';
 import VocabularyList from '@/views/VocabularyList.vue';
-import Route from '@/domains/Route';
+import Route, { PublicRoute } from '@/domains/Route';
 import * as _ from 'lodash';
 import NativeStorage from '@/utils/NativeStorage';
 import DictionaryPage from '@/views/DictionaryPage.vue';
 import LeitnerSystems from '@/views/LeitnerSystems.vue';
 import LeitnerBoxItems from '@/views/LeitnerBoxItems.vue';
+import PrivacyPolicy from '@/views/PrivacyPolicy.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -74,6 +75,11 @@ const routes: RouteRecordRaw[] = [
         name: Route.LeitnerBoxItems,
         component: LeitnerBoxItems,
     },
+    {
+        path: '/privacy-policy',
+        name: Route.PrivacyPolicy,
+        component: PrivacyPolicy,
+    },
 ];
 
 const router = createRouter({
@@ -83,8 +89,11 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next): Promise<void> => {
     const isValidRoute = _.includes(_.map(routes, 'name'), to.name);
+    const isPublicRoute = _.includes(Object.values(PublicRoute), to.name);
     const isAuthenticated = await NativeStorage.isAuthenticated();
-    if (!isValidRoute || (!isAuthenticated && to.name !== Route.SignIn)) {
+    if (isPublicRoute) {
+        next();
+    } else if (!isValidRoute || (!isAuthenticated && to.name !== Route.SignIn)) {
         next(`/sign-in`);
     } else if (!isAuthenticated && to.name === Route.SignIn) {
         next();
