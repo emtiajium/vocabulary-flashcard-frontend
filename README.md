@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.4.0`: Privacy policy + Landing page + HTTPS
 -   `0.3.7`: Renamed leitner system to flashcards (header, menu option, message)
 -   `0.3.6`: Changed the helping message of the generic notes
 -   `0.3.5`: Fixed the bug of displaying multiple identical items while searching by applying debouncing
@@ -142,6 +143,7 @@
 
 ## Release Log
 
+-   `25`: `0.4.0`
 -   `24`: `0.3.7`
 -   `23`: `0.3.6`
 -   `22`: `0.3.5`
