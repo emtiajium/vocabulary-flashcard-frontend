@@ -9,10 +9,12 @@
                     <span class="ion-padding-top item-text"> {{ username }} </span>
                 </div>
             </div>
-            <div v-if="!isAuthenticated" class="intro ion-padding">
-                <h4 class="item-text ion-text-capitalize">
-                    <strong> Firecracker Vocab Practice </strong>
-                </h4>
+            <div v-if="!isAuthenticated" class="intro">
+                <img src="/assets/icon/icon.png" alt="Logo" width="100" />
+                <div class="app-name">
+                    <strong class="item-text ion-text-capitalize"> Firecracker </strong>
+                    <strong class="item-text ion-text-capitalize"> Vocab Practice </strong>
+                </div>
             </div>
             <ion-list>
                 <ion-item v-if="isAuthenticated" button @click="navigate('/vocabularies')">
@@ -135,11 +137,14 @@ export default defineComponent({
 <style scoped>
 .intro {
     background-color: var(--ion-color-primary);
-    height: 100px;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+}
+.app-name {
+    display: flex;
+    flex-direction: column;
 }
 .profile {
     background-color: var(--ion-color-primary);
