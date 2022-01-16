@@ -19,8 +19,8 @@
                             <ion-text class="ion-padding-start"> Continue with Google </ion-text>
                         </ion-button>
                     </ion-row>
-                    <ion-row class="ion-justify-content-center">
-                        <ion-text>
+                    <ion-row class="ion-justify-content-center ion-padding">
+                        <ion-text class="privacy-text">
                             By creating your account you agree with our
                             <a href="https://app.firecrackervocabulary.com/privacy-policy" target="_blank">
                                 Privacy Policy
@@ -124,5 +124,8 @@ export default defineComponent({
     .logo-extra {
         width: 13%;
     }
+}
+.privacy-text {
+    text-align: center;
 }
 </style>
