@@ -154,5 +154,6 @@ export default defineComponent({
 }
 .menu-icon {
     color: var(--ion-color-primary);
+    width: 25px;
 }
 </style>
