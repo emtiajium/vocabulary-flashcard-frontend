@@ -77,7 +77,7 @@ export default defineComponent({
         async handleClick(): Promise<void> {
             await Alert.presentAlertConfirm(
                 '',
-                `"Firecracker Vocab Practice" collects your name, email address, and photo. And for your kind information, we don't sell or share those with any third party user.`,
+                `"Firecracker Vocab Practice" will collect your name, email address and photo after Google authentication.`,
                 async () => {
                     return this.handleSignIn();
                 },
