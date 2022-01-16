@@ -6,19 +6,94 @@
             content-id="privacy-policy"
             menu-id="privacy-policy-menu"
         />
-        <ion-content :fullscreen="true" id="privacy-policy"> </ion-content>
+        <ion-content :fullscreen="true" id="privacy-policy">
+            <ion-card :button="true" class="description-margin">
+                <ion-card-content>
+                    <ion-card-subtitle>
+                        Welcome to <strong>Firecracker Vocab Practice</strong>! Your privacy is important to us. This
+                        Privacy Policy explains how we collect, store, use, disclose and otherwise process your
+                        information when you use
+                        <a href="https://app.firecrackervocabulary.com/">https://app.firecrackervocabulary.com/</a>, and
+                        our mobile app.
+                    </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top header"> Information Collection </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top">
+                        There is certain information that we collect automatically when you sign-up through Google, and
+                        authorize us to collect your authentication information, such as your
+                        <strong>firstname</strong>, <strong>lastname</strong>, <strong>email address</strong>, and
+                        <strong>profile picture (avatar)</strong>. Google will ask your permission to share above
+                        mentioned information under the terms of
+                        <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a> from
+                        your Google account. You can regulate the information that we receive from Google using your
+                        <a href="https://myaccount.google.com/privacy#toolsyoucanusenow" target="_blank"
+                            >Google activity controls</a
+                        >. Other than those pieces of information, we don't store any kind of data of you without your
+                        consent.
+                    </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top header"> Information Usage </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top">
+                        We store the collected data into our database to operate and maintain your account, identify
+                        you, for example, as the vocabulary creator, to create and maintain a cohort.
+                    </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top header"> Information Sharing </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top">
+                        We share your name, avatar, email address and vocabulary you created with the other members if
+                        you create a cohort with them. We do not share any of your data with any third-party user,
+                        either provided by Google (during the sign-up) or the vocabulary you created.
+                    </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top header"> Information Disclose </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top">
+                        We collect and transmit data using industry-standard SSL (Secure Socket Layer) encryption. We
+                        authenticate, authorize every request in a secure manner for your safeness.
+                    </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top header"> Information Deletion </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top">
+                        Contact us if you want to delete your Google provided info, your created vocabulary, or any kind
+                        of data that we have.
+                    </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top header"> Contact Information </ion-card-subtitle>
+
+                    <ion-card-subtitle class="ion-padding-top">
+                        If you do not agree to any of the provisions of this privacy policy, you should not use the
+                        Platform. Do not hesitate to mail us at
+                        <a href="mailto:271emtiaj@gmail.com"> 271emtiaj@gmail.com </a> for any kind of query.
+                    </ion-card-subtitle>
+                </ion-card-content>
+            </ion-card>
+        </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
-import { IonContent, IonPage } from '@ionic/vue';
+import { IonContent, IonPage, IonCard, IonCardContent, IonCardSubtitle } from '@ionic/vue';
 
 export default defineComponent({
     name: 'PrivacyPolicy',
-    components: { FirecrackerHeader, IonContent, IonPage },
+    components: { FirecrackerHeader, IonContent, IonPage, IonCard, IonCardContent, IonCardSubtitle },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.description-margin {
+    margin: unset;
+    margin-inline: unset;
+    margin-bottom: 10px;
+}
+
+.header {
+    font-weight: bold;
+}
+</style>
