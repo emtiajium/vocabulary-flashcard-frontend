@@ -44,7 +44,7 @@
 
                     <ion-card-subtitle class="ion-padding-top">
                         We share your name, avatar, email address and vocabulary you created with the other members if
-                        you create a cohort with them. We do not share any of your data with any third-party user,
+                        you join a cohort with them. However, we do not share your data with any third-party user,
                         either provided by Google (during the sign-up) or the vocabulary you created.
                     </ion-card-subtitle>
 
