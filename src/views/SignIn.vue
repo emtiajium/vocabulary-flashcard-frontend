@@ -98,7 +98,9 @@ export default defineComponent({
                 await this.persistUser(user);
                 await this.$router.replace('/authenticated-home');
             } catch (error) {
-                if (error.error !== 'popup_closed_by_user') {
+                if (error.error && ['popup_closed_by_user', 'access_denied'].includes(error.error)) {
+                    // https://developers.google.com/identity/sign-in/web/reference
+                } else {
                     await Toast.present(MessageDB.networkError);
                 }
             }
