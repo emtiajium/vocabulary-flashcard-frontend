@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.5.0`: Improved UI for the web app + Get it on Google Play
 -   `0.4.1`: Dark mode for the guest also
 -   `0.4.0`: Privacy policy + Landing page + HTTPS
 -   `0.3.7`: Renamed leitner system to flashcards (header, menu option, message)
@@ -144,6 +145,7 @@
 
 ## Release Log
 
+-   `27`: `0.5.0`
 -   `26`: `0.4.1`
 -   `25`: `0.4.0`
 -   `24`: `0.3.7`
