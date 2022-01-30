@@ -60,10 +60,6 @@ export default defineComponent({
     }
 }
 
-.no-margin {
-    margin: unset;
-}
-
 .no-padding {
     padding-top: unset;
     padding-bottom: unset;
