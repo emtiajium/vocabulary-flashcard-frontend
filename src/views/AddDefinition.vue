@@ -8,43 +8,49 @@
         />
 
         <ion-content :fullscreen="true" id="add-definition">
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title> Meaning </ion-card-title>
-                    <ion-card-subtitle> An idea or a thing that a word represents </ion-card-subtitle>
-                </ion-card-header>
+            <ion-row class="display-flex ion-justify-content-center">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                    <ion-card>
+                        <ion-card-header>
+                            <ion-card-title> Meaning </ion-card-title>
+                            <ion-card-subtitle> An idea or a thing that a word represents </ion-card-subtitle>
+                        </ion-card-header>
 
-                <ion-card-content>
-                    <ion-item>
-                        <ion-textarea
-                            autoGrow="true"
-                            inputmode="text"
-                            autocapitalize="sentences"
-                            placeholder="Type something"
-                            :value="$props.definition ? definition.meaning : meaning"
-                            @ionChange="setMeaning($event.target.value)"
-                        />
-                    </ion-item>
-                </ion-card-content>
-            </ion-card>
+                        <ion-card-content>
+                            <ion-item>
+                                <ion-textarea
+                                    autoGrow="true"
+                                    inputmode="text"
+                                    autocapitalize="sentences"
+                                    placeholder="Type something"
+                                    :value="$props.definition ? definition.meaning : meaning"
+                                    @ionChange="setMeaning($event.target.value)"
+                                />
+                            </ion-item>
+                        </ion-card-content>
+                    </ion-card>
 
-            <add-definition-examples ref="AddDefinitionExamplesRef" :existing-examples="definition?.examples" />
-            <add-definition-notes ref="AddDefinitionNotesRef" :existing-notes="definition?.notes" />
-            <add-definition-external-links
-                ref="AddDefinitionExternalLinksRef"
-                :existing-external-links="definition?.externalLinks"
-            />
+                    <add-definition-examples ref="AddDefinitionExamplesRef" :existing-examples="definition?.examples" />
+                    <add-definition-notes ref="AddDefinitionNotesRef" :existing-notes="definition?.notes" />
+                    <add-definition-external-links
+                        ref="AddDefinitionExternalLinksRef"
+                        :existing-external-links="definition?.externalLinks"
+                    />
 
-            <ion-grid>
-                <ion-row>
-                    <ion-col size="6">
-                        <ion-button fill="outline" color="warning" expand="block" @click="back"> Cancel </ion-button>
-                    </ion-col>
-                    <ion-col size="6">
-                        <ion-button color="success" expand="block" @click="persist"> Save </ion-button>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="6">
+                                <ion-button fill="outline" color="warning" expand="block" @click="back">
+                                    Cancel
+                                </ion-button>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-button color="success" expand="block" @click="persist"> Save </ion-button>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-col>
+            </ion-row>
         </ion-content>
     </ion-page>
 </template>

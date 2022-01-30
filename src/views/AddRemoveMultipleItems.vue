@@ -2,7 +2,7 @@
     <view v-for="(item, index) in placeholderItems" :key="item">
         <ion-grid>
             <ion-row>
-                <ion-col sizeXs="7" sizeSm="7" sizeMd="10" sizeLg="11" sizeXl="11">
+                <ion-col sizeXs="7" sizeSm="7" sizeMd="10" sizeLg="10" sizeXl="10">
                     <ion-item>
                         <ion-textarea
                             autoGrow="true"
@@ -14,7 +14,7 @@
                         />
                     </ion-item>
                 </ion-col>
-                <ion-col sizeXs="5" sizeSm="5" sizeMd="2" sizeLg="1" sizeXl="1">
+                <ion-col sizeXs="5" sizeSm="5" sizeMd="2" sizeLg="2" sizeXl="2">
                     <ion-row class="action-buttons">
                         <ion-item lines="none">
                             <ion-button

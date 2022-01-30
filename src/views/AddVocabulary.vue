@@ -4,107 +4,116 @@
         <firecracker-header :header-title="headerTitle" content-id="add-vocabulary" menu-id="add-vocabulary-menu" />
 
         <ion-content :fullscreen="true" id="add-vocabulary">
-            <spinner v-if="isLoading" />
+            <ion-row class="display-flex ion-justify-content-center">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                    <spinner v-if="isLoading" />
 
-            <view v-if="!isLoading">
-                <ion-card>
-                    <ion-card-header>
-                        <ion-card-title> Word </ion-card-title>
-                        <ion-card-subtitle>
-                            A word, an idiom, even a prepositional phrase and most importantly whatever you wish to
-                            insert
-                        </ion-card-subtitle>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <ion-item>
-                            <ion-textarea
-                                autoGrow="true"
-                                inputmode="text"
-                                autocapitalize="sentences"
-                                placeholder="Type something"
-                                :value="word"
-                                @ionChange="setWord($event.target.value)"
-                            />
-                        </ion-item>
-                    </ion-card-content>
-                </ion-card>
-
-                <ion-card>
-                    <ion-card-header>
-                        <ion-card-title> Definitions </ion-card-title>
-                        <ion-card-subtitle> An explanation of what a word means </ion-card-subtitle>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <ion-item v-if="!isLoading" lines="none">
-                            <ion-button color="success" @click="onAddingDefinition">
-                                <view v-if="!definitions.length">
-                                    <font-awesome-icon :icon="faPlusCircle" />
-                                </view>
-                                <view v-if="definitions.length">
-                                    <span class="material-icons"> plus_one </span>
-                                </view>
-                            </ion-button>
-                        </ion-item>
-                        <view v-if="!isLoading">
-                            <view
-                                v-show="definitions.length"
-                                v-for="(definition, index) in definitions"
-                                :key="definition.id"
-                            >
-                                <ion-item lines="none">
-                                    <ion-label color="dark" class="capitalize ion-text-nowrap">
-                                        {{ definition.meaning }}
-                                    </ion-label>
-                                </ion-item>
+                    <view v-if="!isLoading">
+                        <ion-card>
+                            <ion-card-header>
+                                <ion-card-title> Word </ion-card-title>
+                                <ion-card-subtitle>
+                                    A word, an idiom, even a prepositional phrase and most importantly whatever you wish
+                                    to insert
+                                </ion-card-subtitle>
+                            </ion-card-header>
+                            <ion-card-content>
                                 <ion-item>
-                                    <ion-item-group>
-                                        <ion-button color="warning" @click="updateDefinition(index)">
-                                            <font-awesome-icon :icon="faPencilAlt" />
-                                        </ion-button>
-                                        <ion-button color="danger" @click="removeDefinition(index)">
-                                            <font-awesome-icon :icon="faMinusCircle" />
-                                        </ion-button>
-                                    </ion-item-group>
+                                    <ion-textarea
+                                        autoGrow="true"
+                                        inputmode="text"
+                                        autocapitalize="sentences"
+                                        placeholder="Type something"
+                                        :value="word"
+                                        @ionChange="setWord($event.target.value)"
+                                    />
                                 </ion-item>
-                            </view>
-                        </view>
-                    </ion-card-content>
-                </ion-card>
+                            </ion-card-content>
+                        </ion-card>
 
-                <add-linker-words ref="AddLinkerWordsRef" :existing-linker-words="linkerWords" />
-                <add-generic-notes ref="AddGenericNotesRef" :existing-generic-notes="genericNotes" />
-                <add-generic-external-links
-                    ref="AddGenericExternalLinksRef"
-                    :existing-generic-external-links="genericExternalLinks"
-                />
+                        <ion-card>
+                            <ion-card-header>
+                                <ion-card-title> Definitions </ion-card-title>
+                                <ion-card-subtitle> An explanation of what a word means </ion-card-subtitle>
+                            </ion-card-header>
+                            <ion-card-content>
+                                <ion-item v-if="!isLoading" lines="none">
+                                    <ion-button color="success" @click="onAddingDefinition">
+                                        <view v-if="!definitions.length">
+                                            <font-awesome-icon :icon="faPlusCircle" />
+                                        </view>
+                                        <view v-if="definitions.length">
+                                            <span class="material-icons"> plus_one </span>
+                                        </view>
+                                    </ion-button>
+                                </ion-item>
+                                <view v-if="!isLoading">
+                                    <view
+                                        v-show="definitions.length"
+                                        v-for="(definition, index) in definitions"
+                                        :key="definition.id"
+                                    >
+                                        <ion-item lines="none">
+                                            <ion-label color="dark" class="capitalize ion-text-nowrap">
+                                                {{ definition.meaning }}
+                                            </ion-label>
+                                        </ion-item>
+                                        <ion-item>
+                                            <ion-item-group>
+                                                <ion-button color="warning" @click="updateDefinition(index)">
+                                                    <font-awesome-icon :icon="faPencilAlt" />
+                                                </ion-button>
+                                                <ion-button color="danger" @click="removeDefinition(index)">
+                                                    <font-awesome-icon :icon="faMinusCircle" />
+                                                </ion-button>
+                                            </ion-item-group>
+                                        </ion-item>
+                                    </view>
+                                </view>
+                            </ion-card-content>
+                        </ion-card>
 
-                <ion-card>
-                    <ion-card-header>
-                        <ion-card-title> Is Draft </ion-card-title>
-                        <ion-card-subtitle>
-                            It is possible to save a vocabulary without a definition in draft mode
-                        </ion-card-subtitle>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)" />
-                    </ion-card-content>
-                </ion-card>
+                        <add-linker-words ref="AddLinkerWordsRef" :existing-linker-words="linkerWords" />
+                        <add-generic-notes ref="AddGenericNotesRef" :existing-generic-notes="genericNotes" />
+                        <add-generic-external-links
+                            ref="AddGenericExternalLinksRef"
+                            :existing-generic-external-links="genericExternalLinks"
+                        />
 
-                <ion-grid>
-                    <ion-row>
-                        <ion-col size="6">
-                            <ion-button fill="outline" color="warning" expand="block" @click="back">
-                                Cancel
-                            </ion-button>
-                        </ion-col>
-                        <ion-col size="6">
-                            <ion-button color="success" expand="block" :disabled="disableSaveButton" @click="persist">
-                                Save
-                            </ion-button>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </view>
+                        <ion-card>
+                            <ion-card-header>
+                                <ion-card-title> Is Draft </ion-card-title>
+                                <ion-card-subtitle>
+                                    It is possible to save a vocabulary without a definition in draft mode
+                                </ion-card-subtitle>
+                            </ion-card-header>
+                            <ion-card-content>
+                                <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)" />
+                            </ion-card-content>
+                        </ion-card>
+
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="6">
+                                    <ion-button fill="outline" color="warning" expand="block" @click="back">
+                                        Cancel
+                                    </ion-button>
+                                </ion-col>
+                                <ion-col size="6">
+                                    <ion-button
+                                        color="success"
+                                        expand="block"
+                                        :disabled="disableSaveButton"
+                                        @click="persist"
+                                    >
+                                        Save
+                                    </ion-button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </view>
+                </ion-col>
+            </ion-row>
         </ion-content>
     </ion-page>
 
