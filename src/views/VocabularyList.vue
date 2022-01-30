@@ -13,119 +13,132 @@
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-card v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError">
-                <ion-card-content>
-                    <ion-card-subtitle class="ion-text-center">
-                        Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
-                        All you need is to click the button below and wait a bit! And FYI, you may remove those later.
-                    </ion-card-subtitle>
-                    <view class="display-flex ion-justify-content-end">
-                        <ion-item lines="none">
-                            <ion-button @click="bootstrap"> Fetch </ion-button>
-                        </ion-item>
-                    </view>
-                </ion-card-content>
-            </ion-card>
+            <ion-grid>
+                <ion-row class="display-flex ion-justify-content-center">
+                    <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                        <ion-card v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError">
+                            <ion-card-content>
+                                <ion-card-subtitle class="ion-text-center">
+                                    Looks like you do not have any vocabulary in your cohort yet! We can generate a few
+                                    if you wish. All you need is to click the button below and wait a bit! And FYI, you
+                                    may remove those later.
+                                </ion-card-subtitle>
+                                <view class="display-flex ion-justify-content-end">
+                                    <ion-item lines="none">
+                                        <ion-button @click="bootstrap"> Fetch </ion-button>
+                                    </ion-item>
+                                </view>
+                            </ion-card-content>
+                        </ion-card>
 
-            <spinner v-if="showSpinner" />
+                        <spinner v-if="showSpinner" />
 
-            <view v-if="isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError">
-                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-                    <span class="ion-text-center">
-                        {{ `No vocabularies were found for "${searchKeyword}"` }}
-                    </span>
-                </ion-card-subtitle>
-                <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <span class="material-icons searching-result-zero-icon"> manage_search </span>
-                </view>
-            </view>
+                        <view
+                            v-if="
+                                isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError
+                            "
+                        >
+                            <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
+                                <span class="ion-text-center">
+                                    {{ `No vocabularies were found for "${searchKeyword}"` }}
+                                </span>
+                            </ion-card-subtitle>
+                            <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                                <span class="material-icons searching-result-zero-icon"> manage_search </span>
+                            </view>
+                        </view>
 
-            <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
-                <minified-vocabulary
-                    :vocabulary="vocabulary"
-                    :delete-vocabulary="deleteVocabulary"
-                    :update-leitner-box-existence="updateLeitnerBoxExistence"
-                />
-            </view>
+                        <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
+                            <minified-vocabulary
+                                :vocabulary="vocabulary"
+                                :delete-vocabulary="deleteVocabulary"
+                                :update-leitner-box-existence="updateLeitnerBoxExistence"
+                            />
+                        </view>
 
-            <view v-if="isDisabled && vocabularies.length > 0 && !isNetworkError">
-                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-                    <span class="ion-text-center">
-                        {{
-                            vocabularies.length > 10
-                                ? `Congrats! You have viewed the last vocabulary!`
-                                : `Looks like there is no vocabulary left for you to be displayed.`
-                        }}
-                    </span>
-                </ion-card-subtitle>
-                <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faGlassCheers" class="loaded-all-icon" />
-                </view>
-            </view>
+                        <view v-if="isDisabled && vocabularies.length > 0 && !isNetworkError">
+                            <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
+                                <span class="ion-text-center">
+                                    {{
+                                        vocabularies.length > 10
+                                            ? `Congrats! You have viewed the last vocabulary!`
+                                            : `Looks like there is no vocabulary left for you to be displayed.`
+                                    }}
+                                </span>
+                            </ion-card-subtitle>
+                            <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                                <font-awesome-icon :icon="faGlassCheers" class="loaded-all-icon" />
+                            </view>
+                        </view>
 
-            <network-error v-if="isNetworkError" />
+                        <network-error v-if="isNetworkError" />
 
-            <ion-infinite-scroll
-                @ionInfinite="renderVocabularies($event)"
-                threshold="100px"
-                id="infinite-scroll"
-                :disabled="isDisabled"
-            >
-                <spinner />
-            </ion-infinite-scroll>
+                        <ion-infinite-scroll
+                            @ionInfinite="renderVocabularies($event)"
+                            threshold="100px"
+                            id="infinite-scroll"
+                            :disabled="isDisabled"
+                        >
+                            <spinner />
+                        </ion-infinite-scroll>
 
-            <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
-                <spinner />
-            </ion-refresher>
+                        <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
+                            <spinner />
+                        </ion-refresher>
 
-            <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                <ion-fab-button @click="$router.push('/vocabulary/create')">
-                    <font-awesome-icon :icon="faPlus" />
-                </ion-fab-button>
-            </ion-fab>
+                        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                            <ion-fab-button @click="$router.push('/vocabulary/create')">
+                                <font-awesome-icon :icon="faPlus" />
+                            </ion-fab-button>
+                        </ion-fab>
 
-            <ion-fab v-if="totalVocabularies > 0" vertical="center" horizontal="start" slot="fixed">
-                <ion-fab-button color="warning" :disabled="true" size="small"> {{ totalVocabularies }} </ion-fab-button>
-            </ion-fab>
+                        <ion-fab v-if="totalVocabularies > 0" vertical="center" horizontal="start" slot="fixed">
+                            <ion-fab-button color="warning" :disabled="true" size="small">
+                                {{ totalVocabularies }}
+                            </ion-fab-button>
+                        </ion-fab>
 
-            <ion-popover
-                :is-open="isSettingsPopoverOpened"
-                css-class="settings-popover"
-                @didDismiss="onClosingSettingsPopover"
-            >
-                <ion-list lines="none">
-                    <ion-radio-group :value="selectedSort" @ionChange="onChangeSort($event)">
-                        <ion-list-header>
-                            <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
-                        </ion-list-header>
+                        <ion-popover
+                            :is-open="isSettingsPopoverOpened"
+                            css-class="settings-popover"
+                            @didDismiss="onClosingSettingsPopover"
+                        >
+                            <ion-list lines="none">
+                                <ion-radio-group :value="selectedSort" @ionChange="onChangeSort($event)">
+                                    <ion-list-header>
+                                        <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
+                                    </ion-list-header>
 
-                        <ion-item>
-                            <ion-label> Date created (newest first) </ion-label>
-                            <ion-radio slot="end" value="createdAt_DESC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date created (oldest first) </ion-label>
-                            <ion-radio slot="end" value="createdAt_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date updated (newest first) </ion-label>
-                            <ion-radio slot="end" value="updatedAt_DESC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date updated (oldest first) </ion-label>
-                            <ion-radio slot="end" value="updatedAt_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Word (alphabetically first) </ion-label>
-                            <ion-radio slot="end" value="word_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Word (alphabetically last) </ion-label>
-                            <ion-radio slot="end" value="word_DESC" />
-                        </ion-item>
-                    </ion-radio-group>
-                </ion-list>
-            </ion-popover>
+                                    <ion-item>
+                                        <ion-label> Date created (newest first) </ion-label>
+                                        <ion-radio slot="end" value="createdAt_DESC" />
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label> Date created (oldest first) </ion-label>
+                                        <ion-radio slot="end" value="createdAt_ASC" />
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label> Date updated (newest first) </ion-label>
+                                        <ion-radio slot="end" value="updatedAt_DESC" />
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label> Date updated (oldest first) </ion-label>
+                                        <ion-radio slot="end" value="updatedAt_ASC" />
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label> Word (alphabetically first) </ion-label>
+                                        <ion-radio slot="end" value="word_ASC" />
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label> Word (alphabetically last) </ion-label>
+                                        <ion-radio slot="end" value="word_DESC" />
+                                    </ion-item>
+                                </ion-radio-group>
+                            </ion-list>
+                        </ion-popover>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-content>
     </ion-page>
 </template>
@@ -149,6 +162,9 @@ import {
     IonRadioGroup,
     IonList,
     IonListHeader,
+    IonGrid,
+    IonRow,
+    IonCol,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
@@ -195,6 +211,9 @@ export default defineComponent({
         IonList,
         IonRadioGroup,
         IonListHeader,
+        IonGrid,
+        IonRow,
+        IonCol,
     },
     data() {
         return {
