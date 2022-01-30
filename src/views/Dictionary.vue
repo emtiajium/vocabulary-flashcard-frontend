@@ -6,8 +6,8 @@
             </ion-card-header>
         </ion-card>
         <ion-grid>
-            <ion-row>
-                <ion-col size="4">
+            <ion-row class="display-flex ion-justify-content-center">
+                <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="3">
                     <ion-card
                         button="true"
                         :href="`https://dictionary.cambridge.org/dictionary/english/${word.toLowerCase()}`"
@@ -23,7 +23,7 @@
                         </ion-card-content>
                     </ion-card>
                 </ion-col>
-                <ion-col size="4">
+                <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="3">
                     <ion-card
                         button="true"
                         :href="`https://www.merriam-webster.com/dictionary/${word.toLowerCase()}`"
@@ -39,7 +39,7 @@
                         </ion-card-content>
                     </ion-card>
                 </ion-col>
-                <ion-col size="4">
+                <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="3">
                     <ion-card
                         button="true"
                         :href="`https://www.oxfordlearnersdictionaries.com/definition/english/${word
