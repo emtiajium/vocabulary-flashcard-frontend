@@ -42,6 +42,11 @@
                     <font-awesome-icon :icon="faSignInAlt" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Sign In </ion-label>
                 </ion-item>
+                <ion-item v-if="!isAuthenticated">
+                    <font-awesome-icon :icon="faMoon" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Toggle Dark Theme </ion-label>
+                    <ion-toggle slot="end" :checked="isDark" @ionChange="onChangeThemeMode($event.detail.checked)" />
+                </ion-item>
                 <ion-item v-if="isAuthenticated" button @click="signOut">
                     <font-awesome-icon :icon="faSignOutAlt" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Sign Out </ion-label>
