@@ -2,14 +2,7 @@
     <ion-card button="true">
         <ion-grid>
             <ion-row>
-                <ion-col
-                    sizeXs="8"
-                    sizeSm="8"
-                    sizeMd="10"
-                    sizeLg="10"
-                    sizeXl="10"
-                    @click="seeMore(vocabulary.id, vocabulary.word)"
-                >
+                <ion-col size="8" @click="seeMore(vocabulary.id, vocabulary.word)">
                     <ion-card-header>
                         <ion-card-title class="capitalize"> {{ vocabulary.word }} </ion-card-title>
                     </ion-card-header>
@@ -32,7 +25,7 @@
                     </ion-card-content>
                 </ion-col>
 
-                <ion-col sizeXs="4" sizeSm="4" sizeMd="2" sizeLg="2" sizeXl="2" class="center">
+                <ion-col size="4" class="center">
                     <ion-row>
                         <ion-button
                             fill="outline"
