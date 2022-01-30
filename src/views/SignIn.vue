@@ -121,14 +121,6 @@ export default defineComponent({
 .display-grid {
     display: grid;
 }
-.logo-extra {
-    width: 45%;
-}
-@media only screen and (min-device-width: 480px) {
-    .logo-extra {
-        width: 13%;
-    }
-}
 .privacy-text {
     text-align: center;
 }
