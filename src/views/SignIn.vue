@@ -27,6 +27,18 @@
                             </a>
                         </ion-text>
                     </ion-row>
+                    <ion-row class="ion-align-items-end ion-justify-content-center">
+                        <a
+                            href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                            class="display-flex ion-justify-content-center"
+                        >
+                            <img
+                                alt="Get it on Google Play"
+                                src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                                class="google-play"
+                            />
+                        </a>
+                    </ion-row>
                 </ion-grid>
             </view>
         </ion-content>
@@ -123,5 +135,13 @@ export default defineComponent({
 }
 .privacy-text {
     text-align: center;
+}
+.google-play {
+    width: 50%;
+}
+@media only screen and (min-width: 480px) {
+    .google-play {
+        width: 30%;
+    }
 }
 </style>
