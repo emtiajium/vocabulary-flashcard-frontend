@@ -27,7 +27,7 @@
                             </a>
                         </ion-text>
                     </ion-row>
-                    <ion-row class="ion-align-items-end ion-justify-content-center">
+                    <ion-row v-if="!isAndroid" class="ion-align-items-end ion-justify-content-center">
                         <a
                             href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
                             class="display-flex ion-justify-content-center"
@@ -62,6 +62,7 @@ import * as _ from 'lodash';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import Alert from '@/utils/Alert';
 import Intro from '@/views/Intro.vue';
+import Platform from '@/utils/Platform';
 
 export default defineComponent({
     name: 'SignIn',
@@ -83,9 +84,10 @@ export default defineComponent({
     },
     async mounted() {
         await GoogleAuth.load();
+        await this.loadGetItOnGooglePlay().finally();
     },
     data() {
-        return { faGoogle };
+        return { isAndroid: true, faGoogle };
     },
     methods: {
         async handleClick(): Promise<void> {
@@ -120,6 +122,9 @@ export default defineComponent({
         async persistUser(googleUser: User): Promise<void> {
             const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, _.omit(googleUser, 'jwToken'), true);
             await NativeStorage.setAuthorizedUser({ ...persistedUser, jwToken: googleUser.jwToken } as User);
+        },
+        async loadGetItOnGooglePlay(): Promise<void> {
+            this.isAndroid = await Platform.isAndroid();
         },
     },
 });

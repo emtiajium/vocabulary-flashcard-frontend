@@ -1,13 +1,13 @@
 import User from '@/domains/User';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { User as GoogleUser } from '@codetrix-studio/capacitor-google-auth/dist/esm/user';
-import { Device } from '@capacitor/device';
+import Platform from '@/utils/Platform';
 import Config from '../../config.json';
 
 export default class GoogleAuthorization {
     static async load(): Promise<void> {
-        const deviceInfo = await Device.getInfo();
-        if (deviceInfo.platform === 'web') {
+        const isAndroid = await Platform.isAndroid();
+        if (!isAndroid) {
             GoogleAuthorization.createMetadata();
             GoogleAuth.init();
         }

@@ -15,7 +15,7 @@ import { isHome } from '@/domains/Route';
 import HttpHandler from '@/utils/HttpHandler';
 import Android from '@/domains/Android';
 import Alert from '@/utils/Alert';
-import { Device } from '@capacitor/device';
+import Platform from '@/utils/Platform';
 
 export default defineComponent({
     name: 'Home',
@@ -50,8 +50,8 @@ export default defineComponent({
         },
         async notifyAboutAvailableUpdate(): Promise<void> {
             try {
-                const { platform } = await Device.getInfo();
-                if (platform === 'android') {
+                const isAndroid = await Platform.isAndroid();
+                if (isAndroid) {
                     const { build: versionCode } = await App.getInfo();
                     const { versionCode: latestVersionCode } = await HttpHandler.get<Android>(`/v1/androids`);
                     if (Number.parseInt(versionCode, 10) < latestVersionCode) {
