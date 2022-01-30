@@ -29,6 +29,10 @@ ion-card.transparent {
     box-shadow: unset;
 }
 
+ion-card.no-margin {
+    margin: unset;
+}
+
 .firecracker-primary-colored-icon {
     color: var(--ion-color-primary);
 }

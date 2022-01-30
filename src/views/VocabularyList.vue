@@ -40,13 +40,19 @@
                 </view>
             </view>
 
-            <view v-for="vocabulary in vocabularies" :key="vocabulary.id">
-                <minified-vocabulary
-                    :vocabulary="vocabulary"
-                    :delete-vocabulary="deleteVocabulary"
-                    :update-leitner-box-existence="updateLeitnerBoxExistence"
-                />
-            </view>
+            <ion-row
+                v-for="vocabulary in vocabularies"
+                :key="vocabulary.id"
+                class="display-flex ion-justify-content-center"
+            >
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                    <minified-vocabulary
+                        :vocabulary="vocabulary"
+                        :delete-vocabulary="deleteVocabulary"
+                        :update-leitner-box-existence="updateLeitnerBoxExistence"
+                    />
+                </ion-col>
+            </ion-row>
 
             <view v-if="isDisabled && vocabularies.length > 0 && !isNetworkError">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
@@ -149,6 +155,8 @@ import {
     IonRadioGroup,
     IonList,
     IonListHeader,
+    IonRow,
+    IonCol,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
@@ -195,6 +203,8 @@ export default defineComponent({
         IonList,
         IonRadioGroup,
         IonListHeader,
+        IonRow,
+        IonCol,
     },
     data() {
         return {

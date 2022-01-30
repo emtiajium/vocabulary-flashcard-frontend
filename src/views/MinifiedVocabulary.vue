@@ -1,88 +1,86 @@
 <template>
-    <ion-card button="true">
-        <ion-grid>
-            <ion-row>
-                <ion-col
-                    sizeXs="8"
-                    sizeSm="8"
-                    sizeMd="10"
-                    sizeLg="10"
-                    sizeXl="10"
-                    @click="seeMore(vocabulary.id, vocabulary.word)"
-                >
-                    <ion-card-header>
-                        <ion-card-title class="capitalize"> {{ vocabulary.word }} </ion-card-title>
-                    </ion-card-header>
+    <ion-card button="true" class="no-margin">
+        <ion-row>
+            <ion-col
+                sizeXs="8"
+                sizeSm="8"
+                sizeMd="10"
+                sizeLg="10"
+                sizeXl="10"
+                @click="seeMore(vocabulary.id, vocabulary.word)"
+            >
+                <ion-card-header>
+                    <ion-card-title class="capitalize"> {{ vocabulary.word }} </ion-card-title>
+                </ion-card-header>
 
-                    <ion-card-content>
-                        <ion-card-subtitle v-if="!vocabulary.definitions.length">
-                            No definition has been added yet!
-                        </ion-card-subtitle>
-                        <view v-if="vocabulary.definitions.length">
-                            <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
-                                <ion-label class="capitalize display-flow-root overflowed-content">
-                                    {{ definition.meaning }}
-                                </ion-label>
-                            </view>
+                <ion-card-content>
+                    <ion-card-subtitle v-if="!vocabulary.definitions.length">
+                        No definition has been added yet!
+                    </ion-card-subtitle>
+                    <view v-if="vocabulary.definitions.length">
+                        <view v-for="definition in vocabulary.definitions.slice(0, 2)" :key="definition.id">
+                            <ion-label class="capitalize display-flow-root overflowed-content">
+                                {{ definition.meaning }}
+                            </ion-label>
                         </view>
+                    </view>
 
-                        <ion-card-subtitle v-if="vocabulary.definitions.length > 2">
-                            <font-awesome-icon :icon="faEllipsisH" />
-                        </ion-card-subtitle>
-                    </ion-card-content>
-                </ion-col>
+                    <ion-card-subtitle v-if="vocabulary.definitions.length > 2">
+                        <font-awesome-icon :icon="faEllipsisH" />
+                    </ion-card-subtitle>
+                </ion-card-content>
+            </ion-col>
 
-                <ion-col sizeXs="4" sizeSm="4" sizeMd="2" sizeLg="2" sizeXl="2" class="center">
-                    <ion-row>
-                        <ion-button
-                            fill="outline"
-                            size="small"
-                            shape="round"
-                            :strong="true"
-                            color="warning"
-                            @click="presentAlertConfirm(vocabulary)"
-                        >
-                            <font-awesome-icon :icon="faTrashAlt" />
-                        </ion-button>
-                        <ion-button
-                            fill="outline"
-                            size="small"
-                            shape="round"
-                            :strong="true"
-                            color="primary"
-                            @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
-                        >
-                            <font-awesome-icon :icon="faPencilAlt" />
-                        </ion-button>
-                    </ion-row>
-                    <ion-row>
-                        <ion-button
-                            fill="clear"
-                            size="small"
-                            shape="round"
-                            :strong="true"
-                            :disabled="disableBoxInsertionButton"
-                            color="fern-green"
-                            @click="insertIntoLeitnerBox"
-                        >
-                            <span class="material-icons">
-                                {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
-                            </span>
-                        </ion-button>
-                        <ion-button
-                            fill="outline"
-                            size="small"
-                            shape="round"
-                            :strong="true"
-                            color="fern-green"
-                            @click="seeMore(vocabulary.id, vocabulary.word)"
-                        >
-                            <font-awesome-icon :icon="faExpandAlt" />
-                        </ion-button>
-                    </ion-row>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+            <ion-col sizeXs="4" sizeSm="4" sizeMd="2" sizeLg="2" sizeXl="2" class="center">
+                <ion-row>
+                    <ion-button
+                        fill="outline"
+                        size="small"
+                        shape="round"
+                        :strong="true"
+                        color="warning"
+                        @click="presentAlertConfirm(vocabulary)"
+                    >
+                        <font-awesome-icon :icon="faTrashAlt" />
+                    </ion-button>
+                    <ion-button
+                        fill="outline"
+                        size="small"
+                        shape="round"
+                        :strong="true"
+                        color="primary"
+                        @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
+                    >
+                        <font-awesome-icon :icon="faPencilAlt" />
+                    </ion-button>
+                </ion-row>
+                <ion-row>
+                    <ion-button
+                        fill="clear"
+                        size="small"
+                        shape="round"
+                        :strong="true"
+                        :disabled="disableBoxInsertionButton"
+                        color="fern-green"
+                        @click="insertIntoLeitnerBox"
+                    >
+                        <span class="material-icons">
+                            {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
+                        </span>
+                    </ion-button>
+                    <ion-button
+                        fill="outline"
+                        size="small"
+                        shape="round"
+                        :strong="true"
+                        color="fern-green"
+                        @click="seeMore(vocabulary.id, vocabulary.word)"
+                    >
+                        <font-awesome-icon :icon="faExpandAlt" />
+                    </ion-button>
+                </ion-row>
+            </ion-col>
+        </ion-row>
     </ion-card>
 </template>
 
@@ -95,7 +93,6 @@ import {
     IonCardContent,
     IonButton,
     IonLabel,
-    IonGrid,
     IonRow,
     IonCol,
 } from '@ionic/vue';
@@ -119,7 +116,6 @@ export default defineComponent({
         IonButton,
         FontAwesomeIcon,
         IonLabel,
-        IonGrid,
         IonRow,
         IonCol,
     },
