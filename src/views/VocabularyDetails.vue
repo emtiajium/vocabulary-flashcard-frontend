@@ -7,183 +7,165 @@
         />
 
         <ion-content :fullscreen="true" id="vocabulary-details">
-            <ion-grid>
-                <ion-row class="display-flex ion-justify-content-center">
-                    <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                        <spinner v-if="isLoading" />
+            <spinner v-if="isLoading" />
 
-                        <view v-if="!isLoading && Object.keys(vocabulary).length">
-                            <ion-card v-if="showDefaultMessage" class="ion-padding">
-                                <empty-container :message="defaultMessage" />
-                            </ion-card>
+            <view v-if="!isLoading && Object.keys(vocabulary).length">
+                <ion-card v-if="showDefaultMessage" class="ion-padding">
+                    <empty-container :message="defaultMessage" />
+                </ion-card>
 
-                            <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
-                                <ion-card>
-                                    <ion-card-header>
-                                        <ion-card-title>
-                                            <span>
-                                                {{ definitionIndex === 0 ? 'Meaning of' : 'Another Meaning of' }}
-                                                <strong> {{ vocabulary.word }} </strong>
-                                            </span>
-                                        </ion-card-title>
-                                        <ion-card-subtitle>
-                                            <span class="capitalize"> {{ definition.meaning }} </span>
-                                        </ion-card-subtitle>
-                                    </ion-card-header>
+                <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
+                    <ion-card>
+                        <ion-card-header>
+                            <ion-card-title>
+                                <span>
+                                    {{ definitionIndex === 0 ? 'Meaning of' : 'Another Meaning of' }}
+                                    <strong> {{ vocabulary.word }} </strong>
+                                </span>
+                            </ion-card-title>
+                            <ion-card-subtitle>
+                                <span class="capitalize"> {{ definition.meaning }} </span>
+                            </ion-card-subtitle>
+                        </ion-card-header>
 
-                                    <ion-card-content>
-                                        <ion-card-title> Examples </ion-card-title>
-                                        <ul>
-                                            <view
-                                                v-for="(example, exampleIndex) in definition.examples"
-                                                :key="exampleIndex"
-                                            >
-                                                <li>
-                                                    <span class="capitalize"> {{ example }} </span>
-                                                    <br />
-                                                    <br />
-                                                </li>
-                                            </view>
-                                        </ul>
+                        <ion-card-content>
+                            <ion-card-title> Examples </ion-card-title>
+                            <ul>
+                                <view v-for="(example, exampleIndex) in definition.examples" :key="exampleIndex">
+                                    <li>
+                                        <span class="capitalize"> {{ example }} </span>
+                                        <br />
+                                        <br />
+                                    </li>
+                                </view>
+                            </ul>
 
-                                        <view v-if="definition.notes.length">
-                                            <ion-card-title> Notes </ion-card-title>
-                                            <ul>
-                                                <view v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
-                                                    <li>
-                                                        <span class="capitalize"> {{ note }} </span>
-                                                        <br />
-                                                        <br />
-                                                    </li>
-                                                </view>
-                                            </ul>
-                                        </view>
-
-                                        <view v-if="definition.externalLinks.length">
-                                            <ion-card-title> External Links </ion-card-title>
-                                            <ul>
-                                                <view
-                                                    v-for="(
-                                                        externalLink, externalLinkIndex
-                                                    ) in definition.externalLinks"
-                                                    :key="externalLinkIndex"
-                                                >
-                                                    <li>
-                                                        <a :href="externalLink" target="_blank">
-                                                            <span>
-                                                                Browse the link
-                                                                <font-awesome-icon :icon="faExternalLinkAlt" />
-                                                            </span>
-                                                        </a>
-                                                        <br />
-                                                        <br />
-                                                    </li>
-                                                </view>
-                                            </ul>
-                                        </view>
-                                    </ion-card-content>
-                                </ion-card>
+                            <view v-if="definition.notes.length">
+                                <ion-card-title> Notes </ion-card-title>
+                                <ul>
+                                    <view v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
+                                        <li>
+                                            <span class="capitalize"> {{ note }} </span>
+                                            <br />
+                                            <br />
+                                        </li>
+                                    </view>
+                                </ul>
                             </view>
 
-                            <ion-card v-if="vocabulary.linkerWords.length">
-                                <ion-card-header>
-                                    <ion-card-title> Relatable Words </ion-card-title>
-                                </ion-card-header>
-                                <ion-card-content>
+                            <view v-if="definition.externalLinks.length">
+                                <ion-card-title> External Links </ion-card-title>
+                                <ul>
                                     <view
-                                        v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords"
-                                        :key="linkerWordIndex"
+                                        v-for="(externalLink, externalLinkIndex) in definition.externalLinks"
+                                        :key="externalLinkIndex"
                                     >
-                                        <ion-button
-                                            color="lightest"
-                                            mode="ios"
-                                            @click="$router.push(`/dictionary/${linkerWord}`)"
-                                        >
-                                            <ion-chip class="linker-word-chip">
-                                                <span class="ion-padding-end overflowed-content">
-                                                    {{ linkerWord }}
+                                        <li>
+                                            <a :href="externalLink" target="_blank">
+                                                <span>
+                                                    Browse the link
+                                                    <font-awesome-icon :icon="faExternalLinkAlt" />
                                                 </span>
-                                                <font-awesome-icon :icon="faExternalLinkAlt" class="linker-word-icon" />
-                                            </ion-chip>
-                                        </ion-button>
+                                            </a>
+                                            <br />
+                                            <br />
+                                        </li>
                                     </view>
-                                </ion-card-content>
-                            </ion-card>
+                                </ul>
+                            </view>
+                        </ion-card-content>
+                    </ion-card>
+                </view>
 
-                            <ion-card v-if="vocabulary.genericNotes.length">
-                                <ion-card-header>
-                                    <ion-card-title> Generic Notes </ion-card-title>
-                                </ion-card-header>
-                                <ion-card-content>
-                                    <ul>
-                                        <view
-                                            v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
-                                            :key="genericNotesIndex"
-                                        >
-                                            <li>
-                                                <span class="capitalize"> {{ genericNote }} </span>
-                                                <br />
-                                                <br />
-                                            </li>
-                                        </view>
-                                    </ul>
-                                </ion-card-content>
-                            </ion-card>
-
-                            <ion-card v-if="vocabulary.genericExternalLinks.length">
-                                <ion-card-header>
-                                    <ion-card-title> Generic External Links </ion-card-title>
-                                </ion-card-header>
-                                <ion-card-content>
-                                    <ul>
-                                        <view
-                                            v-for="(
-                                                genericExternalLink, genericExternalLinkIndex
-                                            ) in vocabulary.genericExternalLinks"
-                                            :key="genericExternalLinkIndex"
-                                        >
-                                            <li>
-                                                <a :href="genericExternalLink" target="_blank">
-                                                    <span>
-                                                        Browse the link
-                                                        <font-awesome-icon :icon="faExternalLinkAlt" />
-                                                    </span>
-                                                </a>
-                                                <br />
-                                                <br />
-                                            </li>
-                                        </view>
-                                    </ul>
-                                </ion-card-content>
-                            </ion-card>
+                <ion-card v-if="vocabulary.linkerWords.length">
+                    <ion-card-header>
+                        <ion-card-title> Relatable Words </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <view v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords" :key="linkerWordIndex">
+                            <ion-button color="lightest" mode="ios" @click="$router.push(`/dictionary/${linkerWord}`)">
+                                <ion-chip class="linker-word-chip">
+                                    <span class="ion-padding-end overflowed-content">
+                                        {{ linkerWord }}
+                                    </span>
+                                    <font-awesome-icon :icon="faExternalLinkAlt" class="linker-word-icon" />
+                                </ion-chip>
+                            </ion-button>
                         </view>
+                    </ion-card-content>
+                </ion-card>
 
-                        <dictionary v-if="!isLoading && Object.keys(vocabulary).length" :word="vocabulary.word" />
+                <ion-card v-if="vocabulary.genericNotes.length">
+                    <ion-card-header>
+                        <ion-card-title> Generic Notes </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ul>
+                            <view
+                                v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
+                                :key="genericNotesIndex"
+                            >
+                                <li>
+                                    <span class="capitalize"> {{ genericNote }} </span>
+                                    <br />
+                                    <br />
+                                </li>
+                            </view>
+                        </ul>
+                    </ion-card-content>
+                </ion-card>
 
-                        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                            <ion-fab-button
-                                v-if="!isLoading && Object.keys(vocabulary).length"
-                                size="small"
-                                color="lightest"
-                                :disabled="disableBoxInsertionButton"
-                                @click="insertIntoLeitnerBox"
+                <ion-card v-if="vocabulary.genericExternalLinks.length">
+                    <ion-card-header>
+                        <ion-card-title> Generic External Links </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ul>
+                            <view
+                                v-for="(
+                                    genericExternalLink, genericExternalLinkIndex
+                                ) in vocabulary.genericExternalLinks"
+                                :key="genericExternalLinkIndex"
                             >
-                                <span class="material-icons heart-icon">
-                                    {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
-                                </span>
-                            </ion-fab-button>
-                            <span class="ion-margin-top" />
-                            <ion-fab-button
-                                size="small"
-                                color="warning"
-                                @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
-                            >
-                                <font-awesome-icon :icon="faPencilAlt" />
-                            </ion-fab-button>
-                        </ion-fab>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+                                <li>
+                                    <a :href="genericExternalLink" target="_blank">
+                                        <span>
+                                            Browse the link
+                                            <font-awesome-icon :icon="faExternalLinkAlt" />
+                                        </span>
+                                    </a>
+                                    <br />
+                                    <br />
+                                </li>
+                            </view>
+                        </ul>
+                    </ion-card-content>
+                </ion-card>
+            </view>
+
+            <dictionary v-if="!isLoading && Object.keys(vocabulary).length" :word="vocabulary.word" />
+
+            <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                <ion-fab-button
+                    v-if="!isLoading && Object.keys(vocabulary).length"
+                    size="small"
+                    color="lightest"
+                    :disabled="disableBoxInsertionButton"
+                    @click="insertIntoLeitnerBox"
+                >
+                    <span class="material-icons heart-icon">
+                        {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
+                    </span>
+                </ion-fab-button>
+                <span class="ion-margin-top" />
+                <ion-fab-button
+                    size="small"
+                    color="warning"
+                    @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
+                >
+                    <font-awesome-icon :icon="faPencilAlt" />
+                </ion-fab-button>
+            </ion-fab>
         </ion-content>
     </ion-page>
 </template>
@@ -202,9 +184,6 @@ import {
     IonFabButton,
     IonButton,
     IonChip,
-    IonGrid,
-    IonRow,
-    IonCol,
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
@@ -237,9 +216,6 @@ export default defineComponent({
         IonFabButton,
         IonButton,
         IonChip,
-        IonGrid,
-        IonRow,
-        IonCol,
     },
     data() {
         return {
