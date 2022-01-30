@@ -21,7 +21,7 @@
                             </ion-card-content>
                         </view>
 
-                        <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()">
+                        <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()" class="no-margin-lr">
                             <ion-card-content>
                                 <ion-card-title class="display-flex ion-justify-content-center">
                                     {{ cohort.name }}
@@ -31,7 +31,7 @@
 
                         <view v-if="isReady && !isNetworkError && !isTheUserAlone()">
                             <view v-for="user in cohort.users" :key="user.username">
-                                <ion-card>
+                                <ion-card class="no-margin-lr">
                                     <ion-card-content>
                                         <ion-grid>
                                             <ion-row>
