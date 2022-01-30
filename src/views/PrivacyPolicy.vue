@@ -13,7 +13,7 @@
                         Welcome to <strong>Firecracker Vocab Practice</strong>! Your privacy is important to us. This
                         Privacy Policy explains how we collect, store, use, disclose and otherwise process your
                         information when you use
-                        <a href="https://app.firecrackervocabulary.com/">https://app.firecrackervocabulary.com/</a>, and
+                        <a href="https://app.firecrackervocabulary.com">https://app.firecrackervocabulary.com</a>, and
                         our mobile app.
                     </ion-card-subtitle>
 
