@@ -2,59 +2,81 @@
     <ion-page>
         <firecracker-header header-title="My Cohort" content-id="cohort" menu-id="cohort-menu" />
         <ion-content id="cohort">
-            <spinner v-if="!isReady" />
+            <ion-grid>
+                <ion-row class="display-flex ion-justify-content-center">
+                    <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6" sizeXl="6">
+                        <spinner v-if="!isReady" />
 
-            <network-error v-if="isNetworkError && isReady" />
+                        <network-error v-if="isNetworkError && isReady" />
 
-            <view v-if="isReady && !isNetworkError && isTheUserAlone()">
-                <ion-card-header>
-                    <ion-card-subtitle class="ion-text-center">
-                        Looks like you are the only member of your group. Please let us know if you would like to create
-                        your own group.
-                    </ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content class="display-flex ion-justify-content-center">
-                    <img src="/assets/icon/diversity.svg" alt="Cohort" class="empty-cohort-icon" />
-                </ion-card-content>
-            </view>
+                        <view v-if="isReady && !isNetworkError && isTheUserAlone()">
+                            <ion-card-header>
+                                <ion-card-subtitle class="ion-text-center">
+                                    Looks like you are the only member of your group. Please let us know if you would
+                                    like to create your own group.
+                                </ion-card-subtitle>
+                            </ion-card-header>
+                            <ion-card-content class="display-flex ion-justify-content-center">
+                                <img src="/assets/icon/diversity.svg" alt="Cohort" class="empty-cohort-icon" />
+                            </ion-card-content>
+                        </view>
 
-            <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()">
-                <ion-card-content>
-                    <ion-card-title class="display-flex ion-justify-content-center"> {{ cohort.name }} </ion-card-title>
-                </ion-card-content>
-            </ion-card>
+                        <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()">
+                            <ion-card-content>
+                                <ion-card-title class="display-flex ion-justify-content-center">
+                                    {{ cohort.name }}
+                                </ion-card-title>
+                            </ion-card-content>
+                        </ion-card>
 
-            <view v-if="isReady && !isNetworkError && !isTheUserAlone()">
-                <view v-for="user in cohort.users" :key="user.username">
-                    <ion-card>
-                        <ion-card-content>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="4">
-                                        <img
-                                            :src="
-                                                user.profilePictureUrl ||
-                                                `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`
-                                            "
-                                            alt="Avatar"
-                                            class="rounded-circle ion-padding"
-                                            width="100"
-                                        />
-                                    </ion-col>
-                                    <ion-col size="8" class="profile-info">
-                                        <ion-card-subtitle class="ion-text-capitalize">
-                                            {{ user.name }}
-                                        </ion-card-subtitle>
-                                        <ion-card-subtitle class="ion-padding-top">
-                                            {{ user.username }}
-                                        </ion-card-subtitle>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
-                        </ion-card-content>
-                    </ion-card>
-                </view>
-            </view>
+                        <view v-if="isReady && !isNetworkError && !isTheUserAlone()">
+                            <view v-for="user in cohort.users" :key="user.username">
+                                <ion-card>
+                                    <ion-card-content>
+                                        <ion-grid>
+                                            <ion-row>
+                                                <ion-col
+                                                    sizeXs="4"
+                                                    sizeSm="4"
+                                                    sizeMd="6"
+                                                    sizeLg="6"
+                                                    sizeXl="6"
+                                                    class="avatar"
+                                                >
+                                                    <img
+                                                        :src="
+                                                            user.profilePictureUrl ||
+                                                            `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`
+                                                        "
+                                                        alt="Avatar"
+                                                        class="rounded-circle ion-padding"
+                                                        width="100"
+                                                    />
+                                                </ion-col>
+                                                <ion-col
+                                                    sizeXs="8"
+                                                    sizeSm="8"
+                                                    sizeMd="6"
+                                                    sizeLg="6"
+                                                    sizeXl="6"
+                                                    class="profile-info"
+                                                >
+                                                    <ion-card-subtitle class="ion-text-capitalize">
+                                                        {{ user.name }}
+                                                    </ion-card-subtitle>
+                                                    <ion-card-subtitle class="ion-padding-top">
+                                                        {{ user.username }}
+                                                    </ion-card-subtitle>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-grid>
+                                    </ion-card-content>
+                                </ion-card>
+                            </view>
+                        </view>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-content>
     </ion-page>
 </template>
@@ -133,6 +155,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.avatar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
 .profile-info {
     display: flex;
     flex-direction: column;
