@@ -5,12 +5,11 @@
             vocab learned a few days or weeks back?
         </ion-card>
         <ion-card class="ion-padding">
-            According to scientists, spaced repetition is one of the techniques to memorize anything in the long term.
-            Among many approaches based on its principle, the Leitner system is one. It suggests creating a
-            <strong>flashcard</strong>
-            for each item and reviewing those at an interval. This excellent app lets you permanently embed newly
-            introduced words in your long-term memory through the steps of the Leitner system.
+            According to science, spaced repetition is one of the techniques to retain anything in the long term. The
+            Leitner system works based on this principle. It suggests creating a <strong>flashcard</strong> for each
+            item and reviewing those at an interval.
         </ion-card>
+        <ion-card class="ion-padding"> Join us to embed newly introduced words in your long-term memory. </ion-card>
     </view>
 </template>
 
