@@ -30,6 +30,7 @@
                     <ion-row v-if="!isAndroid" class="ion-align-items-end ion-justify-content-center">
                         <a
                             href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                            target="_blank"
                             class="display-flex ion-justify-content-center"
                         >
                             <img
