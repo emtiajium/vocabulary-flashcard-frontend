@@ -10,7 +10,7 @@
         <ion-content :fullscreen="true" id="add-definition">
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-card>
+                    <ion-card class="no-margin-lr">
                         <ion-card-header>
                             <ion-card-title> Meaning </ion-card-title>
                             <ion-card-subtitle> An idea or a thing that a word represents </ion-card-subtitle>
@@ -37,18 +37,16 @@
                         :existing-external-links="definition?.externalLinks"
                     />
 
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size="6">
-                                <ion-button fill="outline" color="warning" expand="block" @click="back">
-                                    Cancel
-                                </ion-button>
-                            </ion-col>
-                            <ion-col size="6">
-                                <ion-button color="success" expand="block" @click="persist"> Save </ion-button>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-button fill="outline" color="warning" expand="block" @click="back">
+                                Cancel
+                            </ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-button color="success" expand="block" @click="persist"> Save </ion-button>
+                        </ion-col>
+                    </ion-row>
                 </ion-col>
             </ion-row>
         </ion-content>
@@ -65,7 +63,6 @@ import {
     IonCardTitle,
     IonCardSubtitle,
     IonCardContent,
-    IonGrid,
     IonRow,
     IonCol,
     IonTextarea,
@@ -103,7 +100,6 @@ export default defineComponent({
         IonCardSubtitle,
         IonCardContent,
         IonButton,
-        IonGrid,
         IonRow,
         IonCol,
         IonTextarea,

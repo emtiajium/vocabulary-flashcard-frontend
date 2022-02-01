@@ -9,7 +9,7 @@
                     <spinner v-if="isLoading" />
 
                     <view v-if="!isLoading">
-                        <ion-card>
+                        <ion-card class="no-margin-lr">
                             <ion-card-header>
                                 <ion-card-title> Word </ion-card-title>
                                 <ion-card-subtitle>
@@ -31,7 +31,7 @@
                             </ion-card-content>
                         </ion-card>
 
-                        <ion-card>
+                        <ion-card class="no-margin-lr">
                             <ion-card-header>
                                 <ion-card-title> Definitions </ion-card-title>
                                 <ion-card-subtitle> An explanation of what a word means </ion-card-subtitle>
@@ -80,7 +80,7 @@
                             :existing-generic-external-links="genericExternalLinks"
                         />
 
-                        <ion-card>
+                        <ion-card class="no-margin-lr">
                             <ion-card-header>
                                 <ion-card-title> Is Draft </ion-card-title>
                                 <ion-card-subtitle>
@@ -92,25 +92,23 @@
                             </ion-card-content>
                         </ion-card>
 
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col size="6">
-                                    <ion-button fill="outline" color="warning" expand="block" @click="back">
-                                        Cancel
-                                    </ion-button>
-                                </ion-col>
-                                <ion-col size="6">
-                                    <ion-button
-                                        color="success"
-                                        expand="block"
-                                        :disabled="disableSaveButton"
-                                        @click="persist"
-                                    >
-                                        Save
-                                    </ion-button>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
+                        <ion-row>
+                            <ion-col size="6">
+                                <ion-button fill="outline" color="warning" expand="block" @click="back">
+                                    Cancel
+                                </ion-button>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-button
+                                    color="success"
+                                    expand="block"
+                                    :disabled="disableSaveButton"
+                                    @click="persist"
+                                >
+                                    Save
+                                </ion-button>
+                            </ion-col>
+                        </ion-row>
                     </view>
                 </ion-col>
             </ion-row>
@@ -141,7 +139,6 @@ import {
     IonButton,
     IonItemGroup,
     IonCard,
-    IonGrid,
     IonRow,
     IonCol,
     IonCardTitle,
@@ -201,7 +198,6 @@ export default defineComponent({
         IonButton,
         IonItemGroup,
         IonCard,
-        IonGrid,
         IonRow,
         IonCol,
         IonCardHeader,

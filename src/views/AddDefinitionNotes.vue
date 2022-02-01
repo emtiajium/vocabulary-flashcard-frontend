@@ -1,5 +1,5 @@
 <template>
-    <ion-card>
+    <ion-card class="no-margin-lr">
         <ion-card-header>
             <ion-card-title> Notes </ion-card-title>
             <ion-card-subtitle>

@@ -1,5 +1,5 @@
 <template>
-    <ion-card>
+    <ion-card class="no-margin-lr">
         <ion-card-header>
             <ion-card-title> Generic External Links </ion-card-title>
             <ion-card-subtitle> Any external link can be inserted here </ion-card-subtitle>
