@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.5.1`: Fixed left-right marking issue of add/edit vocab/definition
 -   `0.5.0`: Improved UI for the web app + Get it on Google Play
 -   `0.4.1`: Dark mode for the guest also
 -   `0.4.0`: Privacy policy + Landing page + HTTPS
@@ -145,6 +146,7 @@
 
 ## Release Log
 
+-   `28`: `0.5.1`
 -   `27`: `0.5.0`
 -   `26`: `0.4.1`
 -   `25`: `0.4.0`
