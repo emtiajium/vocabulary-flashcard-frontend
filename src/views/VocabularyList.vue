@@ -13,19 +13,27 @@
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-card v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError">
-                <ion-card-content>
-                    <ion-card-subtitle class="ion-text-center">
-                        Looks like you do not have any vocabulary in your cohort yet! We can generate a few if you wish.
-                        All you need is to click the button below and wait a bit! And FYI, you may remove those later.
-                    </ion-card-subtitle>
-                    <view class="display-flex ion-justify-content-end">
-                        <ion-item lines="none">
-                            <ion-button @click="bootstrap"> Fetch </ion-button>
-                        </ion-item>
-                    </view>
-                </ion-card-content>
-            </ion-card>
+            <ion-row
+                v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError"
+                class="display-flex ion-justify-content-center"
+            >
+                <ion-col sizeXs="8" sizeSm="8" sizeMd="10" sizeLg="10" sizeXl="10">
+                    <ion-card class="no-margin-lr">
+                        <ion-card-content>
+                            <ion-card-subtitle class="ion-text-center">
+                                Looks like you do not have any vocabulary in your cohort yet! We can generate a few if
+                                you wish. All you need is to click the button below and wait a bit! And FYI, you may
+                                remove those later.
+                            </ion-card-subtitle>
+                            <view class="display-flex ion-justify-content-end">
+                                <ion-item lines="none">
+                                    <ion-button @click="bootstrap"> Fetch </ion-button>
+                                </ion-item>
+                            </view>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
 
             <spinner v-if="showSpinner" />
 
