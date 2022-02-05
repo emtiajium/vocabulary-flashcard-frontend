@@ -92,16 +92,37 @@
                             </ion-card-content>
                         </ion-card>
 
-                        <ion-row>
-                            <ion-col size="6">
-                                <ion-button fill="outline" color="warning" expand="block" @click="back">
+                        <ion-row class="buttons-container">
+                            <ion-col
+                                sizeXs="6"
+                                sizeSm="4"
+                                sizeMd="2"
+                                sizeLg="2"
+                                sizeXl="2"
+                                class="cancel-button-container"
+                            >
+                                <ion-button
+                                    fill="outline"
+                                    color="warning"
+                                    expand="block"
+                                    class="cancel-button"
+                                    @click="back"
+                                >
                                     Cancel
                                 </ion-button>
                             </ion-col>
-                            <ion-col size="6">
+                            <ion-col
+                                sizeXs="6"
+                                sizeSm="4"
+                                sizeMd="2"
+                                sizeLg="2"
+                                sizeXl="2"
+                                class="save-button-container"
+                            >
                                 <ion-button
                                     color="success"
                                     expand="block"
+                                    class="save-button"
                                     :disabled="disableSaveButton"
                                     @click="persist"
                                 >
@@ -511,4 +532,22 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.buttons-container {
+    justify-content: flex-end;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.cancel-button-container {
+    padding-inline-start: unset;
+}
+.save-button-container {
+    padding-inline-end: unset;
+}
+.cancel-button {
+    margin-inline-start: unset;
+}
+.save-button {
+    margin-inline-end: unset;
+}
+</style>
