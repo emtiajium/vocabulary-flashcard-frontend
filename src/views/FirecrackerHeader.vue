@@ -4,9 +4,19 @@
             <ion-grid>
                 <ion-row>
                     <ion-col size="12" class="display-flex">
-                        <ion-menu-button @click="onClickIcon">
-                            <font-awesome-icon v-if="type === 'MENU'" :icon="faBars" />
+                        <ion-menu-button v-if="type === 'MENU'" @click="onClickMenuIcon">
+                            <font-awesome-icon :icon="faBars" />
                         </ion-menu-button>
+                        <ion-button
+                            v-if="type === 'BACK'"
+                            color="white"
+                            shape="round"
+                            fill="clear"
+                            class="back-icon"
+                            @click="onClickBackIcon"
+                        >
+                            <font-awesome-icon :icon="faLongArrowAltLeft" />
+                        </ion-button>
                         <ion-title v-if="!enableSearching" class="overflowed-content"> {{ headerTitle }} </ion-title>
                         <ion-searchbar
                             v-if="enableSearching"
@@ -48,7 +58,7 @@ import {
     IonButton,
 } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBars, faArrowLeft, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faArrowLeft, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerMenu from '@/views/FirecrackerMenu.vue';
 import * as _ from 'lodash';
 
@@ -125,6 +135,7 @@ export default defineComponent({
             faBars,
             faArrowLeft,
             faEllipsisV,
+            faLongArrowAltLeft,
             debouncedOnChangeSearchKeyword: (() => {
                 // this block's purpose is to pacify es-lint
                 // no-empty-function
@@ -139,17 +150,11 @@ export default defineComponent({
         async openMenu(): Promise<void> {
             await (this.$refs.FirecrackerMenuRef as InstanceType<typeof FirecrackerMenu>).openMenu();
         },
-        back(): void {
-            // Something is wrong!
-            // Nothing is wrong, back button needs to be set outside the <IonMenuButton />
+        onClickBackIcon(): void {
             this.$router.back();
         },
-        async onClickIcon(): Promise<void> {
-            if (this.type === 'MENU') {
-                await this.openMenu();
-            } else {
-                this.back();
-            }
+        async onClickMenuIcon(): Promise<void> {
+            await this.openMenu();
         },
         onChangeSearchKeyword($event: CustomEvent): void {
             this.setSearchKeyword($event.detail.value);
@@ -172,5 +177,11 @@ ion-toolbar .sc-ion-searchbar-ios-h {
     --padding-end: 8px;
     width: 40px;
     height: 40px;
+}
+
+.back-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
 }
 </style>

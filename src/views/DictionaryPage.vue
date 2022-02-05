@@ -1,6 +1,11 @@
 <template>
     <ion-page>
-        <firecracker-header :header-title="$route.params.word" content-id="dictionary" menu-id="dictionary-menu" />
+        <firecracker-header
+            :header-title="$route.params.word"
+            content-id="dictionary"
+            menu-id="dictionary-menu"
+            type="BACK"
+        />
         <ion-content :fullscreen="true" id="dictionary">
             <ion-grid>
                 <ion-row class="display-flex ion-justify-content-center">

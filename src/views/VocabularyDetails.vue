@@ -4,6 +4,7 @@
             :header-title="headerTitle"
             content-id="vocabulary-details"
             menu-id="vocabulary-details-menu"
+            type="BACK"
         />
 
         <ion-content :fullscreen="true" id="vocabulary-details">

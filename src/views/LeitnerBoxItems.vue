@@ -4,6 +4,7 @@
             :header-title="headerTitle"
             content-id="leitner-box-items"
             menu-id="leitner-box-items-menu"
+            type="BACK"
         />
         <ion-content :fullscreen="true" id="leitner-box-items">
             <spinner v-if="showSpinner && !isNetworkError" />
