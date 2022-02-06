@@ -125,7 +125,7 @@ export default defineComponent({
     },
     methods: {
         async seeMore(id: string, word: string): Promise<void> {
-            await this.$router.push(`/vocabulary/read/${id}/${word}`);
+            await this.$router.push(`/vocabulary/read/${id}/${word}/${false}`);
         },
         async presentAlertConfirm(vocabulary: Vocabulary): Promise<void> {
             await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"?`, async () => {

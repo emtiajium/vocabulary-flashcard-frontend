@@ -160,7 +160,7 @@
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                 <ion-fab-button
-                    v-if="!isLoading && Object.keys(vocabulary).length"
+                    v-if="!isLoading && Object.keys(vocabulary).length && !disableInsertingIntoLeitnerBox"
                     size="small"
                     color="lightest"
                     :disabled="disableBoxInsertionButton"
@@ -237,6 +237,7 @@ export default defineComponent({
     data() {
         return {
             headerTitle: this.$route.params.word || '',
+            disableInsertingIntoLeitnerBox: this.$route.params.disableInsertingIntoLeitnerBox === 'true',
             isLoading: true,
             vocabulary: {} as Vocabulary,
             showDefaultMessage: false,

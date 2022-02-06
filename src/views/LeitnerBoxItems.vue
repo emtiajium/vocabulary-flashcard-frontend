@@ -267,7 +267,7 @@ export default defineComponent({
         },
 
         async seeMore(id: string, word: string): Promise<void> {
-            await this.$router.push(`/vocabulary/read/${id}/${word}`);
+            await this.$router.push(`/vocabulary/read/${id}/${word}/${true}`);
         },
 
         isFirstBox(): boolean {

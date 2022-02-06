@@ -51,7 +51,7 @@ const routes: RouteRecordRaw[] = [
         component: AddVocabulary,
     },
     {
-        path: '/vocabulary/read/:id/:word',
+        path: '/vocabulary/read/:id/:word/:disableInsertingIntoLeitnerBox',
         name: Route.DisplayVocabulary,
         component: Vocabulary,
     },
