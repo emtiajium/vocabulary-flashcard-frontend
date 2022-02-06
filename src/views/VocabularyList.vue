@@ -224,11 +224,7 @@ export default defineComponent({
         async setSortStuff(): Promise<void> {
             const selectedSort = await NativeStorage.getVocabSort();
             if (!_.isEmpty(selectedSort)) {
-                this.selectedSort = `${selectedSort.field}_${selectedSort.direction}`;
-                this.sort = {
-                    field: selectedSort.field,
-                    direction: selectedSort.direction,
-                };
+                this.onChangeSort(`${selectedSort.field}_${selectedSort.direction}`);
             }
         },
 
