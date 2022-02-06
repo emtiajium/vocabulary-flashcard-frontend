@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.6.1`: UI/UX improvement
 -   `0.6.0`: Introduced back icon (backward to the previous route)
 -   `0.5.1`: Fixed left-right marking issue of add/edit vocab/definition
 -   `0.5.0`: Improved UI for the web app + Get it on Google Play
@@ -147,6 +148,7 @@
 
 ## Release Log
 
+-   `30`: `0.6.1`
 -   `29`: `0.6.0`
 -   `28`: `0.5.1`
 -   `27`: `0.5.0`
