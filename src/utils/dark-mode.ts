@@ -1,6 +1,6 @@
-import { Device } from '@capacitor/device';
 import { ThemeDetection } from '@ionic-native/theme-detection';
 import NativeStorage from '@/utils/NativeStorage';
+import Platform from '@/utils/Platform';
 
 type ExternalHandler = (value: boolean) => void;
 
@@ -40,8 +40,8 @@ export function setThemeMode(mode: 'light' | 'dark'): void {
 
 export async function setThemeBasedOnSystem(): Promise<void> {
     try {
-        const { platform } = await Device.getInfo();
-        if (platform === 'android') {
+        const isAndroid = await Platform.isAndroid();
+        if (isAndroid) {
             const { value: isAvailable } = await ThemeDetection.isAvailable();
             if (isAvailable) {
                 const { value: isDarkModeEnabled } = await ThemeDetection.isDarkModeEnabled();
