@@ -9,7 +9,7 @@
             :search-keyword="searchKeyword"
             :set-search-keyword="setSearchKeyword"
             :enable-settings="true"
-            :modify-settings="onClosingSettingsPopover"
+            :modify-settings="openSettingsPopover"
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
@@ -102,44 +102,13 @@
                 <ion-fab-button color="warning" :disabled="true" size="small"> {{ totalVocabularies }} </ion-fab-button>
             </ion-fab>
 
-            <ion-popover
-                :is-open="isSettingsPopoverOpened"
-                css-class="settings-popover"
-                @didDismiss="onClosingSettingsPopover"
-            >
-                <ion-list lines="none">
-                    <ion-radio-group :value="selectedSort" @ionChange="onChangeSort($event)">
-                        <ion-list-header>
-                            <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
-                        </ion-list-header>
-
-                        <ion-item>
-                            <ion-label> Date created (newest first) </ion-label>
-                            <ion-radio slot="end" value="createdAt_DESC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date created (oldest first) </ion-label>
-                            <ion-radio slot="end" value="createdAt_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date updated (newest first) </ion-label>
-                            <ion-radio slot="end" value="updatedAt_DESC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date updated (oldest first) </ion-label>
-                            <ion-radio slot="end" value="updatedAt_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Word (alphabetically first) </ion-label>
-                            <ion-radio slot="end" value="word_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Word (alphabetically last) </ion-label>
-                            <ion-radio slot="end" value="word_DESC" />
-                        </ion-item>
-                    </ion-radio-group>
-                </ion-list>
-            </ion-popover>
+            <sorting-preference
+                :is-settings-popover-opened="isSettingsPopoverOpened"
+                :selected-sort="selectedSort"
+                :close-settings-popover="closeSettingsPopover"
+                :apply-sorting="applySorting"
+                :on-change-sort="onChangeSort"
+            />
         </ion-content>
     </ion-page>
 </template>
@@ -157,12 +126,6 @@ import {
     IonButton,
     IonItem,
     IonRefresher,
-    IonPopover,
-    IonLabel,
-    IonRadio,
-    IonRadioGroup,
-    IonList,
-    IonListHeader,
     IonRow,
     IonCol,
 } from '@ionic/vue';
@@ -182,6 +145,7 @@ import Spinner from '@/views/Spinner.vue';
 import * as _ from 'lodash';
 import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
+import SortingPreference from '@/views/SortingPreference.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -189,6 +153,7 @@ type IonRefresherType = Components.IonRefresher;
 export default defineComponent({
     name: 'VocabularyList',
     components: {
+        SortingPreference,
         Spinner,
         NetworkError,
         MinifiedVocabulary,
@@ -205,12 +170,6 @@ export default defineComponent({
         IonButton,
         IonItem,
         IonRefresher,
-        IonPopover,
-        IonLabel,
-        IonRadio,
-        IonList,
-        IonRadioGroup,
-        IonListHeader,
         IonRow,
         IonCol,
     },
@@ -218,12 +177,12 @@ export default defineComponent({
         return {
             showSpinner: false,
             faPlus,
+            faGlassCheers,
             vocabularies: [] as Vocabulary[],
             pageNumber: 1,
             pageSize: 10,
             isDisabled: false,
             allQuietOnTheWesternFront: false,
-            faGlassCheers,
             isNetworkError: false,
             searchKeyword: '',
             totalVocabularies: 0,
@@ -419,8 +378,15 @@ export default defineComponent({
             }
         },
 
-        async onClosingSettingsPopover(): Promise<void> {
-            this.isSettingsPopoverOpened = !this.isSettingsPopoverOpened;
+        openSettingsPopover(): void {
+            this.isSettingsPopoverOpened = true;
+        },
+
+        closeSettingsPopover(): void {
+            this.isSettingsPopoverOpened = false;
+        },
+
+        async applySorting(): Promise<void> {
             if (
                 !this.isSettingsPopoverOpened &&
                 !isObjectEqual(_.cloneDeep(this.sort), (await NativeStorage.getVocabSort()) || {})
@@ -430,12 +396,12 @@ export default defineComponent({
             }
         },
 
-        onChangeSort(event: CustomEvent): void {
-            this.selectedSort = event.detail.value;
-            const [field, direction] = event.detail.value.split('_');
+        onChangeSort(selectedOption: string): void {
+            this.selectedSort = selectedOption;
+            const [field, direction] = selectedOption.split('_');
             this.sort = {
                 field,
-                direction,
+                direction: direction as SortDirection,
             };
         },
     },
