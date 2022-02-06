@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.6.2`: UI/UX improvement: V2
 -   `0.6.1`: UI/UX improvement
 -   `0.6.0`: Introduced back icon (backward to the previous route)
 -   `0.5.1`: Fixed left-right marking issue of add/edit vocab/definition
@@ -148,6 +149,7 @@
 
 ## Release Log
 
+-   `31`: `0.6.2`
 -   `30`: `0.6.1`
 -   `29`: `0.6.0`
 -   `28`: `0.5.1`
