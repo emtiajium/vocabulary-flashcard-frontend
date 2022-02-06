@@ -17,17 +17,22 @@
                 v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError"
                 class="display-flex ion-justify-content-center"
             >
-                <ion-col sizeXs="8" sizeSm="8" sizeMd="10" sizeLg="10" sizeXl="10">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
                     <ion-card class="no-margin-lr">
                         <ion-card-content>
-                            <ion-card-subtitle class="ion-text-center">
+                            <view class="display-flex ion-justify-content-center">
+                                <ion-item lines="none">
+                                    <span class="material-icons new-entrant-announcement-icon"> campaign </span>
+                                </ion-item>
+                            </view>
+                            <ion-card-subtitle class="ion-text-center ion-padding">
                                 Looks like you do not have any vocabulary in your cohort yet! We can generate a few if
                                 you wish. All you need is to click the button below and wait a bit! And FYI, you may
                                 remove those later.
                             </ion-card-subtitle>
-                            <view class="display-flex ion-justify-content-end">
+                            <view class="display-flex ion-justify-content-center ion-padding">
                                 <ion-item lines="none">
-                                    <ion-button @click="bootstrap"> Fetch </ion-button>
+                                    <ion-button @click="bootstrap" size="large"> Fetch </ion-button>
                                 </ion-item>
                             </view>
                         </ion-card-content>
@@ -410,6 +415,10 @@ export default defineComponent({
     color: var(--ion-color-primary);
 }
 .searching-result-zero-icon {
+    font-size: 60pt;
+    color: var(--ion-color-primary);
+}
+.new-entrant-announcement-icon {
     font-size: 60pt;
     color: var(--ion-color-primary);
 }
