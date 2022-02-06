@@ -15,7 +15,7 @@
                 class="display-flex ion-justify-content-center"
             >
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-card v-if="showDefaultMessage" class="ion-padding no-margin">
+                    <ion-card v-if="showDefaultMessage" class="ion-padding no-margin-lr">
                         <empty-container :message="defaultMessage" />
                     </ion-card>
 
