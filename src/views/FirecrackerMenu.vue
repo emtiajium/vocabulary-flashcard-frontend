@@ -16,7 +16,7 @@
                     <strong class="item-text ion-text-capitalize"> Vocab Practice </strong>
                 </div>
             </div>
-            <ion-list>
+            <ion-list lines="none">
                 <ion-item v-if="isAuthenticated" button @click="navigate('/vocabularies')">
                     <font-awesome-icon :icon="faBook" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Vocabularies </ion-label>
@@ -155,7 +155,7 @@ export default defineComponent({
     background-color: var(--ion-color-primary);
 }
 .item-text {
-    color: #ffffff;
+    color: var(--ion-color-white);
 }
 .menu-icon {
     color: var(--ion-color-primary);
