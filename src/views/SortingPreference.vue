@@ -2,7 +2,7 @@
     <ion-popover :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" css-class="settings-popover">
         <ion-list lines="none">
             <ion-radio-group :value="selectedSort" @ionChange="setSelectedOption($event)">
-                <ion-list-header>
+                <ion-list-header class="title-container">
                     <ion-card-subtitle class="title"> Sorting Preference </ion-card-subtitle>
                     <ion-button shape="round" size="small" color="warning" class="close" @click="closeSettingsPopover">
                         <font-awesome-icon :icon="faTimesCircle" class="close-icon" />
@@ -96,6 +96,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.title-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 .title {
     width: 80vw;
 }
