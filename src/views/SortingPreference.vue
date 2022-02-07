@@ -3,34 +3,34 @@
         <ion-list lines="none">
             <ion-radio-group :value="selectedSort" @ionChange="setSelectedOption($event)">
                 <ion-list-header class="title-container">
-                    <ion-card-subtitle class="title"> Sorting Preference </ion-card-subtitle>
+                    <ion-label class="title"> Sorting Preference </ion-label>
                     <ion-button shape="round" size="small" color="warning" class="close" @click="closeSettingsPopover">
                         <font-awesome-icon :icon="faTimesCircle" class="close-icon" />
                     </ion-button>
                 </ion-list-header>
 
                 <ion-item>
-                    <ion-label> Date created (newest first) </ion-label>
+                    <ion-card-subtitle> Date created (newest first) </ion-card-subtitle>
                     <ion-radio slot="end" value="createdAt_DESC" />
                 </ion-item>
                 <ion-item>
-                    <ion-label> Date created (oldest first) </ion-label>
+                    <ion-card-subtitle> Date created (oldest first) </ion-card-subtitle>
                     <ion-radio slot="end" value="createdAt_ASC" />
                 </ion-item>
                 <ion-item>
-                    <ion-label> Date updated (newest first) </ion-label>
+                    <ion-card-subtitle> Date updated (newest first) </ion-card-subtitle>
                     <ion-radio slot="end" value="updatedAt_DESC" />
                 </ion-item>
                 <ion-item>
-                    <ion-label> Date updated (oldest first) </ion-label>
+                    <ion-card-subtitle> Date updated (oldest first) </ion-card-subtitle>
                     <ion-radio slot="end" value="updatedAt_ASC" />
                 </ion-item>
                 <ion-item>
-                    <ion-label> Word (alphabetically first) </ion-label>
+                    <ion-card-subtitle> Word (alphabetically first) </ion-card-subtitle>
                     <ion-radio slot="end" value="word_ASC" />
                 </ion-item>
                 <ion-item>
-                    <ion-label> Word (alphabetically last) </ion-label>
+                    <ion-card-subtitle> Word (alphabetically last) </ion-card-subtitle>
                     <ion-radio slot="end" value="word_DESC" />
                 </ion-item>
             </ion-radio-group>
