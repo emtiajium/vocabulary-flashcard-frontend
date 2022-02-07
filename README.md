@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.6.3`: UI/UX improvement: V3
 -   `0.6.2`: UI/UX improvement: V2
 -   `0.6.1`: UI/UX improvement
 -   `0.6.0`: Introduced back icon (backward to the previous route)
@@ -149,6 +150,7 @@
 
 ## Release Log
 
+-   `32`: `0.6.3`
 -   `31`: `0.6.2`
 -   `30`: `0.6.1`
 -   `29`: `0.6.0`
