@@ -109,6 +109,7 @@
 
 ## Change Log
 
+-   `0.6.4`: UI/UX improvement: V4
 -   `0.6.3`: UI/UX improvement: V3
 -   `0.6.2`: UI/UX improvement: V2
 -   `0.6.1`: UI/UX improvement
@@ -150,6 +151,7 @@
 
 ## Release Log
 
+-   `33`: `0.6.4`
 -   `32`: `0.6.3`
 -   `31`: `0.6.2`
 -   `30`: `0.6.1`
