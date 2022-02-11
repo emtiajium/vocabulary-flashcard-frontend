@@ -111,7 +111,7 @@
 
 ## Change Log
 
--   `0.7.0`: Thumbnail using <meta /> (Open Graph protocol)
+-   `0.7.0`: Thumbnail using `<meta />` (Open Graph protocol)
 -   `0.6.4`: UI/UX improvement: V4
 -   `0.6.3`: UI/UX improvement: V3
 -   `0.6.2`: UI/UX improvement: V2
@@ -152,7 +152,7 @@
 -   `0.1.1`: Cohort + Menubar + Sign out
 -   `0.1.0`: User creation with Google authentication + Basic vocabulary functionalities
 
-## Release Log
+## Android Release Log
 
 -   `33`: `0.6.4`
 -   `32`: `0.6.3`
