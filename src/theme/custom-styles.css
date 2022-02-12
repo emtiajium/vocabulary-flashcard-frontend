@@ -29,13 +29,19 @@ ion-card.transparent {
     box-shadow: unset;
 }
 
-ion-card.no-margin {
+.no-margin {
     margin: unset;
 }
 
 .no-margin-lr {
     margin-left: unset;
     margin-right: unset;
+}
+
+.no-margin-lrt {
+    margin-left: unset;
+    margin-right: unset;
+    margin-top: unset;
 }
 
 .firecracker-primary-colored-icon {

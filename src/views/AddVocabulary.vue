@@ -9,7 +9,7 @@
                     <spinner v-if="isLoading" />
 
                     <view v-if="!isLoading">
-                        <ion-card class="no-margin-lr">
+                        <ion-card class="no-margin-lrt">
                             <ion-card-header>
                                 <ion-card-title> Word </ion-card-title>
                                 <ion-card-subtitle>
