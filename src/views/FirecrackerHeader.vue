@@ -155,7 +155,6 @@ ion-toolbar.sc-ion-searchbar-ios-h,
 ion-toolbar .sc-ion-searchbar-ios-h {
     padding-top: unset;
     padding-bottom: unset;
-    padding-right: unset;
 }
 
 .settings-button {
