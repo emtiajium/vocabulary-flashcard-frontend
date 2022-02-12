@@ -27,7 +27,7 @@
                 class="display-flex ion-justify-content-center"
             >
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="8" sizeXl="8">
-                    <ion-card class="no-margin">
+                    <ion-card class="margin-top-bottom-unset">
                         <ion-card-header>
                             <ion-card-title class="display-flex ion-justify-content-center capitalize">
                                 {{ boxItem.word }}

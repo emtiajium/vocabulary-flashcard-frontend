@@ -9,7 +9,7 @@
                     <spinner v-if="isLoading" />
 
                     <view v-if="!isLoading">
-                        <ion-card class="no-margin-lrt">
+                        <ion-card class="margin-top-unset">
                             <ion-card-header>
                                 <ion-card-title> Word </ion-card-title>
                                 <ion-card-subtitle>
@@ -31,7 +31,7 @@
                             </ion-card-content>
                         </ion-card>
 
-                        <ion-card class="no-margin-lr">
+                        <ion-card>
                             <ion-card-header>
                                 <ion-card-title> Definitions </ion-card-title>
                                 <ion-card-subtitle> An explanation of what a word means </ion-card-subtitle>
@@ -80,7 +80,7 @@
                             :existing-generic-external-links="genericExternalLinks"
                         />
 
-                        <ion-card class="no-margin-lr">
+                        <ion-card>
                             <ion-card-header>
                                 <ion-card-title> Is Draft </ion-card-title>
                                 <ion-card-subtitle>

@@ -1,5 +1,5 @@
 <template>
-    <ion-card class="no-margin-lr">
+    <ion-card>
         <ion-card-header>
             <ion-card-title> External Links </ion-card-title>
             <ion-card-subtitle>

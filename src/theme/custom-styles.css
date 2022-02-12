@@ -29,18 +29,17 @@ ion-card.transparent {
     box-shadow: unset;
 }
 
-.no-margin {
-    margin: unset;
+ion-card {
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
-.no-margin-lr {
-    margin-left: unset;
-    margin-right: unset;
+ion-card.margin-top-bottom-unset {
+    margin-top: unset;
+    margin-bottom: unset;
 }
 
-.no-margin-lrt {
-    margin-left: unset;
-    margin-right: unset;
+ion-card.margin-top-unset {
     margin-top: unset;
 }
 

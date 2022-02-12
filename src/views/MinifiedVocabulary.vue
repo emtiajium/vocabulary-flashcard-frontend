@@ -1,5 +1,5 @@
 <template>
-    <ion-card button="true" class="no-margin">
+    <ion-card button="true" class="margin-top-bottom-unset">
         <ion-row>
             <ion-col
                 sizeXs="8"

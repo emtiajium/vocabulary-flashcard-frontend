@@ -1,5 +1,5 @@
 <template>
-    <ion-card class="no-margin-lr">
+    <ion-card>
         <ion-card-header>
             <ion-card-title> Examples </ion-card-title>
             <ion-card-subtitle> Usage of the word in a sentence </ion-card-subtitle>

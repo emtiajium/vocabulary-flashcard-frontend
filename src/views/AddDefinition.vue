@@ -10,7 +10,7 @@
         <ion-content :fullscreen="true" id="add-definition">
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-card class="no-margin-lrt">
+                    <ion-card class="margin-top-unset">
                         <ion-card-header>
                             <ion-card-title> Meaning </ion-card-title>
                             <ion-card-subtitle> An idea or a thing that a word represents </ion-card-subtitle>

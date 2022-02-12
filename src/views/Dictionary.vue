@@ -1,6 +1,6 @@
 <template>
     <view>
-        <ion-card class="no-margin-lrt">
+        <ion-card class="margin-top-unset">
             <ion-card-header class="label-block">
                 <ion-card-title class="ion-text-center"> Definition in the renowned dictionary </ion-card-title>
             </ion-card-header>

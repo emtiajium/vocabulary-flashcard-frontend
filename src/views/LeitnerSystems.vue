@@ -4,7 +4,7 @@
         <ion-content :fullscreen="true" id="leitner-boxes">
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-card :button="true" class="no-margin" @click="toggle">
+                    <ion-card :button="true" class="margin-top-bottom-unset" @click="toggle">
                         <ion-card-content>
                             <ion-card-subtitle>
                                 People often struggle to memorize vocabulary in the long run. Fortunately, there are

@@ -1,5 +1,5 @@
 <template>
-    <ion-card :button="true" class="transparent no-margin" @click="navigate">
+    <ion-card :button="true" class="transparent margin-top-bottom-unset" @click="navigate">
         <ion-card-content class="no-padding">
             <ion-grid>
                 <ion-row class="display-flex ion-justify-content-center">

@@ -15,12 +15,12 @@
                 class="display-flex ion-justify-content-center"
             >
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-card v-if="showDefaultMessage" class="ion-padding no-margin-lrt">
+                    <ion-card v-if="showDefaultMessage" class="ion-padding margin-top-unset">
                         <empty-container :message="defaultMessage" />
                     </ion-card>
 
                     <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
-                        <ion-card :class="definitionIndex === 0 ? 'no-margin-lrt' : 'no-margin-lr'">
+                        <ion-card :class="definitionIndex === 0 ? 'margin-top-unset' : ''">
                             <ion-card-header>
                                 <ion-card-title>
                                     <span>
@@ -82,7 +82,7 @@
                         </ion-card>
                     </view>
 
-                    <ion-card v-if="vocabulary.linkerWords.length" class="no-margin-lr">
+                    <ion-card v-if="vocabulary.linkerWords.length">
                         <ion-card-header>
                             <ion-card-title> Relatable Words </ion-card-title>
                         </ion-card-header>
@@ -107,7 +107,7 @@
                         </ion-card-content>
                     </ion-card>
 
-                    <ion-card v-if="vocabulary.genericNotes.length" class="no-margin-lr">
+                    <ion-card v-if="vocabulary.genericNotes.length">
                         <ion-card-header>
                             <ion-card-title> Generic Notes </ion-card-title>
                         </ion-card-header>
@@ -127,7 +127,7 @@
                         </ion-card-content>
                     </ion-card>
 
-                    <ion-card v-if="vocabulary.genericExternalLinks.length" class="no-margin-lr">
+                    <ion-card v-if="vocabulary.genericExternalLinks.length">
                         <ion-card-header>
                             <ion-card-title> Generic External Links </ion-card-title>
                         </ion-card-header>
