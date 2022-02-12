@@ -1,44 +1,42 @@
 <template>
-    <ion-header>
+    <ion-header class="margin-bottom-5">
         <ion-toolbar>
-            <ion-grid>
-                <ion-row>
-                    <ion-col size="12" class="display-flex">
-                        <ion-menu-button v-if="type === 'MENU'" @click="onClickMenuIcon">
-                            <font-awesome-icon :icon="faBars" />
-                        </ion-menu-button>
-                        <ion-button
-                            v-if="type === 'BACK'"
-                            color="white"
-                            shape="round"
-                            fill="clear"
-                            class="back-icon"
-                            @click="onClickBackIcon"
-                        >
-                            <font-awesome-icon :icon="faLongArrowAltLeft" />
-                        </ion-button>
-                        <ion-title v-if="!enableSearching" class="overflowed-content"> {{ headerTitle }} </ion-title>
-                        <ion-searchbar
-                            v-if="enableSearching"
-                            mode="ios"
-                            :placeholder="searchPlaceholder"
-                            :value="searchKeyword"
-                            @ionChange="debouncedOnChangeSearchKeyword"
-                        />
-                        <ion-button
-                            v-if="enableSettings"
-                            color="white"
-                            size="small"
-                            shape="round"
-                            fill="clear"
-                            class="settings-button"
-                            @click="modifySettings"
-                        >
-                            <font-awesome-icon :icon="faEllipsisV" />
-                        </ion-button>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+            <ion-row>
+                <ion-col size="12" class="display-flex">
+                    <ion-menu-button v-if="type === 'MENU'" @click="onClickMenuIcon">
+                        <font-awesome-icon :icon="faBars" />
+                    </ion-menu-button>
+                    <ion-button
+                        v-if="type === 'BACK'"
+                        color="white"
+                        shape="round"
+                        fill="clear"
+                        class="back-icon"
+                        @click="onClickBackIcon"
+                    >
+                        <font-awesome-icon :icon="faLongArrowAltLeft" />
+                    </ion-button>
+                    <ion-title v-if="!enableSearching" class="overflowed-content"> {{ headerTitle }} </ion-title>
+                    <ion-searchbar
+                        v-if="enableSearching"
+                        mode="ios"
+                        :placeholder="searchPlaceholder"
+                        :value="searchKeyword"
+                        @ionChange="debouncedOnChangeSearchKeyword"
+                    />
+                    <ion-button
+                        v-if="enableSettings"
+                        color="white"
+                        size="small"
+                        shape="round"
+                        fill="clear"
+                        class="settings-button"
+                        @click="modifySettings"
+                    >
+                        <font-awesome-icon :icon="faEllipsisV" />
+                    </ion-button>
+                </ion-col>
+            </ion-row>
         </ion-toolbar>
     </ion-header>
     <firecracker-menu ref="FirecrackerMenuRef" :content-id="contentId" :menu-id="menuId" />
@@ -46,17 +44,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonMenuButton,
-    IonSearchbar,
-    IonButton,
-} from '@ionic/vue';
+import { IonHeader, IonTitle, IonToolbar, IonRow, IonCol, IonMenuButton, IonSearchbar, IonButton } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBars, faArrowLeft, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerMenu from '@/views/FirecrackerMenu.vue';
@@ -69,7 +57,6 @@ export default defineComponent({
         IonHeader,
         IonTitle,
         IonToolbar,
-        IonGrid,
         IonRow,
         IonCol,
         FontAwesomeIcon,
@@ -172,9 +159,9 @@ ion-toolbar .sc-ion-searchbar-ios-h {
 }
 
 .settings-button {
-    font-size: 20px;
     --padding-start: 8px;
     --padding-end: 8px;
+    font-size: 20px;
     width: 40px;
     height: 40px;
 }

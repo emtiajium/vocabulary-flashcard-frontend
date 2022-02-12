@@ -20,7 +20,7 @@
                         </ion-card-content>
                     </view>
 
-                    <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()" class="no-margin-lr">
+                    <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()" class="no-margin-lrt">
                         <ion-card-content>
                             <ion-card-title class="display-flex ion-justify-content-center">
                                 {{ cohort.name }}

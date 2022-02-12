@@ -18,7 +18,7 @@
                 class="display-flex ion-justify-content-center"
             >
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-card class="no-margin-lr">
+                    <ion-card class="no-margin-lrt">
                         <ion-card-content>
                             <view class="display-flex ion-justify-content-center">
                                 <ion-item lines="none">

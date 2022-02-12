@@ -3,8 +3,8 @@
         <firecracker-header header-title="My Flashcards" content-id="leitner-boxes" menu-id="leitner-boxes-menu" />
         <ion-content :fullscreen="true" id="leitner-boxes">
             <ion-row class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10" class="description-container">
-                    <ion-card :button="true" class="description-margin" @click="toggle">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                    <ion-card :button="true" class="no-margin" @click="toggle">
                         <ion-card-content>
                             <ion-card-subtitle>
                                 People often struggle to memorize vocabulary in the long run. Fortunately, there are
@@ -30,7 +30,8 @@
                     </ion-card>
                 </ion-col>
             </ion-row>
-            <ion-row class="display-flex ion-justify-content-center">
+
+            <ion-row class="display-flex ion-justify-content-center box-container">
                 <ion-col sizeXs="6" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="2">
                     <leitner-single-box :box="1" :count="count[1]" />
                 </ion-col>
@@ -113,16 +114,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.description-container {
-    padding-inline-start: unset;
-    padding-inline-end: unset;
-    padding-top: unset;
-    padding-bottom: unset;
-}
-.description-margin {
-    margin: unset;
-    margin-inline: unset;
-    margin-bottom: 10px;
+.box-container {
+    margin-top: 10px;
 }
 
 @media only screen and (min-width: 768px) {

@@ -7,9 +7,9 @@
             menu-id="privacy-policy-menu"
         />
         <ion-content :fullscreen="true" id="privacy-policy">
-            <ion-row class="display-flex ion-justify-content-center">
+            <ion-row class="display-flex ion-justify-content-center margin-bottom-5">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-card :button="true" class="no-margin description-margin">
+                    <ion-card class="no-margin">
                         <ion-card-content>
                             <ion-card-subtitle>
                                 Welcome to <strong>Firecracker Vocab Practice</strong>! Your privacy is important to us.
@@ -114,12 +114,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.description-margin {
-    margin: unset;
-    margin-inline: unset;
-    margin-bottom: 10px;
-}
-
 .header {
     font-weight: bold;
 }
