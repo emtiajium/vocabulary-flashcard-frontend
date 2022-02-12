@@ -20,7 +20,7 @@
                     </ion-card>
 
                     <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
-                        <ion-card :class="definitionIndex === 0 ? 'no-margin' : 'no-margin-lr'">
+                        <ion-card :class="definitionIndex === 0 ? 'no-margin-lrt' : 'no-margin-lr'">
                             <ion-card-header>
                                 <ion-card-title>
                                     <span>
