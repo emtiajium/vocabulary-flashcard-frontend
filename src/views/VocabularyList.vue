@@ -45,7 +45,7 @@
             <view v-if="isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
                     <span class="ion-text-center">
-                        {{ `No vocabularies were found for "${searchKeyword}"` }}
+                        {{ `No vocabulary was found for "${searchKeyword}"` }}
                     </span>
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
