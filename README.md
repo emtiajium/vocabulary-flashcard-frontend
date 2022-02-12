@@ -69,7 +69,7 @@
 
 > Draw the stretchable patches manually using the Draw 9-patch tool. See details from [here](https://developer.android.com/studio/write/draw9patch)
 
-➜ Banner/Website thumbnail: Visit [here](https://www.canva.com/)
+➜ Play store banner/Website thumbnail: Visit [here](https://www.canva.com/)
 
 ## Deploy the web app to the Google Firebase Hosting
 
@@ -111,6 +111,7 @@
 
 ## Change Log
 
+-   `0.7.1`: UI/UX improvement V5 + Used Ionic framework provided `debounce`
 -   `0.7.0`: Thumbnail using `<meta />` (Open Graph protocol)
 -   `0.6.4`: UI/UX improvement: V4
 -   `0.6.3`: UI/UX improvement: V3
@@ -154,6 +155,7 @@
 
 ## Android Release Log
 
+-   `34`: `0.7.1`
 -   `33`: `0.6.4`
 -   `32`: `0.6.3`
 -   `31`: `0.6.2`
