@@ -111,6 +111,7 @@
 
 ## Change Log
 
+-   `0.7.2`: UI/UX improvement: V6
 -   `0.7.1`: UI/UX improvement V5 + Used Ionic framework provided `debounce`
 -   `0.7.0`: Thumbnail using `<meta />` (Open Graph protocol)
 -   `0.6.4`: UI/UX improvement: V4
@@ -155,6 +156,7 @@
 
 ## Android Release Log
 
+-   `35`: `0.7.2`
 -   `34`: `0.7.1`
 -   `33`: `0.6.4`
 -   `32`: `0.6.3`
