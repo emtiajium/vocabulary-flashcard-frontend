@@ -82,7 +82,10 @@
                         </ion-card>
                     </view>
 
-                    <ion-card v-if="vocabulary.linkerWords.length">
+                    <ion-card
+                        v-if="vocabulary.linkerWords.length"
+                        :class="vocabulary.definitions.length === 0 ? 'margin-top-unset' : ''"
+                    >
                         <ion-card-header>
                             <ion-card-title> Relatable Words </ion-card-title>
                         </ion-card-header>
@@ -107,7 +110,10 @@
                         </ion-card-content>
                     </ion-card>
 
-                    <ion-card v-if="vocabulary.genericNotes.length">
+                    <ion-card
+                        v-if="vocabulary.genericNotes.length"
+                        :class="vocabulary.linkerWords.length === 0 ? 'margin-top-unset' : ''"
+                    >
                         <ion-card-header>
                             <ion-card-title> Generic Notes </ion-card-title>
                         </ion-card-header>
@@ -127,7 +133,10 @@
                         </ion-card-content>
                     </ion-card>
 
-                    <ion-card v-if="vocabulary.genericExternalLinks.length">
+                    <ion-card
+                        v-if="vocabulary.genericExternalLinks.length"
+                        :class="vocabulary.genericNotes.length === 0 ? 'margin-top-unset' : ''"
+                    >
                         <ion-card-header>
                             <ion-card-title> Generic External Links </ion-card-title>
                         </ion-card-header>
