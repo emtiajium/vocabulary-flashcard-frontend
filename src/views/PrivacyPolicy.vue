@@ -15,7 +15,7 @@
                                 Welcome to <strong>Firecracker Vocab Practice</strong>! Your privacy is important to us.
                                 This Privacy Policy explains how we collect, store, use, disclose and otherwise process
                                 your information when you use
-                                <a href="https://app.firecrackervocabulary.com" target="_blank"
+                                <a href="https://app.firecrackervocabulary.com" :target="isAndroid ? '_blank' : '_self'"
                                     >https://app.firecrackervocabulary.com</a
                                 >, and our
                                 <a
@@ -97,6 +97,7 @@
 import { defineComponent } from 'vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import { IonContent, IonPage, IonCard, IonCardContent, IonCardSubtitle, IonRow, IonCol } from '@ionic/vue';
+import Platform from '@/utils/Platform';
 
 export default defineComponent({
     name: 'PrivacyPolicy',
@@ -109,6 +110,12 @@ export default defineComponent({
         IonCardSubtitle,
         IonRow,
         IonCol,
+    },
+    data() {
+        return { isAndroid: true };
+    },
+    async mounted() {
+        this.isAndroid = await Platform.isAndroid();
     },
 });
 </script>

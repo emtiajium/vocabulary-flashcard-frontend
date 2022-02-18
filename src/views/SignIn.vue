@@ -22,7 +22,10 @@
                     <ion-row class="ion-justify-content-center ion-padding">
                         <ion-text class="privacy-text">
                             By creating your account, you agree with our
-                            <a href="https://app.firecrackervocabulary.com/privacy-policy" target="_blank">
+                            <a
+                                href="https://app.firecrackervocabulary.com/privacy-policy"
+                                :target="isAndroid ? '_blank' : '_self'"
+                            >
                                 Privacy Policy.
                             </a>
                         </ion-text>
