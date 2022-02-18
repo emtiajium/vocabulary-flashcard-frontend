@@ -1,7 +1,13 @@
 <template>
     <!--tried with routing, but could not find a way to set the definition before navigating back to this page-->
     <ion-page v-bind="$attrs" v-if="!isInDefinition()">
-        <firecracker-header :header-title="headerTitle" content-id="add-vocabulary" menu-id="add-vocabulary-menu" />
+        <firecracker-header
+            :header-title="headerTitle"
+            content-id="add-vocabulary"
+            menu-id="add-vocabulary-menu"
+            type="MANUAL_BACK"
+            :manual-back-icon-handler="back"
+        />
 
         <ion-content :fullscreen="true" id="add-vocabulary">
             <ion-row class="display-flex ion-justify-content-center">

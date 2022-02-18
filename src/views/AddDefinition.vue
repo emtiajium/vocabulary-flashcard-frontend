@@ -4,7 +4,8 @@
             :header-title="word"
             content-id="add-definition"
             menu-id="add-definition-menu"
-            type="MENU"
+            type="MANUAL_BACK"
+            :manual-back-icon-handler="back"
         />
 
         <ion-content :fullscreen="true" id="add-definition">

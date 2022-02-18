@@ -7,7 +7,7 @@
                         <font-awesome-icon :icon="faBars" />
                     </ion-menu-button>
                     <ion-button
-                        v-if="type === 'BACK'"
+                        v-if="['BACK', 'MANUAL_BACK'].includes(type)"
                         color="white"
                         shape="round"
                         fill="clear"
@@ -116,6 +116,13 @@ export default defineComponent({
                 // do nothing
             },
         },
+        manualBackIconHandler: {
+            type: Function,
+            required: false,
+            default: (): void => {
+                // do nothing
+            },
+        },
     },
     data() {
         return {
@@ -129,8 +136,12 @@ export default defineComponent({
         async openMenu(): Promise<void> {
             await (this.$refs.FirecrackerMenuRef as InstanceType<typeof FirecrackerMenu>).openMenu();
         },
-        onClickBackIcon(): void {
-            this.$router.back();
+        async onClickBackIcon(): Promise<void> {
+            if (this.type === 'MANUAL_BACK') {
+                await this.manualBackIconHandler();
+            } else {
+                this.$router.back();
+            }
         },
         async onClickMenuIcon(): Promise<void> {
             await this.openMenu();

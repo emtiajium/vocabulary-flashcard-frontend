@@ -7,7 +7,7 @@ export default class Alert {
         header: string,
         message: string,
         proceedHandler: Handler,
-        changedMindHandler: Handler = Promise.resolve,
+        changedMindHandler: Handler = Promise.resolve.bind(Promise), // https://stackoverflow.com/questions/45210122/
         buttonLabels: Record<string, string> = {
             cancel: 'No',
             agree: 'Yes',
