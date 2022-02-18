@@ -52,6 +52,8 @@ export async function setThemeBasedOnSystem(): Promise<void> {
                     setLightMode();
                 }
             }
+        } else {
+            setLightMode();
         }
     } catch {
         setLightMode();
