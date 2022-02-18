@@ -111,6 +111,7 @@
 
 ## Change Log
 
+-   `0.7.3`: UI/UX improvement: V7 + Introduced back icon for the add/edit vocab/definition page
 -   `0.7.2`: UI/UX improvement: V6
 -   `0.7.1`: UI/UX improvement V5 + Used Ionic framework provided `debounce`
 -   `0.7.0`: Thumbnail using `<meta />` (Open Graph protocol)
@@ -156,6 +157,7 @@
 
 ## Android Release Log
 
+-   `36`: `0.7.3`
 -   `35`: `0.7.2`
 -   `34`: `0.7.1`
 -   `33`: `0.6.4`
