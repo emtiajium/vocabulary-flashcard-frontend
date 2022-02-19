@@ -3,7 +3,7 @@
         <firecracker-header header-title="My Cohort" content-id="cohort" menu-id="cohort-menu" />
         <ion-content id="cohort">
             <ion-row class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6" sizeXl="6">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="8" sizeXl="8">
                     <spinner v-if="!isReady" />
 
                     <network-error v-if="isNetworkError && isReady" />
