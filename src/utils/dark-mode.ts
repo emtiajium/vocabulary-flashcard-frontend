@@ -51,7 +51,7 @@ export async function setThemeBasedOnSystem(): Promise<void> {
     }
 }
 
-export function subscribeToModeChanges(): void {
+export function subscribeToThemeChanges(): void {
     // does not work for Samsung M31
     const prefersDark = window.matchMedia(`(prefers-color-scheme: dark)`);
     prefersDark.addListener((mediaQuery) => {
@@ -61,7 +61,7 @@ export function subscribeToModeChanges(): void {
 
 export async function initTheme(): Promise<void> {
     await setThemeBasedOnSystem();
-    subscribeToModeChanges();
+    subscribeToThemeChanges();
 }
 
 export function getThemeMode(): string {
