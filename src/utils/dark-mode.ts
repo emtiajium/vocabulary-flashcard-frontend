@@ -1,33 +1,14 @@
 import { ThemeDetection } from '@ionic-native/theme-detection';
-import NativeStorage from '@/utils/NativeStorage';
 import Platform from '@/utils/Platform';
-
-type ExternalHandler = (value: boolean) => void;
-
-let externalHandler: ExternalHandler;
-
-export function setExternalHandler(handler: ExternalHandler): void {
-    externalHandler = handler;
-}
-
-function executeExternalHandler(isDark: boolean): void {
-    if (externalHandler) {
-        externalHandler(isDark);
-    }
-}
 
 export function setDarkMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('dark');
-    executeExternalHandler(true);
-    NativeStorage.setThemeMode('dark').finally();
 }
 
 export function setLightMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('light');
-    executeExternalHandler(false);
-    NativeStorage.setThemeMode('light').finally();
 }
 
 export function setThemeMode(mode: 'light' | 'dark'): void {
@@ -47,13 +28,9 @@ export async function setThemeBasedOnSystem(): Promise<void> {
                 const { value: isDarkModeEnabled } = await ThemeDetection.isDarkModeEnabled();
                 if (isDarkModeEnabled) {
                     setDarkMode();
-                } else {
-                    // (CSS class) setting is unnecessary but this method will also modify the native storage's value
-                    setLightMode();
                 }
+                // else do nothing because default mode is light
             }
-        } else {
-            setLightMode();
         }
     } catch {
         setLightMode();
@@ -69,6 +46,10 @@ export function subscribeToModeChanges(): void {
 }
 
 export async function initTheme(): Promise<void> {
-    setThemeBasedOnSystem().finally();
+    await setThemeBasedOnSystem();
     subscribeToModeChanges();
+}
+
+export function getThemeMode(): string {
+    return document.body.classList.value;
 }

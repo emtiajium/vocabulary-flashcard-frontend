@@ -94,14 +94,6 @@ export default class NativeStorage {
         return user && Object.keys(user).length > 0;
     }
 
-    static async setThemeMode(mode: string): Promise<void> {
-        await (await NativeStorage.getStorage()).set(NativeStorageKey.THEME_MODE, mode);
-    }
-
-    static async getThemeMode(): Promise<string> {
-        return NativeStorage.getByKey<string>(NativeStorageKey.THEME_MODE);
-    }
-
     static async setLeitnerBoxExistence(vocabularyId: string): Promise<void> {
         await (await NativeStorage.getStorage()).set(NativeStorageKey.SET_LEITNER_BOX_EXISTENCE, vocabularyId);
     }

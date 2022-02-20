@@ -62,7 +62,7 @@ import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonTog
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
-import { setExternalHandler, setThemeMode } from '@/utils/dark-mode';
+import { getThemeMode, setThemeMode } from '@/utils/dark-mode';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -92,8 +92,8 @@ export default defineComponent({
         };
     },
     async mounted() {
-        await Promise.all([this.initUser(), this.initTheme()]);
-        setExternalHandler(this.changeThemeMode);
+        await this.initUser();
+        this.initTheme();
     },
     methods: {
         async initUser(): Promise<void> {
@@ -107,11 +107,8 @@ export default defineComponent({
                 this.isAuthenticated = true;
             }
         },
-        async initTheme(): Promise<void> {
-            const mode = await NativeStorage.getThemeMode();
-            this.isDark = mode === 'dark';
-        },
         async openMenu(): Promise<void> {
+            this.initTheme(); // to set "isDark"
             await menuController.enable(true, this.menuId);
             await menuController.open(this.menuId);
         },
@@ -127,13 +124,15 @@ export default defineComponent({
         async signOut(): Promise<void> {
             await NativeStorage.removeAuthorizedUser();
             await menuController.close();
+            this.isAuthenticated = false;
             await this.$router.replace('/sign-in');
+        },
+        initTheme(): void {
+            const mode = getThemeMode();
+            this.isDark = mode === 'dark';
         },
         onChangeThemeMode(isDark: boolean): void {
             setThemeMode(isDark ? 'dark' : 'light');
-        },
-        changeThemeMode(isDark: boolean): void {
-            this.isDark = isDark;
         },
     },
 });
