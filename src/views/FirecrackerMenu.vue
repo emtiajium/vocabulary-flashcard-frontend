@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div v-if="!isAuthenticated" class="intro">
-                <img src="/assets/icon/icon.png" alt="Logo" width="100" />
+                <img src="/assets/icon/firecracker-icon.png" alt="Logo" width="100" />
                 <div class="app-name">
                     <strong class="item-text ion-text-capitalize"> Firecracker </strong>
                     <strong class="item-text ion-text-capitalize"> Vocab Practice </strong>
