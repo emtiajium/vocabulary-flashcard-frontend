@@ -1,14 +1,21 @@
 import { ThemeDetection } from '@ionic-native/theme-detection';
 import Platform from '@/utils/Platform';
+import { StatusBar } from '@capacitor/status-bar';
 
 export function setDarkMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('dark');
+    StatusBar.setBackgroundColor({
+        color: '#1f1f1f', // --ion-toolbar-background
+    }).finally();
 }
 
 export function setLightMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('light');
+    StatusBar.setBackgroundColor({
+        color: '#2e8b57', // --ion-toolbar-background
+    }).finally();
 }
 
 export function setThemeMode(mode: 'light' | 'dark'): void {
@@ -28,8 +35,9 @@ export async function setThemeBasedOnSystem(): Promise<void> {
                 const { value: isDarkModeEnabled } = await ThemeDetection.isDarkModeEnabled();
                 if (isDarkModeEnabled) {
                     setDarkMode();
+                } else {
+                    setLightMode();
                 }
-                // else do nothing because default mode is light
             }
         }
     } catch {
