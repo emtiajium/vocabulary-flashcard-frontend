@@ -30,8 +30,9 @@
                     <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                 </ion-item>
                 <ion-item v-if="isAuthenticated">
-                    <font-awesome-icon :icon="faMoon" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Toggle Dark Theme </ion-label>
+                    <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
+                    <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
                     <ion-toggle slot="end" :checked="isDark" @ionChange="onChangeThemeMode($event.detail.checked)" />
                 </ion-item>
                 <ion-item button @click="navigate('/privacy-policy')">
@@ -43,8 +44,9 @@
                     <ion-label class="ion-padding-start"> Sign In </ion-label>
                 </ion-item>
                 <ion-item v-if="!isAuthenticated">
-                    <font-awesome-icon :icon="faMoon" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Toggle Dark Theme </ion-label>
+                    <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
+                    <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
                     <ion-toggle slot="end" :checked="isDark" @ionChange="onChangeThemeMode($event.detail.checked)" />
                 </ion-item>
                 <ion-item v-if="isAuthenticated" button @click="signOut">
@@ -133,6 +135,7 @@ export default defineComponent({
         },
         onChangeThemeMode(isDark: boolean): void {
             setThemeMode(isDark ? 'dark' : 'light');
+            this.isDark = isDark;
         },
     },
 });
