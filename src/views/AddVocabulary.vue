@@ -1,5 +1,5 @@
 <template>
-    <!--tried with routing, but could not find a way to set the definition before navigating back to this page-->
+    <!--tried with routing, but could not find a way to set the definition before navigating back to this page (without relying on the storage)-->
     <ion-page v-bind="$attrs" v-if="!isInDefinition()">
         <firecracker-header
             :header-title="headerTitle"
@@ -446,9 +446,16 @@ export default defineComponent({
             this.currentPage = PageType.VOCABULARY_CU;
             // Do not reset "mode"
             this.goingToBeUpdatedDefinition = {} as Definition;
-            (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).clear();
-            (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>).clear();
-            (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>).clear();
+            // add/edit vocab/definition pages are served by only one route
+            // so when the user presses the browser provided back icon from the definition page
+            // this component's ionViewWillLeave() gets called
+            // but as at that moment <add-vocabulary /> doesn't exist at the DOM tree
+            // below three clear methods throw error
+            /* eslint-disable no-unused-expressions */ // to pacify "?."
+            (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>)?.clear();
+            (this.$refs.AddGenericNotesRef as InstanceType<typeof AddGenericNotes>)?.clear();
+            (this.$refs.AddGenericExternalLinksRef as InstanceType<typeof AddGenericExternalLinks>)?.clear();
+            /* eslint-enable no-unused-expressions */
             this.pristineVocabulary = {} as Vocabulary;
             this.unsubscribeBackButtonListener();
             this.backButtonUnsubscribeHandler = {} as BackButtonUnsubscribeHandler;
