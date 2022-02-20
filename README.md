@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.7.5`: UI/UX improvement: V9
 -   `0.7.4`: UI/UX improvement: V8 + Changed status-bar's color + Favicon + PWA + Fixed minor bugs
 -   `0.7.3`: UI/UX improvement: V7 + Introduced back icon for the add/edit vocab/definition page
 -   `0.7.2`: UI/UX improvement: V6
@@ -159,6 +160,7 @@
 
 ## Android Release Log
 
+-   `38`: `0.7.5`
 -   `37`: `0.7.4`
 -   `36`: `0.7.3`
 -   `35`: `0.7.2`
