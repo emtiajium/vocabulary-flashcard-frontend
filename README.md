@@ -113,6 +113,7 @@
 
 ## Change Log
 
+-   `0.7.4`: UI/UX improvement: V7 + Changed status-bar's color + Fixed minor bugs
 -   `0.7.3`: UI/UX improvement: V7 + Introduced back icon for the add/edit vocab/definition page
 -   `0.7.2`: UI/UX improvement: V6
 -   `0.7.1`: UI/UX improvement V5 + Used Ionic framework provided `debounce`
@@ -159,6 +160,7 @@
 
 ## Android Release Log
 
+-   `36`: `0.7.4`
 -   `36`: `0.7.3`
 -   `35`: `0.7.2`
 -   `34`: `0.7.1`
