@@ -2,20 +2,26 @@ import { ThemeDetection } from '@ionic-native/theme-detection';
 import Platform from '@/utils/Platform';
 import { StatusBar } from '@capacitor/status-bar';
 
+let isAndroid = true;
+
 export function setDarkMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('dark');
-    StatusBar.setBackgroundColor({
-        color: '#1f1f1f', // --ion-toolbar-background
-    }).finally();
+    if (isAndroid) {
+        StatusBar.setBackgroundColor({
+            color: '#1f1f1f', // --ion-toolbar-background
+        }).finally();
+    }
 }
 
 export function setLightMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('light');
-    StatusBar.setBackgroundColor({
-        color: '#2e8b57', // --ion-toolbar-background
-    }).finally();
+    if (isAndroid) {
+        StatusBar.setBackgroundColor({
+            color: '#2e8b57', // --ion-toolbar-background
+        }).finally();
+    }
 }
 
 export function setThemeMode(mode: 'light' | 'dark'): void {
@@ -28,7 +34,7 @@ export function setThemeMode(mode: 'light' | 'dark'): void {
 
 export async function setThemeBasedOnSystem(): Promise<void> {
     try {
-        const isAndroid = await Platform.isAndroid();
+        isAndroid = await Platform.isAndroid();
         if (isAndroid) {
             const { value: isAvailable } = await ThemeDetection.isAvailable();
             if (isAvailable) {
