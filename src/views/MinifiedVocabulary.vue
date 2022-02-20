@@ -4,7 +4,7 @@
             <ion-col
                 sizeXs="8"
                 sizeSm="8"
-                sizeMd="10"
+                sizeMd="9"
                 sizeLg="10"
                 sizeXl="10"
                 @click="seeMore(vocabulary.id, vocabulary.word)"
@@ -31,7 +31,7 @@
                 </ion-card-content>
             </ion-col>
 
-            <ion-col sizeXs="4" sizeSm="4" sizeMd="2" sizeLg="2" sizeXl="2" class="center">
+            <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="2" sizeXl="2" class="center">
                 <ion-row>
                     <ion-button
                         fill="outline"
