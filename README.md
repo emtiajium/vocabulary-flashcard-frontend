@@ -59,17 +59,19 @@
 
 ➜ Run the app
 
-## Launcher icon and splash screen generator
+## Assets generator
 
-➜ Square + Round: Visit [here](https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html)
+➜ Square + Round (Launcher icon): Visit [here](https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html)
 
-➜ Foreground: Visit [here](https://easyappicon.com/)
+➜ Foreground (Launcher icon): Visit [here](https://easyappicon.com/)
 
 ➜ Splash screen: Visit [here](https://romannurik.github.io/AndroidAssetStudio/nine-patches.html)
 
 > Draw the stretchable patches manually using the Draw 9-patch tool. See details from [here](https://developer.android.com/studio/write/draw9patch)
 
 ➜ Play store banner/Website thumbnail: Visit [here](https://www.canva.com/)
+
+➜ Favicon: Visit [here](https://realfavicongenerator.net/)
 
 ## Deploy the web app to the Google Firebase Hosting
 
