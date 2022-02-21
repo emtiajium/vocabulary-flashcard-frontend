@@ -95,7 +95,8 @@ export default defineComponent({
     },
     async mounted() {
         await this.initUser();
-        this.initTheme();
+        this.setThemeStatus();
+        this.observeThemeChange();
     },
     methods: {
         async initUser(): Promise<void> {
@@ -110,7 +111,6 @@ export default defineComponent({
             }
         },
         async openMenu(): Promise<void> {
-            this.initTheme(); // to set "isDark"
             await menuController.enable(true, this.menuId);
             await menuController.open(this.menuId);
         },
@@ -129,13 +129,29 @@ export default defineComponent({
             this.isAuthenticated = false;
             await this.$router.replace('/sign-in');
         },
-        initTheme(): void {
+        setThemeStatus(): void {
             const mode = getThemeMode();
-            this.isDark = mode === 'dark';
+            this.isDark = mode.includes('dark');
+        },
+        observeThemeChange(): void {
+            const targetNode = document.body;
+
+            const config = { attributes: true, attributeFilter: ['class'] };
+
+            const callback = (mutationsRecords: MutationRecord[]): void => {
+                mutationsRecords.forEach((mutation) => {
+                    if (mutation.type === 'attributes') {
+                        this.setThemeStatus();
+                    }
+                });
+            };
+
+            const observer = new MutationObserver(callback);
+
+            observer.observe(targetNode, config);
         },
         onChangeThemeMode(isDark: boolean): void {
             setThemeMode(isDark ? 'dark' : 'light');
-            this.isDark = isDark;
         },
     },
 });
