@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.8.0`: Added tips icon within the add vocab page
 -   `0.7.6`: Detected theme changes using `MutationObserver`
 -   `0.7.5`: UI/UX improvement: V9
 -   `0.7.4`: UI/UX improvement: V8 + Changed status-bar's color + Favicon + PWA + Fixed minor bugs
