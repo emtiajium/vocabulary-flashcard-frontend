@@ -91,7 +91,10 @@
                                         <span class="ion-padding-end overflowed-content">
                                             {{ linkerWord }}
                                         </span>
-                                        <font-awesome-icon :icon="faExternalLinkAlt" class="linker-word-icon" />
+                                        <font-awesome-icon
+                                            :icon="faExternalLinkAlt"
+                                            class="firecracker-primary-colored-icon"
+                                        />
                                     </ion-chip>
                                 </ion-button>
                             </view>
@@ -155,7 +158,7 @@
                     :disabled="disableBoxInsertionButton"
                     @click="insertIntoLeitnerBox"
                 >
-                    <span class="material-icons heart-icon">
+                    <span class="material-icons firecracker-primary-colored-icon">
                         {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
                     </span>
                 </ion-fab-button>
@@ -282,12 +285,6 @@ export default defineComponent({
 <style scoped>
 .linker-word-chip {
     max-width: 20em;
-}
-.linker-word-icon {
-    color: var(--ion-color-primary);
-}
-.heart-icon {
-    color: var(--ion-color-primary);
 }
 li {
     padding-bottom: 10px;
