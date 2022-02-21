@@ -21,11 +21,9 @@
                     </view>
 
                     <ion-card v-if="isReady && !isNetworkError && !isTheUserAlone()" class="margin-top-unset">
-                        <ion-card-content>
-                            <ion-card-title class="display-flex ion-justify-content-center">
-                                {{ cohort.name }}
-                            </ion-card-title>
-                        </ion-card-content>
+                        <ion-card-title class="display-flex ion-justify-content-center name-container">
+                            {{ cohort.name }}
+                        </ion-card-title>
                     </ion-card>
 
                     <view v-if="isReady && !isNetworkError && !isTheUserAlone()">
@@ -142,6 +140,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.name-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 .avatar {
     display: flex;
     flex-direction: row;
