@@ -56,7 +56,7 @@ export default defineComponent({
 
 @media only screen and (min-device-width: 480px) {
     .opened-box-icon {
-        width: 20%;
+        width: 40%;
     }
 }
 
