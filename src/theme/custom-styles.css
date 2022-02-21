@@ -24,6 +24,16 @@ a {
     text-overflow: ellipsis;
 }
 
+.header-md::after {
+    /* unsetting box-shadow */
+    background: unset;
+}
+
+ion-card {
+    box-shadow: unset;
+    border-radius: 8px;
+}
+
 ion-card.transparent {
     --background: var(--ion-background-color);
     box-shadow: unset;
