@@ -36,46 +36,40 @@
                             <ion-card-content>
                                 <ion-card-title> Examples </ion-card-title>
                                 <ul>
-                                    <view v-for="(example, exampleIndex) in definition.examples" :key="exampleIndex">
-                                        <li>
-                                            <span class="capitalize"> {{ example }} </span>
-                                            <br />
-                                            <br />
-                                        </li>
-                                    </view>
+                                    <li v-for="(example, exampleIndex) in definition.examples" :key="exampleIndex">
+                                        <span class="capitalize"> {{ example }} </span>
+                                        <br />
+                                        <br />
+                                    </li>
                                 </ul>
 
                                 <view v-if="definition.notes.length">
                                     <ion-card-title> Notes </ion-card-title>
                                     <ul>
-                                        <view v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
-                                            <li>
-                                                <span class="capitalize"> {{ note }} </span>
-                                                <br />
-                                                <br />
-                                            </li>
-                                        </view>
+                                        <li v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
+                                            <span class="capitalize"> {{ note }} </span>
+                                            <br />
+                                            <br />
+                                        </li>
                                     </ul>
                                 </view>
 
                                 <view v-if="definition.externalLinks.length">
                                     <ion-card-title> External Links </ion-card-title>
                                     <ul>
-                                        <view
+                                        <li
                                             v-for="(externalLink, externalLinkIndex) in definition.externalLinks"
                                             :key="externalLinkIndex"
                                         >
-                                            <li>
-                                                <a :href="externalLink" target="_blank">
-                                                    <span>
-                                                        Browse the link
-                                                        <font-awesome-icon :icon="faExternalLinkAlt" />
-                                                    </span>
-                                                </a>
-                                                <br />
-                                                <br />
-                                            </li>
-                                        </view>
+                                            <a :href="externalLink" target="_blank">
+                                                <span>
+                                                    Browse the link
+                                                    <font-awesome-icon :icon="faExternalLinkAlt" />
+                                                </span>
+                                            </a>
+                                            <br />
+                                            <br />
+                                        </li>
                                     </ul>
                                 </view>
                             </ion-card-content>
@@ -119,16 +113,14 @@
                         </ion-card-header>
                         <ion-card-content>
                             <ul>
-                                <view
+                                <li
                                     v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
                                     :key="genericNotesIndex"
                                 >
-                                    <li>
-                                        <span class="capitalize"> {{ genericNote }} </span>
-                                        <br />
-                                        <br />
-                                    </li>
-                                </view>
+                                    <span class="capitalize"> {{ genericNote }} </span>
+                                    <br />
+                                    <br />
+                                </li>
                             </ul>
                         </ion-card-content>
                     </ion-card>
@@ -142,23 +134,21 @@
                         </ion-card-header>
                         <ion-card-content>
                             <ul>
-                                <view
+                                <li
                                     v-for="(
                                         genericExternalLink, genericExternalLinkIndex
                                     ) in vocabulary.genericExternalLinks"
                                     :key="genericExternalLinkIndex"
                                 >
-                                    <li>
-                                        <a :href="genericExternalLink" target="_blank">
-                                            <span>
-                                                Browse the link
-                                                <font-awesome-icon :icon="faExternalLinkAlt" />
-                                            </span>
-                                        </a>
-                                        <br />
-                                        <br />
-                                    </li>
-                                </view>
+                                    <a :href="genericExternalLink" target="_blank">
+                                        <span>
+                                            Browse the link
+                                            <font-awesome-icon :icon="faExternalLinkAlt" />
+                                        </span>
+                                    </a>
+                                    <br />
+                                    <br />
+                                </li>
                             </ul>
                         </ion-card-content>
                     </ion-card>
