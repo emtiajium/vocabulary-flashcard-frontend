@@ -7,8 +7,8 @@
                     <ion-card :button="true" class="margin-top-bottom-unset" @click="toggle">
                         <ion-card-content>
                             <ion-card-subtitle>
-                                People often struggle to memorize vocabulary in the long run. Fortunately, there are
-                                several methods available to overcome this difficulty. One of these is Leitner System.
+                                We often struggle to memorize vocabulary in the long run. Fortunately, there are several
+                                methods available to overcome this difficulty. One of these is Leitner System.
                             </ion-card-subtitle>
                             <ion-card-subtitle v-show="seeLess" class="see-less"> ... See More </ion-card-subtitle>
                             <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
