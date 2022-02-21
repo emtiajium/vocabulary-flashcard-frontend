@@ -45,6 +45,9 @@ export async function setThemeBasedOnSystem(): Promise<void> {
                     setLightMode();
                 }
             }
+        } else {
+            const prefersDark = window.matchMedia(`(prefers-color-scheme: dark)`);
+            setThemeMode(prefersDark.matches ? 'dark' : 'light');
         }
     } catch {
         setLightMode();
