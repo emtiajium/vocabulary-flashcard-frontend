@@ -38,8 +38,6 @@
                                 <ul>
                                     <li v-for="(example, exampleIndex) in definition.examples" :key="exampleIndex">
                                         <span class="capitalize"> {{ example }} </span>
-                                        <br />
-                                        <br />
                                     </li>
                                 </ul>
 
@@ -48,8 +46,6 @@
                                     <ul>
                                         <li v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
                                             <span class="capitalize"> {{ note }} </span>
-                                            <br />
-                                            <br />
                                         </li>
                                     </ul>
                                 </view>
@@ -67,8 +63,6 @@
                                                     <font-awesome-icon :icon="faExternalLinkAlt" />
                                                 </span>
                                             </a>
-                                            <br />
-                                            <br />
                                         </li>
                                     </ul>
                                 </view>
@@ -118,8 +112,6 @@
                                     :key="genericNotesIndex"
                                 >
                                     <span class="capitalize"> {{ genericNote }} </span>
-                                    <br />
-                                    <br />
                                 </li>
                             </ul>
                         </ion-card-content>
@@ -146,8 +138,6 @@
                                             <font-awesome-icon :icon="faExternalLinkAlt" />
                                         </span>
                                     </a>
-                                    <br />
-                                    <br />
                                 </li>
                             </ul>
                         </ion-card-content>
@@ -298,5 +288,8 @@ export default defineComponent({
 }
 .heart-icon {
     color: var(--ion-color-primary);
+}
+li {
+    padding-bottom: 10px;
 }
 </style>
