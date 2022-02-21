@@ -2,9 +2,12 @@
     <ion-card>
         <ion-card-header>
             <ion-card-title> External Links </ion-card-title>
-            <ion-card-subtitle>
-                Any link can be inserted here, for example, if you found a new word while you were viewing a Quora post
-                or a blog then you can put the link here
+            <ion-card-subtitle class="tips">
+                <span class="material-icons"> tips_and_updates </span>
+                <span class="info">
+                    Any link can be inserted here, for example, if you found a new word while you were viewing a Quora
+                    post or a blog then you can put the link here
+                </span>
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>

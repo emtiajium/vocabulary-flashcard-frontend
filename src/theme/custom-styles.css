@@ -59,3 +59,16 @@ ion-card.margin-top-unset {
 .searchbar-input.sc-ion-searchbar-ios {
     font-size: 16px;
 }
+
+.tips {
+    display: flex;
+    align-items: flex-start;
+}
+.tips .material-icons {
+    color: var(--ion-color-primary);
+    padding-right: 5px;
+    font-size: 20px;
+}
+.tips .info {
+    font-size: 15px;
+}

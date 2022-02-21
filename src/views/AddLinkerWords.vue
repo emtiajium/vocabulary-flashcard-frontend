@@ -2,10 +2,14 @@
     <ion-card>
         <ion-card-header>
             <ion-card-title> Relatable Words </ion-card-title>
-            <ion-card-subtitle>
-                Any related vocabularies can be inserted here. And a relationship can have various aspects, for example,
-                it can be a synonym, an antonym, a homograph, a homonym, a homophone, etc. Therefore, if the word is
-                <strong>Zenith</strong>, <strong>Pinnacle</strong> can be put here
+            <ion-card-subtitle class="tips">
+                <span class="material-icons"> tips_and_updates </span>
+                <span class="info">
+                    Any related vocabularies can be inserted here. And a relationship can have various aspects, for
+                    example, it can be a synonym, an antonym, a homograph, a homonym, a homophone, etc. Therefore, if
+                    the word is
+                    <strong>Zenith</strong>, <strong>Pinnacle</strong> can be put here
+                </span>
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>

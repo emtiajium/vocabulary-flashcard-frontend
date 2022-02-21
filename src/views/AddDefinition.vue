@@ -14,7 +14,10 @@
                     <ion-card class="margin-top-unset">
                         <ion-card-header>
                             <ion-card-title> Meaning </ion-card-title>
-                            <ion-card-subtitle> An idea or a thing that a word represents </ion-card-subtitle>
+                            <ion-card-subtitle class="tips">
+                                <span class="material-icons"> tips_and_updates </span>
+                                <span class="info"> An idea or a thing that a word represents </span>
+                            </ion-card-subtitle>
                         </ion-card-header>
 
                         <ion-card-content>

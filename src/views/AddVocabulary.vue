@@ -18,9 +18,12 @@
                         <ion-card class="margin-top-unset">
                             <ion-card-header>
                                 <ion-card-title> Word </ion-card-title>
-                                <ion-card-subtitle>
-                                    A word, an idiom, even a prepositional phrase and most importantly whatever you wish
-                                    to insert
+                                <ion-card-subtitle class="tips">
+                                    <span class="material-icons"> tips_and_updates </span>
+                                    <span class="info">
+                                        A word, an idiom, even a prepositional phrase and most importantly whatever you
+                                        wish to insert
+                                    </span>
                                 </ion-card-subtitle>
                             </ion-card-header>
                             <ion-card-content>
@@ -40,7 +43,10 @@
                         <ion-card>
                             <ion-card-header>
                                 <ion-card-title> Definitions </ion-card-title>
-                                <ion-card-subtitle> An explanation of what a word means </ion-card-subtitle>
+                                <ion-card-subtitle class="tips">
+                                    <span class="material-icons"> tips_and_updates </span>
+                                    <span class="info"> An explanation of what a word means </span>
+                                </ion-card-subtitle>
                             </ion-card-header>
                             <ion-card-content>
                                 <ion-item v-if="!isLoading" lines="none">
@@ -89,8 +95,11 @@
                         <ion-card>
                             <ion-card-header>
                                 <ion-card-title> Is Draft </ion-card-title>
-                                <ion-card-subtitle>
-                                    It is possible to save a vocabulary without a definition in draft mode
+                                <ion-card-subtitle class="tips">
+                                    <span class="material-icons"> tips_and_updates </span>
+                                    <span class="info">
+                                        It is possible to save a vocabulary without a definition in draft mode
+                                    </span>
                                 </ion-card-subtitle>
                             </ion-card-header>
                             <ion-card-content>

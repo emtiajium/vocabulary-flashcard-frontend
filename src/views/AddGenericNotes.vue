@@ -2,8 +2,11 @@
     <ion-card>
         <ion-card-header>
             <ion-card-title> Generic Notes </ion-card-title>
-            <ion-card-subtitle>
-                Any gibberish note can be put here, for example, the origin of the word, pronunciation, etc.
+            <ion-card-subtitle class="tips">
+                <span class="material-icons"> tips_and_updates </span>
+                <span class="info">
+                    Any gibberish note can be put here, for example, the origin of the word, pronunciation, etc.
+                </span>
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
