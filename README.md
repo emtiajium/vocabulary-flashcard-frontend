@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.8.1`: UI/UX improvement: V10 (Special changes: Removed box-shadow from the header, and the card)
 -   `0.8.0`: Added tips icon within the add vocab page
 -   `0.7.6`: Detected theme changes using `MutationObserver`
 -   `0.7.5`: UI/UX improvement: V9
@@ -162,6 +163,7 @@
 
 ## Android Release Log
 
+-   `40`: `0.8.1`
 -   `39`: `0.7.6`
 -   `38`: `0.7.5`
 -   `37`: `0.7.4`
