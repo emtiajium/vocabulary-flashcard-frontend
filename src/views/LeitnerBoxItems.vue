@@ -52,50 +52,43 @@
                             </ion-card-subtitle>
                         </ion-card-header>
                         <ion-card-content>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="3" />
-                                    <ion-col size="2" class="display-flex ion-justify-content-end">
-                                        <ion-button
-                                            fill="outline"
-                                            size="small"
-                                            shape="round"
-                                            :strong="true"
-                                            color="warning"
-                                            :disabled="isFirstBox()"
-                                            @click="moveBackward(boxItem.vocabularyId)"
-                                        >
-                                            <font-awesome-icon :icon="faThumbsDown" />
-                                        </ion-button>
-                                    </ion-col>
-                                    <ion-col size="2" class="display-flex ion-justify-content-center">
-                                        <ion-button
-                                            fill="outline"
-                                            size="small"
-                                            shape="round"
-                                            :strong="true"
-                                            color="primary"
-                                            :disabled="isLastBox()"
-                                            @click="moveForward(boxItem.vocabularyId)"
-                                        >
-                                            <font-awesome-icon :icon="faThumbsUp" />
-                                        </ion-button>
-                                    </ion-col>
-                                    <ion-col size="2" class="display-flex ion-justify-content-start">
-                                        <ion-button
-                                            fill="outline"
-                                            size="small"
-                                            shape="round"
-                                            :strong="true"
-                                            color="fern-green"
-                                            @click="seeMore(boxItem.vocabularyId, boxItem.word)"
-                                        >
-                                            <font-awesome-icon :icon="faUnlockAlt" />
-                                        </ion-button>
-                                    </ion-col>
-                                    <ion-col size="3" />
-                                </ion-row>
-                            </ion-grid>
+                            <ion-row class="ion-justify-content-center">
+                                <ion-button
+                                    fill="outline"
+                                    size="small"
+                                    shape="round"
+                                    :strong="true"
+                                    color="warning"
+                                    class="margin-10"
+                                    :disabled="isFirstBox()"
+                                    @click="moveBackward(boxItem.vocabularyId)"
+                                >
+                                    <font-awesome-icon :icon="faThumbsDown" />
+                                </ion-button>
+                                <ion-button
+                                    fill="outline"
+                                    size="small"
+                                    shape="round"
+                                    :strong="true"
+                                    color="primary"
+                                    class="margin-10"
+                                    :disabled="isLastBox()"
+                                    @click="moveForward(boxItem.vocabularyId)"
+                                >
+                                    <font-awesome-icon :icon="faThumbsUp" />
+                                </ion-button>
+                                <ion-button
+                                    fill="outline"
+                                    size="small"
+                                    shape="round"
+                                    :strong="true"
+                                    color="fern-green"
+                                    class="margin-10"
+                                    @click="seeMore(boxItem.vocabularyId, boxItem.word)"
+                                >
+                                    <font-awesome-icon :icon="faUnlockAlt" />
+                                </ion-button>
+                            </ion-row>
                         </ion-card-content>
                     </ion-card>
                 </ion-col>
@@ -127,7 +120,6 @@ import {
     IonCol,
     IonContent,
     IonDatetime,
-    IonGrid,
     IonInfiniteScroll,
     IonPage,
     IonRow,
@@ -174,7 +166,6 @@ export default defineComponent({
         IonCardSubtitle,
         IonInfiniteScroll,
         IonCardContent,
-        IonGrid,
         IonRow,
         IonCol,
         IonButton,
@@ -365,5 +356,9 @@ ion-card-content {
 
 .padding-right-10 {
     padding-right: 10px;
+}
+
+.margin-10 {
+    margin: 10px;
 }
 </style>
