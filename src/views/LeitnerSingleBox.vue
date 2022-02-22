@@ -40,11 +40,11 @@ export default defineComponent({
             // generated color using
             // https://material.io/design/color/the-color-system.html#tools-for-picking-colors
             colors: {
-                '1': '#c7e5c5',
-                '2': '#7fc47a',
+                '1': '#7fc47a',
+                '2': '#64b85e',
                 '3': '#49ac41',
-                '4': '#348b2e',
-                '5': '#125b11',
+                '4': '#409d39',
+                '5': '#348b2e',
             },
         };
     },
