@@ -16,7 +16,10 @@
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faGlassCheers" class="firecracker-icon" />
                 </view>
-                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding ion-text-center">
+                <ion-card-subtitle
+                    v-if="totalItems > 0"
+                    class="display-flex ion-justify-content-center ion-padding ion-text-center"
+                >
                     Items will only appear when it is the right time
                 </ion-card-subtitle>
             </view>
@@ -176,6 +179,7 @@ export default defineComponent({
         const box = this.$route.params.box.toString();
         return {
             box,
+            totalItems: Number.parseInt(this.$route.params.count.toString(), 10),
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
             boxItems: [] as LeitnerBoxItem[],
             showSpinner: false,

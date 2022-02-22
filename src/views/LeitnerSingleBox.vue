@@ -51,7 +51,7 @@ export default defineComponent({
     methods: {
         async navigate(): Promise<void> {
             await NativeStorage.setShouldReloadLeitnerItems();
-            await this.$router.push(`/leitner-box/items/${this.box}`);
+            await this.$router.push(`/leitner-box/items/${this.box}/${this.count}`);
         },
     },
 });

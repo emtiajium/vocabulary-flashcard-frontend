@@ -71,7 +71,7 @@ const routes: RouteRecordRaw[] = [
         component: LeitnerSystems,
     },
     {
-        path: '/leitner-box/items/:box',
+        path: '/leitner-box/items/:box/:count',
         name: Route.LeitnerBoxItems,
         component: LeitnerBoxItems,
     },
