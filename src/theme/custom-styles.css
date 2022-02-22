@@ -32,16 +32,12 @@ a {
 ion-card {
     box-shadow: unset;
     border-radius: 8px;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 ion-card.transparent {
     --background: var(--ion-background-color);
-    box-shadow: unset;
-}
-
-ion-card {
-    margin-left: 4px;
-    margin-right: 4px;
 }
 
 ion-card.margin-top-bottom-unset {
