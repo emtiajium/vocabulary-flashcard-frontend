@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.8.3`: UI/UX improvement: V12
 -   `0.8.2`: UI/UX improvement: V11 (Special changes: Dedicated color for each Leitner box)
 -   `0.8.1`: UI/UX improvement: V10 (Special changes: Removed box-shadow from the header, and the card)
 -   `0.8.0`: Added tips icon within the add vocab page
@@ -164,6 +165,7 @@
 
 ## Android Release Log
 
+-   `42`: `0.8.3`
 -   `41`: `0.8.2`
 -   `40`: `0.8.1`
 -   `39`: `0.7.6`
