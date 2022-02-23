@@ -1,6 +1,7 @@
 {
     "name": "Firecracker Vocab Practice",
     "short_name": "Firecracker Vocab Practice",
+    "description": "Collaborative Vocabulary Learning Using Flashcards",
     "icons": [
         {
             "src": "/assets/icon/favicon/android-chrome-36x36.png",
@@ -51,5 +52,13 @@
     "theme_color": "#2e8b57",
     "background_color": "#2e8b57",
     "start_url": ".",
-    "display": "standalone"
+    "display": "standalone",
+    "related_applications": [
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice",
+            "id": "com.emtiajium.firecracker.collaborative.vocab.practice"
+        }
+    ],
+    "iarc_rating_id": "901fc2d5-aa21-4158-973f-44abc51cc19c"
 }
