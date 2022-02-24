@@ -31,7 +31,7 @@
                 </ion-col>
             </ion-row>
 
-            <ion-row class="display-flex ion-justify-content-center box-container">
+            <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="6" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="2">
                     <leitner-single-box :box="1" :count="count[1]" />
                 </ion-col>
@@ -114,10 +114,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.box-container {
-    margin-top: 10px;
-}
-
 @media only screen and (min-width: 768px) {
     .see-more {
         display: flex !important;

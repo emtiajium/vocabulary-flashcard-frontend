@@ -1,13 +1,13 @@
 <template>
     <ion-card :button="true" class="transparent margin-top-bottom-unset" @click="navigate">
         <ion-card-content class="no-padding">
-            <ion-row class="display-flex ion-justify-content-center opened-box-icon">
+            <ion-row class="display-flex ion-justify-content-center icon-container">
                 <empty-box :color="colors[box]"></empty-box>
             </ion-row>
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-card-subtitle> {{ mappedBoxWithDays[`BOX_${box}`] }} Box </ion-card-subtitle>
             </ion-row>
-            <ion-row class="display-flex ion-justify-content-center">
+            <ion-row class="display-flex ion-justify-content-center count-container">
                 <spinner v-if="count === -1" />
                 <ion-card-subtitle v-if="count !== -1"> {{ count }} Vocab </ion-card-subtitle>
             </ion-row>
@@ -61,5 +61,12 @@ export default defineComponent({
 .no-padding {
     padding-top: unset;
     padding-bottom: unset;
+}
+.icon-container {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+.count-container {
+    margin-bottom: 10px;
 }
 </style>
