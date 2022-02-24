@@ -14,7 +14,7 @@
                     "All Quiet on the Western Front"
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-icon" />
+                    <font-awesome-icon :icon="faGlassCheers" class="quiet-icon" />
                 </view>
                 <ion-card-subtitle
                     v-if="totalItems > 0"
@@ -27,7 +27,7 @@
             <ion-row
                 v-for="boxItem in boxItems"
                 :key="boxItem.vocabularyId"
-                class="display-flex ion-justify-content-center"
+                class="display-flex ion-justify-content-center item-container"
             >
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="8" sizeXl="8">
                     <ion-card class="margin-top-bottom-unset">
@@ -338,7 +338,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.firecracker-icon {
+.quiet-icon {
     font-size: 60pt;
     color: var(--ion-color-primary);
 }
@@ -364,5 +364,9 @@ ion-card-content {
 
 .margin-10 {
     margin: 10px;
+}
+
+.item-container:last-of-type {
+    margin-bottom: 5px;
 }
 </style>
