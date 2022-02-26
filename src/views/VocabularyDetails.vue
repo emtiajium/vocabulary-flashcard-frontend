@@ -45,7 +45,7 @@
                                     <ion-card-title> Notes </ion-card-title>
                                     <ul>
                                         <li v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
-                                            <span class="capitalize"> {{ note }} </span>
+                                            <span v-html="note" class="capitalize note" />
                                         </li>
                                     </ul>
                                 </view>
@@ -114,7 +114,7 @@
                                     v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
                                     :key="genericNotesIndex"
                                 >
-                                    <span class="capitalize"> {{ genericNote }} </span>
+                                    <span v-html="genericNote" class="capitalize note" />
                                 </li>
                             </ul>
                         </ion-card-content>
@@ -288,5 +288,11 @@ export default defineComponent({
 }
 li {
     padding-bottom: 10px;
+}
+.note:after {
+    font-family: 'Font Awesome 5 Solid Firecracker';
+    content: '\f35d';
+    padding-left: 5px;
+    color: var(--ion-color-primary);
 }
 </style>
