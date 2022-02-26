@@ -18,6 +18,17 @@ a {
     text-decoration: none;
 }
 
+/* below style should be at
+ src/views/VocabularyDetails.vue
+ but unfortunately it doesn't work
+ */
+span.note > a:after {
+    font-family: 'Font Awesome 5 Solid Firecracker';
+    content: '\f35d'; /* faExternalLinkAlt */
+    padding-left: 5px;
+    color: var(--ion-color-primary);
+}
+
 .overflowed-content {
     white-space: nowrap;
     overflow: hidden;
@@ -57,6 +68,10 @@ ion-card.margin-top-unset {
     color: var(--ion-color-primary);
 }
 
+/* below style should be at
+ src/views/SortingPreference.vue
+ but unfortunately it doesn't work
+ */
 .settings-popover {
     --width: 280px;
     position: unset;

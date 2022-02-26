@@ -289,10 +289,4 @@ export default defineComponent({
 li {
     padding-bottom: 10px;
 }
-.note:after {
-    font-family: 'Font Awesome 5 Solid Firecracker';
-    content: '\f35d';
-    padding-left: 5px;
-    color: var(--ion-color-primary);
-}
 </style>
