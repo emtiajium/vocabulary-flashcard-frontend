@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.9.0`: Smart user can now embed HTML at the notes/generic notes V1 (Without supporting Rich Text Editor)
 -   `0.8.4`: UI/UX improvement: V13
 -   `0.8.3`: UI/UX improvement: V12
 -   `0.8.2`: UI/UX improvement: V11 (Special changes: Dedicated color for each Leitner box)
@@ -166,6 +167,7 @@
 
 ## Android Release Log
 
+-   `44`: `0.9.0`
 -   `43`: `0.8.4`
 -   `42`: `0.8.3`
 -   `41`: `0.8.2`
