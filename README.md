@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.9.2`: [Executed `npx browserslist@latest --update-db`](https://github.com/browserslist/browserslist#browsers-data-updating)
 -   `0.9.1`: Added maskable icons at the manifest (Basically added `"purpose": "any maskable"`)
 -   `0.9.0`: Smart user can now embed HTML at the notes/generic notes V1 (Without supporting Rich Text Editor)
 -   `0.8.4`: UI/UX improvement: V13
