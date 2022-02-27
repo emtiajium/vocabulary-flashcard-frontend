@@ -3,6 +3,6 @@
         "webClientId": "***-***.apps.googleusercontent.com"
     },
     "server": {
-        "apiPrefix": "http://localhost:9006/rest/ielts-service"
+        "apiPrefix": "https://localhost:9006/rest/ielts-service"
     }
 }

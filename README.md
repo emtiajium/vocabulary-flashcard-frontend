@@ -36,7 +36,7 @@
 
 ###### Run the web app on browser
 
-➜ <http://localhost:8080/>
+➜ <https://localhost:8080/>
 
 ###### Run the web app natively on Android
 
@@ -47,8 +47,6 @@
 ➜ Open the project (`/android`) in Android Studio
 
 ➜ Modify few generated files
-
-> Add `android:usesCleartextTraffic="true"` within `<application />` at `./android/app/src/main/AndroidManifest.xml`
 
 > Replace `minSdkVersion = 21` with `minSdkVersion = 23` at `./android/variables.gradle`
 
