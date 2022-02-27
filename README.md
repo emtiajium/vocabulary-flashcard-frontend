@@ -38,6 +38,8 @@
 
 ➜ <https://localhost:8080/>
 
+> Import certificate authority by hitting <chrome://settings/certificates> to resolve `Your connection to this site is not secure`
+
 ###### Run the web app natively on Android
 
 ➜ Read [these](https://reactnative.dev/docs/0.65/running-on-device) and `Enable Debugging over USB`, `Plug in your device via USB`, `Connect to the development server`
@@ -110,6 +112,7 @@
 
 ## Change Log
 
+-   `0.10.0`: HTTPS for the localhost
 -   `0.9.2`: [Executed `npx browserslist@latest --update-db`](https://github.com/browserslist/browserslist#browsers-data-updating)
 -   `0.9.1`: Added maskable icons at the manifest (Basically added `"purpose": "any maskable"`)
 -   `0.9.0`: Smart user can now embed HTML at the notes/generic notes V1 (Without supporting Rich Text Editor)
