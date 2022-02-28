@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.10.1`: Set minSdkVersion from `23` to `21` as `android:usesCleartextTraffic="true"` has been removed and introduced HTTPS for the localhost too
 -   `0.10.0`: HTTPS for the localhost
 -   `0.9.2`: [Executed `npx browserslist@latest --update-db`](https://github.com/browserslist/browserslist#browsers-data-updating)
 -   `0.9.1`: Added maskable icons at the manifest (Basically added `"purpose": "any maskable"`)
@@ -168,6 +169,7 @@
 
 ## Android Release Log
 
+-   `46`: `0.10.1`
 -   `45`: `0.9.0`
 -   `44`: `0.8.4`
 -   `43`: `0.8.3`
