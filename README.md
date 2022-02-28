@@ -38,7 +38,7 @@
 
 ➜ <https://localhost:8080/>
 
-> Import certificate authority by hitting <chrome://settings/certificates> to resolve `Your connection to this site is not secure`
+> Import certificate authority (`cert/CA/CA.pem`) by hitting <chrome://settings/certificates> to resolve `Your connection to this site is not secure`
 
 ###### Run the web app natively on Android
 
