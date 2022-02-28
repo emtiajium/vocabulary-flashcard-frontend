@@ -32,4 +32,3 @@ cp ./android-replacer/app/google-services.json ./android/app/google-services.jso
 
 # Project-level build.gradle
 cp ./android-replacer/android/build.gradle ./android/build.gradle
-cp ./android-replacer/android/variables.gradle ./android/variables.gradle

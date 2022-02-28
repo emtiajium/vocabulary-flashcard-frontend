@@ -48,9 +48,7 @@
 
 ➜ Open the project (`/android`) in Android Studio
 
-➜ Modify few generated files
-
-> Replace `minSdkVersion = 21` with `minSdkVersion = 23` at `./android/variables.gradle`
+➜ Modify generated files
 
 > Add `<string name="server_client_id">***-***.apps.googleusercontent.com</string>` at `./android/app/src/main/res/values/strings.xml`
 
