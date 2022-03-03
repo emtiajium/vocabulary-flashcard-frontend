@@ -158,9 +158,10 @@
                     :disabled="disableBoxInsertionButton"
                     @click="insertIntoLeitnerBox"
                 >
-                    <span class="material-icons firecracker-primary-colored-icon">
-                        {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
-                    </span>
+                    <font-awesome-icon
+                        :icon="vocabulary.isInLeitnerBox ? faHeartSolid : faHeartRegular"
+                        class="firecracker-primary-colored-icon leitner-icon"
+                    />
                 </ion-fab-button>
                 <span class="ion-margin-top" />
                 <ion-fab-button
@@ -199,7 +200,8 @@ import EmptyContainer from '@/views/EmptyContainer.vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import Dictionary from '@/views/Dictionary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faExternalLinkAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faPencilAlt, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
 import LeitnerSystemService from '@/utils/LeitnerSystemService';
@@ -236,6 +238,8 @@ export default defineComponent({
             defaultMessage: `Looks like you haven't added anything yet!`,
             faExternalLinkAlt,
             faPencilAlt,
+            faHeartSolid,
+            faHeartRegular,
             disableBoxInsertionButton: false,
         };
     },
@@ -288,5 +292,8 @@ export default defineComponent({
 }
 li {
     padding-bottom: 10px;
+}
+.leitner-icon {
+    font-size: 20px;
 }
 </style>

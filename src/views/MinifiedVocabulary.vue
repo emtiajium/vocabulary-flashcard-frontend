@@ -64,9 +64,10 @@
                         color="fern-green"
                         @click="insertIntoLeitnerBox"
                     >
-                        <span class="material-icons">
-                            {{ vocabulary.isInLeitnerBox ? 'favorite' : 'favorite_border' }}
-                        </span>
+                        <font-awesome-icon
+                            :icon="vocabulary.isInLeitnerBox ? faHeartSolid : faHeartRegular"
+                            class="leitner-icon"
+                        />
                     </ion-button>
                     <ion-button
                         fill="outline"
@@ -98,7 +99,14 @@ import {
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTrashAlt, faPencilAlt, faExpandAlt, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import {
+    faTrashAlt,
+    faPencilAlt,
+    faExpandAlt,
+    faEllipsisH,
+    faHeart as faHeartSolid,
+} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import Alert from '@/utils/Alert';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
@@ -121,7 +129,15 @@ export default defineComponent({
     },
     props: ['vocabulary', 'deleteVocabulary', 'updateLeitnerBoxExistence'],
     data() {
-        return { faTrashAlt, faPencilAlt, faExpandAlt, faEllipsisH, disableBoxInsertionButton: false };
+        return {
+            faTrashAlt,
+            faPencilAlt,
+            faExpandAlt,
+            faEllipsisH,
+            faHeartSolid,
+            faHeartRegular,
+            disableBoxInsertionButton: false,
+        };
     },
     methods: {
         async seeMore(id: string, word: string): Promise<void> {
@@ -150,5 +166,8 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-end;
+}
+.leitner-icon {
+    font-size: 24px;
 }
 </style>
