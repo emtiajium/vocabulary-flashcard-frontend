@@ -22,9 +22,16 @@ a {
  src/views/VocabularyDetails.vue
  but unfortunately it doesn't work
  */
-span.link-container > a:after {
+.link-container > a:after {
     font-family: 'Font Awesome 5 Solid Firecracker';
     content: '\f35d'; /* faExternalLinkAlt */
+    padding-left: 5px;
+    color: var(--ion-color-primary);
+}
+
+.email-container > a:after {
+    font-family: 'Font Awesome 5 Solid Firecracker';
+    content: '\f0e0'; /* faEnvelope */
     padding-left: 5px;
     color: var(--ion-color-primary);
 }

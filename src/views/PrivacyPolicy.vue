@@ -11,7 +11,7 @@
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
                     <ion-card class="margin-top-bottom-unset">
                         <ion-card-content>
-                            <ion-card-subtitle>
+                            <ion-card-subtitle class="link-container">
                                 Welcome to <strong>Firecracker Vocab Practice</strong>! Your privacy is important to us.
                                 This Privacy Policy explains how we collect, store, use, disclose and otherwise process
                                 your information when you use
@@ -21,8 +21,7 @@
                                 <a
                                     href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice"
                                     target="_blank"
-                                >
-                                    mobile app</a
+                                    >mobile app</a
                                 >.
                             </ion-card-subtitle>
 
@@ -30,7 +29,7 @@
                                 Information Collection
                             </ion-card-subtitle>
 
-                            <ion-card-subtitle class="ion-padding-top">
+                            <ion-card-subtitle class="ion-padding-top link-container">
                                 There is certain information that we collect automatically when you sign-up through
                                 Google, and authorize us to collect your authentication information, such as your
                                 <strong>firstname</strong>, <strong>lastname</strong>, <strong>email address</strong>,
@@ -80,10 +79,10 @@
 
                             <ion-card-subtitle class="ion-padding-top header"> Contact Information </ion-card-subtitle>
 
-                            <ion-card-subtitle class="ion-padding-top">
+                            <ion-card-subtitle class="ion-padding-top email-container">
                                 If you do not agree to any of the provisions of this privacy policy, you should not use
                                 the Platform. Do not hesitate to mail us at
-                                <a href="mailto:271emtiaj@gmail.com"> 271emtiaj@gmail.com </a> for any kind of query.
+                                <a href="mailto:271emtiaj@gmail.com">271emtiaj@gmail.com</a> for any kind of query.
                             </ion-card-subtitle>
                         </ion-card-content>
                     </ion-card>
