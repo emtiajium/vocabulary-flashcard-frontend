@@ -22,7 +22,7 @@ a {
  src/views/VocabularyDetails.vue
  but unfortunately it doesn't work
  */
-span.note > a:after {
+span.link-container > a:after {
     font-family: 'Font Awesome 5 Solid Firecracker';
     content: '\f35d'; /* faExternalLinkAlt */
     padding-left: 5px;
