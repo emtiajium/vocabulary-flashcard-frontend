@@ -22,12 +22,8 @@
                     <ion-row class="ion-justify-content-center ion-padding">
                         <ion-text class="privacy-text">
                             By creating your account, you agree with our
-                            <a
-                                href="https://app.firecrackervocabulary.com/privacy-policy"
-                                :target="isAndroid ? '_blank' : '_self'"
-                            >
-                                Privacy Policy.
-                            </a>
+                            <router-link to="/privacy-policy"> Privacy Policy </router-link>
+                            .
                         </ion-text>
                     </ion-row>
                     <ion-row v-if="!isAndroid" class="ion-align-items-end ion-justify-content-center">
