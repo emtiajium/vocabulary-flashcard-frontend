@@ -55,9 +55,22 @@ export default defineComponent({
                     const { build: versionCode } = await App.getInfo();
                     const { versionCode: latestVersionCode } = await HttpHandler.get<Android>(`/v1/androids`);
                     if (Number.parseInt(versionCode, 10) < latestVersionCode) {
-                        Alert.presentButtonLessAlert(
+                        Alert.presentAlertConfirm(
                             '',
-                            'There is a newer version available for download! Please update the app by visiting the Google Play Store.',
+                            'There is a newer version available for download. Would you like to update it now?',
+                            async () => {
+                                window.open(
+                                    'https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice',
+                                    '_blank',
+                                );
+                            },
+                            async () => {
+                                return Promise.resolve();
+                            },
+                            {
+                                cancel: 'No thanks!',
+                                agree: 'Update',
+                            },
                         ).finally();
                     }
                 }
