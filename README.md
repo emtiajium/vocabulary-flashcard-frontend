@@ -40,7 +40,7 @@
 
 > Import certificate authority (`cert/CA/CA.pem`) by hitting <chrome://settings/certificates> to resolve `Your connection to this site is not secure`
 
-###### Run the web app natively on Android
+###### Run the app natively on Android
 
 ➜ Read [these](https://reactnative.dev/docs/0.65/running-on-device) and `Enable Debugging over USB`, `Plug in your device via USB`, `Connect to the development server`
 
@@ -133,7 +133,7 @@
 -   `0.6.2`: UI/UX improvement: V2
 -   `0.6.1`: UI/UX improvement
 -   `0.6.0`: Introduced back icon (backward to the previous route)
--   `0.5.1`: Fixed left-right marking issue of add/edit vocab/definition
+-   `0.5.1`: Fixed left-right margin issue of add/edit vocab/definition
 -   `0.5.0`: Improved UI for the web app + Get it on Google Play
 -   `0.4.1`: Dark mode for the guest also
 -   `0.4.0`: Privacy policy + Landing page + HTTPS
