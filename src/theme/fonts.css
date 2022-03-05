@@ -3,5 +3,6 @@
     font-family: 'Font Awesome 5 Solid Firecracker';
     font-style: normal;
     font-weight: 900;
-    src: url(https://raw.githubusercontent.com/FortAwesome/Font-Awesome/5.x/webfonts/fa-solid-900.woff2) format('woff2');
+    src: url(https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/otfs/Font%20Awesome%206%20Free-Solid-900.otf)
+        format('woff2');
 }
