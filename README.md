@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.10.3`: More UI/UX improvement + Upgraded FontAwesome to version 6!
 -   `0.10.2`: More UI/UX improvement
 -   `0.10.1`: Set minSdkVersion from `23` to `21` as `android:usesCleartextTraffic="true"` has been removed and introduced HTTPS for the localhost too
 -   `0.10.0`: HTTPS for the localhost
@@ -170,6 +171,7 @@
 
 ## Android Release Log
 
+-   `48`: `0.10.3`
 -   `47`: `0.10.2`
 -   `46`: `0.10.1`
 -   `45`: `0.9.0`
