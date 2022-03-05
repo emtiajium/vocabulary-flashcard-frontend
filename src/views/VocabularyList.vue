@@ -273,7 +273,9 @@ export default defineComponent({
 
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
             const { results, total } = await this.findVocabularies();
-            this.vocabularies = this.vocabularies.concat(results);
+            // reason to use _.uniqueBy(): https://trello.com/c/WIsMIhXr/58
+            // definitely a workaround
+            this.vocabularies = _.uniqBy(this.vocabularies.concat(results), 'id');
             this.handleShowingFetchingFewVocabularies();
             this.pageNumber += 1;
             this.isDisabled = this.vocabularies.length >= total;
@@ -303,7 +305,7 @@ export default defineComponent({
                 },
                 sort: this.sort,
             };
-            let searchResult;
+            let searchResult: SearchResult<Vocabulary>;
             try {
                 searchResult = await HttpHandler.post<VocabularySearch, SearchResult<Vocabulary>>(
                     '/v1/vocabularies/search',
