@@ -23,7 +23,6 @@
                         <ion-text class="privacy-text">
                             By creating your account, you agree with our
                             <router-link to="/privacy-policy"> Privacy Policy </router-link>
-                            .
                         </ion-text>
                     </ion-row>
                     <ion-row v-if="!isAndroid" class="ion-align-items-end ion-justify-content-center">
