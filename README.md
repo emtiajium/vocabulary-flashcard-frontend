@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.10.4`: More UI/UX improvement (notes' container having images)
 -   `0.10.3`: More UI/UX improvement + Upgraded FontAwesome to version 6!
 -   `0.10.2`: More UI/UX improvement
 -   `0.10.1`: Set minSdkVersion from `23` to `21` as `android:usesCleartextTraffic="true"` has been removed and introduced HTTPS for the localhost too
@@ -171,6 +172,7 @@
 
 ## Android Release Log
 
+-   `49`: `0.10.4`
 -   `48`: `0.10.3`
 -   `47`: `0.10.2`
 -   `46`: `0.10.1`
