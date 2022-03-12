@@ -45,7 +45,7 @@
                                     <ion-card-title> Notes </ion-card-title>
                                     <ul>
                                         <li v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
-                                            <span v-html="note" class="capitalize link-container" />
+                                            <span v-html="note" class="capitalize link-container image-container" />
                                         </li>
                                     </ul>
                                 </view>
@@ -114,7 +114,7 @@
                                     v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
                                     :key="genericNotesIndex"
                                 >
-                                    <span v-html="genericNote" class="capitalize link-container" />
+                                    <span v-html="genericNote" class="capitalize link-container image-container" />
                                 </li>
                             </ul>
                         </ion-card-content>
