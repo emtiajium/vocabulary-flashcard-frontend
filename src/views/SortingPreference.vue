@@ -1,6 +1,6 @@
 <template>
     <ion-popover :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" css-class="settings-popover">
-        <ion-list lines="none">
+        <ion-list lines="none" class="container">
             <ion-radio-group :value="selectedSort" @ionChange="setSelectedOption($event)">
                 <ion-list-header class="title-container">
                     <ion-label class="title"> Sorting Preference </ion-label>
@@ -35,7 +35,7 @@
                 </ion-item>
             </ion-radio-group>
 
-            <ion-item>
+            <ion-item class="apply-button-container">
                 <ion-button color="success" fill="solid" size="default" class="apply-button" @click="onApplyingSort">
                     Apply
                 </ion-button>
@@ -96,6 +96,21 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.container {
+    height: 100vh !important;
+    position: relative;
+}
+.apply-button-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.apply-button {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    width: 100vw;
+}
 .title-container {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -108,10 +123,5 @@ export default defineComponent({
 }
 .close-icon {
     font-size: 20px;
-}
-.apply-button {
-    flex: 1;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 </style>
