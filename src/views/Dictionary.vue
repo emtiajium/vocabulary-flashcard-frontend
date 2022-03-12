@@ -76,14 +76,45 @@ export default defineComponent({
 
 <style scoped>
 .dictionary-logo-extra {
-    width: 100%;
     border-radius: 50%;
+    width: 80%;
 }
-@media only screen and (min-device-width: 480px) {
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
     .dictionary-logo-extra {
-        width: 50%;
+        width: 80%;
     }
 }
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .dictionary-logo-extra {
+        width: 70%;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .dictionary-logo-extra {
+        width: 65%;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .dictionary-logo-extra {
+        width: 60%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .dictionary-logo-extra {
+        width: 40%;
+    }
+}
+
 .label-block {
     padding-top: 5px;
     padding-bottom: 5px;
