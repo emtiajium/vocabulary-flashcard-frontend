@@ -111,8 +111,10 @@
                 :is-settings-popover-opened="isSettingsPopoverOpened"
                 :selected-sort="selectedSort"
                 :close-settings-popover="closeSettingsPopover"
-                :apply-sorting="applySorting"
+                :apply-settings="applySettings"
                 :on-change-sort="onChangeSort"
+                :fetch-not-having-definition-only="fetchNotHavingDefinitionOnly"
+                :on-change-fetch-not-having-definition-only="onChangeFetchNotHavingDefinitionOnly"
             />
         </ion-content>
     </ion-page>
@@ -197,11 +199,12 @@ export default defineComponent({
                 field: SupportedSortFields.updatedAt,
                 direction: SortDirection.DESC,
             } as Sort,
+            fetchNotHavingDefinitionOnly: false,
         };
     },
     async mounted() {
         this.showSpinner = true;
-        await this.setSortStuff();
+        await this.setSettingsStuff();
         await this.renderVocabularies();
         this.showSpinner = false;
     },
@@ -226,10 +229,12 @@ export default defineComponent({
             // no resetting of "sort"
         },
 
-        async setSortStuff(): Promise<void> {
-            const selectedSort = await NativeStorage.getVocabSort();
-            if (!_.isEmpty(selectedSort)) {
+        async setSettingsStuff(): Promise<void> {
+            const vocabSettings = await NativeStorage.getVocabSettings();
+            if (!_.isEmpty(vocabSettings)) {
+                const { sort: selectedSort, fetchNotHavingDefinitionOnly } = vocabSettings;
                 this.onChangeSort(`${selectedSort.field}_${selectedSort.direction}`);
+                this.onChangeFetchNotHavingDefinitionOnly(fetchNotHavingDefinitionOnly);
             }
         },
 
@@ -299,6 +304,7 @@ export default defineComponent({
         async findVocabularies(): Promise<SearchResult<Vocabulary>> {
             const vocabularySearch: VocabularySearch = {
                 searchKeyword: this.searchKeyword,
+                fetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
                 pagination: {
                     pageSize: this.pageSize,
                     pageNumber: this.pageNumber,
@@ -389,12 +395,16 @@ export default defineComponent({
             this.isSettingsPopoverOpened = false;
         },
 
-        async applySorting(): Promise<void> {
+        async applySettings(): Promise<void> {
+            const vocabSettings = {
+                sort: this.sort,
+                fetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
+            };
             if (
                 !this.isSettingsPopoverOpened &&
-                !isObjectEqual(_.cloneDeep(this.sort), (await NativeStorage.getVocabSort()) || {})
+                !isObjectEqual(_.cloneDeep(vocabSettings), (await NativeStorage.getVocabSettings()) || {})
             ) {
-                NativeStorage.setVocabSort(_.cloneDeep(this.sort)).finally();
+                NativeStorage.setVocabSettings(_.cloneDeep(vocabSettings)).finally();
                 await this.refresh();
             }
         },
@@ -406,6 +416,10 @@ export default defineComponent({
                 field,
                 direction: direction as SortDirection,
             };
+        },
+
+        onChangeFetchNotHavingDefinitionOnly(fetchNotHavingDefinitionOnly: boolean): void {
+            this.fetchNotHavingDefinitionOnly = fetchNotHavingDefinitionOnly;
         },
     },
 });

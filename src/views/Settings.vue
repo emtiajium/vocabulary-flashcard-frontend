@@ -9,7 +9,7 @@
             </ion-list-header>
 
             <view class="contents-container">
-                <ion-list lines="none" class="sorting-preference-container">
+                <ion-list lines="none">
                     <ion-list-header lines="inset">
                         <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
                     </ion-list-header>
@@ -41,10 +41,25 @@
                         </ion-item>
                     </ion-radio-group>
                 </ion-list>
+
+                <ion-list lines="none">
+                    <ion-list-header lines="inset">
+                        <ion-card-subtitle> Filtering Preference </ion-card-subtitle>
+                    </ion-list-header>
+
+                    <ion-item>
+                        <ion-label> Without definition only </ion-label>
+                        <ion-toggle
+                            slot="end"
+                            :checked="isSetHavingEmptyDefinition"
+                            @ionChange="setSelectedFiltering($event.detail.checked)"
+                        />
+                    </ion-item>
+                </ion-list>
             </view>
 
             <ion-list-header class="footer-container">
-                <ion-button color="success" fill="solid" class="apply-button" @click="onApplyingSort">
+                <ion-button color="success" fill="solid" class="apply-button" @click="onApplyingSettings">
                     Apply
                 </ion-button>
             </ion-list-header>
@@ -66,6 +81,7 @@ import {
     IonCardSubtitle,
     IonButton,
     IonContent,
+    IonToggle,
 } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -85,23 +101,38 @@ export default defineComponent({
         IonButton,
         IonCardTitle,
         IonContent,
+        IonToggle,
     },
     data() {
         return {
             faTimesCircle,
             selectedOption: this.selectedSort,
+            isSetHavingEmptyDefinition: this.fetchNotHavingDefinitionOnly,
         };
     },
-    props: ['isSettingsPopoverOpened', 'selectedSort', 'closeSettingsPopover', 'onChangeSort', 'applySorting'],
+    props: [
+        'isSettingsPopoverOpened',
+        'selectedSort',
+        'closeSettingsPopover',
+        'onChangeSort',
+        'applySettings',
+        'fetchNotHavingDefinitionOnly',
+        'onChangeFetchNotHavingDefinitionOnly',
+    ],
     methods: {
-        async onApplyingSort(): Promise<void> {
+        async onApplyingSettings(): Promise<void> {
             this.onChangeSort(this.selectedOption);
+            this.onChangeFetchNotHavingDefinitionOnly(this.isSetHavingEmptyDefinition);
             this.closeSettingsPopover();
-            await this.applySorting();
+            await this.applySettings();
         },
 
         setSelectedOption(event: CustomEvent): void {
             this.selectedOption = event.detail.value;
+        },
+
+        setSelectedFiltering(isChecked: boolean): void {
+            this.isSetHavingEmptyDefinition = isChecked;
         },
     },
 });

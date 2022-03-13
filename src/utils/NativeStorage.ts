@@ -3,8 +3,8 @@ import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import NativeStorageKey from '@/domains/NativeStorageKey';
 import User from '@/domains/User';
 import Vocabulary from '@/domains/Vocabulary';
-import Sort from '@/domains/Sort';
 import Platform from '@/utils/Platform';
+import VocabSettings from '@/domains/VocabSettings';
 
 let storage: Storage;
 
@@ -106,12 +106,12 @@ export default class NativeStorage {
         return NativeStorage.getByKey<string>(NativeStorageKey.SET_LEITNER_BOX_EXISTENCE);
     }
 
-    static async setVocabSort(sort: Sort): Promise<void> {
-        await (await NativeStorage.getStorage()).set(NativeStorageKey.VOCAB_SORT, sort);
+    static async setVocabSettings(vocabSettings: VocabSettings): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.VOCAB_SETTINGS, vocabSettings);
     }
 
-    static async getVocabSort(): Promise<Sort> {
-        return NativeStorage.getByKey<Sort>(NativeStorageKey.VOCAB_SORT);
+    static async getVocabSettings(): Promise<VocabSettings> {
+        return NativeStorage.getByKey<VocabSettings>(NativeStorageKey.VOCAB_SETTINGS);
     }
 
     static async setShouldReloadLeitnerItems(): Promise<void> {
