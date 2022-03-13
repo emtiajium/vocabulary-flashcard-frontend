@@ -11,31 +11,35 @@
             <view class="contents-container">
                 <ion-list lines="none">
                     <ion-list-header lines="inset">
-                        <ion-card-subtitle class="content-title"> Sorting Preference </ion-card-subtitle>
+                        <ion-card-subtitle class="content-title"> Searching Preference </ion-card-subtitle>
                         <ion-button
                             shape="round"
                             size="small"
                             color="white"
                             class="content-icon-container"
-                            @click="accordionGroup.isSortingAccordionOpen = !accordionGroup.isSortingAccordionOpen"
+                            @click="accordionGroup.isSearchingAccordionOpen = !accordionGroup.isSearchingAccordionOpen"
                         >
                             <font-awesome-icon
-                                :icon="accordionGroup.isSortingAccordionOpen ? faChevronUp : faChevronDown"
+                                :icon="accordionGroup.isSearchingAccordionOpen ? faChevronUp : faChevronDown"
                                 class="accordion-status-icon"
                             />
                         </ion-button>
                     </ion-list-header>
 
-                    <ion-radio-group
-                        v-show="accordionGroup.isSortingAccordionOpen"
-                        :value="selectedSort"
-                        @ionChange="setSelectedOption($event)"
+                    <ion-item
+                        v-show="accordionGroup.isSearchingAccordionOpen"
+                        class="content"
+                        v-for="(option, value) in searchingOptions"
+                        :key="value"
                     >
-                        <ion-item v-for="(label, value) in sortingOptions" :key="value">
-                            <ion-label> {{ label }} </ion-label>
-                            <ion-radio slot="end" :value="value" />
-                        </ion-item>
-                    </ion-radio-group>
+                        <ion-label> {{ option.label }} </ion-label>
+                        <ion-toggle
+                            slot="end"
+                            :checked="selectedSearchingOptions[value]"
+                            :disabled="option.isDisabled"
+                            @ionChange="setSearchOption(value, $event.detail.checked)"
+                        />
+                    </ion-item>
                 </ion-list>
 
                 <ion-list lines="none">
@@ -67,35 +71,31 @@
 
                 <ion-list lines="none">
                     <ion-list-header lines="inset">
-                        <ion-card-subtitle class="content-title"> Searching Preference </ion-card-subtitle>
+                        <ion-card-subtitle class="content-title"> Sorting Preference </ion-card-subtitle>
                         <ion-button
                             shape="round"
                             size="small"
                             color="white"
                             class="content-icon-container"
-                            @click="accordionGroup.isSearchingAccordionOpen = !accordionGroup.isSearchingAccordionOpen"
+                            @click="accordionGroup.isSortingAccordionOpen = !accordionGroup.isSortingAccordionOpen"
                         >
                             <font-awesome-icon
-                                :icon="accordionGroup.isSearchingAccordionOpen ? faChevronUp : faChevronDown"
+                                :icon="accordionGroup.isSortingAccordionOpen ? faChevronUp : faChevronDown"
                                 class="accordion-status-icon"
                             />
                         </ion-button>
                     </ion-list-header>
 
-                    <ion-item
-                        v-show="accordionGroup.isSearchingAccordionOpen"
-                        class="content"
-                        v-for="(option, value) in searchingOptions"
-                        :key="value"
+                    <ion-radio-group
+                        v-show="accordionGroup.isSortingAccordionOpen"
+                        :value="selectedSort"
+                        @ionChange="setSelectedOption($event)"
                     >
-                        <ion-label> {{ option.label }} </ion-label>
-                        <ion-toggle
-                            slot="end"
-                            :checked="selectedSearchingOptions[value]"
-                            :disabled="option.isDisabled"
-                            @ionChange="setSearchOption(value, $event.detail.checked)"
-                        />
-                    </ion-item>
+                        <ion-item v-for="(label, value) in sortingOptions" :key="value">
+                            <ion-label> {{ label }} </ion-label>
+                            <ion-radio slot="end" :value="value" />
+                        </ion-item>
+                    </ion-radio-group>
                 </ion-list>
             </view>
 
@@ -169,9 +169,9 @@ export default defineComponent({
             },
             selectedSearchingOptions: this.vocabularySearchCoverage,
             accordionGroup: {
-                isSortingAccordionOpen: true,
+                isSortingAccordionOpen: false,
                 isFilteringAccordionOpen: false,
-                isSearchingAccordionOpen: false,
+                isSearchingAccordionOpen: true,
             },
         };
     },
