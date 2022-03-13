@@ -115,6 +115,8 @@
                 :on-change-sort="onChangeSort"
                 :fetch-not-having-definition-only="fetchNotHavingDefinitionOnly"
                 :on-change-fetch-not-having-definition-only="onChangeFetchNotHavingDefinitionOnly"
+                :vocabulary-search-coverage="vocabularySearchCoverage"
+                :on-change-searching-coverage="onChangeSearchingCoverage"
             />
         </ion-content>
     </ion-page>
@@ -153,6 +155,7 @@ import * as _ from 'lodash';
 import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/Settings.vue';
+import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -200,6 +203,14 @@ export default defineComponent({
                 direction: SortDirection.DESC,
             } as Sort,
             fetchNotHavingDefinitionOnly: false,
+            vocabularySearchCoverage: {
+                word: true,
+                linkerWords: false,
+                genericNotes: false,
+                meaning: false,
+                examples: false,
+                notes: false,
+            },
         };
     },
     async mounted() {
@@ -226,7 +237,7 @@ export default defineComponent({
             this.searchKeyword = '';
             this.totalVocabularies = 0;
             this.isSettingsPopoverOpened = false;
-            // no resetting of "sort"
+            // no resetting of "sort" and other settings
         },
 
         async setSettingsStuff(): Promise<void> {
@@ -304,6 +315,7 @@ export default defineComponent({
         async findVocabularies(): Promise<SearchResult<Vocabulary>> {
             const vocabularySearch: VocabularySearch = {
                 searchKeyword: this.searchKeyword,
+                vocabularySearchCoverage: this.vocabularySearchCoverage,
                 fetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
                 pagination: {
                     pageSize: this.pageSize,
@@ -399,6 +411,7 @@ export default defineComponent({
             const vocabSettings = {
                 sort: this.sort,
                 fetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
+                vocabularySearchCoverage: this.vocabularySearchCoverage,
             };
             if (
                 !this.isSettingsPopoverOpened &&
@@ -420,6 +433,10 @@ export default defineComponent({
 
         onChangeFetchNotHavingDefinitionOnly(fetchNotHavingDefinitionOnly: boolean): void {
             this.fetchNotHavingDefinitionOnly = fetchNotHavingDefinitionOnly;
+        },
+
+        onChangeSearchingCoverage(vocabularySearchCoverage: VocabularySearchCoverage): void {
+            this.vocabularySearchCoverage = vocabularySearchCoverage;
         },
     },
 });

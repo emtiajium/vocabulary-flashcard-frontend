@@ -36,6 +36,22 @@
                         />
                     </ion-item>
                 </ion-list>
+
+                <ion-list lines="none">
+                    <ion-list-header lines="inset">
+                        <ion-card-subtitle> Searching Preference </ion-card-subtitle>
+                    </ion-list-header>
+
+                    <ion-item v-for="(option, value) in searchingOptions" :key="value">
+                        <ion-label> {{ option.label }} </ion-label>
+                        <ion-toggle
+                            slot="end"
+                            :checked="selectedSearchingOptions[value]"
+                            :disabled="option.isDisabled"
+                            @ionChange="setSearchOption(value, $event.detail.checked)"
+                        />
+                    </ion-item>
+                </ion-list>
             </view>
 
             <ion-list-header class="footer-container">
@@ -96,6 +112,15 @@ export default defineComponent({
             },
             selectedSortingOption: this.selectedSort,
             isSetHavingEmptyDefinition: this.fetchNotHavingDefinitionOnly,
+            searchingOptions: {
+                word: { label: 'Word', isDisabled: true },
+                linkerWords: { label: 'Relatable words', isDisabled: false },
+                genericNotes: { label: 'Generic Notes', isDisabled: false },
+                meaning: { label: 'Meaning', isDisabled: false },
+                examples: { label: 'Examples', isDisabled: false },
+                notes: { label: 'Notes', isDisabled: false },
+            },
+            selectedSearchingOptions: this.vocabularySearchCoverage,
         };
     },
     props: [
@@ -106,11 +131,14 @@ export default defineComponent({
         'applySettings',
         'fetchNotHavingDefinitionOnly',
         'onChangeFetchNotHavingDefinitionOnly',
+        'vocabularySearchCoverage',
+        'onChangeSearchingCoverage',
     ],
     methods: {
         async onApplyingSettings(): Promise<void> {
             this.onChangeSort(this.selectedSortingOption);
             this.onChangeFetchNotHavingDefinitionOnly(this.isSetHavingEmptyDefinition);
+            this.onChangeSearchingCoverage(this.selectedSearchingOptions);
             this.closeSettingsPopover();
             await this.applySettings();
         },
@@ -121,6 +149,10 @@ export default defineComponent({
 
         setSelectedFiltering(isChecked: boolean): void {
             this.isSetHavingEmptyDefinition = isChecked;
+        },
+
+        setSearchOption(property: string, isChecked: boolean): void {
+            this.selectedSearchingOptions[property] = isChecked;
         },
     },
 });

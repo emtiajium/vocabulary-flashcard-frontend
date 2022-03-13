@@ -1,24 +1,15 @@
-import { IsBoolean, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
 import Pagination from '@/domains/Pagination';
-import { Type } from 'class-transformer';
 import Sort from '@/domains/Sort';
+import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 
 export default class VocabularySearch {
-    @IsString()
-    @IsOptional()
-    searchKeyword?: string;
+    searchKeyword: string;
 
-    @IsOptional()
-    @IsBoolean()
-    fetchNotHavingDefinitionOnly?: boolean;
+    vocabularySearchCoverage: VocabularySearchCoverage;
 
-    @IsNotEmpty()
-    @ValidateNested({ each: true })
-    @Type(() => Pagination)
+    fetchNotHavingDefinitionOnly: boolean;
+
     pagination: Pagination;
 
-    @ValidateNested()
-    @IsOptional()
-    @Type(() => Sort)
-    sort?: Sort;
+    sort: Sort;
 }
