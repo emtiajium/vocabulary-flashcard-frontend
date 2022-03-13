@@ -3,7 +3,7 @@
         <ion-content class="container">
             <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
-                <ion-button shape="round" size="small" color="warning" class="close" @click="closeSettingsPopover">
+                <ion-button shape="round" size="small" color="primary" class="close" @click="closeSettingsPopover">
                     <font-awesome-icon :icon="faTimesCircle" class="close-icon" />
                 </ion-button>
             </ion-list-header>
@@ -11,10 +11,26 @@
             <view class="contents-container">
                 <ion-list lines="none">
                     <ion-list-header lines="inset">
-                        <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
+                        <ion-card-subtitle class="content-title"> Sorting Preference </ion-card-subtitle>
+                        <ion-button
+                            shape="round"
+                            size="small"
+                            color="white"
+                            class="content-icon-container"
+                            @click="accordionGroup.isSortingAccordionOpen = !accordionGroup.isSortingAccordionOpen"
+                        >
+                            <font-awesome-icon
+                                :icon="accordionGroup.isSortingAccordionOpen ? faChevronUp : faChevronDown"
+                                class="accordion-status-icon"
+                            />
+                        </ion-button>
                     </ion-list-header>
 
-                    <ion-radio-group :value="selectedSort" @ionChange="setSelectedOption($event)">
+                    <ion-radio-group
+                        v-show="accordionGroup.isSortingAccordionOpen"
+                        :value="selectedSort"
+                        @ionChange="setSelectedOption($event)"
+                    >
                         <ion-item v-for="(label, value) in sortingOptions" :key="value">
                             <ion-label> {{ label }} </ion-label>
                             <ion-radio slot="end" :value="value" />
@@ -24,10 +40,22 @@
 
                 <ion-list lines="none">
                     <ion-list-header lines="inset">
-                        <ion-card-subtitle> Filtering Preference </ion-card-subtitle>
+                        <ion-card-subtitle class="content-title"> Filtering Preference </ion-card-subtitle>
+                        <ion-button
+                            shape="round"
+                            size="small"
+                            color="white"
+                            class="content-icon-container"
+                            @click="accordionGroup.isFilteringAccordionOpen = !accordionGroup.isFilteringAccordionOpen"
+                        >
+                            <font-awesome-icon
+                                :icon="accordionGroup.isFilteringAccordionOpen ? faChevronUp : faChevronDown"
+                                class="accordion-status-icon"
+                            />
+                        </ion-button>
                     </ion-list-header>
 
-                    <ion-item>
+                    <ion-item v-show="accordionGroup.isFilteringAccordionOpen">
                         <ion-label> Without definition only </ion-label>
                         <ion-toggle
                             slot="end"
@@ -39,10 +67,27 @@
 
                 <ion-list lines="none">
                     <ion-list-header lines="inset">
-                        <ion-card-subtitle> Searching Preference </ion-card-subtitle>
+                        <ion-card-subtitle class="content-title"> Searching Preference </ion-card-subtitle>
+                        <ion-button
+                            shape="round"
+                            size="small"
+                            color="white"
+                            class="content-icon-container"
+                            @click="accordionGroup.isSearchingAccordionOpen = !accordionGroup.isSearchingAccordionOpen"
+                        >
+                            <font-awesome-icon
+                                :icon="accordionGroup.isSearchingAccordionOpen ? faChevronUp : faChevronDown"
+                                class="accordion-status-icon"
+                            />
+                        </ion-button>
                     </ion-list-header>
 
-                    <ion-item v-for="(option, value) in searchingOptions" :key="value">
+                    <ion-item
+                        v-show="accordionGroup.isSearchingAccordionOpen"
+                        class="content"
+                        v-for="(option, value) in searchingOptions"
+                        :key="value"
+                    >
                         <ion-label> {{ option.label }} </ion-label>
                         <ion-toggle
                             slot="end"
@@ -80,7 +125,7 @@ import {
     IonToggle,
 } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'Settings',
@@ -102,6 +147,8 @@ export default defineComponent({
     data() {
         return {
             faTimesCircle,
+            faChevronDown,
+            faChevronUp,
             sortingOptions: {
                 createdAt_DESC: 'Date created (newest first)',
                 createdAt_ASC: 'Date created (oldest first)',
@@ -121,6 +168,11 @@ export default defineComponent({
                 genericNotes: { label: 'Generic Notes', isDisabled: false },
             },
             selectedSearchingOptions: this.vocabularySearchCoverage,
+            accordionGroup: {
+                isSortingAccordionOpen: true,
+                isFilteringAccordionOpen: false,
+                isSearchingAccordionOpen: false,
+            },
         };
     },
     props: [
@@ -182,6 +234,16 @@ export default defineComponent({
     height: calc(100vh - 124px); /* 124 = 62 + 62; 62 = toolbar's height */
     overflow-y: auto;
     background-color: var(--ion-item-background);
+}
+.content-title {
+    width: 80vw;
+}
+.content-icon-container {
+    width: 20vw;
+}
+.accordion-status-icon {
+    font-size: 20px;
+    color: var(--ion-color-primary);
 }
 .footer-container {
     height: 62px;
