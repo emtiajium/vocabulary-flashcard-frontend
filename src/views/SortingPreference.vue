@@ -1,50 +1,54 @@
 <template>
     <ion-popover :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" css-class="settings-popover">
-        <ion-list lines="none" class="container">
-            <ion-list-header class="title-container">
+        <ion-content class="container">
+            <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
                 <ion-button shape="round" size="small" color="warning" class="close" @click="closeSettingsPopover">
                     <font-awesome-icon :icon="faTimesCircle" class="close-icon" />
                 </ion-button>
             </ion-list-header>
 
-            <ion-radio-group :value="selectedSort" @ionChange="setSelectedOption($event)">
-                <ion-list-header lines="inset" class="title-container">
-                    <ion-card-subtitle class="title"> Sorting Preference </ion-card-subtitle>
-                </ion-list-header>
+            <view class="contents-container">
+                <ion-list lines="none" class="sorting-preference-container">
+                    <ion-list-header lines="inset">
+                        <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
+                    </ion-list-header>
 
-                <ion-item>
-                    <ion-label> Date created (newest first) </ion-label>
-                    <ion-radio slot="end" value="createdAt_DESC" />
-                </ion-item>
-                <ion-item>
-                    <ion-label> Date created (oldest first) </ion-label>
-                    <ion-radio slot="end" value="createdAt_ASC" />
-                </ion-item>
-                <ion-item>
-                    <ion-label> Date updated (newest first) </ion-label>
-                    <ion-radio slot="end" value="updatedAt_DESC" />
-                </ion-item>
-                <ion-item>
-                    <ion-label> Date updated (oldest first) </ion-label>
-                    <ion-radio slot="end" value="updatedAt_ASC" />
-                </ion-item>
-                <ion-item>
-                    <ion-label> Word (alphabetically first) </ion-label>
-                    <ion-radio slot="end" value="word_ASC" />
-                </ion-item>
-                <ion-item>
-                    <ion-label> Word (alphabetically last) </ion-label>
-                    <ion-radio slot="end" value="word_DESC" />
-                </ion-item>
-            </ion-radio-group>
+                    <ion-radio-group :value="selectedSort" @ionChange="setSelectedOption($event)">
+                        <ion-item>
+                            <ion-label> Date created (newest first) </ion-label>
+                            <ion-radio slot="end" value="createdAt_DESC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Date created (oldest first) </ion-label>
+                            <ion-radio slot="end" value="createdAt_ASC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Date updated (newest first) </ion-label>
+                            <ion-radio slot="end" value="updatedAt_DESC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Date updated (oldest first) </ion-label>
+                            <ion-radio slot="end" value="updatedAt_ASC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Word (alphabetically first) </ion-label>
+                            <ion-radio slot="end" value="word_ASC" />
+                        </ion-item>
+                        <ion-item>
+                            <ion-label> Word (alphabetically last) </ion-label>
+                            <ion-radio slot="end" value="word_DESC" />
+                        </ion-item>
+                    </ion-radio-group>
+                </ion-list>
+            </view>
 
-            <ion-item class="apply-button-container">
-                <ion-button color="success" fill="solid" size="default" class="apply-button" @click="onApplyingSort">
+            <ion-list-header class="footer-container">
+                <ion-button color="success" fill="solid" class="apply-button" @click="onApplyingSort">
                     Apply
                 </ion-button>
-            </ion-item>
-        </ion-list>
+            </ion-list-header>
+        </ion-content>
     </ion-popover>
 </template>
 
@@ -61,6 +65,7 @@ import {
     IonCardTitle,
     IonCardSubtitle,
     IonButton,
+    IonContent,
 } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -79,6 +84,7 @@ export default defineComponent({
         IonCardSubtitle,
         IonButton,
         IonCardTitle,
+        IonContent,
     },
     data() {
         return {
@@ -103,27 +109,36 @@ export default defineComponent({
 
 <style scoped>
 .container {
-    height: 100vh !important;
-    position: relative;
+    height: 100vh;
 }
-.apply-button-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-.apply-button {
-    margin-top: 20px;
-    margin-bottom: 15px;
-    width: 100vw;
+.header-container {
+    height: 62px; /* toolbar's height */
+    background-color: var(--ion-toolbar-background);
 }
 .title {
     width: 80vw;
+    color: var(--ion-color-white);
 }
 .close {
     width: 20vw;
 }
 .close-icon {
     font-size: 20px;
+    color: var(--ion-color-white);
+}
+.contents-container {
+    display: block;
+    height: calc(100vh - 124px); /* 124 = 62 + 62; 62 = toolbar's height */
+    overflow-y: auto;
+    background-color: var(--ion-item-background);
+}
+.footer-container {
+    height: 62px;
+    background-color: var(--ion-item-background);
+    padding-right: 16px;
+}
+.apply-button {
+    width: 100vw;
+    margin-inline: unset;
 }
 </style>

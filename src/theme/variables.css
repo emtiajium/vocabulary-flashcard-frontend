@@ -79,6 +79,8 @@ body.light {
 
     --ion-card-background: var(--ion-color-lightest);
     --ion-card-color: var(--ion-color-dark);
+
+    --ion-item-background: var(--ion-color-white);
 }
 
 body.light ion-toggle {
