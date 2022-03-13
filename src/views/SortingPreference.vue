@@ -1,36 +1,40 @@
 <template>
     <ion-popover :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" css-class="settings-popover">
         <ion-list lines="none" class="container">
+            <ion-list-header class="title-container">
+                <ion-card-title class="title"> Settings </ion-card-title>
+                <ion-button shape="round" size="small" color="warning" class="close" @click="closeSettingsPopover">
+                    <font-awesome-icon :icon="faTimesCircle" class="close-icon" />
+                </ion-button>
+            </ion-list-header>
+
             <ion-radio-group :value="selectedSort" @ionChange="setSelectedOption($event)">
-                <ion-list-header class="title-container">
-                    <ion-label class="title"> Sorting Preference </ion-label>
-                    <ion-button shape="round" size="small" color="warning" class="close" @click="closeSettingsPopover">
-                        <font-awesome-icon :icon="faTimesCircle" class="close-icon" />
-                    </ion-button>
+                <ion-list-header lines="inset" class="title-container">
+                    <ion-card-subtitle class="title"> Sorting Preference </ion-card-subtitle>
                 </ion-list-header>
 
                 <ion-item>
-                    <ion-card-subtitle> Date created (newest first) </ion-card-subtitle>
+                    <ion-label> Date created (newest first) </ion-label>
                     <ion-radio slot="end" value="createdAt_DESC" />
                 </ion-item>
                 <ion-item>
-                    <ion-card-subtitle> Date created (oldest first) </ion-card-subtitle>
+                    <ion-label> Date created (oldest first) </ion-label>
                     <ion-radio slot="end" value="createdAt_ASC" />
                 </ion-item>
                 <ion-item>
-                    <ion-card-subtitle> Date updated (newest first) </ion-card-subtitle>
+                    <ion-label> Date updated (newest first) </ion-label>
                     <ion-radio slot="end" value="updatedAt_DESC" />
                 </ion-item>
                 <ion-item>
-                    <ion-card-subtitle> Date updated (oldest first) </ion-card-subtitle>
+                    <ion-label> Date updated (oldest first) </ion-label>
                     <ion-radio slot="end" value="updatedAt_ASC" />
                 </ion-item>
                 <ion-item>
-                    <ion-card-subtitle> Word (alphabetically first) </ion-card-subtitle>
+                    <ion-label> Word (alphabetically first) </ion-label>
                     <ion-radio slot="end" value="word_ASC" />
                 </ion-item>
                 <ion-item>
-                    <ion-card-subtitle> Word (alphabetically last) </ion-card-subtitle>
+                    <ion-label> Word (alphabetically last) </ion-label>
                     <ion-radio slot="end" value="word_DESC" />
                 </ion-item>
             </ion-radio-group>
@@ -54,6 +58,7 @@ import {
     IonRadioGroup,
     IonRadio,
     IonListHeader,
+    IonCardTitle,
     IonCardSubtitle,
     IonButton,
 } from '@ionic/vue';
@@ -73,6 +78,7 @@ export default defineComponent({
         IonListHeader,
         IonCardSubtitle,
         IonButton,
+        IonCardTitle,
     },
     data() {
         return {
@@ -110,10 +116,6 @@ export default defineComponent({
     margin-top: 20px;
     margin-bottom: 15px;
     width: 100vw;
-}
-.title-container {
-    margin-top: 15px;
-    margin-bottom: 15px;
 }
 .title {
     width: 80vw;
