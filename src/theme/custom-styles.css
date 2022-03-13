@@ -124,7 +124,7 @@ ion-card.margin-top-unset {
  but unfortunately it doesn't work
  */
 .settings-popover {
-    --width: 280px;
+    --width: 295px;
     --height: 100vh;
     --max-height: 100vh;
 }
