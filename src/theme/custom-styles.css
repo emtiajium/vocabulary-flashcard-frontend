@@ -120,7 +120,7 @@ ion-card.margin-top-unset {
 }
 
 /* below style should be at
- src/views/SortingPreference.vue
+ src/views/Settings.vue
  but unfortunately it doesn't work
  */
 .settings-popover {

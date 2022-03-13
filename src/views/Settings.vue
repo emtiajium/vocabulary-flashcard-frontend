@@ -71,7 +71,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
-    name: 'SortingPreference',
+    name: 'Settings',
     components: {
         FontAwesomeIcon,
         IonPopover,

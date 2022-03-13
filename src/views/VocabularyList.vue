@@ -107,7 +107,7 @@
                 <ion-fab-button color="warning" :disabled="true" size="small"> {{ totalVocabularies }} </ion-fab-button>
             </ion-fab>
 
-            <sorting-preference
+            <settings
                 :is-settings-popover-opened="isSettingsPopoverOpened"
                 :selected-sort="selectedSort"
                 :close-settings-popover="closeSettingsPopover"
@@ -150,7 +150,7 @@ import Spinner from '@/views/Spinner.vue';
 import * as _ from 'lodash';
 import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
-import SortingPreference from '@/views/SortingPreference.vue';
+import Settings from '@/views/Settings.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -158,7 +158,7 @@ type IonRefresherType = Components.IonRefresher;
 export default defineComponent({
     name: 'VocabularyList',
     components: {
-        SortingPreference,
+        Settings,
         Spinner,
         NetworkError,
         MinifiedVocabulary,
