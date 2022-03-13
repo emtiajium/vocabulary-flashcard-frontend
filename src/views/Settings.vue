@@ -114,11 +114,11 @@ export default defineComponent({
             isSetHavingEmptyDefinition: this.fetchNotHavingDefinitionOnly,
             searchingOptions: {
                 word: { label: 'Word', isDisabled: true },
-                linkerWords: { label: 'Relatable words', isDisabled: false },
-                genericNotes: { label: 'Generic Notes', isDisabled: false },
                 meaning: { label: 'Meaning', isDisabled: false },
                 examples: { label: 'Examples', isDisabled: false },
                 notes: { label: 'Notes', isDisabled: false },
+                linkerWords: { label: 'Relatable words', isDisabled: false },
+                genericNotes: { label: 'Generic Notes', isDisabled: false },
             },
             selectedSearchingOptions: this.vocabularySearchCoverage,
         };
