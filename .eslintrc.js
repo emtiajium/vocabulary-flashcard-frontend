@@ -57,5 +57,11 @@ module.exports = {
                 'class-methods-use-this': 'off',
             },
         },
+        {
+            files: ['src/views/Settings.vue'],
+            rules: {
+                '@typescript-eslint/camelcase': 'off',
+            },
+        },
     ],
 };

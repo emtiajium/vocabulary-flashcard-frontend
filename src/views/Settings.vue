@@ -15,29 +15,9 @@
                     </ion-list-header>
 
                     <ion-radio-group :value="selectedSort" @ionChange="setSelectedOption($event)">
-                        <ion-item>
-                            <ion-label> Date created (newest first) </ion-label>
-                            <ion-radio slot="end" value="createdAt_DESC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date created (oldest first) </ion-label>
-                            <ion-radio slot="end" value="createdAt_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date updated (newest first) </ion-label>
-                            <ion-radio slot="end" value="updatedAt_DESC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Date updated (oldest first) </ion-label>
-                            <ion-radio slot="end" value="updatedAt_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Word (alphabetically first) </ion-label>
-                            <ion-radio slot="end" value="word_ASC" />
-                        </ion-item>
-                        <ion-item>
-                            <ion-label> Word (alphabetically last) </ion-label>
-                            <ion-radio slot="end" value="word_DESC" />
+                        <ion-item v-for="(label, value) in sortingOptions" :key="value">
+                            <ion-label> {{ label }} </ion-label>
+                            <ion-radio slot="end" :value="value" />
                         </ion-item>
                     </ion-radio-group>
                 </ion-list>
@@ -106,7 +86,15 @@ export default defineComponent({
     data() {
         return {
             faTimesCircle,
-            selectedOption: this.selectedSort,
+            sortingOptions: {
+                createdAt_DESC: 'Date created (newest first)',
+                createdAt_ASC: 'Date created (oldest first)',
+                updatedAt_DESC: 'Date updated (newest first)',
+                updatedAt_ASC: 'Date updated (oldest first)',
+                word_ASC: 'Word (alphabetically first)',
+                word_DESC: 'Word (alphabetically first)',
+            },
+            selectedSortingOption: this.selectedSort,
             isSetHavingEmptyDefinition: this.fetchNotHavingDefinitionOnly,
         };
     },
@@ -121,14 +109,14 @@ export default defineComponent({
     ],
     methods: {
         async onApplyingSettings(): Promise<void> {
-            this.onChangeSort(this.selectedOption);
+            this.onChangeSort(this.selectedSortingOption);
             this.onChangeFetchNotHavingDefinitionOnly(this.isSetHavingEmptyDefinition);
             this.closeSettingsPopover();
             await this.applySettings();
         },
 
         setSelectedOption(event: CustomEvent): void {
-            this.selectedOption = event.detail.value;
+            this.selectedSortingOption = event.detail.value;
         },
 
         setSelectedFiltering(isChecked: boolean): void {
