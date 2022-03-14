@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.11.1`: Local persistence of the searching/filtering settings
 -   `0.11.0`: Advanced searching/filtering
 -   `0.10.4`: More UI/UX improvement (notes' container having images)
 -   `0.10.3`: More UI/UX improvement + Upgraded FontAwesome to version 6!
@@ -173,6 +174,7 @@
 
 ## Android Release Log
 
+-   `51`: `0.11.1`
 -   `50`: `0.11.0`
 -   `49`: `0.10.4`
 -   `48`: `0.10.3`
