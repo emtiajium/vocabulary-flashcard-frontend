@@ -243,8 +243,9 @@ export default defineComponent({
         async setSettingsStuff(): Promise<void> {
             const vocabSettings = await NativeStorage.getVocabSettings();
             if (!_.isEmpty(vocabSettings)) {
-                const { sort: selectedSort, fetchNotHavingDefinitionOnly } = vocabSettings;
+                const { sort: selectedSort, fetchNotHavingDefinitionOnly, vocabularySearchCoverage } = vocabSettings;
                 this.onChangeSort(`${selectedSort.field}_${selectedSort.direction}`);
+                this.onChangeSearchingCoverage(vocabularySearchCoverage);
                 this.onChangeFetchNotHavingDefinitionOnly(fetchNotHavingDefinitionOnly);
             }
         },

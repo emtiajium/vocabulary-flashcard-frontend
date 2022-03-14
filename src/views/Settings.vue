@@ -35,7 +35,7 @@
                         <ion-label> {{ option.label }} </ion-label>
                         <ion-toggle
                             slot="end"
-                            :checked="selectedSearchingOptions[value]"
+                            :checked="vocabularySearchCoverage[value]"
                             :disabled="option.isDisabled"
                             @ionChange="setSearchOption(value, $event.detail.checked)"
                         />
@@ -63,7 +63,7 @@
                         <ion-label> Without definition only </ion-label>
                         <ion-toggle
                             slot="end"
-                            :checked="isSetHavingEmptyDefinition"
+                            :checked="fetchNotHavingDefinitionOnly"
                             @ionChange="setSelectedFiltering($event.detail.checked)"
                         />
                     </ion-item>
