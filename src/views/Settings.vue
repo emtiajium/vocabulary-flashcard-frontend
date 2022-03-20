@@ -155,7 +155,7 @@ export default defineComponent({
                 updatedAt_DESC: 'Date updated (newest first)',
                 updatedAt_ASC: 'Date updated (oldest first)',
                 word_ASC: 'Word (alphabetically first)',
-                word_DESC: 'Word (alphabetically first)',
+                word_DESC: 'Word (alphabetically last)',
             },
             selectedSortingOption: this.selectedSort,
             isSetHavingEmptyDefinition: this.fetchNotHavingDefinitionOnly,
