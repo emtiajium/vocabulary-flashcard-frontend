@@ -93,7 +93,7 @@
                                         </span>
                                         <font-awesome-icon
                                             :icon="faExternalLinkAlt"
-                                            class="firecracker-primary-colored-icon"
+                                            class="firecracker-primary-color-icon"
                                         />
                                     </ion-chip>
                                 </ion-button>
@@ -160,7 +160,7 @@
                 >
                     <font-awesome-icon
                         :icon="vocabulary.isInLeitnerBox ? faHeartSolid : faHeartRegular"
-                        class="firecracker-primary-colored-icon leitner-icon"
+                        class="firecracker-primary-color-icon leitner-icon"
                     />
                 </ion-fab-button>
                 <span class="ion-margin-top" />

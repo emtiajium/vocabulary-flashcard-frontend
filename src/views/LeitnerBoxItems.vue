@@ -37,14 +37,14 @@
                             </ion-card-title>
                             <ion-card-subtitle class="display-flex ion-justify-content-center capitalize">
                                 <ion-row>
-                                    <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-colored-icon" />
+                                    <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
                                     <ion-datetime
                                         :value="boxItem.updatedAt"
                                         display-format="MMMM DD, YYYY"
                                         class="updated-at padding-right-10"
                                         :disabled="true"
                                     />
-                                    <font-awesome-icon :icon="faClock" class="firecracker-primary-colored-icon" />
+                                    <font-awesome-icon :icon="faClock" class="firecracker-primary-color-icon" />
                                     <ion-datetime
                                         :value="boxItem.updatedAt"
                                         display-format="hh:mm A"
