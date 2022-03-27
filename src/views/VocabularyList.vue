@@ -22,7 +22,7 @@
                         <ion-card-content>
                             <view class="display-flex ion-justify-content-center">
                                 <ion-item lines="none">
-                                    <span class="material-icons new-entrant-announcement-icon"> campaign </span>
+                                    <span class="material-icons firecracker-primary-color-icon-60pt"> campaign </span>
                                 </ion-item>
                             </view>
                             <ion-card-subtitle class="ion-text-center ion-padding">
@@ -49,7 +49,7 @@
                     </span>
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <span class="material-icons searching-result-zero-icon"> manage_search </span>
+                    <span class="material-icons firecracker-primary-color-icon-60pt"> manage_search </span>
                 </view>
             </view>
 
@@ -78,7 +78,7 @@
                     </span>
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faGlassCheers" class="loaded-all-icon" />
+                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
                 </view>
             </view>
 
@@ -443,17 +443,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.loaded-all-icon {
-    font-size: 60pt;
-    color: var(--ion-color-primary);
-}
-.searching-result-zero-icon {
-    font-size: 60pt;
-    color: var(--ion-color-primary);
-}
-.new-entrant-announcement-icon {
-    font-size: 60pt;
-    color: var(--ion-color-primary);
-}
-</style>
+<style scoped></style>

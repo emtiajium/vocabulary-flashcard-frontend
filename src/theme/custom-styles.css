@@ -119,6 +119,11 @@ ion-card.margin-top-unset {
     color: var(--ion-color-primary);
 }
 
+.firecracker-primary-color-icon-60pt {
+    font-size: 60pt;
+    color: var(--ion-color-primary);
+}
+
 /* below style should be at
  src/views/Settings.vue
  but unfortunately it doesn't work

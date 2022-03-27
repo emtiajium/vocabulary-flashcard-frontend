@@ -14,7 +14,7 @@
                     "All Quiet on the Western Front"
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faGlassCheers" class="quiet-icon" />
+                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
                 </view>
                 <ion-card-subtitle
                     v-if="totalItems > 0"
@@ -338,11 +338,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.quiet-icon {
-    font-size: 60pt;
-    color: var(--ion-color-primary);
-}
-
 .updated-at {
     padding-top: unset;
     padding-bottom: unset;

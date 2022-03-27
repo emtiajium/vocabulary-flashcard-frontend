@@ -5,7 +5,7 @@
         </view>
         <br />
         <view class="display-flex ion-justify-content-center">
-            <font-awesome-icon :icon="faMehBlank" class="fa-meh-blank-extra" />
+            <font-awesome-icon :icon="faMehBlank" class="firecracker-primary-color-icon-60pt" />
         </view>
     </view>
 </template>
@@ -34,9 +34,5 @@ export default defineComponent({
 <style scoped>
 .empty-container-message {
     font-size: 12pt;
-}
-.fa-meh-blank-extra {
-    font-size: 60pt;
-    color: var(--ion-color-primary);
 }
 </style>
