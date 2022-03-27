@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.11.2`: Fixed typos
 -   `0.11.1`: Local persistence of the searching/filtering settings
 -   `0.11.0`: Advanced searching/filtering
 -   `0.10.4`: More UI/UX improvement (notes' container having images)
@@ -174,6 +175,7 @@
 
 ## Android Release Log
 
+-   `52`: `0.11.2`
 -   `51`: `0.11.1`
 -   `50`: `0.11.0`
 -   `49`: `0.10.4`
