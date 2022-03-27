@@ -66,7 +66,7 @@
 
 > Draw the stretchable patches manually using the Draw 9-patch tool. See details from [here](https://developer.android.com/studio/write/draw9patch)
 
-➜ Play store banner/Website thumbnail: Visit [here](https://www.canva.com/)
+➜ Play store screenshots/banner/Website thumbnail: Visit [here](https://www.canva.com/)
 
 ➜ Favicon: Visit [here](https://realfavicongenerator.net/)
 
