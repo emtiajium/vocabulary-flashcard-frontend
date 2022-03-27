@@ -10,15 +10,12 @@
 
             <view class="contents-container">
                 <ion-list lines="none">
-                    <ion-list-header lines="inset">
+                    <ion-list-header
+                        lines="inset"
+                        @click="accordionGroup.isSearchingAccordionOpen = !accordionGroup.isSearchingAccordionOpen"
+                    >
                         <ion-card-subtitle class="content-title"> Searching Preference </ion-card-subtitle>
-                        <ion-button
-                            shape="round"
-                            size="small"
-                            color="white"
-                            class="content-icon-container"
-                            @click="accordionGroup.isSearchingAccordionOpen = !accordionGroup.isSearchingAccordionOpen"
-                        >
+                        <ion-button shape="round" size="small" color="white" class="content-icon-container">
                             <font-awesome-icon
                                 :icon="accordionGroup.isSearchingAccordionOpen ? faChevronUp : faChevronDown"
                                 class="accordion-status-icon"
@@ -43,15 +40,12 @@
                 </ion-list>
 
                 <ion-list lines="none">
-                    <ion-list-header lines="inset">
+                    <ion-list-header
+                        lines="inset"
+                        @click="accordionGroup.isFilteringAccordionOpen = !accordionGroup.isFilteringAccordionOpen"
+                    >
                         <ion-card-subtitle class="content-title"> Filtering Preference </ion-card-subtitle>
-                        <ion-button
-                            shape="round"
-                            size="small"
-                            color="white"
-                            class="content-icon-container"
-                            @click="accordionGroup.isFilteringAccordionOpen = !accordionGroup.isFilteringAccordionOpen"
-                        >
+                        <ion-button shape="round" size="small" color="white" class="content-icon-container">
                             <font-awesome-icon
                                 :icon="accordionGroup.isFilteringAccordionOpen ? faChevronUp : faChevronDown"
                                 class="accordion-status-icon"
@@ -70,15 +64,12 @@
                 </ion-list>
 
                 <ion-list lines="none">
-                    <ion-list-header lines="inset">
+                    <ion-list-header
+                        lines="inset"
+                        @click="accordionGroup.isSortingAccordionOpen = !accordionGroup.isSortingAccordionOpen"
+                    >
                         <ion-card-subtitle class="content-title"> Sorting Preference </ion-card-subtitle>
-                        <ion-button
-                            shape="round"
-                            size="small"
-                            color="white"
-                            class="content-icon-container"
-                            @click="accordionGroup.isSortingAccordionOpen = !accordionGroup.isSortingAccordionOpen"
-                        >
+                        <ion-button shape="round" size="small" color="white" class="content-icon-container">
                             <font-awesome-icon
                                 :icon="accordionGroup.isSortingAccordionOpen ? faChevronUp : faChevronDown"
                                 class="accordion-status-icon"
