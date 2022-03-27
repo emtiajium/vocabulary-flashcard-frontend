@@ -15,8 +15,8 @@
                                 Welcome to <strong>Firecracker Vocab Practice</strong>! Your privacy is important to us.
                                 This Privacy Policy explains how we collect, store, use, disclose and otherwise process
                                 your information when you use
-                                <a href="https://app.firecrackervocabulary.com" :target="isAndroid ? '_blank' : '_self'"
-                                    >https://app.firecrackervocabulary.com</a
+                                <a href="https://firecrackervocabulary.com" :target="isAndroid ? '_blank' : '_self'"
+                                    >https://firecrackervocabulary.com</a
                                 >, and our
                                 <a
                                     href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice"
@@ -46,14 +46,14 @@
                                 without your consent.
                             </ion-card-subtitle>
 
-                            <ion-card-subtitle class="ion-padding-top header"> Information Usage </ion-card-subtitle>
+                            <ion-card-subtitle class="ion-padding-top header"> Information Usage</ion-card-subtitle>
 
                             <ion-card-subtitle class="ion-padding-top">
                                 We store the collected data into our database to operate and maintain your account,
                                 identify you, for example, as the vocabulary creator, to create and maintain a cohort.
                             </ion-card-subtitle>
 
-                            <ion-card-subtitle class="ion-padding-top header"> Information Sharing </ion-card-subtitle>
+                            <ion-card-subtitle class="ion-padding-top header"> Information Sharing</ion-card-subtitle>
 
                             <ion-card-subtitle class="ion-padding-top">
                                 We share your name, avatar, email address and vocabulary you created with the other
@@ -62,7 +62,7 @@
                                 created.
                             </ion-card-subtitle>
 
-                            <ion-card-subtitle class="ion-padding-top header"> Information Disclose </ion-card-subtitle>
+                            <ion-card-subtitle class="ion-padding-top header"> Information Disclose</ion-card-subtitle>
 
                             <ion-card-subtitle class="ion-padding-top">
                                 We collect and transmit data using industry-standard SSL (Secure Socket Layer)
@@ -70,14 +70,14 @@
                                 safeness.
                             </ion-card-subtitle>
 
-                            <ion-card-subtitle class="ion-padding-top header"> Information Deletion </ion-card-subtitle>
+                            <ion-card-subtitle class="ion-padding-top header"> Information Deletion</ion-card-subtitle>
 
                             <ion-card-subtitle class="ion-padding-top">
                                 Contact us if you want to delete your Google provided info, your created vocabulary, or
                                 any kind of data that we have.
                             </ion-card-subtitle>
 
-                            <ion-card-subtitle class="ion-padding-top header"> Contact Information </ion-card-subtitle>
+                            <ion-card-subtitle class="ion-padding-top header"> Contact Information</ion-card-subtitle>
 
                             <ion-card-subtitle class="ion-padding-top email-container">
                                 If you do not agree to any of the provisions of this privacy policy, you should not use
