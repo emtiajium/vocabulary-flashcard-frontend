@@ -44,7 +44,7 @@ export default class Vocabulary {
     genericNotes?: string[];
 
     @ValidateIf((vocabulary) => !!vocabulary.genericExternalLinks?.length)
-    @IsUrl(undefined, { each: true, message: `Each generic external link must be an URL address` })
+    @IsUrl(undefined, { each: true, message: `Each generic external link must be a URL address` })
     @IsArray()
     @IsOptional()
     genericExternalLinks?: string[];

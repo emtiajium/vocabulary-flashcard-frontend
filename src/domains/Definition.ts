@@ -39,7 +39,7 @@ export default class Definition {
     notes?: string[];
 
     @ValidateIf((definition) => !!definition.externalLinks?.length)
-    @IsUrl(undefined, { each: true, message: `Each external link must be an URL address` })
+    @IsUrl(undefined, { each: true, message: `Each external link must be a URL address` })
     @IsArray()
     @IsOptional()
     externalLinks?: string[];
