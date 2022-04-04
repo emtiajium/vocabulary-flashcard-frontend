@@ -205,9 +205,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.container {
-    height: 100vh;
-}
 .header-container {
     height: 62px; /* toolbar's height */
     background-color: var(--ion-toolbar-background);
