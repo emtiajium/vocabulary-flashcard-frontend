@@ -12,6 +12,7 @@
                 <ion-list lines="none">
                     <ion-list-header
                         lines="inset"
+                        class="cursor-pointer"
                         @click="accordionGroup.isSearchingAccordionOpen = !accordionGroup.isSearchingAccordionOpen"
                     >
                         <ion-card-subtitle class="content-title"> Searching Preference </ion-card-subtitle>
@@ -42,6 +43,7 @@
                 <ion-list lines="none">
                     <ion-list-header
                         lines="inset"
+                        class="cursor-pointer"
                         @click="accordionGroup.isFilteringAccordionOpen = !accordionGroup.isFilteringAccordionOpen"
                     >
                         <ion-card-subtitle class="content-title"> Filtering Preference </ion-card-subtitle>
@@ -66,6 +68,7 @@
                 <ion-list lines="none">
                     <ion-list-header
                         lines="inset"
+                        class="cursor-pointer"
                         @click="accordionGroup.isSortingAccordionOpen = !accordionGroup.isSortingAccordionOpen"
                     >
                         <ion-card-subtitle class="content-title"> Sorting Preference </ion-card-subtitle>
@@ -244,5 +247,8 @@ export default defineComponent({
 .apply-button {
     width: 100vw;
     margin-inline: unset;
+}
+.cursor-pointer {
+    cursor: pointer;
 }
 </style>
