@@ -24,7 +24,7 @@ jobs:
         run: npm i
 
       - name: Create environment variables
-        run:
+        run: |  
           npm run create:capacitor.config
           npm run create:config
 
