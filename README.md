@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.12.0`: CI pipeline with Github actions
 -   `0.11.2`: Fixed typos
 -   `0.11.1`: Local persistence of the searching/filtering settings
 -   `0.11.0`: Advanced searching/filtering
