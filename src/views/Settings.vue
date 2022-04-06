@@ -27,15 +27,15 @@
                     <ion-item
                         v-show="accordionGroup.isSearchingAccordionOpen"
                         class="content"
-                        v-for="(option, value) in searchingOptions"
-                        :key="value"
+                        v-for="(value, option) in vocabularySearchCoverage"
+                        :key="option"
                     >
-                        <ion-label> {{ option.label }} </ion-label>
+                        <ion-label> {{ searchingOptions[option].label }} </ion-label>
                         <ion-toggle
                             slot="end"
-                            :checked="vocabularySearchCoverage[value]"
-                            :disabled="option.isDisabled"
-                            @ionChange="setSearchOption(value, $event.detail.checked)"
+                            :checked="value"
+                            :disabled="searchingOptions[option].isDisabled"
+                            @ionChange="setSearchOption(option, $event.detail.checked)"
                         />
                     </ion-item>
                 </ion-list>
