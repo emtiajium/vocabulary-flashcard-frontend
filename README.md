@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.13.0`: Fixed the bug related to the version `0.11.1`
 -   `0.12.0`: CI pipeline with Github actions
 -   `0.11.2`: Fixed typos
 -   `0.11.1`: Local persistence of the searching/filtering settings
@@ -176,6 +177,7 @@
 
 ## Android Release Log
 
+-   `53`: `0.13.0`
 -   `52`: `0.11.2`
 -   `51`: `0.11.1`
 -   `50`: `0.11.0`
