@@ -35,7 +35,7 @@
                             slot="end"
                             :checked="value"
                             :disabled="searchingOptions[option].isDisabled"
-                            @ionChange="setSearchOption(option, $event.detail.checked)"
+                            @ionChange="setSearchingOption(option, $event.detail.checked)"
                         />
                     </ion-item>
                 </ion-list>
@@ -83,7 +83,7 @@
                     <ion-radio-group
                         v-show="accordionGroup.isSortingAccordionOpen"
                         :value="selectedSort"
-                        @ionChange="setSelectedSortingOption($event)"
+                        @ionChange="setSelectedSortingOption($event.detail.value)"
                     >
                         <ion-item v-for="(label, value) in sortingOptions" :key="value">
                             <ion-label> {{ label }} </ion-label>
@@ -151,8 +151,8 @@ export default defineComponent({
                 word_ASC: 'Word (alphabetically first)',
                 word_DESC: 'Word (alphabetically last)',
             },
-            selectedSortingOption: this.selectedSort,
-            isSetHavingEmptyDefinition: this.fetchNotHavingDefinitionOnly,
+            innerSelectedSort: this.selectedSort,
+            innerFetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
             searchingOptions: {
                 word: { label: 'Word', isDisabled: true },
                 meaning: { label: 'Meaning', isDisabled: false },
@@ -161,7 +161,7 @@ export default defineComponent({
                 linkerWords: { label: 'Relatable words', isDisabled: false },
                 genericNotes: { label: 'Generic Notes', isDisabled: false },
             },
-            selectedSearchingOptions: this.vocabularySearchCoverage,
+            innerVocabularySearchCoverage: this.vocabularySearchCoverage,
             accordionGroup: {
                 isSortingAccordionOpen: false,
                 isFilteringAccordionOpen: false,
@@ -180,25 +180,37 @@ export default defineComponent({
         'vocabularySearchCoverage',
         'onChangeSearchingCoverage',
     ],
+    watch: {
+        isSettingsPopoverOpened(newValue: boolean, oldValue: boolean): void {
+            const isOpen = newValue && !oldValue;
+            if (isOpen) {
+                this.setSelectedSortingOption(this.selectedSort);
+                this.setSelectedFiltering(this.fetchNotHavingDefinitionOnly);
+                Object.keys(this.vocabularySearchCoverage).forEach((key) => {
+                    this.setSearchingOption(key, this.vocabularySearchCoverage[key]);
+                });
+            }
+        },
+    },
     methods: {
         async onApplyingSettings(): Promise<void> {
-            this.onChangeSort(this.selectedSortingOption);
-            this.onChangeFetchNotHavingDefinitionOnly(this.isSetHavingEmptyDefinition);
-            this.onChangeSearchingCoverage(this.selectedSearchingOptions);
+            this.onChangeSort(this.innerSelectedSort);
+            this.onChangeFetchNotHavingDefinitionOnly(this.innerFetchNotHavingDefinitionOnly);
+            this.onChangeSearchingCoverage(this.innerVocabularySearchCoverage);
             this.closeSettingsPopover();
             await this.applySettings();
         },
 
-        setSelectedSortingOption(event: CustomEvent): void {
-            this.selectedSortingOption = event.detail.value;
+        setSelectedSortingOption(innerSelectedSort: string): void {
+            this.innerSelectedSort = innerSelectedSort;
         },
 
         setSelectedFiltering(isChecked: boolean): void {
-            this.isSetHavingEmptyDefinition = isChecked;
+            this.innerFetchNotHavingDefinitionOnly = isChecked;
         },
 
-        setSearchOption(property: string, isChecked: boolean): void {
-            this.selectedSearchingOptions[property] = isChecked;
+        setSearchingOption(property: string, isChecked: boolean): void {
+            this.innerVocabularySearchCoverage[property] = isChecked;
         },
     },
 });
