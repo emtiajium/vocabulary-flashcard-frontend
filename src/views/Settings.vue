@@ -184,11 +184,7 @@ export default defineComponent({
         isSettingsPopoverOpened(newValue: boolean, oldValue: boolean): void {
             const isOpen = newValue && !oldValue;
             if (isOpen) {
-                this.setSelectedSortingOption(this.selectedSort);
-                this.setSelectedFiltering(this.fetchNotHavingDefinitionOnly);
-                Object.keys(this.vocabularySearchCoverage).forEach((key) => {
-                    this.setSearchingOption(key, this.vocabularySearchCoverage[key]);
-                });
+                this.setCurrentSettings();
             }
         },
     },
@@ -211,6 +207,14 @@ export default defineComponent({
 
         setSearchingOption(property: string, isChecked: boolean): void {
             this.innerVocabularySearchCoverage[property] = isChecked;
+        },
+
+        setCurrentSettings(): void {
+            this.setSelectedSortingOption(this.selectedSort);
+            this.setSelectedFiltering(this.fetchNotHavingDefinitionOnly);
+            Object.keys(this.vocabularySearchCoverage).forEach((key) => {
+                this.setSearchingOption(key, this.vocabularySearchCoverage[key]);
+            });
         },
     },
 });
