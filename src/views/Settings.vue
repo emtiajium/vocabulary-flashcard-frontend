@@ -83,7 +83,7 @@
                     <ion-radio-group
                         v-show="accordionGroup.isSortingAccordionOpen"
                         :value="selectedSort"
-                        @ionChange="setSelectedOption($event)"
+                        @ionChange="setSelectedSortingOption($event)"
                     >
                         <ion-item v-for="(label, value) in sortingOptions" :key="value">
                             <ion-label> {{ label }} </ion-label>
@@ -189,7 +189,7 @@ export default defineComponent({
             await this.applySettings();
         },
 
-        setSelectedOption(event: CustomEvent): void {
+        setSelectedSortingOption(event: CustomEvent): void {
             this.selectedSortingOption = event.detail.value;
         },
 
