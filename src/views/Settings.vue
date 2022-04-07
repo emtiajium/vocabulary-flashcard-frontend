@@ -1,6 +1,6 @@
 <template>
     <ion-popover :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" css-class="settings-popover">
-        <ion-content>
+        <ion-content class="settings-container">
             <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
                 <ion-button shape="round" size="small" color="primary" class="close" @click="closeSettingsPopover">
