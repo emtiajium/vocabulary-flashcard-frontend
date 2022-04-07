@@ -27,14 +27,14 @@
                     <ion-item
                         v-show="accordionGroup.isSearchingAccordionOpen"
                         class="content"
-                        v-for="(value, option) in vocabularySearchCoverage"
+                        v-for="(value, option) in searchingOptions"
                         :key="option"
                     >
-                        <ion-label> {{ searchingOptions[option].label }} </ion-label>
+                        <ion-label> {{ value.label }} </ion-label>
                         <ion-toggle
                             slot="end"
-                            :checked="value"
-                            :disabled="searchingOptions[option].isDisabled"
+                            :checked="innerVocabularySearchCoverage[option]"
+                            :disabled="value.isDisabled"
                             @ionChange="setSearchingOption(option, $event.detail.checked)"
                         />
                     </ion-item>
@@ -59,7 +59,7 @@
                         <ion-label> Without definition only </ion-label>
                         <ion-toggle
                             slot="end"
-                            :checked="fetchNotHavingDefinitionOnly"
+                            :checked="innerFetchNotHavingDefinitionOnly"
                             @ionChange="setSelectedFiltering($event.detail.checked)"
                         />
                     </ion-item>
@@ -82,7 +82,7 @@
 
                     <ion-radio-group
                         v-show="accordionGroup.isSortingAccordionOpen"
-                        :value="selectedSort"
+                        :value="innerSelectedSort"
                         @ionChange="setSelectedSortingOption($event.detail.value)"
                     >
                         <ion-item v-for="(label, value) in sortingOptions" :key="value">
