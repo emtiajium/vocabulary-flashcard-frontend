@@ -167,6 +167,11 @@ export default defineComponent({
                 isFilteringAccordionOpen: false,
                 isSearchingAccordionOpen: true,
             },
+            setAppHeight: (): void => {
+                // reading material: https://ilxanlar.medium.com/you-shouldnt-rely-on-css-100vh-and-here-s-why-1b4721e74487
+                // had to do it because the apply  button doesn't show when I browse the "web" app using "Android mobile"
+                document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+            },
         };
     },
     props: [
@@ -187,6 +192,13 @@ export default defineComponent({
                 this.setCurrentSettings();
             }
         },
+    },
+    mounted(): void {
+        window.addEventListener('resize', this.setAppHeight);
+        this.setAppHeight();
+    },
+    beforeUnmount(): void {
+        window.removeEventListener('resize', this.setAppHeight);
     },
     methods: {
         async onApplyingSettings(): Promise<void> {
@@ -238,7 +250,7 @@ export default defineComponent({
 }
 .contents-container {
     display: block;
-    height: calc(100vh - 124px); /* 124 = 62 + 62; 62 = toolbar's height */
+    height: calc(var(--app-height) - 124px); /* 124 = 62 + 62; 62 = toolbar's height */
     overflow-y: auto;
     background-color: var(--ion-item-background);
 }
