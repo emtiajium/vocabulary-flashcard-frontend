@@ -2,7 +2,7 @@
     <ion-page>
         <firecracker-header
             type="MENU"
-            header-title="Firecracker Vocabulary Flashcards"
+            header-title="Firecracker Vocab Flashcards"
             content-id="sign-in"
             menu-id="sign-in-menu"
         />
