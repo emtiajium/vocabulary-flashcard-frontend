@@ -2,7 +2,7 @@
     "name": "ielts-gibberish-android",
     "version": "0.14.0",
     "private": true,
-    "description": "Firecracker Vocab Practice",
+    "description": "Firecracker Vocabulary Flashcards",
     "scripts": {
         "create:capacitor.config": "node -r fs -e \"fs.copyFileSync('capacitor.config.json.text', 'capacitor.config.json', fs.constants.COPYFILE_EXCL)\"",
         "create:config": "node -r fs -e \"fs.copyFileSync('config.json.text', 'config.json', fs.constants.COPYFILE_EXCL)\"",

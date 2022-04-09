@@ -1,6 +1,6 @@
 {
     "appId": "com.emtiajium.firecracker.collaborative.vocab.practice",
-    "appName": "Firecracker Vocab Practice",
+    "appName": "Firecracker Vocabulary Flashcards",
     "webDir": "dist",
     "bundledWebRuntime": false,
     "plugins": {

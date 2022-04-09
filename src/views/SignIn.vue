@@ -2,7 +2,7 @@
     <ion-page>
         <firecracker-header
             type="MENU"
-            header-title="Firecracker Vocab Practice"
+            header-title="Firecracker Vocabulary Flashcards"
             content-id="sign-in"
             menu-id="sign-in-menu"
         />
@@ -92,7 +92,7 @@ export default defineComponent({
         async handleClick(): Promise<void> {
             await Alert.presentAlertConfirm(
                 '',
-                `"Firecracker Vocab Practice" will collect your name, email address and photo after Google authentication.`,
+                `"Firecracker Vocabulary Flashcards" will collect your name, email address and photo after Google authentication.`,
                 async () => {
                     return this.handleSignIn();
                 },

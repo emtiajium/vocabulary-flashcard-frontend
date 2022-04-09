@@ -12,9 +12,9 @@
                     <ion-card class="margin-top-bottom-unset">
                         <ion-card-content>
                             <ion-card-subtitle class="link-container">
-                                Welcome to <strong>Firecracker Vocab Practice</strong>! Your privacy is important to us.
-                                This Privacy Policy explains how we collect, store, use, disclose and otherwise process
-                                your information when you use
+                                Welcome to <strong>Firecracker Vocabulary Flashcards</strong>! Your privacy is important
+                                to us. This Privacy Policy explains how we collect, store, use, disclose and otherwise
+                                process your information when you use
                                 <a href="https://firecrackervocabulary.com" :target="isAndroid ? '_blank' : '_self'"
                                     >https://firecrackervocabulary.com</a
                                 >, and our
