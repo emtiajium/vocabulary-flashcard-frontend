@@ -8,8 +8,8 @@
         </ion-col>
         <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="3" sizeXl="2">
             <ion-card class="margin-top-bottom-unset ion-padding">
-                According to science, spaced repetition is one of the techniques to retain anything in the long term.
-                The Leitner system works based on this principle. It suggests creating a
+                According to science, <strong>spaced repetition</strong> is one of the techniques to retain anything in
+                the long term. The Leitner system works based on this principle. It suggests creating a
                 <strong>flashcard</strong> for each item and reviewing those at an interval.
             </ion-card>
         </ion-col>

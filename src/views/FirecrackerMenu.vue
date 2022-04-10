@@ -12,7 +12,7 @@
             <div v-if="!isAuthenticated" class="intro">
                 <img src="/assets/icon/firecracker-icon.png" alt="Logo" width="100" />
                 <div class="app-name">
-                    <strong class="item-text"> Firecracker </strong>
+                    <ion-title class="item-text"> Firecracker </ion-title>
                 </div>
             </div>
             <ion-list lines="none">
@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonToggle } from '@ionic/vue';
+import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonToggle, IonTitle } from '@ionic/vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
@@ -75,6 +75,7 @@ export default defineComponent({
         IonLabel,
         FontAwesomeIcon,
         IonToggle,
+        IonTitle,
     },
     props: ['contentId', 'menuId'],
     data() {
