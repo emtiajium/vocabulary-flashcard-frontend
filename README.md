@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.15.0`: Renamed the app
 -   `0.14.0`: Fixed few minor bugs
 -   `0.13.0`: Fixed the bug related to the version `0.11.1`
 -   `0.12.0`: CI pipeline with Github actions
@@ -178,6 +179,7 @@
 
 ## Android Release Log
 
+-   `55`: `0.15.0`
 -   `54`: `0.14.0`
 -   `53`: `0.13.0`
 -   `52`: `0.11.2`
