@@ -12,8 +12,7 @@
             <div v-if="!isAuthenticated" class="intro">
                 <img src="/assets/icon/firecracker-icon.png" alt="Logo" width="100" />
                 <div class="app-name">
-                    <strong class="item-text ion-text-capitalize"> Firecracker </strong>
-                    <strong class="item-text ion-text-capitalize"> Vocab Practice </strong>
+                    <strong class="item-text"> Firecracker </strong>
                 </div>
             </div>
             <ion-list lines="none">
