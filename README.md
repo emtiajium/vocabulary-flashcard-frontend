@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.16.0`: Handled deprecated method `MediaQueryList.addListener()`
 -   `0.15.0`: Renamed the app
 -   `0.14.0`: Fixed few minor bugs
 -   `0.13.0`: Fixed the bug related to the version `0.11.1`
@@ -179,6 +180,7 @@
 
 ## Android Release Log
 
+-   `56`: `0.16.0`
 -   `55`: `0.15.0`
 -   `54`: `0.14.0`
 -   `53`: `0.13.0`
