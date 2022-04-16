@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.16.1`: Changed the icon of the "My Flashcards" menu
 -   `0.16.0`: Handled deprecated method `MediaQueryList.addListener()`
 -   `0.15.0`: Renamed the app
 -   `0.14.0`: Fixed few minor bugs
@@ -180,6 +181,7 @@
 
 ## Android Release Log
 
+-   `57`: `0.16.1`
 -   `56`: `0.16.0`
 -   `55`: `0.15.0`
 -   `54`: `0.14.0`
