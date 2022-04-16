@@ -64,7 +64,7 @@ import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 import { getThemeMode, setThemeMode } from '@/utils/dark-mode';
-import FlashcardIcon from '@/views/FlashcardIcon.vue';
+import FlashcardIcon from '@/media/FlashcardIcon.vue';
 
 export default defineComponent({
     name: 'FirecrackerMenu',

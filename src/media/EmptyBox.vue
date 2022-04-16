@@ -1,4 +1,5 @@
 <template>
+    <!-- all credit goes to https://uxwing.com/ -->
     <svg viewBox="0 0 122.88 117.85" width="122.88" height="87.85" xmlns="http://www.w3.org/2000/svg">
         <g>
             <rect fill="none" id="canvas_background" height="514" width="514" y="-1" x="-1" />

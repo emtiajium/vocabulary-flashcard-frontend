@@ -21,7 +21,7 @@ import { IonCard, IonCardContent, IonCardSubtitle, IonRow } from '@ionic/vue';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import Spinner from '@/views/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
-import EmptyBox from '@/views/EmptyBox.vue';
+import EmptyBox from '@/media/EmptyBox.vue';
 
 export default defineComponent({
     name: 'LeitnerSingleBox',

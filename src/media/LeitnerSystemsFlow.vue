@@ -1,6 +1,6 @@
-<!--https://en.wikipedia.org/wiki/Leitner_system#/media/File:Leitner_system.svg-->
 <template>
     <view class="display-flex ion-justify-content-center">
+        <!-- all credit goes to https://en.wikipedia.org/wiki/Leitner_system#/media/File:Leitner_system.svg -->
         <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
