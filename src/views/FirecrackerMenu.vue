@@ -25,7 +25,7 @@
                     <ion-label class="ion-padding-start"> My Cohort </ion-label>
                 </ion-item>
                 <ion-item v-if="isAuthenticated" button @click="navigate('/leitner-systems')">
-                    <font-awesome-icon :icon="faBoxOpen" class="menu-icon" />
+                    <flashcard-icon :colorVariable="'--ion-color-primary'" class="menu-icon" />
                     <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                 </ion-item>
                 <ion-item v-if="isAuthenticated">
@@ -64,10 +64,12 @@ import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 import { getThemeMode, setThemeMode } from '@/utils/dark-mode';
+import FlashcardIcon from '@/views/FlashcardIcon.vue';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
     components: {
+        FlashcardIcon,
         IonContent,
         IonItem,
         IonList,
