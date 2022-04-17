@@ -14,7 +14,12 @@
 
         <ion-content :fullscreen="true" id="vocabulary-list">
             <ion-row
-                v-if="allQuietOnTheWesternFront && !searchKeyword.length && !isNetworkError"
+                v-if="
+                    allQuietOnTheWesternFront &&
+                    !searchKeyword.length &&
+                    !this.fetchNotHavingDefinitionOnly &&
+                    !isNetworkError
+                "
                 class="display-flex ion-justify-content-center"
             >
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
@@ -50,6 +55,15 @@
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <span class="material-icons firecracker-primary-color-icon-60pt"> manage_search </span>
+                </view>
+            </view>
+
+            <view v-if="vocabularies.length === 0 && this.fetchNotHavingDefinitionOnly && !isNetworkError">
+                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
+                    <span class="ion-text-center"> No vocabulary was found without definition </span>
+                </ion-card-subtitle>
+                <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-60pt" />
                 </view>
             </view>
 
@@ -146,7 +160,7 @@ import VocabularySearch from '@/domains/VocabularySearch';
 import { Components } from '@ionic/core/components';
 import MinifiedVocabulary from '@/views/MinifiedVocabulary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPlus, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faGlassCheers, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import NetworkError from '@/views/NetworkError.vue';
 import NativeStorage from '@/utils/NativeStorage';
@@ -188,6 +202,7 @@ export default defineComponent({
             showSpinner: false,
             faPlus,
             faGlassCheers,
+            faThumbsUp,
             vocabularies: [] as Vocabulary[],
             pageNumber: 1,
             pageSize: 10,
