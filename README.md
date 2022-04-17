@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.16.2`: Fixed the bug, which is related to filtering vocab without definition
 -   `0.16.1`: Changed the icon of the "My Flashcards" menu
 -   `0.16.0`: Handled deprecated method `MediaQueryList.addListener()`
 -   `0.15.0`: Renamed the app
@@ -181,6 +182,7 @@
 
 ## Android Release Log
 
+-   `58`: `0.16.2`
 -   `57`: `0.16.1`
 -   `56`: `0.16.0`
 -   `55`: `0.15.0`
