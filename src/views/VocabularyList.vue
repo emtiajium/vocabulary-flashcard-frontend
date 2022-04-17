@@ -58,7 +58,14 @@
                 </view>
             </view>
 
-            <view v-if="vocabularies.length === 0 && this.fetchNotHavingDefinitionOnly && !isNetworkError">
+            <view
+                v-if="
+                    vocabularies.length === 0 &&
+                    this.fetchNotHavingDefinitionOnly &&
+                    !isNetworkError &&
+                    !searchKeyword.length
+                "
+            >
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
                     <span class="ion-text-center"> No vocabulary was found without definition </span>
                 </ion-card-subtitle>
