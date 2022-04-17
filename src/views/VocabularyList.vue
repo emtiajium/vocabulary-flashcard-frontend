@@ -61,7 +61,7 @@
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
                     <minified-vocabulary
                         :vocabulary="vocabulary"
-                        :delete-vocabulary="deleteVocabulary"
+                        :delete-vocabulary="disappearVocabularyFromUI"
                         :update-leitner-box-existence="updateLeitnerBoxExistence"
                     />
                 </ion-col>
@@ -265,7 +265,11 @@ export default defineComponent({
             NativeStorage.getUpdatedVocabulary()
                 .then((updatedVocabulary) => {
                     if (!_.isEmpty(updatedVocabulary)) {
-                        this.updateVocabulary(updatedVocabulary);
+                        if (this.fetchNotHavingDefinitionOnly && updatedVocabulary.definitions?.length) {
+                            this.disappearVocabularyFromUI(updatedVocabulary.id);
+                        } else if (!this.fetchNotHavingDefinitionOnly) {
+                            this.updateVocabulary(updatedVocabulary);
+                        }
                     }
                 })
                 .catch();
@@ -343,7 +347,7 @@ export default defineComponent({
             return this.vocabularies.findIndex((vocabulary) => vocabulary.id === id);
         },
 
-        deleteVocabulary(id: string): void {
+        disappearVocabularyFromUI(id: string): void {
             this.vocabularies = this.vocabularies.filter(({ id: vocabularyId }) => id !== vocabularyId);
             this.totalVocabularies -= 1;
             if (!this.vocabularies.length) {
