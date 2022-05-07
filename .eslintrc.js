@@ -52,12 +52,6 @@ module.exports = {
             },
         },
         {
-            files: ['src/utils/Transformer.ts'],
-            rules: {
-                'class-methods-use-this': 'off',
-            },
-        },
-        {
             files: ['src/views/Settings.vue'],
             rules: {
                 '@typescript-eslint/camelcase': 'off',
