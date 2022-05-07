@@ -2,7 +2,7 @@
 
 ###### Prerequisites
 
-➜ Install Node 14 LTS
+➜ Install Node 14 LTS using [nvm](https://github.com/nvm-sh/nvm)
 
 ➜ <https://github.com/emtiajium/ielts-gibberish>
 
