@@ -20,17 +20,13 @@ module.exports = {
     rules: {
         'no-console': 'off',
         'no-debugger': 'off',
+        'no-unused-vars': 'warn',
         'vue/no-deprecated-slot-attribute': 'off',
         '@typescript-eslint/no-explicit-any': 'error',
         '@typescript-eslint/explicit-function-return-type': 'error',
+        '@typescript-eslint/no-unused-vars': 'warn',
     },
     overrides: [
-        {
-            files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
-            env: {
-                jest: true,
-            },
-        },
         {
             files: ['src/utils/GoogleAuthorization.ts'],
             rules: {
