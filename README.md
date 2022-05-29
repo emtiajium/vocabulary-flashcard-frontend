@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.16.3`: Applied changes as much as possible, which are suggested by the Lighthouse, esp., the color contrast issue
 -   `0.16.2`: Fixed the bug, which is related to filtering vocab without definition
 -   `0.16.1`: Changed the icon of the "My Flashcards" menu
 -   `0.16.0`: Handled deprecated method `MediaQueryList.addListener()`
