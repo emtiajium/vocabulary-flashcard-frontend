@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.16.5`: Changed the color of `<ion-card-title />` and `<ion-card-subtitle />`
 -   `0.16.4`: Fixed more color contrast issue
 -   `0.16.3`: Applied changes as much as possible, which are suggested by the Lighthouse, esp., the color contrast issue
 -   `0.16.2`: Fixed the bug, which is related to filtering vocab without definition
@@ -184,6 +185,7 @@
 
 ## Android Release Log
 
+-   `61`: `0.16.5`
 -   `60`: `0.16.4`
 -   `59`: `0.16.3`
 -   `58`: `0.16.2`
