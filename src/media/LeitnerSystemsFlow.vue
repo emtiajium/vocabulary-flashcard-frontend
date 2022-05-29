@@ -14,7 +14,7 @@
                 <g>
                     <g>
                         <path
-                            fill="#2e8b57"
+                            fill="var(--ion-color-primary)"
                             d="M32.363,63.602c0.639-4.496,2.271-8.827,4.646-12.64c2.373-3.822,5.463-7.137,8.976-9.841
 				c7.044-5.42,15.733-8.385,24.47-8.844c8.727-0.481,17.655,1.487,25.292,5.962c0.953,0.559,1.885,1.156,2.792,1.791l0.846,0.607
 				l0.344,0.258c0.458,0.345,0.909,0.701,1.351,1.066c0.886,0.731,1.741,1.502,2.561,2.311c0.82-2.28,1.487-4.655,1.997-7.102
@@ -31,7 +31,7 @@
                 <g>
                     <g>
                         <path
-                            fill="#2e8b57"
+                            fill="var(--ion-color-primary)"
                             d="M116.637,63.603c0.638-4.496,2.271-8.827,4.646-12.64c2.372-3.822,5.463-7.137,8.976-9.841
 				c7.043-5.42,15.733-8.385,24.47-8.844c8.727-0.481,17.655,1.487,25.291,5.962c0.953,0.559,1.885,1.156,2.792,1.791l0.847,0.607
 				l0.344,0.258c0.458,0.345,0.909,0.7,1.352,1.066c0.886,0.731,1.741,1.501,2.561,2.311c0.82-2.28,1.486-4.655,1.997-7.101
@@ -48,7 +48,7 @@
                 <g>
                     <g>
                         <path
-                            fill="#2e8b57"
+                            fill="var(--ion-color-primary)"
                             d="M205.357,63.602c0.639-4.496,2.271-8.827,4.646-12.64c2.373-3.822,5.463-7.137,8.976-9.841
 				c7.044-5.42,15.733-8.385,24.47-8.844c8.727-0.481,17.655,1.487,25.292,5.962c0.953,0.559,1.885,1.156,2.792,1.791l0.847,0.607
 				l0.344,0.258c0.458,0.345,0.909,0.7,1.352,1.066c0.886,0.731,1.741,1.501,2.561,2.311c0.82-2.28,1.487-4.655,1.997-7.101
@@ -65,7 +65,7 @@
                 <g>
                     <g>
                         <path
-                            fill="#2e8b57"
+                            fill="var(--ion-color-primary)"
                             d="M289.631,63.603c0.639-4.496,2.271-8.827,4.646-12.64c2.372-3.822,5.463-7.137,8.976-9.841
 				c7.044-5.42,15.733-8.385,24.47-8.844c8.727-0.481,17.655,1.487,25.292,5.962c0.953,0.559,1.885,1.156,2.792,1.791l0.847,0.607
 				l0.344,0.258c0.458,0.345,0.909,0.7,1.352,1.066c0.886,0.731,1.741,1.501,2.561,2.311c0.82-2.28,1.487-4.655,1.997-7.101
@@ -78,41 +78,321 @@
                     </g>
                 </g>
             </g>
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="11.5" y1="63.881" x2="11.5" y2="77.381" />
-            <rect x="0.5" y="77.381" fill="none" stroke="#2e8b57" stroke-miterlimit="10" width="52" height="29" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="0.5" y1="77.381" x2="11.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="52.5" y1="77.381" x2="63.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="52.5" y1="106.382" x2="63.5" y2="92.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="11.5" y1="63.881" x2="63.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="63.5" y1="63.881" x2="63.5" y2="92.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="94.5" y1="63.881" x2="94.5" y2="77.381" />
-            <rect x="83.5" y="77.381" fill="none" stroke="#2e8b57" stroke-miterlimit="10" width="52" height="29.001" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="83.5" y1="77.381" x2="94.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="135.5" y1="77.381" x2="146.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="135.5" y1="106.382" x2="146.5" y2="92.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="94.5" y1="63.881" x2="146.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="146.5" y1="63.881" x2="146.5" y2="92.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="182.5" y1="63.881" x2="182.5" y2="77.381" />
-            <rect x="171.5" y="77.381" fill="none" stroke="#2e8b57" stroke-miterlimit="10" width="52" height="29.001" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="171.5" y1="77.381" x2="182.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="223.5" y1="77.381" x2="234.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="223.5" y1="106.382" x2="234.5" y2="92.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="182.5" y1="63.881" x2="234.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="234.5" y1="63.881" x2="234.5" y2="92.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="275.5" y1="62.881" x2="275.5" y2="76.381" />
-            <rect x="264.5" y="76.381" fill="none" stroke="#2e8b57" stroke-miterlimit="10" width="52" height="29" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="264.5" y1="76.381" x2="275.5" y2="62.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="316.5" y1="76.381" x2="327.5" y2="62.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="316.5" y1="105.382" x2="327.5" y2="91.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="275.5" y1="62.881" x2="327.5" y2="62.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="327.5" y1="62.881" x2="327.5" y2="91.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="361.5" y1="63.881" x2="361.5" y2="77.381" />
-            <rect x="350.5" y="77.381" fill="none" stroke="#2e8b57" stroke-miterlimit="10" width="52" height="29" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="350.5" y1="77.381" x2="361.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="402.5" y1="77.381" x2="413.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="402.5" y1="106.382" x2="413.5" y2="92.882" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="361.5" y1="63.881" x2="413.5" y2="63.881" />
-            <line fill="none" stroke="#2e8b57" stroke-miterlimit="10" x1="413.5" y1="63.881" x2="413.5" y2="92.882" />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="11.5"
+                y1="63.881"
+                x2="11.5"
+                y2="77.381"
+            />
+            <rect
+                x="0.5"
+                y="77.381"
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                width="52"
+                height="29"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="0.5"
+                y1="77.381"
+                x2="11.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="52.5"
+                y1="77.381"
+                x2="63.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="52.5"
+                y1="106.382"
+                x2="63.5"
+                y2="92.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="11.5"
+                y1="63.881"
+                x2="63.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="63.5"
+                y1="63.881"
+                x2="63.5"
+                y2="92.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="94.5"
+                y1="63.881"
+                x2="94.5"
+                y2="77.381"
+            />
+            <rect
+                x="83.5"
+                y="77.381"
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                width="52"
+                height="29.001"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="83.5"
+                y1="77.381"
+                x2="94.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="135.5"
+                y1="77.381"
+                x2="146.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="135.5"
+                y1="106.382"
+                x2="146.5"
+                y2="92.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="94.5"
+                y1="63.881"
+                x2="146.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="146.5"
+                y1="63.881"
+                x2="146.5"
+                y2="92.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="182.5"
+                y1="63.881"
+                x2="182.5"
+                y2="77.381"
+            />
+            <rect
+                x="171.5"
+                y="77.381"
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                width="52"
+                height="29.001"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="171.5"
+                y1="77.381"
+                x2="182.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="223.5"
+                y1="77.381"
+                x2="234.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="223.5"
+                y1="106.382"
+                x2="234.5"
+                y2="92.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="182.5"
+                y1="63.881"
+                x2="234.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="234.5"
+                y1="63.881"
+                x2="234.5"
+                y2="92.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="275.5"
+                y1="62.881"
+                x2="275.5"
+                y2="76.381"
+            />
+            <rect
+                x="264.5"
+                y="76.381"
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                width="52"
+                height="29"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="264.5"
+                y1="76.381"
+                x2="275.5"
+                y2="62.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="316.5"
+                y1="76.381"
+                x2="327.5"
+                y2="62.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="316.5"
+                y1="105.382"
+                x2="327.5"
+                y2="91.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="275.5"
+                y1="62.881"
+                x2="327.5"
+                y2="62.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="327.5"
+                y1="62.881"
+                x2="327.5"
+                y2="91.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="361.5"
+                y1="63.881"
+                x2="361.5"
+                y2="77.381"
+            />
+            <rect
+                x="350.5"
+                y="77.381"
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                width="52"
+                height="29"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="350.5"
+                y1="77.381"
+                x2="361.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="402.5"
+                y1="77.381"
+                x2="413.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="402.5"
+                y1="106.382"
+                x2="413.5"
+                y2="92.882"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="361.5"
+                y1="63.881"
+                x2="413.5"
+                y2="63.881"
+            />
+            <line
+                fill="none"
+                stroke="var(--ion-color-primary)"
+                stroke-miterlimit="10"
+                x1="413.5"
+                y1="63.881"
+                x2="413.5"
+                y2="92.882"
+            />
             <g>
                 <g>
                     <g>
