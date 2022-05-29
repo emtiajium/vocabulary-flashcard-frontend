@@ -66,7 +66,7 @@
                                         :key="definition.id"
                                     >
                                         <ion-item lines="none">
-                                            <ion-label color="dark" class="capitalize ion-text-nowrap">
+                                            <ion-label class="capitalize ion-text-nowrap">
                                                 {{ definition.meaning }}
                                             </ion-label>
                                         </ion-item>

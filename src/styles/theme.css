@@ -33,6 +33,14 @@ ion-toggle {
     --handle-background-checked: var(--ion-color-primary);
 }
 
+ion-card-title {
+    --color: var(--ion-text-color);
+}
+
+ion-card-subtitle {
+    --color: var(--ion-text-color);
+}
+
 ion-card.transparent {
     --background: var(--ion-background-color);
 }
