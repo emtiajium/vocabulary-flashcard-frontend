@@ -34,15 +34,15 @@ ion-toggle {
 }
 
 body.light ion-card-title {
-    --color: var(--ion-text-color);
-}
-
-body.dark ion-card-title {
     --color: var(--ion-color-step-850);
 }
 
+body.dark ion-card-title {
+    --color: var(--ion-color-step-750);
+}
+
 body.light ion-card-subtitle {
-    --color: var(--ion-text-color);
+    --color: var(--ion-color-step-750);
 }
 
 body.dark ion-card-subtitle {
