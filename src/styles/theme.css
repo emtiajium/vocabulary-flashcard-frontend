@@ -58,6 +58,10 @@ body.dark ion-menu {
     --ion-background-color: var(--ion-color-step-100);
 }
 
+.alert-message {
+    color: var(--ion-card-title-color) !important;
+}
+
 body.dark ion-alert {
     --background: var(--ion-color-step-100);
 }
