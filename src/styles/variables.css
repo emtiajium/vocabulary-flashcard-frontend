@@ -103,6 +103,8 @@ body.light {
 
     --ion-card-background: var(--ion-color-lightest);
     --ion-card-color: var(--ion-text-color);
+    --ion-card-title-color: var(--ion-color-step-850);
+    --ion-card-sub-title-color: var(--ion-color-step-750);
 
     --ion-item-background: var(--ion-color-white);
 }
@@ -168,4 +170,6 @@ body.dark {
 
     --ion-card-background: var(--ion-color-lightest);
     --ion-card-color: var(--ion-text-color);
+    --ion-card-title-color: var(--ion-color-step-750);
+    --ion-card-sub-title-color: var(--ion-color-step-650);
 }

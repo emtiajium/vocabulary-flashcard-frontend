@@ -469,7 +469,7 @@
             <rect x="73.023" y="3.048" fill="none" width="270" height="20.5" />
             <text
                 transform="matrix(1 0 0 1 73.0234 20.0879)"
-                fill="var(--ion-card-color)"
+                fill="var(--ion-card-sub-title-color)"
                 font-family="'MyriadPro-Bold'"
                 font-size="24"
             >
@@ -478,7 +478,7 @@
             <rect x="59.816" y="151.048" fill="none" width="290.16" height="20.5" />
             <text
                 transform="matrix(1 0 0 1 59.8164 168.0879)"
-                fill="var(--ion-card-color)"
+                fill="var(--ion-card-sub-title-color)"
                 font-family="'MyriadPro-Bold'"
                 font-size="24"
             >
