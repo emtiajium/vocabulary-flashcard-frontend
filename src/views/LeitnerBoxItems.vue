@@ -43,6 +43,7 @@
                                         display-format="MMMM DD, YYYY"
                                         class="updated-at padding-right-10"
                                         :disabled="true"
+                                        :readonly="true"
                                     />
                                     <font-awesome-icon :icon="faClock" class="firecracker-primary-color-icon" />
                                     <ion-datetime
@@ -50,6 +51,7 @@
                                         display-format="hh:mm A"
                                         class="updated-at"
                                         :disabled="true"
+                                        :readonly="true"
                                     />
                                 </ion-row>
                             </ion-card-subtitle>
