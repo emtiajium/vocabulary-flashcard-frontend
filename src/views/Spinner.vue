@@ -1,6 +1,6 @@
 <template>
     <view class="container ion-justify-content-center ion-padding-top ion-padding-bottom">
-        <ion-spinner color="primary" name="lines" />
+        <ion-spinner aria-label="Loading" color="primary" name="lines" />
     </view>
 </template>
 

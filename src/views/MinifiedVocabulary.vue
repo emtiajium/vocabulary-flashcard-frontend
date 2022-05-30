@@ -34,6 +34,7 @@
             <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="2" sizeXl="2" class="center">
                 <ion-row>
                     <ion-button
+                        aria-label="Remove vocabulary"
                         fill="outline"
                         size="small"
                         shape="round"
@@ -44,6 +45,7 @@
                         <font-awesome-icon :icon="faTrashAlt" />
                     </ion-button>
                     <ion-button
+                        aria-label="Update vocabulary"
                         fill="outline"
                         size="small"
                         shape="round"
@@ -56,6 +58,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-button
+                        aria-label="Create flashcard"
                         fill="clear"
                         size="small"
                         shape="round"
@@ -70,6 +73,7 @@
                         />
                     </ion-button>
                     <ion-button
+                        aria-label="View vocabulary details"
                         fill="outline"
                         size="small"
                         shape="round"

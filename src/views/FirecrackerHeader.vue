@@ -3,7 +3,7 @@
         <ion-toolbar>
             <ion-row>
                 <ion-col size="12" class="display-flex">
-                    <ion-menu-button v-if="type === 'MENU'" @click="onClickMenuIcon">
+                    <ion-menu-button v-if="type === 'MENU'" aria-label="Menu" @click="onClickMenuIcon">
                         <font-awesome-icon :icon="faBars" />
                     </ion-menu-button>
                     <ion-button
@@ -27,6 +27,7 @@
                     />
                     <ion-button
                         v-if="enableSettings"
+                        aria-label="Vocabulary settings preferences"
                         color="white"
                         size="small"
                         shape="round"
