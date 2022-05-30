@@ -57,6 +57,7 @@
                         <ion-card-content>
                             <ion-row class="ion-justify-content-center">
                                 <ion-button
+                                    aria-label="Move to the previous box"
                                     fill="outline"
                                     size="small"
                                     shape="round"
@@ -69,6 +70,7 @@
                                     <font-awesome-icon :icon="faThumbsDown" />
                                 </ion-button>
                                 <ion-button
+                                    aria-label="Move to the next box"
                                     fill="outline"
                                     size="small"
                                     shape="round"
@@ -81,6 +83,7 @@
                                     <font-awesome-icon :icon="faThumbsUp" />
                                 </ion-button>
                                 <ion-button
+                                    aria-label="View vocabulary details"
                                     fill="outline"
                                     size="small"
                                     shape="round"
