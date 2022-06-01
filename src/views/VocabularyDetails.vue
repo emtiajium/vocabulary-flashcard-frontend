@@ -24,7 +24,7 @@
                             <ion-card-header>
                                 <ion-card-title>
                                     <span>
-                                        {{ definitionIndex === 0 ? 'Meaning of' : 'Another Meaning of' }}
+                                        {{ definitionIndex === 0 ? 'Meaning of' : 'Another meaning of' }}
                                         <strong> {{ vocabulary.word }} </strong>
                                     </span>
                                 </ion-card-title>
