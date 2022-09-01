@@ -9,12 +9,14 @@
                     <span class="ion-padding-top item-text"> {{ username }} </span>
                 </div>
             </div>
+
             <div v-if="!isAuthenticated" class="intro">
                 <img src="/assets/icon/firecracker-icon.png" alt="Logo" width="100" />
                 <div class="app-name">
                     <ion-title class="item-text"> Firecracker </ion-title>
                 </div>
             </div>
+
             <ion-list lines="none">
                 <ion-item v-if="isAuthenticated" button @click="navigate('/vocabularies')">
                     <font-awesome-icon :icon="faBook" class="menu-icon" />
@@ -53,6 +55,22 @@
                     <ion-label class="ion-padding-start"> Sign Out </ion-label>
                 </ion-item>
             </ion-list>
+
+            <ion-list lines="none">
+                <ion-item v-if="isAuthenticated && !isAndroid" class="display-flex ion-align-items-end">
+                    <a
+                        href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                        target="_blank"
+                        class="display-flex ion-justify-content-center"
+                    >
+                        <img
+                            alt="Get it on Google Play"
+                            src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                            class="google-play"
+                        />
+                    </a>
+                </ion-item>
+            </ion-list>
         </ion-content>
     </ion-menu>
 </template>
@@ -65,6 +83,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 import { getThemeMode, setThemeMode } from '@/utils/dark-mode';
 import FlashcardIcon from '@/media/FlashcardIcon.vue';
+import Platform from '@/utils/Platform';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -93,10 +112,12 @@ export default defineComponent({
             isDark: false,
             faBoxOpen,
             isAuthenticated: false,
+            isAndroid: true,
         };
     },
     async mounted() {
         await this.initUser();
+        await this.loadGetItOnGooglePlay().finally();
         this.setThemeStatus();
         this.observeThemeChange();
     },
@@ -111,6 +132,9 @@ export default defineComponent({
                 this.name = user.name as string;
                 this.isAuthenticated = true;
             }
+        },
+        async loadGetItOnGooglePlay(): Promise<void> {
+            this.isAndroid = await Platform.isAndroid();
         },
         async openMenu(): Promise<void> {
             await menuController.enable(true, this.menuId);
@@ -180,5 +204,8 @@ export default defineComponent({
 .menu-icon {
     color: var(--ion-color-primary);
     width: 25px;
+}
+.google-play {
+    width: 60%;
 }
 </style>
