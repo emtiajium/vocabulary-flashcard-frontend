@@ -1,6 +1,6 @@
 {
     "name": "ielts-gibberish-android",
-    "version": "0.16.6",
+    "version": "0.17.0",
     "private": true,
     "description": "Build your own dictionary, create flashcards, memorize vocabulary",
     "scripts": {
