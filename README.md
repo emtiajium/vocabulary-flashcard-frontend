@@ -121,7 +121,7 @@
 -   `0.15.0`: Renamed the app
 -   `0.14.0`: Fixed few minor bugs
 -   `0.13.0`: Fixed the bug related to the version `0.11.1`
--   `0.12.0`: CI pipeline with Github actions
+-   `0.12.0`: CI pipeline with GitHub actions
 -   `0.11.2`: Fixed typos
 -   `0.11.1`: Local persistence of the searching/filtering settings
 -   `0.11.0`: Advanced searching/filtering
