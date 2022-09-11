@@ -185,7 +185,7 @@ import {
 } from '@ionic/vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
-import Vocabulary from '@/domains/Vocabulary';
+import Vocabulary, { VocabularyExistenceResponse } from '@/domains/Vocabulary';
 import { v4 as uuidV4 } from 'uuid';
 import AddLinkerWords from '@/views/AddLinkerWords.vue';
 import AddGenericNotes from '@/views/AddGenericNotes.vue';
@@ -325,13 +325,46 @@ export default defineComponent({
         setIsDraft(isDraft: boolean): void {
             this.isDraft = isDraft;
         },
+        async notifyExistence(existingVocabulary: VocabularyExistenceResponse): Promise<void> {
+            await Alert.presentAlertConfirm(
+                '',
+                `"${existingVocabulary.word}" already exists. Please consider updating it.`,
+                async () => {
+                    await this.$router.replace(`/vocabulary/update/${existingVocabulary.id}`);
+                },
+                async () => Promise.resolve(),
+                {
+                    cancel: 'Cancel',
+                    agree: 'Update',
+                },
+            );
+        },
+        async assertExistence(): Promise<boolean> {
+            try {
+                const vocabularyId = (this.$route.params.id || this.id) as string;
+                const existingVocabulary = await HttpHandler.get<VocabularyExistenceResponse>(
+                    `/v1/vocabularies/${vocabularyId}/assert-existence/words/${this.word}`,
+                );
+                if (!_.isEmpty(existingVocabulary)) {
+                    await this.notifyExistence(existingVocabulary);
+                    return true;
+                }
+                return false;
+            } catch {
+                // do nothing if an error is thrown by the server
+                return false;
+            }
+        },
         async onAddingDefinition(): Promise<void> {
             if (!this.word) {
                 await Toast.present(`Please insert the word before adding the definition`);
             } else {
-                this.setPartialPayload();
-                this.resetGoingToBeUpdatedDefinition();
-                this.setCurrentPage(PageType.DEFINITION_CU);
+                const isExists = await this.assertExistence();
+                if (!isExists) {
+                    this.setPartialPayload();
+                    this.resetGoingToBeUpdatedDefinition();
+                    this.setCurrentPage(PageType.DEFINITION_CU);
+                }
             }
         },
         setCurrentPage(currentPage: PageType): void {
@@ -377,10 +410,13 @@ export default defineComponent({
         resetGoingToBeUpdatedDefinition(): void {
             this.goingToBeUpdatedDefinition = {} as Definition;
         },
-        updateDefinition(updatableIndex: number): void {
-            this.setPartialPayload();
-            this.setGoingToBeUpdatedDefinition(updatableIndex);
-            this.setCurrentPage(PageType.DEFINITION_CU);
+        async updateDefinition(updatableIndex: number): Promise<void> {
+            const isExists = await this.assertExistence();
+            if (!isExists) {
+                this.setPartialPayload();
+                this.setGoingToBeUpdatedDefinition(updatableIndex);
+                this.setCurrentPage(PageType.DEFINITION_CU);
+            }
         },
         setPartialPayload(): void {
             this.linkerWords = (this.$refs.AddLinkerWordsRef as InstanceType<typeof AddLinkerWords>).getLinkerWords();
