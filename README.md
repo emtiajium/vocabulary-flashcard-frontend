@@ -110,6 +110,7 @@
 
 ## Change Log
 
+-   `0.18.0`: Notified users if a vocabulary already exists
 -   `0.17.0`: Displayed `Get it on Google Play` button for the web users
 -   `0.16.6`: Added buttons' `area-label` to improve the accessibility
 -   `0.16.5`: Changed the color of `<ion-card-title />` and `<ion-card-subtitle />`
@@ -187,6 +188,7 @@
 
 ## Android Release Log
 
+-   `63`: `0.18.0`
 -   `62`: `0.16.6`
 -   `61`: `0.16.5`
 -   `60`: `0.16.4`
