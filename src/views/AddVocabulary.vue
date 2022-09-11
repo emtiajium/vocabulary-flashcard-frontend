@@ -284,6 +284,7 @@ export default defineComponent({
         },
         async init(): Promise<void> {
             this.subscribeToHardwareBackButtonListener();
+            this.isLoading = true;
             const routeParameters = this.$route.params;
             if (routeParameters?.id) {
                 await this.loadEditView();
@@ -325,13 +326,21 @@ export default defineComponent({
         setIsDraft(isDraft: boolean): void {
             this.isDraft = isDraft;
         },
+        async navigateToExisting(existingVocabulary: VocabularyExistenceResponse): Promise<void> {
+            await this.$router.replace(`/vocabulary/update/${existingVocabulary.id}`);
+            // reset the form with new data
+            // it doesn't happen automatically because in the edit mode
+            // the route remains the same (just the param is different)
+            // so, ionViewDidEnter() is not getting executed
+            if (this.isInUpdateMode()) {
+                await this.init();
+            }
+        },
         async notifyExistence(existingVocabulary: VocabularyExistenceResponse): Promise<void> {
             await Alert.presentAlertConfirm(
                 '',
                 `"${existingVocabulary.word}" already exists. Please consider updating it.`,
-                async () => {
-                    await this.$router.replace(`/vocabulary/update/${existingVocabulary.id}`);
-                },
+                async () => this.navigateToExisting(existingVocabulary),
                 async () => Promise.resolve(),
                 {
                     cancel: 'Cancel',
