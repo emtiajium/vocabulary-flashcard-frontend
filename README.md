@@ -36,7 +36,7 @@
 
 ###### Run the web app on browser
 
-➜ <https://localhost:8080/>
+➜ <https://localhost:8090/>
 
 > Import certificate authority (`cert/CA/CA.pem`) by hitting <chrome://settings/certificates> to resolve `Your connection to this site is not secure`
 
@@ -100,7 +100,7 @@
 
 > `keytool -list -alias <an-alias> -keystore <keystore-path/keystore-name>.keystore -v`
 
-➜ Navigate to the [OAuth consent screen](https://console.cloud.google.com/) and publish the app
+➜ Navigate to the [OAuth consent screen](https://console.cloud.google.com/apis/credentials/consent) and publish the app
 
 ➜ Do an internal testing
 

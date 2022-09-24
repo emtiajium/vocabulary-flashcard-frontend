@@ -6,7 +6,7 @@
     "scripts": {
         "create:capacitor.config": "node -r fs -e \"fs.copyFileSync('capacitor.config.json.text', 'capacitor.config.json', fs.constants.COPYFILE_EXCL)\"",
         "create:config": "node -r fs -e \"fs.copyFileSync('config.json.text', 'config.json', fs.constants.COPYFILE_EXCL)\"",
-        "serve": "vue-cli-service serve",
+        "serve": "vue-cli-service serve --port 8090",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint --fix",
         "lint:check": "vue-cli-service lint",
@@ -39,8 +39,6 @@
         "@ionic/storage": "^3.0.4",
         "@ionic/vue": "^5.4.0",
         "@ionic/vue-router": "^5.4.0",
-        "@types/lodash": "^4.14.170",
-        "@types/uuid": "^8.3.0",
         "axios": "^0.21.1",
         "class-transformer": "^0.4.0",
         "class-validator": "^0.13.1",
@@ -59,6 +57,8 @@
     "devDependencies": {
         "@types/gapi": "0.0.39",
         "@types/gapi.auth2": "0.0.54",
+        "@types/lodash": "^4.14.170",
+        "@types/uuid": "^8.3.0",
         "@typescript-eslint/eslint-plugin": "^2.34.0",
         "@typescript-eslint/parser": "^2.33.0",
         "@vue/cli-plugin-babel": "~4.5.0",

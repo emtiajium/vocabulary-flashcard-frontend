@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
     devServer = {
         // Without setting host as `localhost`
         // I'm getting `net::ERR_CERT_COMMON_NAME_INVALID` at the console
-        // for the https://*.*.*.*:8080/sockjs-node
+        // for the https://*.*.*.*:8090/sockjs-node
         // but, we need to have web socket server to enable hot reloading
         host: 'localhost',
         https: true,
