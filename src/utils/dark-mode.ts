@@ -4,12 +4,16 @@ import { StatusBar } from '@capacitor/status-bar';
 
 let isAndroid = true;
 
+function getStatusBarBackgroundColor(): string {
+    return getComputedStyle(document.body).getPropertyValue('--ion-toolbar-background').trim();
+}
+
 export function setDarkMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('dark');
     if (isAndroid) {
         StatusBar.setBackgroundColor({
-            color: '#1f1f1f', // --ion-toolbar-background
+            color: getStatusBarBackgroundColor(),
         }).finally();
     }
 }
@@ -19,7 +23,7 @@ export function setLightMode(): void {
     document.body.classList.add('light');
     if (isAndroid) {
         StatusBar.setBackgroundColor({
-            color: '#2e8b57', // --ion-toolbar-background
+            color: getStatusBarBackgroundColor(),
         }).finally();
     }
 }
