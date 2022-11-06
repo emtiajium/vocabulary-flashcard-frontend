@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.19.0`: Fixed the toggling theme issue for the Android (native) app
 -   `0.18.0`: Notified users if a vocabulary already exists
 -   `0.17.0`: Displayed `Get it on Google Play` button for the web users
 -   `0.16.6`: Added buttons' `area-label` to improve the accessibility
