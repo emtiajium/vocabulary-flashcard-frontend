@@ -2,6 +2,13 @@ import { ThemeDetection } from '@ionic-native/theme-detection';
 import Platform from '@/utils/Platform';
 import { StatusBar } from '@capacitor/status-bar';
 
+declare global {
+    interface Window {
+        setLightMode: () => void;
+        setDarkMode: () => void;
+    }
+}
+
 let isAndroid = true;
 
 function getStatusBarBackgroundColor(): string {
@@ -27,6 +34,9 @@ export function setLightMode(): void {
         }).finally();
     }
 }
+
+window.setLightMode = setLightMode;
+window.setDarkMode = setDarkMode;
 
 export function setThemeMode(mode: 'light' | 'dark'): void {
     if (mode === 'light') {
@@ -75,7 +85,11 @@ export function subscribeToThemeChanges(): void {
 
 export async function initTheme(): Promise<void> {
     await setThemeBasedOnSystem();
-    subscribeToThemeChanges();
+    if (!isAndroid) {
+        subscribeToThemeChanges();
+    }
+    // WebView as a rescuer for the Android app
+    // java/com/emtiajium/firecracker/collaborative/vocab/practice/MainActivity.java
 }
 
 export function getThemeMode(): string {
