@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# MainActivity.java
+cp -R ./android-replacer/app/src/main/java/com/emtiajium/firecracker/collaborative/vocab/practice/MainActivity.java ./android/app/src/main/java/com/emtiajium/firecracker/collaborative/vocab/practice/MainActivity.java
 # Splash screen
 cp -R ./android-replacer/app/src/main/res/drawable ./android/app/src/main/res
 cp -R ./android-replacer/app/src/main/res/drawable-land-hdpi ./android/app/src/main/res
@@ -29,6 +32,5 @@ cp ./android-replacer/app/src/main/AndroidManifest.xml ./android/app/src/main/An
 cp ./android-replacer/app/build.gradle ./android/app/build.gradle
 # Firebase
 cp ./android-replacer/app/google-services.json ./android/app/google-services.json
-
 # Project-level build.gradle
 cp ./android-replacer/android/build.gradle ./android/build.gradle
