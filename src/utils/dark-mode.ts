@@ -89,7 +89,7 @@ export async function initTheme(): Promise<void> {
         subscribeToThemeChanges();
     }
     // WebView as a rescuer for the Android app
-    // java/com/emtiajium/firecracker/collaborative/vocab/practice/MainActivity.java
+    // android/app/src/main/java/com/emtiajium/firecracker/collaborative/vocab/practice/MainActivity.java
 }
 
 export function getThemeMode(): string {
