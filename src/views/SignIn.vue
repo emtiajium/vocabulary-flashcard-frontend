@@ -118,9 +118,9 @@ export default defineComponent({
                 }
             }
         },
-        async persistUser(googleUser: User): Promise<void> {
-            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, _.omit(googleUser, 'jwToken'), true);
-            await NativeStorage.setAuthorizedUser({ ...persistedUser, jwToken: googleUser.jwToken } as User);
+        async persistUser(user: User): Promise<void> {
+            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user, true);
+            await NativeStorage.setAuthorizedUser(persistedUser);
         },
         async loadGetItOnGooglePlay(): Promise<void> {
             this.isAndroid = await Platform.isAndroid();
