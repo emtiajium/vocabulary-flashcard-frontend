@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.20.0`: Made API request with non-expired token
 -   `0.19.0`: Fixed the toggling theme issue for the Android (native) app
 -   `0.18.0`: Notified users if a vocabulary already exists
 -   `0.17.0`: Displayed `Get it on Google Play` button for the web users
@@ -191,6 +192,7 @@
 
 ## Android Release Log
 
+-   `65`: `0.20.0`
 -   `64`: `0.19.0`
 -   `63`: `0.18.0`
 -   `62`: `0.16.6`
