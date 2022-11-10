@@ -119,4 +119,11 @@ export default class NativeStorage {
     static async removeShouldReloadLeitnerItems(): Promise<void> {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.SHOULD_RELOAD_LEITNER_ITEMS);
     }
+
+    static async removeLegacyAuthInfo(): Promise<void> {
+        const user = await NativeStorage.getAuthorizedUser();
+        if (user && (user as Record<string, unknown>).jwToken) {
+            await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
+        }
+    }
 }
