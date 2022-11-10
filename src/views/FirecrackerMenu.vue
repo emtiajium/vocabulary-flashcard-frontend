@@ -84,6 +84,7 @@ import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon, faBoxOpen } from '@
 import { getThemeMode, setThemeMode } from '@/utils/dark-mode';
 import FlashcardIcon from '@/media/FlashcardIcon.vue';
 import Platform from '@/utils/Platform';
+import GoogleAuthorization from '@/utils/GoogleAuthorization';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -151,6 +152,7 @@ export default defineComponent({
         },
         async signOut(): Promise<void> {
             await NativeStorage.removeAuthorizedUser();
+            await GoogleAuthorization.signOut();
             await menuController.close();
             this.isAuthenticated = false;
             await this.$router.replace('/sign-in');

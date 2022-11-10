@@ -42,16 +42,10 @@ export default class NativeStorage {
         return NativeStorage.getByKey<User>(NativeStorageKey.AUTHORIZED_USER);
     }
 
-    static async getJwToken(): Promise<string> {
-        const user = await NativeStorage.getAuthorizedUser();
-        return user.jwToken as string;
-    }
-
     static async setAuthorizedUser(user: User): Promise<void> {
         await (
             await NativeStorage.getStorage()
         ).set(NativeStorageKey.AUTHORIZED_USER, {
-            jwToken: user?.jwToken,
             username: user?.username,
             name: user?.name,
             profilePictureUrl: user?.profilePictureUrl,

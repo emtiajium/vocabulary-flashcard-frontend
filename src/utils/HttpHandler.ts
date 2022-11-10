@@ -1,5 +1,5 @@
 import AxiosAdapter from '@/utils/AxiosAdapter';
-import NativeStorage from '@/utils/NativeStorage';
+import GoogleAuthorization from '@/utils/GoogleAuthorization';
 import Config from '../../config.json';
 
 type RequestConfig = Record<string, unknown>;
@@ -10,7 +10,7 @@ export default class HttpHandler {
             'content-type': 'application/json',
         };
         if (!isPublic) {
-            requestConfig.Authorization = `Bearer ${await NativeStorage.getJwToken()}`;
+            requestConfig.Authorization = `Bearer ${await GoogleAuthorization.getToken()}`;
         }
         return { headers: requestConfig };
     }
