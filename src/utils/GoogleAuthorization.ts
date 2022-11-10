@@ -84,7 +84,7 @@ export default class GoogleAuthorization {
     }
 
     static async getToken(): Promise<string> {
-        await GoogleAuthorization.assertRefreshToken();
+        // await GoogleAuthorization.assertRefreshToken();
         return GoogleAuthorization.currentIdToken;
     }
 
