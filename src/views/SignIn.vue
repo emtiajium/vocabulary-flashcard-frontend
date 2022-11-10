@@ -57,7 +57,6 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import MessageDB from '@/utils/MessageDB';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { App } from '@capacitor/app';
-import * as _ from 'lodash';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import Alert from '@/utils/Alert';
 import Intro from '@/views/Intro.vue';
@@ -83,7 +82,7 @@ export default defineComponent({
     },
     async mounted() {
         await GoogleAuth.load();
-        await this.loadGetItOnGooglePlay().finally();
+        this.loadGetItOnGooglePlay().finally();
     },
     data() {
         return { isAndroid: true, faGoogle };
