@@ -32,7 +32,11 @@ export default class GoogleAuthorization {
     }
 
     static async signOut(): Promise<void> {
-        await GoogleAuth.signOut();
+        try {
+            await GoogleAuth.signOut();
+        } catch {
+            // do nothing
+        }
     }
 
     private static getOAuth2Client(): OAuth2Client {
