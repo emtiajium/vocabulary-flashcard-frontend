@@ -47,7 +47,7 @@
 <script lang="ts">
 import { IonContent, IonPage, IonText, IonButton, IonGrid, IonRow, useBackButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import GoogleAuth from '@/utils/GoogleAuthorization';
+import GoogleAuth from '@/utils/GoogleAuthentication';
 import User from '@/domains/User';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';

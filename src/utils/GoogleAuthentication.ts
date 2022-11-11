@@ -5,7 +5,7 @@ import { Authentication, User as GoogleUser } from '@codetrix-studio/capacitor-g
 import Platform from '@/utils/Platform';
 import Config from '../../config.json';
 
-export default class GoogleAuthorization {
+export default class GoogleAuthentication {
     private static eagerRefreshThresholdInMilliSeconds = 5 * 60 * 1000;
 
     private static currentIdToken: string;
@@ -19,16 +19,16 @@ export default class GoogleAuthorization {
     static async load(): Promise<void> {
         const isAndroid = await Platform.isAndroid();
         if (!isAndroid) {
-            GoogleAuthorization.createMetadata();
+            GoogleAuthentication.createMetadata();
             GoogleAuth.init();
         }
     }
 
     static async signIn(): Promise<User> {
         const authenticatedUser: GoogleUser = await GoogleAuth.signIn();
-        GoogleAuthorization.setToken(authenticatedUser.authentication);
-        GoogleAuthorization.setTokenInfo().finally();
-        return GoogleAuthorization.generateAuthenticatedUserPayload(authenticatedUser);
+        GoogleAuthentication.setToken(authenticatedUser.authentication);
+        GoogleAuthentication.setTokenInfo().finally();
+        return GoogleAuthentication.generateAuthenticatedUserPayload(authenticatedUser);
     }
 
     static async signOut(): Promise<void> {
@@ -40,10 +40,10 @@ export default class GoogleAuthorization {
     }
 
     private static getOAuth2Client(): OAuth2Client {
-        if (!GoogleAuthorization.oAuth2Client) {
-            GoogleAuthorization.oAuth2Client = new OAuth2Client(Config.google.webClientId);
+        if (!GoogleAuthentication.oAuth2Client) {
+            GoogleAuthentication.oAuth2Client = new OAuth2Client(Config.google.webClientId);
         }
-        return GoogleAuthorization.oAuth2Client;
+        return GoogleAuthentication.oAuth2Client;
     }
 
     private static createMetadata(): void {
@@ -63,14 +63,14 @@ export default class GoogleAuthorization {
     }
 
     private static setToken(authentication: Authentication): void {
-        GoogleAuthorization.currentIdToken = authentication.idToken;
-        GoogleAuthorization.currentAccessToken = authentication.accessToken;
+        GoogleAuthentication.currentIdToken = authentication.idToken;
+        GoogleAuthentication.currentAccessToken = authentication.accessToken;
     }
 
     private static async setTokenInfo(): Promise<void> {
         try {
-            GoogleAuthorization.tokenInfo = await GoogleAuthorization.getOAuth2Client().getTokenInfo(
-                GoogleAuthorization.currentAccessToken,
+            GoogleAuthentication.tokenInfo = await GoogleAuthentication.getOAuth2Client().getTokenInfo(
+                GoogleAuthentication.currentAccessToken,
             );
         } catch {
             // just smile, and wave!
@@ -78,31 +78,31 @@ export default class GoogleAuthorization {
     }
 
     private static async assertRefreshToken(): Promise<void> {
-        if (GoogleAuthorization.isTokenExpiring()) {
-            await GoogleAuthorization.refreshToken();
+        if (GoogleAuthentication.isTokenExpiring()) {
+            await GoogleAuthentication.refreshToken();
         }
     }
 
     static async getToken(): Promise<string> {
         // await GoogleAuthorization.assertRefreshToken();
-        return GoogleAuthorization.currentIdToken;
+        return GoogleAuthentication.currentIdToken;
     }
 
     private static isTokenExpiring(): boolean {
-        if (!GoogleAuthorization.tokenInfo) {
+        if (!GoogleAuthentication.tokenInfo) {
             return true;
         }
 
         // copied from node_modules/google-auth-library/build/src/auth/oauth2client.js
-        const expiryDate = GoogleAuthorization.tokenInfo.expiry_date;
+        const expiryDate = GoogleAuthentication.tokenInfo.expiry_date;
         return expiryDate
-            ? expiryDate <= new Date().getTime() + GoogleAuthorization.eagerRefreshThresholdInMilliSeconds
+            ? expiryDate <= new Date().getTime() + GoogleAuthentication.eagerRefreshThresholdInMilliSeconds
             : false;
     }
 
     private static async refreshToken(): Promise<void> {
         const authentication = await GoogleAuth.refresh();
-        GoogleAuthorization.setToken(authentication);
-        GoogleAuthorization.setTokenInfo().finally();
+        GoogleAuthentication.setToken(authentication);
+        GoogleAuthentication.setTokenInfo().finally();
     }
 }

@@ -1,5 +1,5 @@
 import AxiosAdapter from '@/utils/AxiosAdapter';
-import GoogleAuthorization from '@/utils/GoogleAuthorization';
+import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import Config from '../../config.json';
 
 type RequestConfig = Record<string, unknown>;
@@ -10,7 +10,7 @@ export default class HttpHandler {
             'content-type': 'application/json',
         };
         if (!isPublic) {
-            requestConfig.Authorization = `Bearer ${await GoogleAuthorization.getToken()}`;
+            requestConfig.Authorization = `Bearer ${await GoogleAuthentication.getToken()}`;
         }
         return { headers: requestConfig };
     }
