@@ -21,7 +21,7 @@ declare global {
     }
 }
 
-class GoogleAuthorization {
+class GoogleAuthentication {
     private auth2!: GoogleAuth;
 
     private elementId: string;
@@ -110,7 +110,7 @@ async function start(): Promise<void> {
         </view>
     `;
 
-    const googleAuth = new GoogleAuthorization();
+    const googleAuth = new GoogleAuthentication();
     await googleAuth.init(`btn-google-sign-in`);
     const user = await googleAuth.signIn();
     console.log(user);
