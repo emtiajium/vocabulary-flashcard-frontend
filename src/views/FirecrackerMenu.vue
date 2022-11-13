@@ -30,11 +30,10 @@
                     <flashcard-icon :colorVariable="'--ion-color-primary'" class="menu-icon" />
                     <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                 </ion-item>
-                <ion-item v-if="isAuthenticated">
+                <ion-item button v-if="isAuthenticated" @click="toggleTheme()">
                     <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
                     <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
-                    <ion-toggle slot="end" :checked="isDark" @ionChange="onChangeThemeMode($event.detail.checked)" />
                 </ion-item>
                 <ion-item button @click="navigate('/privacy-policy')">
                     <span class="material-icons menu-icon"> policy </span>
@@ -44,11 +43,10 @@
                     <font-awesome-icon :icon="faSignInAlt" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Sign In </ion-label>
                 </ion-item>
-                <ion-item v-if="!isAuthenticated">
+                <ion-item button v-if="!isAuthenticated" @click="toggleTheme()">
                     <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
                     <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
-                    <ion-toggle slot="end" :checked="isDark" @ionChange="onChangeThemeMode($event.detail.checked)" />
                 </ion-item>
                 <ion-item v-if="isAuthenticated" button @click="signOut">
                     <font-awesome-icon :icon="faSignOutAlt" class="menu-icon" />
@@ -77,7 +75,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonToggle, IonTitle } from '@ionic/vue';
+import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonTitle } from '@ionic/vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
@@ -96,7 +94,6 @@ export default defineComponent({
         IonMenu,
         IonLabel,
         FontAwesomeIcon,
-        IonToggle,
         IonTitle,
     },
     props: ['contentId', 'menuId'],
@@ -178,8 +175,8 @@ export default defineComponent({
 
             observer.observe(targetNode, config);
         },
-        onChangeThemeMode(isDark: boolean): void {
-            setThemeMode(isDark ? 'dark' : 'light');
+        toggleTheme(): void {
+            setThemeMode(!this.isDark ? 'dark' : 'light');
         },
     },
 });
