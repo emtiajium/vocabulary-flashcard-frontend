@@ -39,9 +39,9 @@ export default class Platform {
 
         const isAndroid = await Platform.isAndroid();
         if (isAndroid) {
-            const { build, id } = await App.getInfo();
-            versionCode = id;
-            version = build;
+            const { build, version: androidVersion } = await App.getInfo();
+            versionCode = build;
+            version = androidVersion;
         } else {
             version = packageInfo.version;
             versionCode = 'NA';
