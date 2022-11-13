@@ -56,9 +56,16 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
     }
 
-    static async resetAuthorizedUser(user: User): Promise<void> {
-        await NativeStorage.removeAuthorizedUser();
-        await NativeStorage.setAuthorizedUser(user);
+    static async getJwToken(): Promise<string> {
+        return NativeStorage.getByKey<string>(NativeStorageKey.JWT);
+    }
+
+    static async setJwToken(jwToken: string): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.JWT, jwToken);
+    }
+
+    static async removeJwToken(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.JWT);
     }
 
     static async setShouldReloadVocabularies(shouldReloadVocabularies: boolean): Promise<void> {
@@ -118,12 +125,5 @@ export default class NativeStorage {
 
     static async removeShouldReloadLeitnerItems(): Promise<void> {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.SHOULD_RELOAD_LEITNER_ITEMS);
-    }
-
-    static async removeLegacyAuthInfo(): Promise<void> {
-        const user = await NativeStorage.getAuthorizedUser();
-        if (user && (user as Record<string, unknown>).jwToken) {
-            await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
-        }
     }
 }

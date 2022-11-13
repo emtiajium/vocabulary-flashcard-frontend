@@ -1,42 +1,67 @@
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/camelcase */
+
 import User from '@/domains/User';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-import { OAuth2Client, TokenInfo } from 'google-auth-library';
-import { Authentication, User as GoogleUser } from '@codetrix-studio/capacitor-google-auth/dist/esm/user';
+import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import Platform from '@/utils/Platform';
+import { getThemeMode } from '@/utils/dark-mode';
+import NativeStorage from '@/utils/NativeStorage';
 import Config from '../../config.json';
 
+type CredentialResponse = google.accounts.id.CredentialResponse;
+type OnConsentCallback = () => Promise<void>;
+
 export default class GoogleAuthentication {
-    private static eagerRefreshThresholdInMilliSeconds = 5 * 60 * 1000;
-
     private static currentIdToken: string;
-
-    private static currentAccessToken: string;
-
-    private static tokenInfo: TokenInfo;
 
     private static oAuth2Client: OAuth2Client;
 
-    static async load(): Promise<void> {
+    static user: User;
+
+    static onConsentCallback: OnConsentCallback;
+
+    static async load(elementId: string, callback: OnConsentCallback): Promise<void> {
         const isAndroid = await Platform.isAndroid();
         if (!isAndroid) {
-            GoogleAuthentication.createMetadata();
-            GoogleAuth.init();
+            GoogleAuthentication.onConsentCallback = callback;
+            GoogleAuthentication.renderTemplate(elementId);
         }
     }
 
-    static async signIn(): Promise<User> {
-        const authenticatedUser: GoogleUser = await GoogleAuth.signIn();
-        GoogleAuthentication.setToken(authenticatedUser.authentication);
-        GoogleAuthentication.setTokenInfo().finally();
-        return GoogleAuthentication.generateAuthenticatedUserPayload(authenticatedUser);
+    static async onConsent(credential: string): Promise<void> {
+        GoogleAuthentication.setToken(credential);
+        const loginTicket = await GoogleAuthentication.getOAuth2Client().verifyIdToken({
+            idToken: credential,
+            audience: Config.google.webClientId,
+        });
+        const decodedToken = loginTicket.getPayload() as TokenPayload;
+        GoogleAuthentication.generateAuthenticatedUserPayload(decodedToken);
     }
 
-    static async signOut(): Promise<void> {
+    static signOut(): void {
         try {
-            await GoogleAuth.signOut();
+            NativeStorage.removeJwToken().finally();
+            window.google.accounts.id.disableAutoSelect();
         } catch {
-            // do nothing
+            // just smile, and wave!
         }
+    }
+
+    private static renderTemplate(elementId: string): void {
+        window.google.accounts.id.renderButton(document.getElementById(elementId) as HTMLElement, {
+            type: 'standard',
+            size: 'large',
+            shape: 'rectangular',
+            theme: GoogleAuthentication.getButtonTheme(),
+            text: 'continue_with',
+            logo_alignment: 'left',
+        });
+        window.google.accounts.id.prompt();
+    }
+
+    private static getButtonTheme(): 'filled_black' | 'outline' {
+        const mode = getThemeMode();
+        return mode.includes('dark') ? 'filled_black' : 'outline';
     }
 
     private static getOAuth2Client(): OAuth2Client {
@@ -46,63 +71,40 @@ export default class GoogleAuthentication {
         return GoogleAuthentication.oAuth2Client;
     }
 
-    private static createMetadata(): void {
-        const googlePlatformMetadata = document.createElement('meta');
-        googlePlatformMetadata.setAttribute('name', 'google-signin-client_id');
-        googlePlatformMetadata.setAttribute('content', Config.google.webClientId);
-        document.head.appendChild(googlePlatformMetadata);
-    }
-
-    private static generateAuthenticatedUserPayload(googleUser: GoogleUser): User {
-        return {
-            username: googleUser.email,
-            firstname: googleUser.givenName,
-            lastname: googleUser.familyName,
-            profilePictureUrl: googleUser.imageUrl,
+    private static generateAuthenticatedUserPayload(decodedToken: TokenPayload): void {
+        GoogleAuthentication.user = {
+            username: decodedToken.email,
+            firstname: decodedToken.given_name,
+            lastname: decodedToken.family_name,
+            profilePictureUrl: decodedToken.picture,
         };
     }
 
-    private static setToken(authentication: Authentication): void {
-        GoogleAuthentication.currentIdToken = authentication.idToken;
-        GoogleAuthentication.currentAccessToken = authentication.accessToken;
-    }
-
-    private static async setTokenInfo(): Promise<void> {
-        try {
-            GoogleAuthentication.tokenInfo = await GoogleAuthentication.getOAuth2Client().getTokenInfo(
-                GoogleAuthentication.currentAccessToken,
-            );
-        } catch {
-            // just smile, and wave!
-        }
-    }
-
-    private static async assertRefreshToken(): Promise<void> {
-        if (GoogleAuthentication.isTokenExpiring()) {
-            await GoogleAuthentication.refreshToken();
-        }
+    private static setToken(token: string): void {
+        GoogleAuthentication.currentIdToken = token;
+        NativeStorage.setJwToken(token).finally();
     }
 
     static async getToken(): Promise<string> {
-        // await GoogleAuthorization.assertRefreshToken();
-        return GoogleAuthentication.currentIdToken;
-    }
-
-    private static isTokenExpiring(): boolean {
-        if (!GoogleAuthentication.tokenInfo) {
-            return true;
-        }
-
-        // copied from node_modules/google-auth-library/build/src/auth/oauth2client.js
-        const expiryDate = GoogleAuthentication.tokenInfo.expiry_date;
-        return expiryDate
-            ? expiryDate <= new Date().getTime() + GoogleAuthentication.eagerRefreshThresholdInMilliSeconds
-            : false;
-    }
-
-    private static async refreshToken(): Promise<void> {
-        const authentication = await GoogleAuth.refresh();
-        GoogleAuthentication.setToken(authentication);
-        GoogleAuthentication.setTokenInfo().finally();
+        return (
+            GoogleAuthentication.currentIdToken ||
+            NativeStorage.getJwToken().then((token) => {
+                GoogleAuthentication.currentIdToken = token;
+                return token;
+            })
+        );
     }
 }
+
+window.onload = function onLoadGoogleAuthLib(): void {
+    window.google.accounts.id.initialize({
+        client_id: Config.google.webClientId,
+        context: 'signin',
+        ux_mode: 'popup',
+        auto_select: false,
+        callback: async (credentialResponse: CredentialResponse): Promise<void> => {
+            await GoogleAuthentication.onConsent(credentialResponse.credential);
+            await GoogleAuthentication.onConsentCallback();
+        },
+    });
+};

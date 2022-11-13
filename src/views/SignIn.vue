@@ -13,11 +13,8 @@
                     <ion-row class="ion-justify-content-center">
                         <intro />
                     </ion-row>
-                    <ion-row class="ion-justify-content-center">
-                        <ion-button @click="handleClick">
-                            <font-awesome-icon :icon="faGoogle" />
-                            <ion-text class="ion-padding-start"> Continue with Google </ion-text>
-                        </ion-button>
+                    <ion-row class="ion-justify-content-center ion-padding">
+                        <div id="google-sign-in"></div>
                     </ion-row>
                     <ion-row class="ion-justify-content-center ion-padding">
                         <ion-text class="privacy-text">
@@ -45,14 +42,13 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonPage, IonText, IonButton, IonGrid, IonRow, useBackButton } from '@ionic/vue';
+import { IonContent, IonPage, IonText, IonGrid, IonRow, useBackButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import GoogleAuth from '@/utils/GoogleAuthentication';
+import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import User from '@/domains/User';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import NativeStorage from '@/utils/NativeStorage';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import MessageDB from '@/utils/MessageDB';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
@@ -70,8 +66,6 @@ export default defineComponent({
         IonContent,
         IonPage,
         IonText,
-        IonButton,
-        FontAwesomeIcon,
         IonGrid,
         IonRow,
     },
@@ -81,7 +75,7 @@ export default defineComponent({
         });
     },
     async mounted() {
-        await GoogleAuth.load();
+        await GoogleAuthentication.load('google-sign-in', this.handleClick);
         this.loadGetItOnGooglePlay().finally();
     },
     data() {
@@ -91,34 +85,30 @@ export default defineComponent({
         async handleClick(): Promise<void> {
             await Alert.presentAlertConfirm(
                 '',
-                `"Firecracker Vocabulary Flashcards" will collect your name, email address and photo after Google authentication.`,
-                async () => {
+                `"Firecracker Vocabulary Flashcards" will collect your name, email address, and photo.`,
+                () => {
                     return this.handleSignIn();
                 },
                 async () => {
-                    return true;
+                    GoogleAuthentication.signOut();
                 },
                 {
                     cancel: 'Deny',
-                    agree: 'Accept',
+                    agree: 'Proceed',
                 },
             );
         },
         async handleSignIn(): Promise<void> {
             try {
-                const user = await GoogleAuth.signIn();
+                const { user } = GoogleAuthentication;
                 await this.persistUser(user);
                 await this.$router.replace('/authenticated-home');
-            } catch (error) {
-                if (error.error && ['popup_closed_by_user', 'access_denied'].includes(error.error)) {
-                    // https://developers.google.com/identity/sign-in/web/reference
-                } else {
-                    await Toast.present(MessageDB.networkError);
-                }
+            } catch {
+                await Toast.present(MessageDB.networkError);
             }
         },
         async persistUser(user: User): Promise<void> {
-            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user, true);
+            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
             await NativeStorage.setAuthorizedUser(persistedUser);
         },
         async loadGetItOnGooglePlay(): Promise<void> {

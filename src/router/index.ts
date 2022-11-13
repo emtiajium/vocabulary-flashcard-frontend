@@ -88,8 +88,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next): Promise<void> => {
-    // TODO remove the below method after a certain period
-    await NativeStorage.removeLegacyAuthInfo();
     const isValidRoute = _.includes(_.map(routes, 'name'), to.name);
     const isPublicRoute = _.includes(Object.values(PublicRoute), to.name);
     const isAuthenticated = await NativeStorage.isAuthenticated();

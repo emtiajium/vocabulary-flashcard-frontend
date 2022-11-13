@@ -152,7 +152,7 @@ export default defineComponent({
         },
         async signOut(): Promise<void> {
             await NativeStorage.removeAuthorizedUser();
-            await GoogleAuthentication.signOut();
+            GoogleAuthentication.signOut();
             await menuController.close();
             this.isAuthenticated = false;
             await this.$router.replace('/sign-in');
