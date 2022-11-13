@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.20.2`: Migrated to the new Google Identity Services library
 -   `0.20.1`: Reverted the last changes
 -   `0.20.0`: Made API request with non-expired token
 -   `0.19.0`: Fixed the toggling theme issue for the Android (native) app
@@ -193,6 +194,8 @@
 
 ## Android Release Log
 
+-   `68`: `0.20.2`
+-   `67`: from `38a1d7fb95ce63ecfafba3a60d7423b6b865b895` to `a6e0a82ee5bbbb0dba71f29e468d98c1f810c4cb`
 -   `66`: `0.20.1`
 -   `65`: `0.20.0`
 -   `64`: `0.19.0`
