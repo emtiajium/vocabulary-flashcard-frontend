@@ -95,3 +95,8 @@ export async function initTheme(): Promise<void> {
 export function getThemeMode(): string {
     return document.body.classList.value;
 }
+
+export function isModeDark(): boolean {
+    const mode = getThemeMode();
+    return mode.includes('dark') && !mode.includes('light');
+}

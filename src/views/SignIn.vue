@@ -14,10 +14,9 @@
                         <intro />
                     </ion-row>
                     <ion-row class="ion-justify-content-center ion-padding">
-                        <ion-button v-if="isAndroid" @click="handleClick">
-                            <font-awesome-icon :icon="faGoogle" />
-                            <ion-text class="ion-padding-start"> Continue with Google </ion-text>
-                        </ion-button>
+                        <div v-if="isAndroid" @click="handleClick">
+                            <continue-with-google />
+                        </div>
                         <div v-show="!isAndroid" id="google-sign-in"></div>
                     </ion-row>
                     <ion-row class="ion-justify-content-center ion-padding">
@@ -46,14 +45,13 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonPage, IonText, IonGrid, IonRow, useBackButton, IonButton } from '@ionic/vue';
+import { IonContent, IonPage, IonText, IonGrid, IonRow, useBackButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import User from '@/domains/User';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import NativeStorage from '@/utils/NativeStorage';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import MessageDB from '@/utils/MessageDB';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
@@ -62,17 +60,17 @@ import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import Alert from '@/utils/Alert';
 import Intro from '@/views/Intro.vue';
 import Platform from '@/utils/Platform';
+import ContinueWithGoogle from '@/views/ContinueWithGoogle.vue';
 
 export default defineComponent({
     name: 'SignIn',
     components: {
         FirecrackerHeader,
+        ContinueWithGoogle,
         Intro,
         IonContent,
         IonPage,
         IonText,
-        IonButton,
-        FontAwesomeIcon,
         IonGrid,
         IonRow,
     },
@@ -97,7 +95,9 @@ export default defineComponent({
                     return this.handleSignIn();
                 },
                 async () => {
-                    await GoogleAuthentication.signOut();
+                    if (!this.isAndroid) {
+                        await GoogleAuthentication.signOut();
+                    }
                 },
                 {
                     cancel: 'Deny',
