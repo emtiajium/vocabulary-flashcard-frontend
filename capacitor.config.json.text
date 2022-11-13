@@ -3,5 +3,11 @@
     "appName": "Firecracker Vocabulary Flashcards",
     "webDir": "dist",
     "bundledWebRuntime": false,
-    "plugins": {}
+    "plugins": {
+        "GoogleAuth": {
+            "scopes": ["profile", "email"],
+            "serverClientId": "***-***.apps.googleusercontent.com",
+            "forceCodeForRefreshToken" : true
+        }
+    }
 }

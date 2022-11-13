@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/camelcase */
 
-import User from '@/domains/User';
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import Platform from '@/utils/Platform';
+import User from '@/domains/User';
 import { getThemeMode } from '@/utils/dark-mode';
 import NativeStorage from '@/utils/NativeStorage';
 import Config from '../../config.json';
@@ -12,6 +13,8 @@ type CredentialResponse = google.accounts.id.CredentialResponse;
 type OnConsentCallback = () => Promise<void>;
 
 export default class GoogleAuthentication {
+    private static isAndroid: boolean;
+
     private static currentIdToken: string;
 
     private static oAuth2Client: OAuth2Client;
@@ -22,10 +25,22 @@ export default class GoogleAuthentication {
 
     static async load(elementId: string, callback: OnConsentCallback): Promise<void> {
         const isAndroid = await Platform.isAndroid();
+        GoogleAuthentication.isAndroid = isAndroid;
         if (!isAndroid) {
             GoogleAuthentication.onConsentCallback = callback;
             GoogleAuthentication.renderTemplate(elementId);
         }
+    }
+
+    static async androidSignIn(): Promise<void> {
+        const user = await GoogleAuth.signIn();
+        GoogleAuthentication.setToken(user.authentication.idToken);
+        GoogleAuthentication.generateAuthenticatedUserPayload({
+            email: user.email,
+            given_name: user.givenName,
+            family_name: user.familyName,
+            picture: user.imageUrl,
+        });
     }
 
     static async onConsent(credential: string): Promise<void> {
@@ -38,10 +53,14 @@ export default class GoogleAuthentication {
         GoogleAuthentication.generateAuthenticatedUserPayload(decodedToken);
     }
 
-    static signOut(): void {
+    static async signOut(): Promise<void> {
         try {
             NativeStorage.removeJwToken().finally();
-            window.google.accounts.id.disableAutoSelect();
+            if (!GoogleAuthentication.isAndroid) {
+                window.google.accounts.id.disableAutoSelect();
+            } else {
+                await GoogleAuth.signOut();
+            }
         } catch {
             // just smile, and wave!
         }
@@ -71,7 +90,7 @@ export default class GoogleAuthentication {
         return GoogleAuthentication.oAuth2Client;
     }
 
-    private static generateAuthenticatedUserPayload(decodedToken: TokenPayload): void {
+    private static generateAuthenticatedUserPayload(decodedToken: TokenPayload | Partial<TokenPayload>): void {
         GoogleAuthentication.user = {
             username: decodedToken.email,
             firstname: decodedToken.given_name,
