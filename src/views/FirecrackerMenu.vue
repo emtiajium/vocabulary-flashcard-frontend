@@ -30,11 +30,6 @@
                     <flashcard-icon :colorVariable="'--ion-color-primary'" class="menu-icon" />
                     <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                 </ion-item>
-                <ion-item button v-if="isAuthenticated" @click="toggleTheme()">
-                    <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
-                    <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
-                </ion-item>
                 <ion-item button @click="navigate('/privacy-policy')">
                     <span class="material-icons menu-icon"> policy </span>
                     <ion-label class="ion-padding-start"> Privacy Policy </ion-label>
@@ -44,6 +39,11 @@
                     <ion-label class="ion-padding-start"> Sign In </ion-label>
                 </ion-item>
                 <ion-item button v-if="!isAuthenticated" @click="toggleTheme()">
+                    <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
+                    <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
+                </ion-item>
+                <ion-item button v-if="isAuthenticated" @click="toggleTheme()">
                     <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
                     <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
                     <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
