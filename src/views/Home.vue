@@ -25,7 +25,7 @@ export default defineComponent({
     async mounted() {
         this.subscribeToHardwareBackButtonListener();
         await this.init();
-        this.notifyAboutAvailableUpdate().finally();
+        this.assertNotifyingAboutAvailableUpdate().finally();
     },
     methods: {
         subscribeToHardwareBackButtonListener(): void {
@@ -48,35 +48,37 @@ export default defineComponent({
                 await Promise.all([Toast.present(MessageDB.genericError), this.$router.push('/sign-in')]);
             }
         },
-        async notifyAboutAvailableUpdate(): Promise<void> {
+        async assertNotifyingAboutAvailableUpdate(): Promise<void> {
             try {
-                const isAndroid = await Platform.isAndroid();
+                const { versionCode, isAndroid } = await Platform.getVersion();
                 if (isAndroid) {
-                    const { build: versionCode } = await App.getInfo();
                     const { versionCode: latestVersionCode } = await HttpHandler.get<Android>(`/v1/androids`);
                     if (Number.parseInt(versionCode, 10) < latestVersionCode) {
-                        Alert.presentAlertConfirm(
-                            '',
-                            'There is a newer version available for download. Would you like to update it now?',
-                            async () => {
-                                window.open(
-                                    'https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice',
-                                    '_blank',
-                                );
-                            },
-                            async () => {
-                                return Promise.resolve();
-                            },
-                            {
-                                cancel: 'No thanks!',
-                                agree: 'Update',
-                            },
-                        ).finally();
+                        this.notifyAboutAvailableUpdate();
                     }
                 }
             } catch {
                 // do nothing
             }
+        },
+        notifyAboutAvailableUpdate(): void {
+            Alert.presentAlertConfirm(
+                '',
+                'There is a newer version available for download. Would you like to update it now?',
+                async () => {
+                    window.open(
+                        'https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice',
+                        '_blank',
+                    );
+                },
+                async () => {
+                    return Promise.resolve();
+                },
+                {
+                    cancel: 'No thanks!',
+                    agree: 'Update',
+                },
+            ).finally();
         },
     },
 });

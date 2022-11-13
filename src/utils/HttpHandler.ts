@@ -1,13 +1,18 @@
 import AxiosAdapter from '@/utils/AxiosAdapter';
 import GoogleAuthentication from '@/utils/GoogleAuthentication';
+import Platform from '@/utils/Platform';
 import Config from '../../config.json';
 
 type RequestConfig = Record<string, unknown>;
 
 export default class HttpHandler {
     static async getRequestConfig(isPublic = false): Promise<RequestConfig> {
+        const { isAndroid, version, versionCode } = await Platform.getVersion();
         const requestConfig: RequestConfig = {
             'content-type': 'application/json',
+            'X-Client-Id': `${isAndroid ? 'AndroidNativeApp' : 'WebApp'}`,
+            'X-Version': version,
+            'X-Version-Code': versionCode,
         };
         if (!isPublic) {
             requestConfig.Authorization = `Bearer ${await GoogleAuthentication.getToken()}`;
