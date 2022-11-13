@@ -56,7 +56,7 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
     }
 
-    static async getJwToken(): Promise<string> {
+    static getJwToken(): Promise<string> {
         return NativeStorage.getByKey<string>(NativeStorageKey.JWT);
     }
 
@@ -74,7 +74,7 @@ export default class NativeStorage {
         ).set(NativeStorageKey.SHOULD_RELOAD_VOCABULARIES, shouldReloadVocabularies);
     }
 
-    static async getShouldReloadVocabularies(): Promise<boolean> {
+    static getShouldReloadVocabularies(): Promise<boolean> {
         return NativeStorage.getByKey<boolean>(NativeStorageKey.SHOULD_RELOAD_VOCABULARIES);
     }
 
@@ -103,7 +103,7 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.SET_LEITNER_BOX_EXISTENCE);
     }
 
-    static async getLeitnerBoxExistence(): Promise<string> {
+    static getLeitnerBoxExistence(): Promise<string> {
         return NativeStorage.getByKey<string>(NativeStorageKey.SET_LEITNER_BOX_EXISTENCE);
     }
 
@@ -111,7 +111,7 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).set(NativeStorageKey.VOCAB_SETTINGS, vocabSettings);
     }
 
-    static async getVocabSettings(): Promise<VocabSettings> {
+    static getVocabSettings(): Promise<VocabSettings> {
         return NativeStorage.getByKey<VocabSettings>(NativeStorageKey.VOCAB_SETTINGS);
     }
 
@@ -119,7 +119,7 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).set(NativeStorageKey.SHOULD_RELOAD_LEITNER_ITEMS, true);
     }
 
-    static async getShouldReloadLeitnerItems(): Promise<boolean> {
+    static getShouldReloadLeitnerItems(): Promise<boolean> {
         return NativeStorage.getByKey<boolean>(NativeStorageKey.SHOULD_RELOAD_LEITNER_ITEMS);
     }
 

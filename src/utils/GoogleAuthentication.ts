@@ -104,13 +104,22 @@ export default class GoogleAuthentication {
     }
 
     static async getToken(): Promise<string> {
-        return (
-            GoogleAuthentication.currentIdToken ||
-            NativeStorage.getJwToken().then((token) => {
-                GoogleAuthentication.currentIdToken = token;
-                return token;
-            })
-        );
+        if (GoogleAuthentication.currentIdToken) {
+            return GoogleAuthentication.currentIdToken;
+        }
+        let token = await NativeStorage.getJwToken();
+        if (!token) {
+            // backward compatibility
+            const user = (await NativeStorage.getAuthorizedUser()) as Record<string, string>;
+            if (user.jwToken) {
+                token = user.jwToken;
+                await NativeStorage.setJwToken(token);
+                delete user.jwToken;
+                await NativeStorage.setAuthorizedUser(user);
+            }
+        }
+        GoogleAuthentication.currentIdToken = token;
+        return token;
     }
 }
 
