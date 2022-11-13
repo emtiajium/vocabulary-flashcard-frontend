@@ -34,10 +34,6 @@
                     <span class="material-icons menu-icon"> policy </span>
                     <ion-label class="ion-padding-start"> Privacy Policy </ion-label>
                 </ion-item>
-                <ion-item v-if="!isAuthenticated" button @click="navigate('/sign-in')">
-                    <font-awesome-icon :icon="faSignInAlt" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Sign In </ion-label>
-                </ion-item>
                 <ion-item button v-if="!isAuthenticated" @click="toggleTheme()">
                     <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
                     <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
@@ -78,7 +74,7 @@ import { defineComponent } from 'vue';
 import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonTitle } from '@ionic/vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faUsers, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 import { getThemeMode, setThemeMode } from '@/utils/dark-mode';
 import FlashcardIcon from '@/media/FlashcardIcon.vue';
 import Platform from '@/utils/Platform';
@@ -104,7 +100,6 @@ export default defineComponent({
             name: '',
             faBook,
             faUsers,
-            faSignInAlt,
             faSignOutAlt,
             faMoon,
             isDark: false,
@@ -115,7 +110,7 @@ export default defineComponent({
     },
     async mounted() {
         await this.initUser();
-        await this.loadGetItOnGooglePlay().finally();
+        this.loadGetItOnGooglePlay().finally();
         this.setThemeStatus();
         this.observeThemeChange();
     },
