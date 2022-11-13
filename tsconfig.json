@@ -14,7 +14,7 @@
         "resolveJsonModule": true,
         "strictPropertyInitialization": false,
         "baseUrl": ".",
-        "types": ["webpack-env", "jest", "gapi", "gapi.auth2", "google.accounts"],
+        "types": ["webpack-env", "jest", "google.accounts"],
         "paths": {
             "@/*": ["./src/*"]
         },
