@@ -75,7 +75,7 @@ import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonTit
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
-import { getThemeMode, setThemeMode } from '@/utils/dark-mode';
+import { isModeDark, setThemeMode } from '@/utils/dark-mode';
 import FlashcardIcon from '@/media/FlashcardIcon.vue';
 import Platform from '@/utils/Platform';
 import GoogleAuthentication from '@/utils/GoogleAuthentication';
@@ -150,8 +150,7 @@ export default defineComponent({
             await this.$router.replace('/sign-in');
         },
         setThemeStatus(): void {
-            const mode = getThemeMode();
-            this.isDark = mode.includes('dark');
+            this.isDark = isModeDark();
         },
         observeThemeChange(): void {
             const targetNode = document.body;
