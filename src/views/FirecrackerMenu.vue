@@ -178,7 +178,7 @@ export default defineComponent({
 
 <style scoped>
 .intro {
-    background-color: var(--ion-color-primary);
+    background-color: var(--ion-toolbar-background);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -189,7 +189,7 @@ export default defineComponent({
     flex-direction: column;
 }
 .profile {
-    background-color: var(--ion-color-primary);
+    background-color: var(--ion-toolbar-background);
 }
 .item-text {
     color: var(--ion-color-white);
