@@ -10,7 +10,9 @@
                                 We often struggle to memorize vocabulary in the long run. Fortunately, there are several
                                 methods available to overcome this difficulty. One of these is Leitner System.
                             </ion-card-subtitle>
-                            <ion-card-subtitle v-show="seeLess" class="see-less"> ... See More </ion-card-subtitle>
+                            <ion-card-subtitle v-show="seeLess" class="see-less">
+                                ... <span> See More </span>
+                            </ion-card-subtitle>
                             <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
                                 Sebastian Leitner, a German journalist, proposed this method based on the principle of
                                 spaced repetition in which items can be repetitively reviewed until the learner gets
@@ -121,5 +123,8 @@ export default defineComponent({
     .see-less {
         display: none !important;
     }
+}
+.see-less > span {
+    color: var(--ion-color-primary);
 }
 </style>
