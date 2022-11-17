@@ -112,7 +112,6 @@
 
 ## Change Log
 
--   `0.21.0`: UI/UX improvement
 -   `0.20.3`: Backward compatibility for fetching token
 -   `0.20.2`: Migrated to the new Google Identity Services library + Sent platform info as the header
 -   `0.20.1`: Reverted the last changes
@@ -196,7 +195,6 @@
 
 ## Android Release Log
 
--   `70`: `0.21.0`
 -   `69`: `0.20.3`
 -   `68`: `0.20.2`
 -   `67`: from `38a1d7fb95ce63ecfafba3a60d7423b6b865b895` to `a6e0a82ee5bbbb0dba71f29e468d98c1f810c4cb`
