@@ -75,8 +75,8 @@ export default defineComponent({
         IonRow,
     },
     setup() {
-        useBackButton(BackButtonHandlerPriority.SIGN_IN, () => {
-            App.exitApp();
+        useBackButton(BackButtonHandlerPriority.SIGN_IN, async () => {
+            await App.exitApp();
         });
     },
     async mounted() {

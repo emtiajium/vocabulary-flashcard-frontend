@@ -112,7 +112,7 @@
 
 ## Change Log
 
--   `0.21.0`: UI/UX improvement
+-   `0.21.0`: Upgraded Capacitor from 3 to 4 to resolve `Starting in November 2022, app updates must target API level 31 or above and adjust for behavioral changes in Android 12`
 -   `0.20.3`: Backward compatibility for fetching token
 -   `0.20.2`: Migrated to the new Google Identity Services library + Sent platform info as the header
 -   `0.20.1`: Reverted the last changes
