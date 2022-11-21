@@ -311,6 +311,7 @@ export default defineComponent({
         },
 
         async onKickingOutItem(vocabularyId: string): Promise<void> {
+            this.totalItems -= 1;
             this.boxItems = _.filter(this.boxItems, (boxItem) => {
                 return boxItem.vocabularyId !== vocabularyId;
             });
