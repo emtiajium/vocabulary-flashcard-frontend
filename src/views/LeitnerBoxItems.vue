@@ -11,13 +11,27 @@
 
             <view v-if="allQuietOnTheWesternFront && !isNetworkError">
                 <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding ion-text-center">
-                    "All Quiet on the Western Front"
+                    Things are pretty quiet right now.
                 </ion-card-subtitle>
+
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
                 </view>
+
                 <ion-card-subtitle
-                    v-if="totalItems > 0"
+                    v-if="box === '1' && totalItems === 0"
+                    class="display-flex ion-justify-content-center ion-padding ion-text-center"
+                >
+                    <span>
+                        But beginning the journey with Leitner Systems is super easy. All you need to do is create a
+                        flashcard by pressing the
+                        <font-awesome-icon :icon="faHeartRegular" class="leitner-icon" /> icon on the vocabulary card.
+                        After that, the vocabulary will immediately place into the "{{ headerTitle }}".
+                    </span>
+                </ion-card-subtitle>
+
+                <ion-card-subtitle
+                    v-if="box !== '1' && totalItems > 0"
                     class="display-flex ion-justify-content-center ion-padding ion-text-center"
                 >
                     Items will only appear when it is the right time
@@ -149,6 +163,7 @@ import {
     faThumbsUp,
     faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import Toast from '@/utils/Toast';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import * as _ from 'lodash';
@@ -199,6 +214,7 @@ export default defineComponent({
             faGlassCheers,
             faClock,
             faCalendarAlt,
+            faHeartRegular,
             headerTitle: `${MappedLeitnerBoxWithDays[`BOX_${box}`]} Box` || '',
         };
     },
@@ -369,5 +385,11 @@ ion-card-content {
 
 .item-container:last-of-type {
     margin-bottom: 5px;
+}
+
+.leitner-icon {
+    color: var(--ion-color-primary);
+    padding-left: 5px;
+    padding-right: 5px;
 }
 </style>
