@@ -10,7 +10,7 @@
             <spinner v-if="showSpinner && !isNetworkError" />
 
             <view v-if="allQuietOnTheWesternFront && !isNetworkError">
-                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding ion-text-center">
+                <ion-card-subtitle class="ion-padding ion-text-center">
                     Things are pretty quiet right now.
                 </ion-card-subtitle>
 
@@ -18,10 +18,7 @@
                     <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
                 </view>
 
-                <ion-card-subtitle
-                    v-if="box === '1' && totalItems === 0"
-                    class="display-flex ion-justify-content-center ion-padding ion-text-center"
-                >
+                <ion-card-subtitle v-if="box === '1' && totalItems === 0" class="ion-padding ion-text-center">
                     <span>
                         But beginning the journey with Leitner Systems is super easy. All you need to do is create a
                         flashcard by pressing the
@@ -30,11 +27,22 @@
                     </span>
                 </ion-card-subtitle>
 
-                <ion-card-subtitle
-                    v-if="box !== '1' && totalItems > 0"
-                    class="display-flex ion-justify-content-center ion-padding ion-text-center"
-                >
-                    Items will only appear when it is the right time
+                <ion-card-subtitle v-if="box !== '1' && totalItems > 0" class="ion-padding ion-text-center">
+                    <span v-if="!singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary">
+                        Items will only appear when it is the right time.
+                    </span>
+                    <span v-if="singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary">
+                        Items will only appear when it is the right time. For example, the vocabulary "{{
+                            singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
+                        }}" will appear on
+                        <ion-datetime
+                            :value="singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate"
+                            display-format="MMMM, DD."
+                            class="updated-at"
+                            :disabled="true"
+                            :readonly="true"
+                        />
+                    </span>
                 </ion-card-subtitle>
             </view>
 
@@ -148,7 +156,6 @@ import {
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
 import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
-import SearchResult from '@/domains/SearchResult';
 import HttpHandler from '@/utils/HttpHandler';
 import Pagination from '@/domains/Pagination';
 import { Components } from '@ionic/core/components';
@@ -168,6 +175,9 @@ import Toast from '@/utils/Toast';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import * as _ from 'lodash';
 import NativeStorage from '@/utils/NativeStorage';
+import LeitnerBoxItemSearchResult, {
+    SingleLeitnerItemEarlierToBoxAppearanceDate,
+} from '@/domains/LeitnerBoxItemSearchResult';
 
 interface Payload {
     pagination: Pagination;
@@ -202,6 +212,7 @@ export default defineComponent({
             totalItems: Number.parseInt(this.$route.params.count.toString(), 10),
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
             boxItems: [] as LeitnerBoxItem[],
+            singleLeitnerItemEarlierToBoxAppearanceDate: {} as SingleLeitnerItemEarlierToBoxAppearanceDate,
             showSpinner: false,
             pageNumber: 1,
             pageSize: 10,
@@ -229,13 +240,14 @@ export default defineComponent({
         clean(): void {
             this.showSpinner = false;
             this.boxItems = [] as LeitnerBoxItem[];
+            this.singleLeitnerItemEarlierToBoxAppearanceDate = {} as SingleLeitnerItemEarlierToBoxAppearanceDate;
             this.pageNumber = 1;
             this.isDisabled = false;
             this.allQuietOnTheWesternFront = false;
             this.isNetworkError = false;
         },
 
-        async findBoxItems(): Promise<SearchResult<LeitnerBoxItem>> {
+        async findBoxItems(): Promise<LeitnerBoxItemSearchResult> {
             const payload: Payload = {
                 pagination: {
                     pageSize: this.pageSize,
@@ -244,7 +256,7 @@ export default defineComponent({
             };
             let searchResult;
             try {
-                searchResult = await HttpHandler.post<Payload, SearchResult<LeitnerBoxItem>>(
+                searchResult = await HttpHandler.post<Payload, LeitnerBoxItemSearchResult>(
                     `/v1/leitner-systems/items/${this.box}`,
                     payload,
                 );
@@ -253,11 +265,12 @@ export default defineComponent({
                 this.isNetworkError = true;
                 searchResult = { results: [], total: 0 };
             }
-            return searchResult as SearchResult<LeitnerBoxItem>;
+            return searchResult as LeitnerBoxItemSearchResult;
         },
 
         async renderBoxItems(event?: CustomEvent<void>): Promise<void> {
-            const { results, total } = await this.findBoxItems();
+            const { results, total, singleLeitnerItemEarlierToBoxAppearanceDate } = await this.findBoxItems();
+            this.singleLeitnerItemEarlierToBoxAppearanceDate = singleLeitnerItemEarlierToBoxAppearanceDate;
             if (!total) {
                 this.allQuietOnTheWesternFront = true;
             }
