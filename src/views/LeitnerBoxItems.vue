@@ -19,11 +19,12 @@
                 </view>
 
                 <ion-card-subtitle v-if="box === '1' && totalItems === 0" class="ion-padding ion-text-center">
-                    <span>
+                    <span class="link-container">
                         But beginning the journey with Leitner Systems is super easy. All you need to do is create a
                         flashcard by pressing the
-                        <font-awesome-icon :icon="faHeartRegular" class="leitner-icon" /> icon on the vocabulary card.
-                        After that, the vocabulary will immediately place into the "{{ headerTitle }}".
+                        <font-awesome-icon :icon="faHeartRegular" class="leitner-icon" /> icon on the
+                        <a href="/vocabularies">vocabulary card</a>. After that, the vocabulary will immediately place
+                        into the "{{ headerTitle }}".
                     </span>
                 </ion-card-subtitle>
 
