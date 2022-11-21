@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.22.0`: Improved the messages that appear in the leitner item components
 -   `0.21.0`: Upgraded Capacitor from 3 to 4 to resolve `Starting in November 2022, app updates must target API level 31 or above and adjust for behavioral changes in Android 12`
 -   `0.20.3`: Backward compatibility for fetching token
 -   `0.20.2`: Migrated to the new Google Identity Services library + Sent platform info as the header
@@ -196,6 +197,7 @@
 
 ## Android Release Log
 
+-   `71`: `0.22.0`
 -   `70`: `0.21.0`
 -   `69`: `0.20.3`
 -   `68`: `0.20.2`
