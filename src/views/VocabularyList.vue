@@ -94,7 +94,7 @@
                         {{
                             vocabularies.length > 10
                                 ? `Congrats! You have viewed the last vocabulary!`
-                                : `Looks like there is no vocabulary left for you to be displayed.`
+                                : `Looks like there is no other vocabulary left for you to be displayed.`
                         }}
                     </span>
                 </ion-card-subtitle>
