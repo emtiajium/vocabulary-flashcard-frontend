@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.24.0`: A bit of UI changes e.g., changed the background color for the light mode
 -   `0.23.0`: Material design UI for the iOS too
 -   `0.22.0`: Improved the messages that appear in the leitner item components
 -   `0.21.0`: Upgraded Capacitor from 3 to 4 to resolve `Starting in November 2022, app updates must target API level 31 or above and adjust for behavioral changes in Android 12`
@@ -198,6 +199,7 @@
 
 ## Android Release Log
 
+-   `72`: `0.24.0`
 -   `71`: `0.22.0`
 -   `70`: `0.21.0`
 -   `69`: `0.20.3`
