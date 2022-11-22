@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.23.0`: Material design UI for the iOS too
 -   `0.22.0`: Improved the messages that appear in the leitner item components
 -   `0.21.0`: Upgraded Capacitor from 3 to 4 to resolve `Starting in November 2022, app updates must target API level 31 or above and adjust for behavioral changes in Android 12`
 -   `0.20.3`: Backward compatibility for fetching token

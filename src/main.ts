@@ -6,7 +6,11 @@ import App from '@/App.vue';
 import router from '@/router';
 import { initTheme } from '@/utils/dark-mode';
 
-const app = createApp(App).use(IonicVue).use(router);
+const app = createApp(App)
+    .use(IonicVue, {
+        mode: 'md',
+    })
+    .use(router);
 
 router.isReady().then(() => {
     app.mount('#app');
