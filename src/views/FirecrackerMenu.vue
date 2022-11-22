@@ -30,6 +30,10 @@
                     <flashcard-icon :colorVariable="'--ion-color-primary'" class="menu-icon" />
                     <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                 </ion-item>
+                <ion-item v-if="!isAuthenticated" button @click="navigate('/sign-in')">
+                    <font-awesome-icon :icon="faSignInAlt" class="menu-icon" />
+                    <ion-label class="ion-padding-start"> Sign In </ion-label>
+                </ion-item>
                 <ion-item button @click="navigate('/privacy-policy')">
                     <span class="material-icons menu-icon"> policy </span>
                     <ion-label class="ion-padding-start"> Privacy Policy </ion-label>
@@ -74,7 +78,7 @@ import { defineComponent } from 'vue';
 import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonTitle } from '@ionic/vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBook, faUsers, faSignOutAlt, faMoon, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { isModeDark, setThemeMode } from '@/utils/dark-mode';
 import FlashcardIcon from '@/media/FlashcardIcon.vue';
 import Platform from '@/utils/Platform';
@@ -100,10 +104,10 @@ export default defineComponent({
             name: '',
             faBook,
             faUsers,
+            faSignInAlt,
             faSignOutAlt,
             faMoon,
             isDark: false,
-            faBoxOpen,
             isAuthenticated: false,
             isAndroid: true,
         };
