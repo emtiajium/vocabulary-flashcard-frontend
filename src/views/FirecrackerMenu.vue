@@ -192,7 +192,7 @@ export default defineComponent({
     background-color: var(--ion-toolbar-background);
 }
 .item-text {
-    color: var(--ion-color-white);
+    color: var(--ion-toolbar-color);
 }
 .menu-icon {
     color: var(--ion-color-primary);
