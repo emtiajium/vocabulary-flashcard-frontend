@@ -4,7 +4,7 @@
             <ion-grid class="display-grid">
                 <ion-row v-if="isAuthenticated" class="profile">
                     <img :src="profilePictureUrl" alt="Avatar" class="rounded-circle ion-padding" width="100" />
-                    <div>
+                    <div class="ion-padding-bottom">
                         <strong class="display-flex ion-justify-content-center item-text ion-text-capitalize">
                             {{ name }}
                         </strong>
@@ -17,7 +17,7 @@
                     <ion-title class="item-text"> <strong> Firecracker </strong> </ion-title>
                 </ion-row>
 
-                <ion-row :class="`top-menu-container-${isAuthenticated ? `member` : `guest`}`">
+                <ion-row>
                     <ion-list lines="none">
                         <ion-item v-if="isAuthenticated" button @click="navigate('/vocabularies')">
                             <font-awesome-icon :icon="faBook" class="menu-icon" />
@@ -199,6 +199,7 @@ export default defineComponent({
 .container {
     height: 100%;
     display: flex;
+    overflow-y: auto;
 }
 .container > ion-grid {
     padding-inline-start: unset;
@@ -209,7 +210,6 @@ export default defineComponent({
 .intro {
     background-color: var(--ion-toolbar-background);
     align-items: center;
-    height: fit-content;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -221,11 +221,6 @@ export default defineComponent({
 }
 .item-text {
     color: var(--ion-toolbar-color);
-}
-.top-menu-container-guest {
-    position: absolute;
-    top: 120px;
-    width: 100%;
 }
 ion-list {
     width: 100%;
