@@ -17,7 +17,7 @@
                     <ion-title class="item-text"> <strong> Firecracker </strong> </ion-title>
                 </ion-row>
 
-                <ion-row>
+                <ion-row :class="`top-menu-container-${isAuthenticated ? `member` : `guest`}`">
                     <ion-list lines="none">
                         <ion-item v-if="isAuthenticated" button @click="navigate('/vocabularies')">
                             <font-awesome-icon :icon="faBook" class="menu-icon" />
@@ -28,7 +28,7 @@
                             <ion-label class="ion-padding-start"> My Cohort </ion-label>
                         </ion-item>
                         <ion-item v-if="isAuthenticated" button @click="navigate('/leitner-systems')">
-                            <flashcard-icon :colorVariable="'--ion-color-primary'" class="menu-icon" />
+                            <flashcard-icon :color-variable="'--ion-color-primary'" class="menu-icon" />
                             <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                         </ion-item>
                         <ion-item v-if="!isAuthenticated" button @click="navigate('/sign-in')">
@@ -42,9 +42,9 @@
                     </ion-list>
                 </ion-row>
 
-                <ion-row>
+                <ion-row v-if="isAuthenticated && !isAndroid">
                     <ion-list lines="none">
-                        <ion-item v-if="isAuthenticated && !isAndroid" class="display-flex ion-align-items-end">
+                        <ion-item class="display-flex ion-align-items-end">
                             <a
                                 href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
                                 target="_blank"
@@ -209,6 +209,9 @@ export default defineComponent({
 .intro {
     background-color: var(--ion-toolbar-background);
     align-items: center;
+    height: fit-content;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .profile {
     background-color: var(--ion-toolbar-background);
@@ -218,6 +221,11 @@ export default defineComponent({
 }
 .item-text {
     color: var(--ion-toolbar-color);
+}
+.top-menu-container-guest {
+    position: absolute;
+    top: 120px;
+    width: 100%;
 }
 ion-list {
     width: 100%;
