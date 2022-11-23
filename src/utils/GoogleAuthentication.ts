@@ -5,7 +5,6 @@ import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import Platform from '@/utils/Platform';
 import User from '@/domains/User';
-import { isModeDark } from '@/utils/dark-mode';
 import NativeStorage from '@/utils/NativeStorage';
 import Config from '../../config.json';
 
@@ -71,15 +70,11 @@ export default class GoogleAuthentication {
             type: 'standard',
             size: 'large',
             shape: 'rectangular',
-            theme: GoogleAuthentication.getButtonTheme(),
+            theme: 'outline',
             text: 'continue_with',
             logo_alignment: 'left',
         });
         window.google.accounts.id.prompt();
-    }
-
-    private static getButtonTheme(): 'filled_black' | 'outline' {
-        return isModeDark() ? 'filled_black' : 'outline';
     }
 
     private static getOAuth2Client(): OAuth2Client {
