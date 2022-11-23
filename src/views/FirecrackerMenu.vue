@@ -1,81 +1,95 @@
 <template>
     <ion-menu side="start" :menu-id="menuId" :content-id="contentId">
-        <ion-content>
-            <div v-if="isAuthenticated" class="profile ion-padding-bottom">
-                <img :src="profilePictureUrl" alt="Avatar" class="rounded-circle ion-padding" width="100" />
-                <div class="ion-padding-start">
-                    <strong class="item-text ion-text-capitalize"> {{ name }} </strong>
-                    <br />
-                    <span class="ion-padding-top item-text"> {{ username }} </span>
-                </div>
-            </div>
+        <view class="container">
+            <ion-grid class="display-grid">
+                <ion-row v-if="isAuthenticated" class="profile">
+                    <img :src="profilePictureUrl" alt="Avatar" class="rounded-circle ion-padding" width="100" />
+                    <div>
+                        <strong class="display-flex ion-justify-content-center item-text ion-text-capitalize">
+                            {{ name }}
+                        </strong>
+                        <span class="item-text"> {{ username }} </span>
+                    </div>
+                </ion-row>
 
-            <div v-if="!isAuthenticated" class="intro">
-                <img src="/assets/icon/firecracker-icon.png" alt="Logo" width="100" />
-                <div class="app-name">
-                    <ion-title class="item-text"> Firecracker </ion-title>
-                </div>
-            </div>
+                <ion-row v-if="!isAuthenticated" class="intro">
+                    <img src="/assets/icon/firecracker-icon.png" alt="Logo" width="100" />
+                    <ion-title class="item-text"> <strong> Firecracker </strong> </ion-title>
+                </ion-row>
 
-            <ion-list lines="none">
-                <ion-item v-if="isAuthenticated" button @click="navigate('/vocabularies')">
-                    <font-awesome-icon :icon="faBook" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Vocabularies </ion-label>
-                </ion-item>
-                <ion-item v-if="isAuthenticated" button @click="navigate('/cohort/read')">
-                    <font-awesome-icon :icon="faUsers" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> My Cohort </ion-label>
-                </ion-item>
-                <ion-item v-if="isAuthenticated" button @click="navigate('/leitner-systems')">
-                    <flashcard-icon :colorVariable="'--ion-color-primary'" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> My Flashcards </ion-label>
-                </ion-item>
-                <ion-item v-if="!isAuthenticated" button @click="navigate('/sign-in')">
-                    <font-awesome-icon :icon="faSignInAlt" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Sign In </ion-label>
-                </ion-item>
-                <ion-item button @click="navigate('/privacy-policy')">
-                    <span class="material-icons menu-icon"> policy </span>
-                    <ion-label class="ion-padding-start"> Privacy Policy </ion-label>
-                </ion-item>
-                <ion-item button v-if="!isAuthenticated" @click="toggleTheme()">
-                    <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
-                    <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
-                </ion-item>
-                <ion-item button v-if="isAuthenticated" @click="toggleTheme()">
-                    <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
-                    <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Switch to {{ isDark ? 'Light' : 'Dark' }} Theme </ion-label>
-                </ion-item>
-                <ion-item v-if="isAuthenticated" button @click="signOut">
-                    <font-awesome-icon :icon="faSignOutAlt" class="menu-icon" />
-                    <ion-label class="ion-padding-start"> Sign Out </ion-label>
-                </ion-item>
-            </ion-list>
+                <ion-row>
+                    <ion-list lines="none">
+                        <ion-item v-if="isAuthenticated" button @click="navigate('/vocabularies')">
+                            <font-awesome-icon :icon="faBook" class="menu-icon" />
+                            <ion-label class="ion-padding-start"> Vocabularies </ion-label>
+                        </ion-item>
+                        <ion-item v-if="isAuthenticated" button @click="navigate('/cohort/read')">
+                            <font-awesome-icon :icon="faUsers" class="menu-icon" />
+                            <ion-label class="ion-padding-start"> My Cohort </ion-label>
+                        </ion-item>
+                        <ion-item v-if="isAuthenticated" button @click="navigate('/leitner-systems')">
+                            <flashcard-icon :colorVariable="'--ion-color-primary'" class="menu-icon" />
+                            <ion-label class="ion-padding-start"> My Flashcards </ion-label>
+                        </ion-item>
+                        <ion-item v-if="!isAuthenticated" button @click="navigate('/sign-in')">
+                            <font-awesome-icon :icon="faSignInAlt" class="menu-icon" />
+                            <ion-label class="ion-padding-start"> Sign In </ion-label>
+                        </ion-item>
+                        <ion-item button @click="navigate('/privacy-policy')">
+                            <span class="material-icons menu-icon"> policy </span>
+                            <ion-label class="ion-padding-start"> Privacy Policy </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </ion-row>
 
-            <ion-list lines="none">
-                <ion-item v-if="isAuthenticated && !isAndroid" class="display-flex ion-align-items-end">
-                    <a
-                        href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
-                        target="_blank"
-                        class="display-flex ion-justify-content-center"
-                    >
-                        <img
-                            alt="Get it on Google Play"
-                            src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-                            class="google-play"
-                        />
-                    </a>
-                </ion-item>
-            </ion-list>
-        </ion-content>
+                <ion-row>
+                    <ion-list lines="none">
+                        <ion-item v-if="isAuthenticated && !isAndroid" class="display-flex ion-align-items-end">
+                            <a
+                                href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                                target="_blank"
+                                class="display-flex ion-justify-content-center"
+                            >
+                                <img
+                                    alt="Get it on Google Play"
+                                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                                    class="google-play"
+                                />
+                            </a>
+                        </ion-item>
+                    </ion-list>
+                </ion-row>
+
+                <ion-row class="ion-align-items-end">
+                    <ion-list lines="none">
+                        <ion-item button v-if="!isAuthenticated" @click="toggleTheme()">
+                            <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
+                            <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
+                            <ion-label class="ion-padding-start">
+                                Switch to {{ isDark ? 'Light' : 'Dark' }} Theme
+                            </ion-label>
+                        </ion-item>
+                        <ion-item button v-if="isAuthenticated" @click="toggleTheme()">
+                            <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
+                            <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
+                            <ion-label class="ion-padding-start">
+                                Switch to {{ isDark ? 'Light' : 'Dark' }} Theme
+                            </ion-label>
+                        </ion-item>
+                        <ion-item v-if="isAuthenticated" button @click="signOut">
+                            <font-awesome-icon :icon="faSignOutAlt" class="menu-icon" />
+                            <ion-label class="ion-padding-start"> Sign Out </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </ion-row>
+            </ion-grid>
+        </view>
     </ion-menu>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonContent, IonItem, IonList, IonMenu, menuController, IonLabel, IonTitle } from '@ionic/vue';
+import { IonItem, IonList, IonMenu, menuController, IonLabel, IonTitle, IonGrid, IonRow } from '@ionic/vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBook, faUsers, faSignInAlt, faSignOutAlt, faMoon } from '@fortawesome/free-solid-svg-icons';
@@ -88,13 +102,14 @@ export default defineComponent({
     name: 'FirecrackerMenu',
     components: {
         FlashcardIcon,
-        IonContent,
         IonItem,
         IonList,
         IonMenu,
         IonLabel,
         FontAwesomeIcon,
         IonTitle,
+        IonGrid,
+        IonRow,
     },
     props: ['contentId', 'menuId'],
     data() {
@@ -181,22 +196,31 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.container {
+    height: 100%;
+    display: flex;
+}
+.container > ion-grid {
+    padding-inline-start: unset;
+    padding-inline-end: unset;
+    padding-top: unset;
+    padding-bottom: unset;
+}
 .intro {
     background-color: var(--ion-toolbar-background);
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
     align-items: center;
-}
-.app-name {
-    display: flex;
-    flex-direction: column;
 }
 .profile {
     background-color: var(--ion-toolbar-background);
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 .item-text {
     color: var(--ion-toolbar-color);
+}
+ion-list {
+    width: 100%;
 }
 .menu-icon {
     color: var(--ion-color-primary);

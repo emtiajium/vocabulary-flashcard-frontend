@@ -168,6 +168,7 @@ body.dark {
     --ion-item-background: var(--ion-color-step-100);
 
     --ion-toolbar-background: #1f1f1f;
+    --ion-toolbar-color: var(--ion-color-white);
 
     --ion-tab-bar-background: #1f1f1f;
 

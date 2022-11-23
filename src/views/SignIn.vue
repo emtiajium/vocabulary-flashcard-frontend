@@ -137,9 +137,6 @@ export default defineComponent({
     height: 100%;
     display: flex;
 }
-.display-grid {
-    display: grid;
-}
 .privacy-text {
     text-align: center;
 }
