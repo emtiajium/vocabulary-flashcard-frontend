@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.24.1`: More UI changes: improved menu styling
 -   `0.24.0`: A bit of UI changes e.g., changed the background color for the light mode
 -   `0.23.0`: Material design UI for the iOS too
 -   `0.22.0`: Improved the messages that appear in the leitner item components
@@ -199,6 +200,7 @@
 
 ## Android Release Log
 
+-   `73`: `0.24.1`
 -   `72`: `0.24.0`
 -   `71`: `0.22.0`
 -   `70`: `0.21.0`
