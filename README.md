@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.24.2`: Fixed the bug of `0.24.1` in which not all menus were showing when the device's height is too small
 -   `0.24.1`: More UI changes: improved menu styling
 -   `0.24.0`: A bit of UI changes e.g., changed the background color for the light mode
 -   `0.23.0`: Material design UI for the iOS too
@@ -200,6 +201,7 @@
 
 ## Android Release Log
 
+-   `74`: `0.24.2`
 -   `73`: `0.24.1`
 -   `72`: `0.24.0`
 -   `71`: `0.22.0`
