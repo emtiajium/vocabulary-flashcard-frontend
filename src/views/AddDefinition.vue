@@ -249,8 +249,7 @@ export default defineComponent({
 <style scoped>
 .buttons-container {
     justify-content: flex-end;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin: 25px 4px;
 }
 .cancel-button-container {
     padding-inline-start: unset;
@@ -259,9 +258,11 @@ export default defineComponent({
     padding-inline-end: unset;
 }
 .cancel-button {
+    --border-radius: 8px;
     margin-inline-start: unset;
 }
 .save-button {
+    --border-radius: 8px;
     margin-inline-end: unset;
 }
 </style>
