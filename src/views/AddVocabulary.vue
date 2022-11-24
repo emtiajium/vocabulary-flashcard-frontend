@@ -624,6 +624,9 @@ export default defineComponent({
     padding-left: 5px;
     margin-bottom: 10px;
 }
+body.dark .added-definition-container {
+    border-color: var(--ion-color-white-shade);
+}
 .added-definition-container:last-of-type {
     margin-bottom: unset;
 }
