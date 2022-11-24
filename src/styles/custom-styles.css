@@ -168,3 +168,7 @@ ion-textarea {
     border-radius: 8px;
     padding-left: 5px;
 }
+
+body.dark ion-textarea {
+    border-color: var(--ion-color-white-shade);
+}
