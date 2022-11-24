@@ -644,6 +644,7 @@ export default defineComponent({
     width: 100%;
     border-radius: 8px;
     padding-left: 5px;
+    padding-right: 5px;
     margin-bottom: 10px;
 }
 body.dark .added-definition-container {
