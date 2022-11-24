@@ -49,58 +49,51 @@
                                 </ion-card-subtitle>
                             </ion-card-header>
                             <ion-card-content>
-                                <ion-item v-if="!isLoading" lines="none">
-                                    <ion-button
-                                        color="success"
-                                        size="small"
-                                        shape="round"
-                                        fill="clear"
-                                        :strong="true"
-                                        @click="onAddingDefinition"
-                                    >
-                                        <view v-if="!definitions.length">
-                                            <font-awesome-icon :icon="faPlusCircle" />
-                                        </view>
-                                        <view v-if="definitions.length">
-                                            <span class="material-icons"> plus_one </span>
-                                        </view>
-                                    </ion-button>
-                                </ion-item>
-                                <div v-if="!isLoading" lines="none">
-                                    <div
-                                        v-show="definitions.length"
-                                        v-for="(definition, index) in definitions"
-                                        :key="definition.id"
-                                        class="added-definition-container"
-                                    >
+                                <ion-button
+                                    v-if="!isLoading"
+                                    color="success"
+                                    size="small"
+                                    shape="round"
+                                    fill="clear"
+                                    :strong="true"
+                                    @click="onAddingDefinition"
+                                >
+                                    <font-awesome-icon v-if="!definitions.length" :icon="faPlusCircle" />
+                                    <span v-if="definitions.length" class="material-icons"> plus_one </span>
+                                </ion-button>
+                                <div
+                                    v-show="!isLoading && definitions.length"
+                                    v-for="(definition, index) in definitions"
+                                    :key="definition.id"
+                                    class="added-definition-container"
+                                >
+                                    <div class="added-definition-action-buttons">
+                                        <ion-button
+                                            color="warning"
+                                            size="small"
+                                            shape="round"
+                                            fill="clear"
+                                            :strong="true"
+                                            @click="removeDefinition(index)"
+                                        >
+                                            <font-awesome-icon :icon="faMinusCircle" />
+                                        </ion-button>
+                                        <ion-button
+                                            color="success"
+                                            size="small"
+                                            shape="round"
+                                            fill="clear"
+                                            :strong="true"
+                                            @click="updateDefinition(index)"
+                                        >
+                                            <font-awesome-icon :icon="faPencilAlt" />
+                                        </ion-button>
+                                    </div>
+                                    <div class="added-definition-contents">
                                         <ion-item lines="none">
                                             <ion-label class="capitalize ion-text-nowrap">
                                                 {{ definition.meaning }}
                                             </ion-label>
-                                        </ion-item>
-                                        <ion-item lines="none">
-                                            <ion-item-group>
-                                                <ion-button
-                                                    color="success"
-                                                    size="small"
-                                                    shape="round"
-                                                    fill="clear"
-                                                    :strong="true"
-                                                    @click="updateDefinition(index)"
-                                                >
-                                                    <font-awesome-icon :icon="faPencilAlt" />
-                                                </ion-button>
-                                                <ion-button
-                                                    color="warning"
-                                                    size="small"
-                                                    shape="round"
-                                                    fill="clear"
-                                                    :strong="true"
-                                                    @click="removeDefinition(index)"
-                                                >
-                                                    <font-awesome-icon :icon="faMinusCircle" />
-                                                </ion-button>
-                                            </ion-item-group>
                                         </ion-item>
                                     </div>
                                 </div>
@@ -195,7 +188,6 @@ import {
     IonPage,
     IonToggle,
     IonButton,
-    IonItemGroup,
     IonCard,
     IonRow,
     IonCol,
@@ -254,7 +246,6 @@ export default defineComponent({
         IonItem,
         IonToggle,
         IonButton,
-        IonItemGroup,
         IonCard,
         IonRow,
         IonCol,
@@ -640,17 +631,27 @@ export default defineComponent({
     margin-inline-end: unset;
 }
 .added-definition-container {
-    border: thin solid var(--ion-color-white);
-    width: 100%;
-    border-radius: 8px;
-    padding-left: 5px;
-    padding-right: 5px;
-    margin-bottom: 10px;
+    display: flex;
 }
 body.dark .added-definition-container {
     border-color: var(--ion-color-white-shade);
 }
 .added-definition-container:last-of-type {
     margin-bottom: unset;
+}
+.added-definition-action-buttons {
+    display: flex;
+    width: 100px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.added-definition-contents {
+    width: calc(100% - 100px);
+    border: thin solid var(--ion-color-white);
+    border-radius: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 10px;
 }
 </style>
