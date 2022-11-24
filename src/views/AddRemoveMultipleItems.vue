@@ -3,7 +3,7 @@
         <ion-grid>
             <ion-row>
                 <ion-col sizeXs="7" sizeSm="7" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-item>
+                    <ion-item lines="none">
                         <ion-textarea
                             autoGrow="true"
                             inputmode="text"

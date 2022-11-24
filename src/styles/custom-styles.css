@@ -162,3 +162,9 @@ ion-card.margin-top-unset {
 .tips .info {
     font-size: 15px;
 }
+
+ion-textarea {
+    border: thin solid var(--ion-color-white);
+    border-radius: 8px;
+    padding-left: 5px;
+}

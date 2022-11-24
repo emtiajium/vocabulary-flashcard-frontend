@@ -27,7 +27,7 @@
                                 </ion-card-subtitle>
                             </ion-card-header>
                             <ion-card-content>
-                                <ion-item>
+                                <ion-item lines="none">
                                     <ion-textarea
                                         autoGrow="true"
                                         inputmode="text"
@@ -60,17 +60,18 @@
                                     </ion-button>
                                 </ion-item>
                                 <view v-if="!isLoading">
-                                    <view
+                                    <div
                                         v-show="definitions.length"
                                         v-for="(definition, index) in definitions"
                                         :key="definition.id"
+                                        class="added-definition-container"
                                     >
                                         <ion-item lines="none">
                                             <ion-label class="capitalize ion-text-nowrap">
                                                 {{ definition.meaning }}
                                             </ion-label>
                                         </ion-item>
-                                        <ion-item>
+                                        <ion-item lines="none">
                                             <ion-item-group>
                                                 <ion-button color="warning" @click="updateDefinition(index)">
                                                     <font-awesome-icon :icon="faPencilAlt" />
@@ -80,7 +81,7 @@
                                                 </ion-button>
                                             </ion-item-group>
                                         </ion-item>
-                                    </view>
+                                    </div>
                                 </view>
                             </ion-card-content>
                         </ion-card>
@@ -616,5 +617,14 @@ export default defineComponent({
 }
 .save-button {
     margin-inline-end: unset;
+}
+.added-definition-container {
+    border: thin solid var(--ion-color-white);
+    border-radius: 8px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+.added-definition-container:last-of-type {
+    margin-bottom: unset;
 }
 </style>

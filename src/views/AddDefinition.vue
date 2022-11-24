@@ -21,7 +21,7 @@
                         </ion-card-header>
 
                         <ion-card-content>
-                            <ion-item>
+                            <ion-item lines="none">
                                 <ion-textarea
                                     autoGrow="true"
                                     inputmode="text"
