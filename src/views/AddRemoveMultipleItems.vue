@@ -1,51 +1,41 @@
 <template>
-    <view v-for="(item, index) in placeholderItems" :key="item">
-        <ion-grid>
-            <ion-row>
-                <ion-col sizeXs="7" sizeSm="7" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <ion-item lines="none">
-                        <ion-textarea
-                            autoGrow="true"
-                            inputmode="text"
-                            autocapitalize="sentences"
-                            placeholder="Type something"
-                            :value="items[index] || ''"
-                            @ionChange="insertItem($event.target.value, index)"
-                        />
-                    </ion-item>
-                </ion-col>
-                <ion-col sizeXs="5" sizeSm="5" sizeMd="2" sizeLg="2" sizeXl="2">
-                    <ion-row class="action-buttons">
-                        <ion-item lines="none">
-                            <ion-button
-                                v-show="
-                                    items.length > 0 &&
-                                    index === placeholderItems.length - 1 &&
-                                    items[index]?.length > 0
-                                "
-                                color="success"
-                                @click="onAddMoreItem"
-                            >
-                                <span class="material-icons"> plus_one </span>
-                            </ion-button>
-                            <ion-button
-                                v-show="items.length > 0 && items[index]?.length > 0"
-                                color="danger"
-                                @click="onRemoveLastItem(index)"
-                            >
-                                <font-awesome-icon :icon="faMinusCircle" />
-                            </ion-button>
-                        </ion-item>
-                    </ion-row>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </view>
+    <div v-for="(item, index) in placeholderItems" :key="item" class="container">
+        <div class="contents">
+            <ion-item lines="none">
+                <ion-textarea
+                    autoGrow="true"
+                    inputmode="text"
+                    autocapitalize="sentences"
+                    placeholder="Type something"
+                    :value="items[index] || ''"
+                    @ionChange="insertItem($event.target.value, index)"
+                />
+            </ion-item>
+        </div>
+        <div class="action-buttons">
+            <ion-button
+                v-show="items.length > 0 && index === placeholderItems.length - 1 && items[index]?.length > 0"
+                color="success"
+                size="small"
+                @click="onAddMoreItem"
+            >
+                <span class="material-icons"> plus_one </span>
+            </ion-button>
+            <ion-button
+                v-show="items.length > 0 && items[index]?.length > 0"
+                color="danger"
+                size="small"
+                @click="onRemoveLastItem(index)"
+            >
+                <font-awesome-icon :icon="faMinusCircle" />
+            </ion-button>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonTextarea, IonItem, IonButton, IonGrid, IonRow, IonCol } from '@ionic/vue';
+import { IonTextarea, IonItem, IonButton } from '@ionic/vue';
 import { v4 as uuidV4 } from 'uuid';
 import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -57,9 +47,6 @@ export default defineComponent({
         IonTextarea,
         IonItem,
         IonButton,
-        IonGrid,
-        IonRow,
-        IonCol,
         FontAwesomeIcon,
     },
     props: ['existingItems'],
@@ -104,8 +91,23 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.container {
+    display: flex;
+}
+.contents {
+    width: 100%;
+}
 .action-buttons {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding-top: 8px;
+}
+.action-buttons ion-button {
+    min-width: 48px;
+}
+ion-item {
+    --min-height: unset;
 }
 </style>
