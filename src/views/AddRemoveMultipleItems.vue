@@ -15,16 +15,24 @@
         <div class="action-buttons">
             <ion-button
                 v-show="items.length > 0 && index === placeholderItems.length - 1 && items[index]?.length > 0"
+                aria-label="Add one more"
                 color="success"
                 size="small"
+                shape="round"
+                fill="clear"
+                :strong="true"
                 @click="onAddMoreItem"
             >
                 <span class="material-icons"> plus_one </span>
             </ion-button>
             <ion-button
                 v-show="items.length > 0 && items[index]?.length > 0"
-                color="danger"
+                aria-label="Remove"
+                color="warning"
                 size="small"
+                shape="round"
+                fill="clear"
+                :strong="true"
                 @click="onRemoveLastItem(index)"
             >
                 <font-awesome-icon :icon="faMinusCircle" />
@@ -103,9 +111,6 @@ export default defineComponent({
     justify-content: center;
     align-items: flex-end;
     padding-top: 8px;
-}
-.action-buttons ion-button {
-    min-width: 48px;
 }
 ion-item {
     --min-height: unset;

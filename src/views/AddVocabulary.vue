@@ -50,7 +50,14 @@
                             </ion-card-header>
                             <ion-card-content>
                                 <ion-item v-if="!isLoading" lines="none">
-                                    <ion-button color="success" @click="onAddingDefinition">
+                                    <ion-button
+                                        color="success"
+                                        size="small"
+                                        shape="round"
+                                        fill="clear"
+                                        :strong="true"
+                                        @click="onAddingDefinition"
+                                    >
                                         <view v-if="!definitions.length">
                                             <font-awesome-icon :icon="faPlusCircle" />
                                         </view>
@@ -59,7 +66,7 @@
                                         </view>
                                     </ion-button>
                                 </ion-item>
-                                <view v-if="!isLoading">
+                                <ion-item v-if="!isLoading" lines="none">
                                     <div
                                         v-show="definitions.length"
                                         v-for="(definition, index) in definitions"
@@ -73,16 +80,30 @@
                                         </ion-item>
                                         <ion-item lines="none">
                                             <ion-item-group>
-                                                <ion-button color="warning" @click="updateDefinition(index)">
+                                                <ion-button
+                                                    color="success"
+                                                    size="small"
+                                                    shape="round"
+                                                    fill="clear"
+                                                    :strong="true"
+                                                    @click="updateDefinition(index)"
+                                                >
                                                     <font-awesome-icon :icon="faPencilAlt" />
                                                 </ion-button>
-                                                <ion-button color="danger" @click="removeDefinition(index)">
+                                                <ion-button
+                                                    color="warning"
+                                                    size="small"
+                                                    shape="round"
+                                                    fill="clear"
+                                                    :strong="true"
+                                                    @click="removeDefinition(index)"
+                                                >
                                                     <font-awesome-icon :icon="faMinusCircle" />
                                                 </ion-button>
                                             </ion-item-group>
                                         </ion-item>
                                     </div>
-                                </view>
+                                </ion-item>
                             </ion-card-content>
                         </ion-card>
 
@@ -620,6 +641,7 @@ export default defineComponent({
 }
 .added-definition-container {
     border: thin solid var(--ion-color-white);
+    width: 100%;
     border-radius: 8px;
     padding-left: 5px;
     margin-bottom: 10px;
