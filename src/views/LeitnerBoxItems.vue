@@ -20,7 +20,7 @@
 
                 <ion-card-subtitle v-if="box === '1' && totalItems === 0" class="ion-padding ion-text-center">
                     <span class="link-container">
-                        But beginning the journey with Leitner Systems is super easy. All you need to do is create a
+                        But beginning the journey with Leitner System is super easy. All you need to do is create a
                         flashcard by pressing the
                         <font-awesome-icon :icon="faHeartRegular" class="leitner-icon" /> icon on the
                         <router-link to="/vocabularies"> vocabulary card </router-link>. After that, the vocabulary will
