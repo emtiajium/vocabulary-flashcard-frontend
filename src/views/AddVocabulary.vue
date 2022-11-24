@@ -66,7 +66,7 @@
                                         </view>
                                     </ion-button>
                                 </ion-item>
-                                <ion-item v-if="!isLoading" lines="none">
+                                <div v-if="!isLoading" lines="none">
                                     <div
                                         v-show="definitions.length"
                                         v-for="(definition, index) in definitions"
@@ -103,7 +103,7 @@
                                             </ion-item-group>
                                         </ion-item>
                                     </div>
-                                </ion-item>
+                                </div>
                             </ion-card-content>
                         </ion-card>
 
