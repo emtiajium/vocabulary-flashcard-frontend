@@ -12,6 +12,7 @@
         "lint:check": "vue-cli-service lint",
         "format": "prettier --write \"public/*.html\" \"src/**/*.{css,ts,vue}\" \"*.md\" \"*.js\"",
         "format:check": "prettier --check \"public/*.html\" \"src/**/*.{css,ts,vue}\" \"*.md\" \"*.js\"",
+        "ci": "npm run format:check && npm run lint:check && npm run build",
         "serve:android:anew": "rm -rf android/ && ionic build --prod --release && npx cap add android && npx cap sync android",
         "serve:android:anew:prod": "node server-validator-before-release.js && npm run serve:android:anew",
         "deploy:firebase": "node server-validator-before-release.js && npm run build && firebase deploy --only hosting",
