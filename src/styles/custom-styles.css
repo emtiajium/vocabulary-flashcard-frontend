@@ -164,7 +164,7 @@ ion-card.margin-top-unset {
 }
 
 ion-textarea {
-    border: thin solid var(--ion-color-white);
+    border: thin solid var(--ion-color-lightest);
     border-radius: 8px;
     padding-left: 5px;
     padding-right: 5px;

@@ -82,11 +82,7 @@
                                 v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords"
                                 :key="linkerWordIndex"
                             >
-                                <ion-button
-                                    color="lightest"
-                                    mode="ios"
-                                    @click="$router.push(`/dictionary/${linkerWord}`)"
-                                >
+                                <ion-button color="card" mode="ios" @click="$router.push(`/dictionary/${linkerWord}`)">
                                     <ion-chip class="linker-word-chip">
                                         <span class="ion-padding-end overflowed-content">
                                             {{ linkerWord }}
