@@ -646,8 +646,7 @@ export default defineComponent({
 }
 .added-definition-contents {
     width: calc(100% - 100px);
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-top: 8px;
     margin-bottom: 10px;
 }
 </style>
