@@ -112,6 +112,9 @@ export default defineComponent({
     align-items: flex-end;
     padding-top: 8px;
 }
+.action-buttons > ion-button {
+    width: 28px;
+}
 ion-item {
     --min-height: unset;
 }
