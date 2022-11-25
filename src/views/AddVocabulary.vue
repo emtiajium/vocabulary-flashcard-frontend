@@ -634,9 +634,6 @@ export default defineComponent({
 .added-definition-container {
     display: flex;
 }
-body.dark .added-definition-container {
-    border-color: var(--ion-color-white-shade);
-}
 .added-definition-container:last-of-type {
     margin-bottom: unset;
 }
@@ -649,8 +646,6 @@ body.dark .added-definition-container {
 }
 .added-definition-contents {
     width: calc(100% - 100px);
-    border: thin solid var(--ion-color-white);
-    border-radius: 8px;
     padding-left: 5px;
     padding-right: 5px;
     margin-bottom: 10px;
