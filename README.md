@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.24.5`: UI changes: Changed the card color
 -   `0.24.4`: Continuation of `0.24.3`
 -   `0.24.3`: More UI changes: improved add vocab UI
 -   `0.24.2`: Fixed the bug of `0.24.1` in which not all menus were showing when the device's height is too small
@@ -203,6 +204,7 @@
 
 ## Android Release Log
 
+-   `77`: `0.24.5`
 -   `76`: `0.24.4`
 -   `75`: `0.24.3`
 -   `74`: `0.24.2`
