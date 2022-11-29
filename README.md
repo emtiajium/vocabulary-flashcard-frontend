@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.24.6`: UI changes: Reduced the card width for bigger screen
 -   `0.24.5`: UI changes: Changed the card color
 -   `0.24.4`: Continuation of `0.24.3`
 -   `0.24.3`: More UI changes: improved add vocab UI
@@ -204,6 +205,7 @@
 
 ## Android Release Log
 
+-   `78`: `0.24.6`
 -   `77`: `0.24.5`
 -   `76`: `0.24.4`
 -   `75`: `0.24.3`
