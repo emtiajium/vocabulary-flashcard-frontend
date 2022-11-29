@@ -8,7 +8,7 @@
         />
         <ion-content :fullscreen="true" id="privacy-policy">
             <ion-row class="display-flex ion-justify-content-center margin-bottom-5">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <ion-card class="margin-top-bottom-unset">
                         <ion-card-content>
                             <ion-card-subtitle class="link-container">

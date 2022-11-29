@@ -14,7 +14,7 @@
                 v-if="!isLoading && Object.keys(vocabulary).length"
                 class="display-flex ion-justify-content-center"
             >
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <ion-card v-if="showDefaultMessage" class="ion-padding margin-top-unset">
                         <empty-container :message="defaultMessage" />
                     </ion-card>

@@ -56,7 +56,7 @@
                         <font-awesome-icon :icon="faPencilAlt" />
                     </ion-button>
                 </ion-row>
-                <ion-row>
+                <ion-row style="flex-wrap: unset">
                     <ion-button
                         aria-label="Create flashcard"
                         fill="clear"

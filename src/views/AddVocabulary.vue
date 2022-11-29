@@ -11,7 +11,7 @@
 
         <ion-content :fullscreen="true" id="add-vocabulary">
             <ion-row class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <spinner v-if="isLoading" />
 
                     <view v-if="!isLoading">

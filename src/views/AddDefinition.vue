@@ -10,7 +10,7 @@
 
         <ion-content :fullscreen="true" id="add-definition">
             <ion-row class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <ion-card class="margin-top-unset">
                         <ion-card-header>
                             <ion-card-title> Meaning </ion-card-title>

@@ -22,7 +22,7 @@
                 "
                 class="display-flex ion-justify-content-center"
             >
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <ion-card class="margin-top-unset">
                         <ion-card-content>
                             <view class="display-flex ion-justify-content-center">
@@ -79,7 +79,7 @@
                 :key="vocabulary.id"
                 class="display-flex ion-justify-content-center"
             >
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <minified-vocabulary
                         :vocabulary="vocabulary"
                         :delete-vocabulary="disappearVocabularyFromUI"
