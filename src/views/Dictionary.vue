@@ -2,7 +2,7 @@
     <view>
         <ion-card class="margin-top-unset">
             <ion-card-header class="label-block">
-                <ion-card-title class="ion-text-center"> Definition in the renowned dictionary </ion-card-title>
+                <ion-card-title :class="getLabelClass()"> Definition in the renowned dictionary </ion-card-title>
             </ion-card-header>
         </ion-card>
         <ion-row class="display-flex ion-justify-content-center">
@@ -70,7 +70,12 @@ export default defineComponent({
         IonCardTitle,
         IonCardHeader,
     },
-    props: ['word'],
+    props: ['word', 'labelAlignment'],
+    methods: {
+        getLabelClass(): string {
+            return this.labelAlignment === 'center' ? 'ion-text-center' : 'ion-text-left';
+        },
+    },
 });
 </script>
 

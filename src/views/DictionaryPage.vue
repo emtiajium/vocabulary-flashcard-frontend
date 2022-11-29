@@ -9,7 +9,7 @@
         <ion-content :fullscreen="true" id="dictionary">
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="10" sizeXl="10">
-                    <dictionary :word="$route.params.word" />
+                    <dictionary :word="$route.params.word" :label-alignment="'center'" />
                 </ion-col>
             </ion-row>
         </ion-content>

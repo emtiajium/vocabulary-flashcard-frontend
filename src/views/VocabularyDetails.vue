@@ -142,7 +142,11 @@
                         </ion-card-content>
                     </ion-card>
 
-                    <dictionary v-if="!isLoading && Object.keys(vocabulary).length" :word="vocabulary.word" />
+                    <dictionary
+                        v-if="!isLoading && Object.keys(vocabulary).length"
+                        :word="vocabulary.word"
+                        :label-alignment="'left'"
+                    />
                 </ion-col>
             </ion-row>
 
