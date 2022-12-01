@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.25.0`: Linker words page + Changed the UI to show the total no. of vocab
 -   `0.24.6`: UI changes: Reduced the card width for bigger screen
 -   `0.24.5`: UI changes: Changed the card color
 -   `0.24.4`: Continuation of `0.24.3`
@@ -205,6 +206,7 @@
 
 ## Android Release Log
 
+-   `79`: `0.25.0`
 -   `78`: `0.24.6`
 -   `77`: `0.24.5`
 -   `76`: `0.24.4`
