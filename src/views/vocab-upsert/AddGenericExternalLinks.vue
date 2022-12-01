@@ -1,14 +1,14 @@
 <template>
     <ion-card>
         <ion-card-header>
-            <ion-card-title> Examples </ion-card-title>
+            <ion-card-title> Generic External Links </ion-card-title>
             <ion-card-subtitle class="tips">
                 <span class="material-icons"> tips_and_updates </span>
-                <span class="info"> Usage of the word in a sentence </span>
+                <span class="info"> Any external link can be inserted here </span>
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingExamples" />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericExternalLinks" />
         </ion-card-content>
     </ion-card>
 </template>
@@ -16,10 +16,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent } from '@ionic/vue';
-import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
+import AddRemoveMultipleItems from '@/views/vocab-upsert/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
-    name: 'AddDefinitionExamples',
+    name: 'AddGenericExternalLinks',
     components: {
         AddRemoveMultipleItems,
         IonCard,
@@ -28,22 +28,22 @@ export default defineComponent({
         IonCardHeader,
         IonCardContent,
     },
-    props: ['existingExamples'],
+    props: ['existingGenericExternalLinks'],
     data() {
         return {
-            examples: [] as string[],
+            genericExternalLinks: (this.existingGenericExternalLinks || []) as string[],
         };
     },
     methods: {
-        getExamples(): string[] {
-            this.examples = (
+        getGenericExternalLinks(): string[] {
+            this.genericExternalLinks = (
                 this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
             ).getItems();
-            return this.examples;
+            return this.genericExternalLinks;
         },
         clear(): void {
             (this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>).clear();
-            this.examples = [];
+            this.genericExternalLinks = [];
         },
     },
 });

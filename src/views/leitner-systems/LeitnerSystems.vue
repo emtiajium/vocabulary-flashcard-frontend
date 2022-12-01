@@ -57,8 +57,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonContent, IonPage, IonRow, IonCol, IonCardSubtitle, IonCardContent, IonCard } from '@ionic/vue';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
-import LeitnerSingleBox from '@/views/LeitnerSingleBox.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
+import LeitnerSingleBox from '@/views/leitner-systems/LeitnerSingleBox.vue';
 import LeitnerSystemsFlow from '@/media/LeitnerSystemsFlow.vue';
 import HttpHandler from '@/utils/HttpHandler';
 

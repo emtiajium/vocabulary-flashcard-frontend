@@ -19,7 +19,7 @@
 import { defineComponent } from 'vue';
 import { IonCard, IonCardContent, IonCardSubtitle, IonRow } from '@ionic/vue';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
-import Spinner from '@/views/Spinner.vue';
+import Spinner from '@/views/shared/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import EmptyBox from '@/media/EmptyBox.vue';
 

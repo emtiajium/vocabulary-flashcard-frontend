@@ -56,11 +56,11 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import MessageDB from '@/utils/MessageDB';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { App } from '@capacitor/app';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import Alert from '@/utils/Alert';
-import Intro from '@/views/Intro.vue';
+import Intro from '@/views/kick-off/Intro.vue';
 import Platform from '@/utils/Platform';
-import ContinueWithGoogle from '@/views/ContinueWithGoogle.vue';
+import ContinueWithGoogle from '@/views/kick-off/ContinueWithGoogle.vue';
 
 export default defineComponent({
     name: 'SignIn',

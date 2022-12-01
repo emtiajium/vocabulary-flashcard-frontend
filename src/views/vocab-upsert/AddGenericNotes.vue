@@ -1,16 +1,16 @@
 <template>
     <ion-card>
         <ion-card-header>
-            <ion-card-title> Notes </ion-card-title>
+            <ion-card-title> Generic Notes </ion-card-title>
             <ion-card-subtitle class="tips">
                 <span class="material-icons"> tips_and_updates </span>
                 <span class="info">
-                    It can be a ninja technique to memorize the meaning, a personal relatable incident, etc.
+                    Any gibberish note can be put here, for example, the origin of the word, pronunciation, etc.
                 </span>
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingNotes" />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericNotes" />
         </ion-card-content>
     </ion-card>
 </template>
@@ -18,10 +18,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent } from '@ionic/vue';
-import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
+import AddRemoveMultipleItems from '@/views/vocab-upsert/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
-    name: 'AddDefinitionNotes',
+    name: 'AddGenericNotes',
     components: {
         AddRemoveMultipleItems,
         IonCard,
@@ -30,22 +30,22 @@ export default defineComponent({
         IonCardHeader,
         IonCardContent,
     },
-    props: ['existingNotes'],
+    props: ['existingGenericNotes'],
     data() {
         return {
-            notes: [] as string[],
+            genericNotes: (this.existingGenericNotes || []) as string[],
         };
     },
     methods: {
-        getNotes(): string[] {
-            this.notes = (
+        getGenericNotes(): string[] {
+            this.genericNotes = (
                 this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
             ).getItems();
-            return this.notes;
+            return this.genericNotes;
         },
         clear(): void {
             (this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>).clear();
-            this.notes = [];
+            this.genericNotes = [];
         },
     },
 });

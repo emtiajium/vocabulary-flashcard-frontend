@@ -165,9 +165,9 @@ import {
     IonRow,
     IonCol,
 } from '@ionic/vue';
-import Spinner from '@/views/Spinner.vue';
-import EmptyContainer from '@/views/EmptyContainer.vue';
-import Dictionary from '@/views/Dictionary.vue';
+import Spinner from '@/views/shared/Spinner.vue';
+import EmptyContainer from '@/views/vocab-read/EmptyContainer.vue';
+import Dictionary from '@/views/vocab-read/Dictionary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExternalLinkAlt, faPencilAlt, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';

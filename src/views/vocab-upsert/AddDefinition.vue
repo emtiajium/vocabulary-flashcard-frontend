@@ -82,15 +82,15 @@ import {
     useBackButton,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import AddDefinitionExamples from '@/views/AddDefinitionExamples.vue';
-import AddDefinitionNotes from '@/views/AddDefinitionNotes.vue';
-import AddDefinitionExternalLinks from '@/views/AddDefinitionExternalLinks.vue';
+import AddDefinitionExamples from '@/views/vocab-upsert/AddDefinitionExamples.vue';
+import AddDefinitionNotes from '@/views/vocab-upsert/AddDefinitionNotes.vue';
+import AddDefinitionExternalLinks from '@/views/vocab-upsert/AddDefinitionExternalLinks.vue';
 import Definition from '@/domains/Definition';
 import { v4 as uuidV4 } from 'uuid';
 import { validateSync } from 'class-validator';
 import Toast from '@/utils/Toast';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import { isArrayOfStringEqual } from '@/utils/is-equal';
 import Alert from '@/utils/Alert';
 import * as _ from 'lodash';

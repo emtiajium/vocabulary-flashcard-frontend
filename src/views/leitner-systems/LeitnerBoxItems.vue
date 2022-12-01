@@ -155,13 +155,13 @@ import {
     IonPage,
     IonRow,
 } from '@ionic/vue';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
 import HttpHandler from '@/utils/HttpHandler';
 import Pagination from '@/domains/Pagination';
 import { Components } from '@ionic/core/components';
-import Spinner from '@/views/Spinner.vue';
-import NetworkError from '@/views/NetworkError.vue';
+import Spinner from '@/views/shared/Spinner.vue';
+import NetworkError from '@/views/shared/NetworkError.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
     faCalendarAlt,

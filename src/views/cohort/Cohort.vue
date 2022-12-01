@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Spinner from '@/views/Spinner.vue';
+import Spinner from '@/views/shared/Spinner.vue';
 import Cohort from '@/domains/Cohort';
 import {
     IonCard,
@@ -83,8 +83,8 @@ import {
     IonCol,
     IonCardHeader,
 } from '@ionic/vue';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
-import NetworkError from '@/views/NetworkError.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
+import NetworkError from '@/views/shared/NetworkError.vue';
 import HttpHandler from '@/utils/HttpHandler';
 
 export default defineComponent({

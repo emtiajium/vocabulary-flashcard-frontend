@@ -23,9 +23,9 @@ import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
-import VocabularyDetails from '@/views/VocabularyDetails.vue';
+import VocabularyDetails from '@/views/vocab-read/VocabularyDetails.vue';
 import { IonContent, IonPage } from '@ionic/vue';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 
 export default defineComponent({
     name: 'VocabularyDetailsPage',

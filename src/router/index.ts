@@ -1,19 +1,19 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import Home from '@/views/Home.vue';
-import AddVocabulary from '@/views/AddVocabulary.vue';
-import SignIn from '@/views/SignIn.vue';
-import Cohort from '@/views/Cohort.vue';
-import VocabularyList from '@/views/VocabularyList.vue';
+import Home from '@/views/kick-off/Home.vue';
+import AddVocabulary from '@/views/vocab-upsert/AddVocabulary.vue';
+import SignIn from '@/views/kick-off/SignIn.vue';
+import Cohort from '@/views/cohort/Cohort.vue';
+import VocabularyList from '@/views/vocab-read/VocabularyList.vue';
 import Route, { PublicRoute } from '@/domains/Route';
 import * as _ from 'lodash';
 import NativeStorage from '@/utils/NativeStorage';
-import DictionaryPage from '@/views/DictionaryPage.vue';
-import LeitnerSystems from '@/views/LeitnerSystems.vue';
-import LeitnerBoxItems from '@/views/LeitnerBoxItems.vue';
-import PrivacyPolicy from '@/views/PrivacyPolicy.vue';
-import LinkerWord from '@/views/LinkerWord.vue';
-import VocabularyDetailsPage from '@/views/VocabularyDetailsPage.vue';
+import DictionaryPage from '@/views/vocab-read/DictionaryPage.vue';
+import LeitnerSystems from '@/views/leitner-systems/LeitnerSystems.vue';
+import LeitnerBoxItems from '@/views/leitner-systems/LeitnerBoxItems.vue';
+import PrivacyPolicy from '@/views/privacy-policy/PrivacyPolicy.vue';
+import LinkerWord from '@/views/vocab-read/LinkerWord.vue';
+import VocabularyDetailsPage from '@/views/vocab-read/VocabularyDetailsPage.vue';
 
 const routes: RouteRecordRaw[] = [
     {

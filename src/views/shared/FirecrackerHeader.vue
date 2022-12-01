@@ -50,7 +50,7 @@ import { defineComponent } from 'vue';
 import { IonHeader, IonTitle, IonToolbar, IonRow, IonCol, IonMenuButton, IonSearchbar, IonButton } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBars, faArrowLeft, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
-import FirecrackerMenu from '@/views/FirecrackerMenu.vue';
+import FirecrackerMenu from '@/views/shared/FirecrackerMenu.vue';
 
 export default defineComponent({
     name: 'FirecrackerHeader',

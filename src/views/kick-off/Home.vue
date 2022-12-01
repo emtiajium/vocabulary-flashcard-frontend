@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Spinner from '@/views/Spinner.vue';
+import Spinner from '@/views/shared/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { useBackButton, useIonRouter } from '@ionic/vue';
 import { App } from '@capacitor/app';

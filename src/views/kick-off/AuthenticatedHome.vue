@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import VocabularyList from '@/views/VocabularyList.vue';
+import VocabularyList from '@/views/vocab-read/VocabularyList.vue';
 
 export default defineComponent({
     name: 'AuthenticatedHome',

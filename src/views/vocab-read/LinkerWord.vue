@@ -22,12 +22,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonPage, IonContent, IonRow, IonCol } from '@ionic/vue';
-import Dictionary from '@/views/Dictionary.vue';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import Dictionary from '@/views/vocab-read/Dictionary.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
-import Spinner from '@/views/Spinner.vue';
-import VocabularyDetails from '@/views/VocabularyDetails.vue';
+import Spinner from '@/views/shared/Spinner.vue';
+import VocabularyDetails from '@/views/vocab-read/VocabularyDetails.vue';
 
 export default defineComponent({
     name: 'LinkerWord',

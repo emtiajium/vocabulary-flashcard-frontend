@@ -94,7 +94,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import { IonContent, IonPage, IonCard, IonCardContent, IonCardSubtitle, IonRow, IonCol } from '@ionic/vue';
 import Platform from '@/utils/Platform';
 

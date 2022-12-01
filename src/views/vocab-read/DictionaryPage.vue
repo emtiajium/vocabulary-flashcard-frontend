@@ -19,8 +19,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonPage, IonContent, IonRow, IonCol } from '@ionic/vue';
-import Dictionary from '@/views/Dictionary.vue';
-import FirecrackerHeader from '@/views/FirecrackerHeader.vue';
+import Dictionary from '@/views/vocab-read/Dictionary.vue';
+import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 
 export default defineComponent({
     name: 'DictionaryPage',

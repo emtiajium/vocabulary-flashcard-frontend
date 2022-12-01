@@ -1,16 +1,19 @@
 <template>
     <ion-card>
         <ion-card-header>
-            <ion-card-title> Generic Notes </ion-card-title>
+            <ion-card-title> Relatable Words</ion-card-title>
             <ion-card-subtitle class="tips">
                 <span class="material-icons"> tips_and_updates </span>
                 <span class="info">
-                    Any gibberish note can be put here, for example, the origin of the word, pronunciation, etc.
+                    Any related vocabulary can be inserted here. And a relationship can have various aspects, for
+                    example, it can be a synonym, an antonym, a homograph, a homonym, a homophone, etc. Therefore, if
+                    the word is
+                    <strong>Zenith</strong>, <strong>Pinnacle</strong> can be put here
                 </span>
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericNotes" />
+            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="linkerWords" />
         </ion-card-content>
     </ion-card>
 </template>
@@ -18,10 +21,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonCardContent } from '@ionic/vue';
-import AddRemoveMultipleItems from '@/views/AddRemoveMultipleItems.vue';
+import AddRemoveMultipleItems from '@/views/vocab-upsert/AddRemoveMultipleItems.vue';
 
 export default defineComponent({
-    name: 'AddGenericNotes',
+    name: 'AddLinkerWords',
     components: {
         AddRemoveMultipleItems,
         IonCard,
@@ -30,22 +33,22 @@ export default defineComponent({
         IonCardHeader,
         IonCardContent,
     },
-    props: ['existingGenericNotes'],
+    props: ['existingLinkerWords'],
     data() {
         return {
-            genericNotes: (this.existingGenericNotes || []) as string[],
+            linkerWords: (this.existingLinkerWords || []) as string[],
         };
     },
     methods: {
-        getGenericNotes(): string[] {
-            this.genericNotes = (
+        getLinkerWords(): string[] {
+            this.linkerWords = (
                 this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>
             ).getItems();
-            return this.genericNotes;
+            return this.linkerWords;
         },
         clear(): void {
             (this.$refs.AddRemoveMultipleItemsRef as InstanceType<typeof AddRemoveMultipleItems>).clear();
-            this.genericNotes = [];
+            this.linkerWords = [];
         },
     },
 });
