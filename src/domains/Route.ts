@@ -14,6 +14,7 @@ enum Route {
     LeitnerSystems = 'LeitnerSystems',
     LeitnerBoxItems = 'LeitnerBoxItems',
     PrivacyPolicy = 'PrivacyPolicy',
+    LinkerWord = 'LinkerWord',
 }
 
 export enum PublicRoute {
