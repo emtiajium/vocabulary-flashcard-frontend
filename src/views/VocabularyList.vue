@@ -124,8 +124,10 @@
                 </ion-fab-button>
             </ion-fab>
 
-            <ion-fab v-if="totalVocabularies > 0" vertical="center" horizontal="start" slot="fixed">
-                <ion-fab-button color="warning" :disabled="true" size="small"> {{ totalVocabularies }} </ion-fab-button>
+            <ion-fab v-if="totalVocabularies > 0" vertical="bottom" horizontal="center" slot="fixed">
+                <ion-chip class="vocab-count">
+                    <span> {{ totalVocabularies }} Vocabs </span>
+                </ion-chip>
             </ion-fab>
 
             <settings
@@ -158,6 +160,7 @@ import {
     IonRefresher,
     IonRow,
     IonCol,
+    IonChip,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
@@ -203,6 +206,7 @@ export default defineComponent({
         IonRefresher,
         IonRow,
         IonCol,
+        IonChip,
     },
     data() {
         return {

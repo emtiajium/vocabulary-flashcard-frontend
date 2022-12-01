@@ -173,3 +173,9 @@ ion-textarea {
 body.dark ion-textarea {
     border-color: var(--ion-color-white-shade);
 }
+
+.vocab-count {
+    background-color: var(--ion-color-primary);
+    color: var(--ion-color-white);
+    margin-left: auto;
+}
