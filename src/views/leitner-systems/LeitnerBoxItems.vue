@@ -284,6 +284,7 @@ export default defineComponent({
             this.pageNumber += 1;
             this.isDisabled = this.boxItems.length >= total;
             if (event?.target) {
+                // eslint-disable-next-line no-param-reassign
                 ((event as CustomEvent).target as unknown as IonInfiniteScrollType).disabled = this.isDisabled;
                 await ((event as CustomEvent).target as unknown as IonInfiniteScrollType).complete();
             }
