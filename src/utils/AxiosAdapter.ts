@@ -14,6 +14,11 @@ export default class AxiosAdapter {
         if (Array.isArray(error.response?.data?.message)) {
             throw new Error(error.response?.data.message[0]);
         }
+        if (error.response?.data?.name === 'CriticalError') {
+            const modifiedError = new Error(error.response?.data.message);
+            modifiedError.name = error.response?.data.name;
+            throw modifiedError;
+        }
         throw new Error(error.response?.data.message);
     }
 

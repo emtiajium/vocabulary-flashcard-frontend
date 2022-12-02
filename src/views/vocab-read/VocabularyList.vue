@@ -102,7 +102,7 @@
                 </view>
             </view>
 
-            <network-error v-if="isNetworkError" />
+            <network-error v-if="isNetworkError" :message="criticalErrorMessage" />
 
             <ion-infinite-scroll
                 @ionInfinite="renderVocabularies($event)"
@@ -237,6 +237,7 @@ export default defineComponent({
                 notes: false,
             },
             cssStyleToClearlyDisplayVocabCountChip: `margin-bottom: 50px`,
+            criticalErrorMessage: '',
         };
     },
     async mounted() {
@@ -253,6 +254,7 @@ export default defineComponent({
     },
     methods: {
         clean(): void {
+            this.criticalErrorMessage = '';
             this.showSpinner = false;
             this.vocabularies = [] as Vocabulary[];
             this.pageNumber = 1;
@@ -364,6 +366,9 @@ export default defineComponent({
                 this.isNetworkError = false;
                 this.totalVocabularies = searchResult.total;
             } catch (error) {
+                if (error.name === 'CriticalError') {
+                    this.criticalErrorMessage = error.message;
+                }
                 this.isNetworkError = true;
                 searchResult = { results: [], total: 0 };
             }
