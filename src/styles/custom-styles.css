@@ -1,3 +1,7 @@
+:root {
+    --defaul-border-radius: 8px;
+}
+
 .display-flex {
     display: flex;
 }
@@ -102,7 +106,7 @@ body.dark .image-container > img {
 
 ion-card {
     box-shadow: unset;
-    border-radius: 8px;
+    border-radius: var(--defaul-border-radius);
     margin-left: 4px;
     margin-right: 4px;
 }
@@ -114,6 +118,10 @@ ion-card.margin-top-bottom-unset {
 
 ion-card.margin-top-unset {
     margin-top: unset;
+}
+
+ion-button:not(.button-round) {
+    --border-radius: var(--defaul-border-radius);
 }
 
 .margin-bottom-5 {
@@ -165,7 +173,7 @@ ion-card.margin-top-unset {
 
 ion-textarea {
     border: thin solid var(--ion-color-lightest);
-    border-radius: 8px;
+    border-radius: var(--defaul-border-radius);
     padding-left: 5px;
     padding-right: 5px;
 }

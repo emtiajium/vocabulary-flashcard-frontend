@@ -258,11 +258,9 @@ export default defineComponent({
     padding-inline-end: unset;
 }
 .cancel-button {
-    --border-radius: 8px;
     margin-inline-start: unset;
 }
 .save-button {
-    --border-radius: 8px;
     margin-inline-end: unset;
 }
 </style>
