@@ -17,7 +17,7 @@
                 v-if="
                     allQuietOnTheWesternFront &&
                     !searchKeyword.length &&
-                    !this.fetchNotHavingDefinitionOnly &&
+                    !fetchNotHavingDefinitionOnly &&
                     !isNetworkError
                 "
                 class="display-flex ion-justify-content-center"
