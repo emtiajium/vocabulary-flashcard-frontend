@@ -94,7 +94,10 @@
                             : `Looks like there is no other vocabulary left for you to be displayed.`
                     }}
                 </ion-card-subtitle>
-                <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                <view
+                    class="display-flex ion-justify-content-center ion-padding-bottom"
+                    :style="cssStyleToClearlyDisplayVocabCountChip"
+                >
                     <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
                 </view>
             </view>
@@ -107,7 +110,7 @@
                 id="infinite-scroll"
                 :disabled="isDisabled"
             >
-                <spinner />
+                <spinner :inline-style="cssStyleToClearlyDisplayVocabCountChip" />
             </ion-infinite-scroll>
 
             <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
@@ -233,6 +236,7 @@ export default defineComponent({
                 examples: false,
                 notes: false,
             },
+            cssStyleToClearlyDisplayVocabCountChip: `margin-bottom: 50px`,
         };
     },
     async mounted() {
