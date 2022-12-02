@@ -59,7 +59,7 @@
             <view
                 v-if="
                     vocabularies.length === 0 &&
-                    this.fetchNotHavingDefinitionOnly &&
+                    fetchNotHavingDefinitionOnly &&
                     !isNetworkError &&
                     !searchKeyword.length
                 "
