@@ -48,10 +48,8 @@
             <spinner v-if="showSpinner" />
 
             <view v-if="isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError">
-                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-                    <span class="ion-text-center">
-                        {{ `No vocabulary was found for "${searchKeyword}"` }}
-                    </span>
+                <ion-card-subtitle class="ion-padding ion-text-center">
+                    {{ `No vocabulary was found for "${searchKeyword}"` }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <span class="material-icons firecracker-primary-color-icon-60pt"> manage_search </span>
@@ -66,8 +64,8 @@
                     !searchKeyword.length
                 "
             >
-                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-                    <span class="ion-text-center"> No vocabulary was found without definition </span>
+                <ion-card-subtitle class="ion-text-center ion-padding">
+                    No vocabulary was found without definition
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-60pt" />
@@ -89,14 +87,12 @@
             </ion-row>
 
             <view v-if="isDisabled && vocabularies.length > 0 && !isNetworkError">
-                <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-                    <span class="ion-text-center">
-                        {{
-                            vocabularies.length > 10
-                                ? `Congrats! You have viewed the last vocabulary!`
-                                : `Looks like there is no other vocabulary left for you to be displayed.`
-                        }}
-                    </span>
+                <ion-card-subtitle class="ion-padding ion-text-center">
+                    {{
+                        vocabularies.length > 10
+                            ? `Congrats! You have viewed the last vocabulary!`
+                            : `Looks like there is no other vocabulary left for you to be displayed.`
+                    }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
