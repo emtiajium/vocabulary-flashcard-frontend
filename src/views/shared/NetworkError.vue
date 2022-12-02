@@ -1,7 +1,7 @@
 <template>
     <view>
-        <ion-card-subtitle class="display-flex ion-justify-content-center ion-padding">
-            <span class="ion-text-center"> Looks like something is wrong with your network. Please try later. </span>
+        <ion-card-subtitle class="ion-padding ion-text-center">
+            Looks like something is wrong with your network. Please try later.
         </ion-card-subtitle>
         <view class="display-flex ion-justify-content-center ion-padding-bottom">
             <span class="material-icons network-error-icon"> wifi_off </span>
