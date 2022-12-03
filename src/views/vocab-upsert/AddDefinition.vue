@@ -21,7 +21,7 @@
                         </ion-card-header>
 
                         <ion-card-content>
-                            <ion-item lines="none">
+                            <ion-item lines="none" class="vocab-upsert-item">
                                 <ion-textarea
                                     autoGrow="true"
                                     inputmode="text"

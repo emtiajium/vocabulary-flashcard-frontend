@@ -13,7 +13,11 @@
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="linkerWords" />
+            <add-remove-multiple-items
+                ref="AddRemoveMultipleItemsRef"
+                :existing-items="linkerWords"
+                :item-class="'vocab-upsert-item'"
+            />
         </ion-card-content>
     </ion-card>
 </template>

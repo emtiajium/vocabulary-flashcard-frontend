@@ -8,7 +8,11 @@
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingExamples" />
+            <add-remove-multiple-items
+                ref="AddRemoveMultipleItemsRef"
+                :existing-items="existingExamples"
+                :item-class="'vocab-upsert-item'"
+            />
         </ion-card-content>
     </ion-card>
 </template>

@@ -10,7 +10,11 @@
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-            <add-remove-multiple-items ref="AddRemoveMultipleItemsRef" :existing-items="existingGenericNotes" />
+            <add-remove-multiple-items
+                ref="AddRemoveMultipleItemsRef"
+                :existing-items="existingGenericNotes"
+                :item-class="'vocab-upsert-item'"
+            />
         </ion-card-content>
     </ion-card>
 </template>

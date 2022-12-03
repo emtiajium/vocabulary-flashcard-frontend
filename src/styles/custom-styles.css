@@ -158,6 +158,11 @@ ion-button:not(.button-round) {
     font-size: 16px;
 }
 
+.vocab-upsert-item {
+    --padding-start: unset;
+    --inner-padding-end: unset;
+}
+
 .tips {
     display: flex;
     align-items: flex-start;

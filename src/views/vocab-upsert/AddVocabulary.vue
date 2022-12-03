@@ -27,7 +27,7 @@
                                 </ion-card-subtitle>
                             </ion-card-header>
                             <ion-card-content>
-                                <ion-item lines="none">
+                                <ion-item lines="none" class="vocab-upsert-item">
                                     <ion-textarea
                                         autoGrow="true"
                                         inputmode="text"
@@ -48,7 +48,7 @@
                                     <span class="info"> An explanation of what a word means </span>
                                 </ion-card-subtitle>
                             </ion-card-header>
-                            <ion-card-content>
+                            <ion-card-content class="added-definition-card-content">
                                 <ion-button
                                     v-if="!isLoading"
                                     color="success"
@@ -118,7 +118,11 @@
                                 </ion-card-subtitle>
                             </ion-card-header>
                             <ion-card-content>
-                                <ion-toggle :checked="isDraft" @ionChange="setIsDraft($event.target.checked)" />
+                                <ion-toggle
+                                    class="draft-toggle"
+                                    :checked="isDraft"
+                                    @ionChange="setIsDraft($event.target.checked)"
+                                />
                             </ion-card-content>
                         </ion-card>
 
@@ -629,6 +633,10 @@ export default defineComponent({
 .save-button {
     margin-inline-end: unset;
 }
+.added-definition-card-content {
+    padding-inline-start: unset;
+    padding-inline-end: unset;
+}
 .added-definition-container {
     display: flex;
 }
@@ -646,5 +654,8 @@ export default defineComponent({
     width: calc(100% - 100px);
     padding-top: 8px;
     margin-bottom: 10px;
+}
+.draft-toggle {
+    padding-inline: unset;
 }
 </style>

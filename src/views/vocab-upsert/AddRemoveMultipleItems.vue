@@ -1,7 +1,7 @@
 <template>
     <div v-for="(item, index) in placeholderItems" :key="item" class="container">
         <div class="contents">
-            <ion-item lines="none">
+            <ion-item lines="none" :class="itemClass">
                 <ion-textarea
                     autoGrow="true"
                     inputmode="text"
@@ -57,7 +57,7 @@ export default defineComponent({
         IonButton,
         FontAwesomeIcon,
     },
-    props: ['existingItems'],
+    props: ['existingItems', 'itemClass'],
     data() {
         const isEmpty = _.isEmpty(this.existingItems);
         const placeholderItems = _.fill(_.times(isEmpty ? 1 : this.existingItems.length), uuidV4());
@@ -114,6 +114,7 @@ export default defineComponent({
 }
 .action-buttons > ion-button {
     width: 28px;
+    margin-left: 5px;
 }
 ion-item {
     --min-height: unset;
