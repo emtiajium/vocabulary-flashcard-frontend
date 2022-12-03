@@ -1,4 +1,4 @@
-@import 'variables.css';
+@import 'color-variables.css';
 
 .ion-color-lightest {
     --ion-color-base: var(--ion-color-lightest);
