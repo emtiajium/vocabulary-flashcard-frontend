@@ -52,7 +52,7 @@
                 :key="boxItem.vocabularyId"
                 class="display-flex ion-justify-content-center item-container"
             >
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="8" sizeXl="8">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="6" sizeLg="6" sizeXl="6">
                     <ion-card class="margin-top-bottom-unset">
                         <ion-card-header>
                             <ion-card-title class="display-flex ion-justify-content-center capitalize">
