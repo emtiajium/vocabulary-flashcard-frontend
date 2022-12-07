@@ -31,7 +31,7 @@
                 </ion-card-content>
             </ion-col>
 
-            <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="2" sizeXl="2" class="center">
+            <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="2" sizeXl="2" class="action-buttons">
                 <ion-row>
                     <ion-button
                         aria-label="Remove vocabulary"
@@ -165,11 +165,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.center {
+.action-buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-end;
+    padding-inline: 16px;
 }
 .leitner-icon {
     font-size: 24px;
