@@ -125,7 +125,7 @@
 
             <ion-fab v-if="totalVocabularies > 0" vertical="bottom" horizontal="center" slot="fixed">
                 <ion-chip class="vocab-count">
-                    <span> {{ totalVocabularies }} Vocabs </span>
+                    <span> {{ `${totalVocabularies} ${totalVocabularies > 1 ? 'Vocabs' : 'Vocab'}` }} </span>
                 </ion-chip>
             </ion-fab>
 
