@@ -36,7 +36,7 @@
                             <ion-label class="ion-padding-start"> Sign In </ion-label>
                         </ion-item>
                         <ion-item button @click="navigate('/privacy-policy')">
-                            <span class="material-icons menu-icon"> policy </span>
+                            <policy-icon class="menu-icon" :color-variable="'--ion-color-primary'" />
                             <ion-label class="ion-padding-start"> Privacy Policy </ion-label>
                         </ion-item>
                     </ion-list>
@@ -62,15 +62,8 @@
 
                 <ion-row class="ion-align-items-end">
                     <ion-list lines="none">
-                        <ion-item button v-if="!isAuthenticated" @click="toggleTheme()">
-                            <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
-                            <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
-                            <ion-label class="ion-padding-start">
-                                Switch to {{ isDark ? 'Light' : 'Dark' }} Theme
-                            </ion-label>
-                        </ion-item>
                         <ion-item button v-if="isAuthenticated" @click="toggleTheme()">
-                            <span v-if="!isDark" class="material-icons menu-icon"> light_mode </span>
+                            <light-mode-icon v-if="!isDark" class="menu-icon" :color-variable="'--ion-color-primary'" />
                             <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
                             <ion-label class="ion-padding-start">
                                 Switch to {{ isDark ? 'Light' : 'Dark' }} Theme
@@ -97,10 +90,14 @@ import { isModeDark, setThemeMode } from '@/utils/dark-mode';
 import FlashcardIcon from '@/media/FlashcardIcon.vue';
 import Platform from '@/utils/Platform';
 import GoogleAuthentication from '@/utils/GoogleAuthentication';
+import PolicyIcon from '@/media/PolicyIcon.vue';
+import LightModeIcon from '@/media/LightModeIcon.vue';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
     components: {
+        LightModeIcon,
+        PolicyIcon,
         FlashcardIcon,
         IonItem,
         IonList,
