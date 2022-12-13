@@ -3,7 +3,7 @@
         {{ message || 'Looks like something is wrong with your network. Please try later.' }}
     </ion-card-subtitle>
     <view class="display-flex ion-justify-content-center ion-padding-bottom">
-        <wifi-off-icon :color-variable="'--ion-color-primary'" />
+        <wifi-off-icon :fill-color-variable="'--ion-color-primary'" :stroke-color-variable="'--ion-color-primary'" />
     </view>
 </template>
 

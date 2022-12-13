@@ -28,7 +28,11 @@
                             <ion-label class="ion-padding-start"> My Cohort </ion-label>
                         </ion-item>
                         <ion-item v-if="isAuthenticated" button @click="navigate('/leitner-systems')">
-                            <flashcard-icon :color-variable="'--ion-color-primary'" class="menu-icon" />
+                            <flashcard-icon
+                                :fill-color-variable="'--ion-color-primary'"
+                                :stroke-color-variable="'--ion-color-primary'"
+                                class="menu-icon"
+                            />
                             <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                         </ion-item>
                         <ion-item v-if="!isAuthenticated" button @click="navigate('/sign-in')">
@@ -36,7 +40,11 @@
                             <ion-label class="ion-padding-start"> Sign In </ion-label>
                         </ion-item>
                         <ion-item button @click="navigate('/privacy-policy')">
-                            <policy-icon class="menu-icon" :color-variable="'--ion-color-primary'" />
+                            <policy-icon
+                                class="menu-icon"
+                                :fill-color-variable="'--ion-color-primary'"
+                                :stroke-color-variable="'--ion-item-background'"
+                            />
                             <ion-label class="ion-padding-start"> Privacy Policy </ion-label>
                         </ion-item>
                     </ion-list>
@@ -63,7 +71,12 @@
                 <ion-row class="ion-align-items-end">
                     <ion-list lines="none">
                         <ion-item button @click="toggleTheme()">
-                            <light-mode-icon v-if="!isDark" class="menu-icon" :color-variable="'--ion-color-primary'" />
+                            <light-mode-icon
+                                v-if="!isDark"
+                                class="menu-icon"
+                                :fill-color-variable="'--ion-color-primary'"
+                                :stroke-color-variable="'--ion-color-primary'"
+                            />
                             <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
                             <ion-label class="ion-padding-start">
                                 Switch to {{ isDark ? 'Light' : 'Dark' }} Theme
