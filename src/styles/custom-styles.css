@@ -129,6 +129,7 @@ ion-toggle {
     height: 20px;
     --handle-width: 25px;
     --handle-height: 25px;
+    --handle-box-shadow: unset;
 }
 
 .margin-bottom-5 {
