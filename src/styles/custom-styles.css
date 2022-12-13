@@ -124,6 +124,13 @@ ion-button:not(.button-round) {
     --border-radius: var(--defaul-border-radius);
 }
 
+ion-toggle {
+    width: 45px;
+    height: 20px;
+    --handle-width: 25px;
+    --handle-height: 25px;
+}
+
 .margin-bottom-5 {
     margin-bottom: 5px;
 }
