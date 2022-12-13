@@ -2,7 +2,7 @@
     <ion-card :button="true" class="transparent margin-top-bottom-unset" @click="navigate">
         <ion-card-content class="no-padding">
             <ion-row class="display-flex ion-justify-content-center icon-container">
-                <empty-box :color="colors[box]"></empty-box>
+                <empty-box-icon :color="colors[box]"></empty-box-icon>
             </ion-row>
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-card-subtitle> {{ mappedBoxWithDays[`BOX_${box}`] }} Box </ion-card-subtitle>
@@ -21,12 +21,12 @@ import { IonCard, IonCardContent, IonCardSubtitle, IonRow } from '@ionic/vue';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import Spinner from '@/views/shared/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
-import EmptyBox from '@/media/EmptyBox.vue';
+import EmptyBoxIcon from '@/media/EmptyBoxIcon.vue';
 
 export default defineComponent({
     name: 'LeitnerSingleBox',
     components: {
-        EmptyBox,
+        EmptyBoxIcon,
         Spinner,
         IonCard,
         IonCardContent,

@@ -12,7 +12,7 @@
                 <div class="nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb">
                     <div class="nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf">
                         <div class="nsm7Bb-HzV7m-LgbsSe-Bz112c">
-                            <google />
+                            <google-icon />
                         </div>
                     </div>
                     <span class="nsm7Bb-HzV7m-LgbsSe-BPrWId">Continue with Google</span>
@@ -24,11 +24,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Google from '@/media/Google.vue';
+import GoogleIcon from '@/media/GoogleIcon.vue';
 
 export default defineComponent({
     name: 'ContinueWithGoogle',
-    components: { Google },
+    components: { GoogleIcon },
 });
 </script>
 
