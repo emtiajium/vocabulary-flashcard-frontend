@@ -62,7 +62,7 @@
 
                 <ion-row class="ion-align-items-end">
                     <ion-list lines="none">
-                        <ion-item button v-if="isAuthenticated" @click="toggleTheme()">
+                        <ion-item button @click="toggleTheme()">
                             <light-mode-icon v-if="!isDark" class="menu-icon" :color-variable="'--ion-color-primary'" />
                             <font-awesome-icon v-if="isDark" :icon="faMoon" class="menu-icon" />
                             <ion-label class="ion-padding-start">
