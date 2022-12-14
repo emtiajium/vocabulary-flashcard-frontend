@@ -140,6 +140,10 @@ ion-toggle {
     color: var(--ion-color-primary);
 }
 
+.firecracker-warning-color-icon {
+    color: var(--ion-color-warning);
+}
+
 .firecracker-primary-color-icon-60pt {
     font-size: 60pt;
     color: var(--ion-color-primary);

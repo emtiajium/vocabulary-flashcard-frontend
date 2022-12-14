@@ -35,19 +35,19 @@
 
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="6" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="2">
-                    <leitner-single-box :box="1" :count="count[1]" />
+                    <leitner-single-box :box="1" :count="count[1]" :error="error[1]" />
                 </ion-col>
                 <ion-col sizeXs="6" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="2">
-                    <leitner-single-box :box="2" :count="count[2]" />
+                    <leitner-single-box :box="2" :count="count[2]" :error="error[2]" />
                 </ion-col>
                 <ion-col sizeXs="6" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="2">
-                    <leitner-single-box :box="3" :count="count[3]" />
+                    <leitner-single-box :box="3" :count="count[3]" :error="error[3]" />
                 </ion-col>
                 <ion-col sizeXs="6" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="2">
-                    <leitner-single-box :box="4" :count="count[4]" />
+                    <leitner-single-box :box="4" :count="count[4]" :error="error[4]" />
                 </ion-col>
                 <ion-col sizeXs="6" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="2">
-                    <leitner-single-box :box="5" :count="count[5]" />
+                    <leitner-single-box :box="5" :count="count[5]" :error="error[5]" />
                 </ion-col>
             </ion-row>
         </ion-content>
@@ -61,6 +61,7 @@ import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import LeitnerSingleBox from '@/views/leitner-systems/LeitnerSingleBox.vue';
 import LeitnerSystemsFlow from '@/media/LeitnerSystemsFlow.vue';
 import HttpHandler from '@/utils/HttpHandler';
+import Toast from '@/utils/Toast';
 
 export default defineComponent({
     name: 'LeitnerSystems',
@@ -81,6 +82,7 @@ export default defineComponent({
             seeLess: true,
             placeholderItems: [1, 2, 3, 4, 5],
             count: [-1, -1, -1, -1, -1, -1] as number[],
+            error: [false, false, false, false, false, false] as boolean[],
         };
     },
     async ionViewDidEnter() {
@@ -94,22 +96,36 @@ export default defineComponent({
             this.seeLess = !this.seeLess;
         },
 
-        async countBoxItem(box: number): Promise<number> {
+        countBoxItem(box: number): Promise<number> {
             return HttpHandler.get<number>(`/v1/leitner-systems/items/count/${box}`);
         },
 
         async countBoxesItem(): Promise<void> {
+            let lastError: Error = new Error();
+
             await Promise.all(
                 this.placeholderItems.map((box) => {
-                    return this.countBoxItem(box).then((count) => {
-                        this.count[box] = count;
-                    });
+                    return this.countBoxItem(box)
+                        .then((count) => {
+                            this.count[box] = count;
+                            this.error[box] = false;
+                        })
+                        .catch((error) => {
+                            this.count[box] = -1;
+                            this.error[box] = true;
+                            lastError = error;
+                        });
                 }),
             ).catch();
+
+            if (lastError.message) {
+                await Toast.present(lastError.message);
+            }
         },
 
         clean(): void {
             this.count = [-1, -1, -1, -1, -1, -1];
+            this.error = [false, false, false, false, false, false];
         },
     },
 });

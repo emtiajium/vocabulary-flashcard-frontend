@@ -8,8 +8,14 @@
                 <ion-card-subtitle> {{ mappedBoxWithDays[`BOX_${box}`] }} Box </ion-card-subtitle>
             </ion-row>
             <ion-row class="display-flex ion-justify-content-center count-container">
-                <spinner v-if="count === -1" />
-                <ion-card-subtitle v-if="count !== -1"> {{ count }} Vocab </ion-card-subtitle>
+                <spinner v-if="count === -1 && error === false" />
+                <font-awesome-icon
+                    v-if="count === -1 && error === true"
+                    class="firecracker-warning-color-icon ion-margin-top"
+                    size="2x"
+                    :icon="faTriangleExclamation"
+                />
+                <ion-card-subtitle v-if="count !== -1 && error === false"> {{ count }} Vocab </ion-card-subtitle>
             </ion-row>
         </ion-card-content>
     </ion-card>
@@ -22,6 +28,8 @@ import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import Spinner from '@/views/shared/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import EmptyBoxIcon from '@/media/EmptyBoxIcon.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'LeitnerSingleBox',
@@ -32,8 +40,9 @@ export default defineComponent({
         IonCardContent,
         IonCardSubtitle,
         IonRow,
+        FontAwesomeIcon,
     },
-    props: ['box', 'count'],
+    props: ['box', 'count', 'error'],
     data() {
         return {
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
@@ -46,6 +55,7 @@ export default defineComponent({
                 '4': '#2E7D32',
                 '5': '#1B5E20',
             },
+            faTriangleExclamation,
         };
     },
     methods: {
