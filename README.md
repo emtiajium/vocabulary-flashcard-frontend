@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.26.1`: More UI changes, e.g., local caching of few material icons
 -   `0.26.0`: More UI changes: improved add vocab UI + Displayed critical error thrown by the server
 -   `0.25.0`: Linker words page + Changed the UI to show the total no. of vocab
 -   `0.24.6`: UI changes: Reduced the card width for bigger screen
@@ -207,6 +208,7 @@
 
 ## Android Release Log
 
+-   `81`: `0.26.1`
 -   `80`: `0.26.0`
 -   `79`: `0.25.0`
 -   `78`: `0.24.6`
