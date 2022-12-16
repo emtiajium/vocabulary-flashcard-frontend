@@ -88,7 +88,7 @@
                                 <ion-button
                                     v-if="!isLoading"
                                     color="success"
-                                    size="small"
+                                    size="large"
                                     shape="round"
                                     fill="clear"
                                     :strong="true"
