@@ -77,12 +77,10 @@
                                             <font-awesome-icon :icon="faPencilAlt" />
                                         </ion-button>
                                     </div>
-                                    <div class="added-definition-contents">
-                                        <ion-item lines="none">
-                                            <ion-label class="capitalize ion-text-nowrap">
-                                                {{ definition.meaning }}
-                                            </ion-label>
-                                        </ion-item>
+                                    <div class="added-definition-contents overflowed-content">
+                                        <ion-label class="capitalize">
+                                            {{ definition.meaning }}
+                                        </ion-label>
                                     </div>
                                 </div>
                             </ion-card-content>
@@ -654,8 +652,9 @@ export default defineComponent({
     margin-left: -5px;
 }
 .added-definition-contents {
-    width: calc(100% - 100px);
+    width: calc(100% - 116px);
     padding-top: 8px;
+    padding-right: 16px;
     margin-bottom: 10px;
 }
 .add-definition-button-container {
