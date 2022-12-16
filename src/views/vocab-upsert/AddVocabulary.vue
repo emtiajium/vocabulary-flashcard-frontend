@@ -77,10 +77,10 @@
                                             <font-awesome-icon :icon="faPencilAlt" />
                                         </ion-button>
                                     </div>
-                                    <div class="added-definition-contents overflowed-content">
-                                        <ion-label class="capitalize">
+                                    <div class="added-definition-contents overflowed-content capitalize">
+                                        <span>
                                             {{ definition.meaning }}
-                                        </ion-label>
+                                        </span>
                                     </div>
                                 </div>
                             </ion-card-content>
@@ -188,7 +188,6 @@ import {
     IonContent,
     IonTextarea,
     IonItem,
-    IonLabel,
     IonPage,
     IonToggle,
     IonButton,
@@ -246,7 +245,6 @@ export default defineComponent({
         IonContent,
         IonPage,
         IonTextarea,
-        IonLabel,
         IonItem,
         IonToggle,
         IonButton,
