@@ -49,18 +49,6 @@
                                 </ion-card-subtitle>
                             </ion-card-header>
                             <ion-card-content class="added-definition-card-content">
-                                <ion-button
-                                    v-if="!isLoading"
-                                    color="success"
-                                    size="small"
-                                    shape="round"
-                                    fill="clear"
-                                    :strong="true"
-                                    @click="onAddingDefinition"
-                                >
-                                    <font-awesome-icon v-if="!definitions.length" :icon="faPlusCircle" />
-                                    <span v-if="definitions.length" class="material-icons"> plus_one </span>
-                                </ion-button>
                                 <div
                                     v-show="!isLoading && definitions.length"
                                     v-for="(definition, index) in definitions"
@@ -97,6 +85,20 @@
                                         </ion-item>
                                     </div>
                                 </div>
+                            </ion-card-content>
+                            <ion-card-content class="add-definition-button-container">
+                                <ion-button
+                                    v-if="!isLoading"
+                                    color="success"
+                                    size="small"
+                                    shape="round"
+                                    fill="clear"
+                                    :strong="true"
+                                    @click="onAddingDefinition"
+                                >
+                                    <font-awesome-icon v-if="!definitions.length" :icon="faPlusCircle" />
+                                    <span v-if="definitions.length" class="material-icons add-more"> plus_one </span>
+                                </ion-button>
                             </ion-card-content>
                         </ion-card>
 
@@ -649,11 +651,18 @@ export default defineComponent({
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-left: -5px;
 }
 .added-definition-contents {
     width: calc(100% - 100px);
     padding-top: 8px;
     margin-bottom: 10px;
+}
+.add-definition-button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: unset;
+    margin-right: -8px;
 }
 .draft-toggle {
     padding-inline: unset;
