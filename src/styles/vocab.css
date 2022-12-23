@@ -16,26 +16,31 @@
     --inner-padding-end: unset;
 }
 
-.buttons-container {
+#add-vocabulary .buttons-container,
+#add-definition .buttons-container {
     justify-content: flex-end;
     margin: calc(var(--ion-margin) + var(--ion-margin) / 2) calc(var(--ion-margin) / 4);
 }
-.cancel-button-container {
+#add-vocabulary .cancel-button-container,
+#add-definition .cancel-button-container {
     padding-inline-start: unset;
 }
-.save-button-container {
+#add-vocabulary .save-button-container,
+#add-definition .save-button-container {
     padding-inline-end: unset;
 }
-.cancel-button {
+#add-vocabulary .cancel-button,
+#add-definition .cancel-button {
     margin-inline-start: unset;
 }
-.save-button {
+#add-vocabulary .save-button,
+#add-definition .save-button {
     margin-inline-end: unset;
 }
 
 /* below style should be at
  src/views/vocab-read/Settings.vue
- but unfortunately it doesn't work
+ but unfortunately it (scoped css) doesn't work
  */
 .settings-popover {
     --width: 295px;
