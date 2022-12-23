@@ -269,7 +269,7 @@ export default defineComponent({
 .footer-container {
     height: 62px;
     background-color: var(--ion-item-background);
-    padding-right: 16px;
+    padding-right: var(--ion-padding);
 }
 .apply-button {
     width: 100vw;

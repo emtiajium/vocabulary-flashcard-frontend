@@ -64,7 +64,7 @@
                                     <ion-datetime
                                         :value="boxItem.updatedAt"
                                         display-format="MMMM DD, YYYY"
-                                        class="updated-at padding-right-10"
+                                        class="updated-at ion-padding-end"
                                         :disabled="true"
                                         :readonly="true"
                                     />
@@ -390,10 +390,6 @@ ion-card-content {
     padding-bottom: unset;
 }
 
-.padding-right-10 {
-    padding-right: 10px;
-}
-
 .margin-10 {
     margin: 10px;
 }
@@ -404,7 +400,7 @@ ion-card-content {
 
 .leitner-icon {
     color: var(--ion-color-primary);
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: calc(var(--ion-padding) / 2);
+    padding-right: calc(var(--ion-padding) / 2);
 }
 </style>

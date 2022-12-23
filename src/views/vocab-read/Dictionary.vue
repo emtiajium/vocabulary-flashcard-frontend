@@ -121,7 +121,7 @@ export default defineComponent({
 }
 
 .label-block {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: calc(var(--ion-padding) / 2);
+    padding-bottom: calc(var(--ion-padding) / 2);
 }
 </style>

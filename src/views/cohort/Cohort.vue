@@ -141,8 +141,8 @@ export default defineComponent({
 
 <style scoped>
 .name-container {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: calc(var(--ion-padding) / 2);
+    padding-bottom: calc(var(--ion-padding) / 2);
 }
 .avatar {
     display: flex;

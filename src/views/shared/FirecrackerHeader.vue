@@ -163,8 +163,8 @@ ion-toolbar .sc-ion-searchbar-ios-h {
 }
 
 .settings-button {
-    --padding-start: 8px;
-    --padding-end: 8px;
+    --padding-start: calc(var(--ion-padding) / 2);
+    --padding-end: calc(var(--ion-padding) / 2);
     font-size: 20px;
     width: 40px;
     height: 40px;

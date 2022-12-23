@@ -650,9 +650,9 @@ export default defineComponent({
     margin-left: -5px;
 }
 .added-definition-contents {
-    width: calc(100% - 116px);
-    padding-top: 8px;
-    padding-right: 16px;
+    width: calc(100% - 100px - var(--ion-padding));
+    padding-top: calc(var(--ion-padding) / 2);
+    padding-right: var(--ion-padding);
     margin-bottom: 10px;
 }
 .add-definition-button-container {

@@ -220,8 +220,8 @@ export default defineComponent({
 .intro {
     background-color: var(--ion-toolbar-background);
     align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: var(--ion-padding);
+    padding-bottom: var(--ion-padding);
 }
 .profile {
     background-color: var(--ion-toolbar-background);

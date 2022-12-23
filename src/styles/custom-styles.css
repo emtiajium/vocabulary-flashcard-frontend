@@ -1,4 +1,5 @@
 :root {
+    --ion-padding: 16px;
     --defaul-border-radius: 8px;
 }
 
@@ -191,8 +192,8 @@ ion-toggle {
 ion-textarea {
     border: thin solid var(--ion-color-lightest);
     border-radius: var(--defaul-border-radius);
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: var(--ion-padding);
+    padding-right: var(--ion-padding);
 }
 
 body.dark ion-textarea {

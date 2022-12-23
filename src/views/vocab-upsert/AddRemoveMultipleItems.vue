@@ -110,7 +110,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    padding-top: 8px;
+    padding-top: calc(var(--ion-padding) / 2);
 }
 .action-buttons > ion-button {
     width: 28px;

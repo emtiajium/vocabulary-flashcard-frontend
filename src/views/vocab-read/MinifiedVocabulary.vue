@@ -170,7 +170,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-end;
-    padding-inline: 16px;
+    padding-inline: var(--ion-padding);
 }
 .leitner-icon {
     font-size: 24px;

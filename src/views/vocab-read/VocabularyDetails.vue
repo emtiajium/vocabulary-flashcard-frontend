@@ -258,10 +258,10 @@ export default defineComponent({
 
 <style scoped>
 .linker-word-chip {
-    max-width: 20em;
+    max-width: 20rem;
 }
 li {
-    padding-bottom: 10px;
+    padding-bottom: var(--ion-padding);
 }
 .leitner-icon {
     font-size: 20px;
