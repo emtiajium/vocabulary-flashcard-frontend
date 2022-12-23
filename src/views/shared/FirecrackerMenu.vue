@@ -50,6 +50,10 @@
                     </ion-list>
                 </ion-row>
 
+                <!-- dummy elements to resolve height issue; it looks uglier without those -->
+                <ion-row v-if="!(isAuthenticated && !isAndroid)"></ion-row>
+                <ion-row v-if="!(isAuthenticated && !isAndroid)"></ion-row>
+
                 <ion-row v-if="isAuthenticated && !isAndroid">
                     <ion-list lines="none">
                         <ion-item class="display-flex ion-align-items-end">
