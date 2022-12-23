@@ -1,7 +1,8 @@
-:root {
-    --ion-padding: 16px;
-    --ion-margin: 16px;
-    --defaul-border-radius: 8px;
+@import 'util.css';
+
+a {
+    text-decoration: none;
+    color: var(--ion-color-primary-contrast-to-background);
 }
 
 .display-flex {
@@ -24,114 +25,10 @@
     border-radius: 50%;
 }
 
-a {
-    text-decoration: none;
-    color: var(--ion-color-primary-contrast-to-background);
-}
-
-/* below style should be at
- src/views/VocabularyDetails.vue
- but unfortunately it doesn't work
- */
-.link-container > a:after {
-    font-family: 'Font Awesome 6 Solid Firecracker';
-    content: '\f35d'; /* faExternalLinkAlt */
-    padding-left: calc(var(--ion-padding) / 2);
-    color: var(--ion-color-primary-contrast-to-background);
-}
-
-.email-container > a:after {
-    font-family: 'Font Awesome 6 Solid Firecracker';
-    content: '\f0e0'; /* faEnvelope */
-    padding-left: calc(var(--ion-padding) / 2);
-    color: var(--ion-color-primary-contrast-to-background);
-}
-
-.image-container > img {
-    max-width: 100%;
-    max-height: 20rem;
-    /* en-center */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-body.dark .image-container > img {
-    filter: grayscale(1);
-}
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-    .image-container > img {
-        max-width: 100%;
-    }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-    .image-container > img {
-        max-width: 70%;
-    }
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-    .image-container > img {
-        max-width: 65%;
-    }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-    .image-container > img {
-        max-width: 60%;
-    }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-    .image-container > img {
-        max-width: 40%;
-    }
-}
-
 .overflowed-content {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.header-md::after {
-    /* unsetting box-shadow */
-    background: unset;
-}
-
-ion-card {
-    box-shadow: unset;
-    border-radius: var(--defaul-border-radius);
-    margin-left: calc(var(--ion-margin) / 4);
-    margin-right: calc(var(--ion-margin) / 4);
-}
-
-ion-card.margin-top-bottom-unset {
-    margin-top: unset;
-    margin-bottom: unset;
-}
-
-ion-card.margin-top-unset {
-    margin-top: unset;
-}
-
-ion-button:not(.button-round) {
-    --border-radius: var(--defaul-border-radius);
-}
-
-ion-toggle {
-    width: 45px;
-    height: 20px;
-    --handle-width: 25px;
-    --handle-height: 25px;
-    --handle-box-shadow: unset;
 }
 
 .margin-bottom-4 {
@@ -149,42 +46,4 @@ ion-toggle {
 .firecracker-primary-color-icon-60pt {
     font-size: 60pt;
     color: var(--ion-color-primary);
-}
-
-/* below style should be at
- src/views/vocab-read/Settings.vue
- but unfortunately it doesn't work
- */
-.settings-popover {
-    --width: 295px;
-    --height: 100vh;
-    --max-height: 100vh;
-}
-
-.popover-content {
-    top: 0 !important;
-    left: unset !important;
-    right: 0 !important;
-    border-radius: unset !important;
-}
-
-.searchbar-input.sc-ion-searchbar-ios {
-    font-size: 16px;
-}
-
-ion-textarea {
-    border: thin solid var(--ion-color-lightest);
-    border-radius: var(--defaul-border-radius);
-    padding-left: var(--ion-padding);
-    padding-right: var(--ion-padding);
-}
-
-body.dark ion-textarea {
-    border-color: var(--ion-color-white-shade);
-}
-
-.vocab-count {
-    background-color: var(--ion-color-primary);
-    color: var(--ion-color-white);
-    margin-left: calc(-1 * var(--ion-margin));
 }

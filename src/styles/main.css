@@ -8,8 +8,11 @@
 @import url('../../node_modules/@ionic/vue/css/text-transformation.css');
 @import url('../../node_modules/@ionic/vue/css/flex-utils.css');
 @import url('../../node_modules/@ionic/vue/css/display.css');
-@import url('./theme.css');
+
 @import url('./fonts.css');
-@import url('./custom-styles.css');
-@import url('./vocab-upsert.css');
+@import url('./variables.css');
+@import url('./color-variables.css');
+@import url('./ionic.css');
 @import url('./google-sign-in.css');
+@import url('./custom-styles.css');
+@import url('./vocab.css');

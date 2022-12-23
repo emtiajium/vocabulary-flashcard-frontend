@@ -1,5 +1,3 @@
-@import 'color-variables.css';
-
 .ion-color-lightest {
     --ion-color-base: var(--ion-color-lightest);
     --ion-color-base-rgb: var(--ion-color-lightest-rgb);
@@ -31,14 +29,27 @@ ion-toggle {
     --background-checked: #989aa2;
     --handle-background: var(--ion-color-warning);
     --handle-background-checked: var(--ion-color-primary);
+    width: 45px;
+    height: 20px;
+    --handle-width: 25px;
+    --handle-height: 25px;
+    --handle-box-shadow: unset;
 }
 
-ion-card-title {
-    --color: var(--ion-card-title-color);
+ion-card {
+    box-shadow: unset;
+    border-radius: var(--defaul-border-radius);
+    margin-left: calc(var(--ion-margin) / 4);
+    margin-right: calc(var(--ion-margin) / 4);
 }
 
-ion-card-subtitle {
-    --color: var(--ion-card-sub-title-color);
+ion-card.margin-top-bottom-unset {
+    margin-top: unset;
+    margin-bottom: unset;
+}
+
+ion-card.margin-top-unset {
+    margin-top: unset;
 }
 
 ion-card.transparent {
@@ -47,6 +58,14 @@ ion-card.transparent {
 
 ion-card ion-item {
     --ion-item-background: var(--ion-card-background);
+}
+
+ion-card-title {
+    --color: var(--ion-card-title-color);
+}
+
+ion-card-subtitle {
+    --color: var(--ion-card-sub-title-color);
 }
 
 body.light ion-searchbar {
@@ -64,4 +83,35 @@ body.dark ion-menu {
 
 body.dark ion-alert {
     --background: var(--ion-color-step-100);
+}
+
+ion-button:not(.button-round) {
+    --border-radius: var(--defaul-border-radius);
+}
+
+.popover-content {
+    top: 0 !important;
+    left: unset !important;
+    right: 0 !important;
+    border-radius: unset !important;
+}
+
+.header-md::after {
+    /* unsetting box-shadow */
+    background: unset;
+}
+
+.searchbar-input.sc-ion-searchbar-ios {
+    font-size: 16px;
+}
+
+ion-textarea {
+    border: thin solid var(--ion-color-lightest);
+    border-radius: var(--defaul-border-radius);
+    padding-left: var(--ion-padding);
+    padding-right: var(--ion-padding);
+}
+
+body.dark ion-textarea {
+    border-color: var(--ion-color-white-shade);
 }

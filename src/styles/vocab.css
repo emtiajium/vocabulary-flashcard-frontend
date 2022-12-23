@@ -32,3 +32,19 @@
 .save-button {
     margin-inline-end: unset;
 }
+
+/* below style should be at
+ src/views/vocab-read/Settings.vue
+ but unfortunately it doesn't work
+ */
+.settings-popover {
+    --width: 295px;
+    --height: 100vh;
+    --max-height: 100vh;
+}
+
+.vocab-count {
+    background-color: var(--ion-color-primary);
+    color: var(--ion-color-white);
+    margin-left: calc(-1 * var(--ion-margin));
+}
