@@ -1,5 +1,5 @@
 <template>
-    <ion-header class="margin-bottom-5">
+    <ion-header class="margin-bottom-4">
         <ion-toolbar>
             <ion-row>
                 <ion-col size="12" class="display-flex">

@@ -1,5 +1,6 @@
 :root {
     --ion-padding: 16px;
+    --ion-margin: 16px;
     --defaul-border-radius: 8px;
 }
 
@@ -108,8 +109,8 @@ body.dark .image-container > img {
 ion-card {
     box-shadow: unset;
     border-radius: var(--defaul-border-radius);
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: calc(var(--ion-margin) / 4);
+    margin-right: calc(var(--ion-margin) / 4);
 }
 
 ion-card.margin-top-bottom-unset {
@@ -133,8 +134,8 @@ ion-toggle {
     --handle-box-shadow: unset;
 }
 
-.margin-bottom-5 {
-    margin-bottom: 5px;
+.margin-bottom-4 {
+    margin-bottom: calc(var(--ion-margin) / 4);
 }
 
 .firecracker-primary-color-icon {
@@ -182,7 +183,7 @@ ion-toggle {
 }
 .tips .material-icons {
     color: var(--ion-color-primary);
-    padding-right: 5px;
+    padding-right: calc(var(--ion-padding) / 4);
     font-size: 20px;
 }
 .tips .info {
@@ -203,5 +204,5 @@ body.dark ion-textarea {
 .vocab-count {
     background-color: var(--ion-color-primary);
     color: var(--ion-color-white);
-    margin-left: -15px;
+    margin-left: calc(-1 * var(--ion-margin));
 }

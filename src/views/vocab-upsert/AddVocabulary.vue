@@ -617,7 +617,7 @@ export default defineComponent({
 <style scoped>
 .buttons-container {
     justify-content: flex-end;
-    margin: 25px 4px;
+    margin: calc(var(--ion-margin) + var(--ion-margin) / 2) calc(var(--ion-margin) / 4);
 }
 .cancel-button-container {
     padding-inline-start: unset;
@@ -647,19 +647,19 @@ export default defineComponent({
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-left: -5px;
+    margin-left: calc(-1 * var(--ion-padding) / 2);
 }
 .added-definition-contents {
     width: calc(100% - 100px - var(--ion-padding));
     padding-top: calc(var(--ion-padding) / 2);
     padding-right: var(--ion-padding);
-    margin-bottom: 10px;
+    margin-bottom: var(--ion-margin);
 }
 .add-definition-button-container {
     display: flex;
     justify-content: flex-end;
     padding-top: unset;
-    margin-right: -8px;
+    margin-right: calc(-1 * var(--ion-padding) / 2);
 }
 .draft-toggle {
     padding-inline: unset;

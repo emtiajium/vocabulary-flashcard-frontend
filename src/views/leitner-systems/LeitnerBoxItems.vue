@@ -58,7 +58,9 @@
                             <ion-card-title class="display-flex ion-justify-content-center capitalize">
                                 {{ boxItem.word }}
                             </ion-card-title>
-                            <ion-card-subtitle class="display-flex ion-justify-content-center capitalize">
+                            <ion-card-subtitle
+                                class="display-flex ion-justify-content-center capitalize ion-margin-top"
+                            >
                                 <ion-row>
                                     <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
                                     <ion-datetime
@@ -88,7 +90,7 @@
                                     shape="round"
                                     :strong="true"
                                     color="warning"
-                                    class="margin-10"
+                                    class="ion-margin"
                                     :disabled="isFirstBox()"
                                     @click="moveBackward(boxItem.vocabularyId)"
                                 >
@@ -101,7 +103,7 @@
                                     shape="round"
                                     :strong="true"
                                     color="primary"
-                                    class="margin-10"
+                                    class="ion-margin"
                                     :disabled="isLastBox()"
                                     @click="moveForward(boxItem.vocabularyId)"
                                 >
@@ -114,7 +116,7 @@
                                     shape="round"
                                     :strong="true"
                                     color="fern-green"
-                                    class="margin-10"
+                                    class="ion-margin"
                                     @click="seeMore(boxItem.vocabularyId, boxItem.word)"
                                 >
                                     <font-awesome-icon :icon="faUnlockAlt" />
@@ -390,12 +392,8 @@ ion-card-content {
     padding-bottom: unset;
 }
 
-.margin-10 {
-    margin: 10px;
-}
-
 .item-container:last-of-type {
-    margin-bottom: 5px;
+    margin-bottom: calc(var(--ion-margin) / 2);
 }
 
 .leitner-icon {

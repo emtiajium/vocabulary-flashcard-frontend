@@ -73,10 +73,10 @@ export default defineComponent({
     padding-bottom: unset;
 }
 .icon-container {
-    margin-top: 15px;
-    margin-bottom: 5px;
+    margin-top: var(--ion-margin);
+    margin-bottom: calc(var(--ion-margin) / 2);
 }
 .count-container {
-    margin-bottom: 10px;
+    margin-bottom: var(--ion-margin);
 }
 </style>

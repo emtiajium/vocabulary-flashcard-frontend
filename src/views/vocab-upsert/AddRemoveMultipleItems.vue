@@ -114,7 +114,7 @@ export default defineComponent({
 }
 .action-buttons > ion-button {
     width: 28px;
-    margin-left: 5px;
+    margin-left: calc(var(--ion-margin) / 4);
 }
 ion-item {
     --min-height: unset;

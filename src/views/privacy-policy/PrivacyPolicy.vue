@@ -7,7 +7,7 @@
             menu-id="privacy-policy-menu"
         />
         <ion-content :fullscreen="true" id="privacy-policy">
-            <ion-row class="display-flex ion-justify-content-center margin-bottom-5">
+            <ion-row class="display-flex ion-justify-content-center margin-bottom-4">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <ion-card class="margin-top-bottom-unset">
                         <ion-card-content>
