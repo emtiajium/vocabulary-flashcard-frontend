@@ -67,14 +67,12 @@
                 </ion-card-header>
                 <ion-card-content>
                     <view v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords" :key="linkerWordIndex">
-                        <ion-button color="card" mode="ios" @click="$router.push(`/linker-words/${linkerWord}`)">
-                            <ion-chip class="linker-word-chip">
-                                <span class="ion-padding-end overflowed-content">
-                                    {{ linkerWord }}
-                                </span>
-                                <font-awesome-icon :icon="faExternalLinkAlt" class="firecracker-primary-color-icon" />
-                            </ion-chip>
-                        </ion-button>
+                        <ion-chip class="linker-word-chip" @click="$router.push(`/linker-words/${linkerWord}`)">
+                            <span class="ion-padding-end overflowed-content">
+                                {{ linkerWord }}
+                            </span>
+                            <font-awesome-icon :icon="faExternalLinkAlt" class="firecracker-primary-color-icon" />
+                        </ion-chip>
                     </view>
                 </ion-card-content>
             </ion-card>
@@ -160,7 +158,6 @@ import {
     IonCardSubtitle,
     IonFab,
     IonFabButton,
-    IonButton,
     IonChip,
     IonRow,
     IonCol,
@@ -188,7 +185,6 @@ export default defineComponent({
         IonCardSubtitle,
         IonFab,
         IonFabButton,
-        IonButton,
         IonChip,
         IonRow,
         IonCol,
