@@ -67,11 +67,7 @@
                 </ion-card-header>
                 <ion-card-content>
                     <view v-for="(linkerWord, linkerWordIndex) in vocabulary.linkerWords" :key="linkerWordIndex">
-                        <ion-chip
-                            class="linker-word-chip"
-                            color="primary"
-                            @click="$router.push(`/linker-words/${linkerWord}`)"
-                        >
+                        <ion-chip class="linker-word-chip" @click="$router.push(`/linker-words/${linkerWord}`)">
                             <span class="ion-padding-end overflowed-content">
                                 {{ linkerWord }}
                             </span>
