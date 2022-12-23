@@ -1,0 +1,34 @@
+.tips {
+    display: flex;
+    align-items: flex-start;
+}
+.tips .material-icons {
+    color: var(--ion-color-primary);
+    padding-right: calc(var(--ion-padding) / 4);
+    font-size: 20px;
+}
+.tips .info {
+    font-size: 15px;
+}
+
+.vocab-upsert-item {
+    --padding-start: unset;
+    --inner-padding-end: unset;
+}
+
+.buttons-container {
+    justify-content: flex-end;
+    margin: calc(var(--ion-margin) + var(--ion-margin) / 2) calc(var(--ion-margin) / 4);
+}
+.cancel-button-container {
+    padding-inline-start: unset;
+}
+.save-button-container {
+    padding-inline-end: unset;
+}
+.cancel-button {
+    margin-inline-start: unset;
+}
+.save-button {
+    margin-inline-end: unset;
+}

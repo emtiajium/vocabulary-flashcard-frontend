@@ -11,4 +11,5 @@
 @import url('./theme.css');
 @import url('./fonts.css');
 @import url('./custom-styles.css');
+@import url('./vocab-upsert.css');
 @import url('./google-sign-in.css');

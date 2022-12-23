@@ -615,22 +615,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.buttons-container {
-    justify-content: flex-end;
-    margin: calc(var(--ion-margin) + var(--ion-margin) / 2) calc(var(--ion-margin) / 4);
-}
-.cancel-button-container {
-    padding-inline-start: unset;
-}
-.save-button-container {
-    padding-inline-end: unset;
-}
-.cancel-button {
-    margin-inline-start: unset;
-}
-.save-button {
-    margin-inline-end: unset;
-}
 .added-definition-card-content {
     padding-inline-start: unset;
     padding-inline-end: unset;
