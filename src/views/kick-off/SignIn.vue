@@ -20,7 +20,7 @@
                         <div v-show="!isAndroid" id="google-sign-in"></div>
                     </ion-row>
                     <ion-row class="ion-justify-content-center ion-padding">
-                        <ion-text class="privacy-text">
+                        <ion-text class="ion-text-center">
                             By creating your account, you agree with our
                             <router-link to="/privacy-policy"> Privacy Policy </router-link>
                         </ion-text>
@@ -136,9 +136,6 @@ export default defineComponent({
 .container {
     height: 100%;
     display: flex;
-}
-.privacy-text {
-    text-align: center;
 }
 .google-play {
     width: 50%;
