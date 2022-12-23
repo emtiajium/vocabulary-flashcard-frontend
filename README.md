@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.26.3`: UI: Padding/margin variables
 -   `0.26.2`: More UI changes, e.g., fixed the padding/margin issues in the vocab upsert page
 -   `0.26.1`: More UI changes, e.g., local caching of few material icons
 -   `0.26.0`: More UI changes: improved add vocab UI + Displayed critical error thrown by the server
@@ -209,6 +210,7 @@
 
 ## Android Release Log
 
+-   `83`: `0.26.3`
 -   `82`: `0.26.2`
 -   `81`: `0.26.1`
 -   `80`: `0.26.0`
