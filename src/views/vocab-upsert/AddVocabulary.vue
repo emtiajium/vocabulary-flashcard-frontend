@@ -77,8 +77,8 @@
                                             <font-awesome-icon :icon="faPencilAlt" />
                                         </ion-button>
                                     </div>
-                                    <div class="added-definition-contents overflowed-content capitalize">
-                                        <span>
+                                    <div class="added-definition-contents">
+                                        <span class="overflowed-content capitalize">
                                             {{ definition.meaning }}
                                         </span>
                                     </div>
