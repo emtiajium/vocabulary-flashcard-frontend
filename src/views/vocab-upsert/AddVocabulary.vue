@@ -634,10 +634,10 @@ export default defineComponent({
     margin-left: calc(-1 * var(--ion-padding) / 2);
 }
 .added-definition-contents {
+    display: flex;
+    align-items: center;
     width: calc(100% - 100px - var(--ion-padding));
-    padding-top: calc(var(--ion-padding) / 2);
     padding-right: var(--ion-padding);
-    margin-bottom: var(--ion-margin);
 }
 .add-definition-button-container {
     display: flex;
