@@ -259,6 +259,9 @@ export default defineComponent({
 li {
     padding-bottom: var(--ion-padding);
 }
+li:last-of-type {
+    padding-bottom: unset;
+}
 .leitner-icon {
     font-size: 20px;
 }
