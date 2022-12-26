@@ -3,12 +3,12 @@
 
     <ion-row v-if="!isLoading && Object.keys(vocabulary).length" class="display-flex ion-justify-content-center">
         <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
-            <ion-card v-if="showDefaultMessage" class="ion-padding margin-top-unset">
+            <ion-card v-if="showDefaultMessage" class="ion-padding">
                 <empty-container :message="defaultMessage" />
             </ion-card>
 
             <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
-                <ion-card :class="definitionIndex === 0 ? 'margin-top-unset' : ''">
+                <ion-card>
                     <ion-card-header>
                         <ion-card-title>
                             <span>
@@ -58,10 +58,7 @@
                 </ion-card>
             </view>
 
-            <ion-card
-                v-if="vocabulary.linkerWords.length"
-                :class="vocabulary.definitions.length === 0 ? 'margin-top-unset' : ''"
-            >
+            <ion-card v-if="vocabulary.linkerWords.length">
                 <ion-card-header>
                     <ion-card-title> Relatable Words </ion-card-title>
                 </ion-card-header>
@@ -77,10 +74,7 @@
                 </ion-card-content>
             </ion-card>
 
-            <ion-card
-                v-if="vocabulary.genericNotes.length"
-                :class="vocabulary.linkerWords.length === 0 ? 'margin-top-unset' : ''"
-            >
+            <ion-card v-if="vocabulary.genericNotes.length">
                 <ion-card-header>
                     <ion-card-title> Generic Notes </ion-card-title>
                 </ion-card-header>
@@ -96,10 +90,7 @@
                 </ion-card-content>
             </ion-card>
 
-            <ion-card
-                v-if="vocabulary.genericExternalLinks.length"
-                :class="vocabulary.genericNotes.length === 0 ? 'margin-top-unset' : ''"
-            >
+            <ion-card v-if="vocabulary.genericExternalLinks.length">
                 <ion-card-header>
                     <ion-card-title> Generic External Links </ion-card-title>
                 </ion-card-header>
@@ -253,6 +244,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+ion-card:first-of-type {
+    margin-top: unset;
+}
 .linker-word-chip {
     max-width: 20rem;
 }
