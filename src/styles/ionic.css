@@ -29,7 +29,7 @@ ion-toggle {
     --background: var(--ion-color-step-400);
     --handle-background: var(--ion-color-warning);
     --background-checked: var(--ion-color-step-400);
-    --handle-background-checked: var(--ion-color-primary);
+    --handle-background-checked: var(--ion-color-warning);
     width: 45px;
     height: 25px;
     --handle-width: 20px;
