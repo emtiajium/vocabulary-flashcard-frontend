@@ -59,6 +59,7 @@
                         <ion-label> Without definition only </ion-label>
                         <ion-toggle
                             slot="end"
+                            mode="ios"
                             :checked="innerFetchNotHavingDefinitionOnly"
                             @ionChange="setSelectedFiltering($event.detail.checked)"
                         />

@@ -26,13 +26,14 @@
 }
 
 ion-toggle {
-    --background-checked: #989aa2;
+    --background: var(--ion-color-step-400);
     --handle-background: var(--ion-color-warning);
+    --background-checked: var(--ion-color-step-400);
     --handle-background-checked: var(--ion-color-primary);
     width: 45px;
-    height: 20px;
-    --handle-width: 25px;
-    --handle-height: 25px;
+    height: 25px;
+    --handle-width: 20px;
+    --handle-spacing: 3px;
     --handle-box-shadow: unset;
 }
 

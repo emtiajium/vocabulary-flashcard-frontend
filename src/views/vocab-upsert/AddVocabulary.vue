@@ -120,6 +120,7 @@
                             <ion-card-content>
                                 <ion-toggle
                                     class="draft-toggle"
+                                    mode="ios"
                                     :checked="isDraft"
                                     @ionChange="setIsDraft($event.target.checked)"
                                 />
