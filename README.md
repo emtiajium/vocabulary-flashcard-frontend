@@ -112,12 +112,13 @@
 
 ## Change Log
 
+-   `0.27.0`: Added info on creating a cohort using email
 -   `0.26.5`: UI: iOS style toggle
 -   `0.26.4`: UI: Fixed the margin issue
 -   `0.26.3`: UI: Padding/margin variables
 -   `0.26.2`: More UI changes, e.g., fixed the padding/margin issues in the vocab upsert page
 -   `0.26.1`: More UI changes, e.g., local caching of few material icons
--   `0.26.0`: More UI changes: improved add vocab UI + Displayed critical error thrown by the server
+-   `0.26.0`: More UI changes: Improved add vocab UI + Displayed critical error thrown by the server
 -   `0.25.0`: Linker words page + Changed the UI to show the total no. of vocab
 -   `0.24.6`: UI changes: Reduced the card width for bigger screen
 -   `0.24.5`: UI changes: Changed the card color
@@ -212,6 +213,7 @@
 
 ## Android Release Log
 
+-   `86`: `0.27.0`
 -   `85`: `0.26.5`
 -   `84`: `0.26.4`
 -   `83`: `0.26.3`
