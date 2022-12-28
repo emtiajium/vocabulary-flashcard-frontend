@@ -10,9 +10,11 @@
 
                     <view v-if="isReady && !isNetworkError && isTheUserAlone()">
                         <ion-card-header>
-                            <ion-card-subtitle class="ion-text-center">
-                                Looks like you are the only member of your group. Please let us know if you would like
-                                to create your own group.
+                            <ion-card-subtitle class="ion-text-center email-container">
+                                Looks like you are the only member of your group. If you want to create a group with
+                                your friends, please email us at
+                                <a href="mailto:271emtiaj@gmail.com?subject=Cohort Creation!">271emtiaj@gmail.com</a>
+                                with the cohort's name and all members' emails.
                             </ion-card-subtitle>
                         </ion-card-header>
                         <ion-card-content class="display-flex ion-justify-content-center">
