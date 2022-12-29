@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.27.1`: Added info on modifying a cohort using email + Changed dark mode colors
 -   `0.27.0`: Added info on creating a cohort using email
 -   `0.26.5`: UI: iOS style toggle
 -   `0.26.4`: UI: Fixed the margin issue
@@ -213,6 +214,7 @@
 
 ## Android Release Log
 
+-   `87`: `0.27.1`
 -   `86`: `0.27.0`
 -   `85`: `0.26.5`
 -   `84`: `0.26.4`
