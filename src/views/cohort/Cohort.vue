@@ -63,6 +63,14 @@
                                 </ion-card-content>
                             </ion-card>
                         </view>
+
+                        <ion-card-header>
+                            <ion-card-subtitle class="ion-text-center email-container">
+                                Please <a href="mailto:271emtiaj@gmail.com?subject=Cohort Modification!">email</a> us if
+                                you want to add new members or remove existing members with the cohort's name and all
+                                members' emails.
+                            </ion-card-subtitle>
+                        </ion-card-header>
                     </view>
                 </ion-col>
             </ion-row>
