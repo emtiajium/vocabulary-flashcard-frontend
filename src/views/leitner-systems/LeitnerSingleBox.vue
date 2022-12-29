@@ -15,7 +15,9 @@
                     size="2x"
                     :icon="faTriangleExclamation"
                 />
-                <ion-card-subtitle v-if="count !== -1 && error === false"> {{ count }} Vocab </ion-card-subtitle>
+                <ion-card-subtitle v-if="count !== -1 && error === false">
+                    {{ count }} {{ count > 1 ? 'Vocabs' : 'Vocab' }}
+                </ion-card-subtitle>
             </ion-row>
         </ion-card-content>
     </ion-card>
