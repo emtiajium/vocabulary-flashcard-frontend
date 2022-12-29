@@ -10,7 +10,7 @@
                 @click="seeMore(vocabulary.id, vocabulary.word)"
             >
                 <ion-card-header>
-                    <ion-card-title class="capitalize"> {{ vocabulary.word }} </ion-card-title>
+                    <ion-card-title class="capitalize overflowed-content"> {{ vocabulary.word }} </ion-card-title>
                 </ion-card-header>
 
                 <ion-card-content>
