@@ -50,6 +50,6 @@
 
 .vocab-count {
     background-color: var(--ion-color-primary);
-    color: var(--ion-color-white);
+    color: var(--ion-color-primary-contrast);
     margin-left: calc(-1 * var(--ion-margin));
 }
