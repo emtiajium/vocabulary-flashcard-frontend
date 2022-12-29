@@ -2,7 +2,7 @@
     <ion-card :button="true" class="transparent margin-top-bottom-unset" @click="navigate">
         <ion-card-content class="no-padding">
             <ion-row class="display-flex ion-justify-content-center icon-container">
-                <empty-box-icon :color="colors[box]"></empty-box-icon>
+                <empty-box-icon :color-variable="colors[box]"></empty-box-icon>
             </ion-row>
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-card-subtitle> {{ mappedBoxWithDays[`BOX_${box}`] }} Box </ion-card-subtitle>
@@ -48,14 +48,12 @@ export default defineComponent({
     data() {
         return {
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
-            // generated color using
-            // https://material.io/design/color/the-color-system.html#tools-for-picking-colors
             colors: {
-                '1': '#66BB6A',
-                '2': '#43A047',
-                '3': '#388E3C',
-                '4': '#2E7D32',
-                '5': '#1B5E20',
+                '1': '--leitner-box-1',
+                '2': '--leitner-box-2',
+                '3': '--leitner-box-3',
+                '4': '--leitner-box-4',
+                '5': '--leitner-box-5',
             },
             faTriangleExclamation,
         };

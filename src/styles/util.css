@@ -2,14 +2,14 @@
     font-family: 'Font Awesome 6 Solid Firecracker';
     content: '\f35d'; /* faExternalLinkAlt */
     padding-left: calc(var(--ion-padding) / 2);
-    color: var(--ion-color-primary-contrast-to-background);
+    color: var(--ion-color-primary);
 }
 
 .email-container > a:after {
     font-family: 'Font Awesome 6 Solid Firecracker';
     content: '\f0e0'; /* faEnvelope */
     padding-left: calc(var(--ion-padding) / 2);
-    color: var(--ion-color-primary-contrast-to-background);
+    color: var(--ion-color-primary);
 }
 
 .image-container > img {
