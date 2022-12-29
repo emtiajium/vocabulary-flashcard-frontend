@@ -225,7 +225,7 @@ body.dark {
     --ion-card-background: var(--ion-color-card);
     --ion-card-color: var(--ion-color-card-contrast);
     --ion-card-title-color: var(--ion-color-step-750);
-    --ion-card-sub-title-color: var(--ion-color-step-650);
+    --ion-card-sub-title-color: var(--ion-color-step-850);
 
     --leitner-box-1: #78c497;
     --leitner-box-2: #5bb882;
