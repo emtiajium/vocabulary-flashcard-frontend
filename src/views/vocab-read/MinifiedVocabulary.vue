@@ -1,14 +1,7 @@
 <template>
     <ion-card button="true" class="margin-top-bottom-unset">
         <ion-row>
-            <ion-col
-                sizeXs="8"
-                sizeSm="8"
-                sizeMd="9"
-                sizeLg="10"
-                sizeXl="10"
-                @click="seeMore(vocabulary.id, vocabulary.word)"
-            >
+            <div class="contents" @click="seeMore(vocabulary.id, vocabulary.word)">
                 <ion-card-header>
                     <ion-card-title class="capitalize overflowed-content"> {{ vocabulary.word }} </ion-card-title>
                 </ion-card-header>
@@ -29,9 +22,9 @@
                         <font-awesome-icon :icon="faEllipsisH" />
                     </ion-card-subtitle>
                 </ion-card-content>
-            </ion-col>
+            </div>
 
-            <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="2" sizeXl="2" class="action-buttons">
+            <div class="action-buttons">
                 <ion-row>
                     <ion-button
                         aria-label="Remove vocabulary"
@@ -84,7 +77,7 @@
                         <font-awesome-icon :icon="faExpandAlt" />
                     </ion-button>
                 </ion-row>
-            </ion-col>
+            </div>
         </ion-row>
     </ion-card>
 </template>
@@ -99,7 +92,6 @@ import {
     IonButton,
     IonLabel,
     IonRow,
-    IonCol,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -129,7 +121,6 @@ export default defineComponent({
         FontAwesomeIcon,
         IonLabel,
         IonRow,
-        IonCol,
     },
     props: ['vocabulary', 'deleteVocabulary', 'updateLeitnerBoxExistence'],
     data() {
@@ -165,7 +156,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.contents {
+    width: calc(100% - 120px);
+}
 .action-buttons {
+    width: 120px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
