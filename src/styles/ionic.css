@@ -37,6 +37,10 @@ ion-toggle {
     --handle-box-shadow: unset;
 }
 
+ion-radio {
+    --color-checked: var(--ion-color-warning);
+}
+
 ion-card {
     box-shadow: unset;
     border-radius: var(--defaul-border-radius);
