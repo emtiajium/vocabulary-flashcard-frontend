@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.28.0`: Changed vocab upsert's tips UI + increased profile pic's width
 -   `0.27.1`: Added info on modifying a cohort using email + Changed dark mode colors
 -   `0.27.0`: Added info on creating a cohort using email
 -   `0.26.5`: UI: iOS style toggle
@@ -214,6 +215,7 @@
 
 ## Android Release Log
 
+-   `88`: `0.28.0`
 -   `87`: `0.27.1`
 -   `86`: `0.27.0`
 -   `85`: `0.26.5`
