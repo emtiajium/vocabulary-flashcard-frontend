@@ -12,7 +12,7 @@
                         <ion-card-header>
                             <ion-card-subtitle class="ion-text-center email-container">
                                 Looks like you are the only member of your group. If you want to create a group with
-                                your friends, please email us at
+                                your friends, please email the app admin at
                                 <a href="mailto:271emtiaj@gmail.com?subject=Cohort Creation!">271emtiaj@gmail.com</a>
                                 with the cohort's name and all members' emails.
                             </ion-card-subtitle>
@@ -66,9 +66,9 @@
 
                         <ion-card-header>
                             <ion-card-subtitle class="ion-text-center email-container">
-                                Please <a href="mailto:271emtiaj@gmail.com?subject=Cohort Modification!">email</a> us if
-                                you want to add new members or remove existing members with the cohort's name and all
-                                members' emails.
+                                Please <a href="mailto:271emtiaj@gmail.com?subject=Cohort Modification!">email</a> the
+                                app admin if you want to add new members or remove existing members with the cohort's
+                                name and all members' emails.
                             </ion-card-subtitle>
                         </ion-card-header>
                     </view>
