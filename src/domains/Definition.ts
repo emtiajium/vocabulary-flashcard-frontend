@@ -1,36 +1,19 @@
-import {
-    ArrayNotEmpty,
-    IsArray,
-    IsDefined,
-    IsNotEmpty,
-    IsOptional,
-    IsString,
-    IsUrl,
-    IsUUID,
-    ValidateIf,
-} from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsNotEmpty, IsOptional, IsUrl, IsUUID, ValidateIf } from 'class-validator';
 
 export default class Definition {
     @IsUUID()
-    @IsNotEmpty()
-    @IsDefined()
     id: string;
 
     @IsUUID()
-    @IsNotEmpty()
-    @IsDefined()
     vocabularyId: string;
 
-    @IsString()
-    @IsNotEmpty()
-    @IsDefined()
+    @IsNotEmpty({ message: `The meaning should not be empty.` })
     meaning: string;
 
     @IsNotEmpty({ each: true })
-    @ArrayNotEmpty()
+    @ArrayNotEmpty({ message: `Examples should not be empty.` })
     @IsArray()
-    @IsDefined()
-    examples?: string[];
+    examples: string[];
 
     @ValidateIf((definition) => !!definition.notes?.length)
     @IsNotEmpty({ each: true })
@@ -39,7 +22,7 @@ export default class Definition {
     notes?: string[];
 
     @ValidateIf((definition) => !!definition.externalLinks?.length)
-    @IsUrl(undefined, { each: true, message: `Each external link must be a URL address` })
+    @IsUrl(undefined, { each: true, message: `Each external link should be a valid URL address.` })
     @IsArray()
     @IsOptional()
     externalLinks?: string[];

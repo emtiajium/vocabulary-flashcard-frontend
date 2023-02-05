@@ -6,7 +6,6 @@ import {
     IsDefined,
     IsNotEmpty,
     IsOptional,
-    IsString,
     IsUrl,
     IsUUID,
     ValidateIf,
@@ -19,22 +18,20 @@ export type VocabularyExistenceResponse = Pick<Vocabulary, 'id' | 'word'>;
 
 export default class Vocabulary {
     @IsUUID()
-    @IsNotEmpty()
-    @IsDefined()
     id: string;
 
     @IsUUID()
     @IsOptional()
     cohortId?: string;
 
-    @IsString()
-    @IsNotEmpty()
-    @IsDefined()
+    @IsNotEmpty({ message: `The word should not be empty.` })
     word: string;
 
     @ValidateIf((vocabulary) => vocabulary.isDraft === false || !_.isEmpty(vocabulary.definitions))
     @ValidateNested({ each: true })
-    @ArrayNotEmpty()
+    @ArrayNotEmpty({
+        message: `Definitions should not be empty. Alternatively, a vocabulary can be added without definitions in the draft mode.`,
+    })
     @IsArray()
     @Type(() => Definition)
     definitions?: Definition[];
@@ -46,7 +43,7 @@ export default class Vocabulary {
     genericNotes?: string[];
 
     @ValidateIf((vocabulary) => !!vocabulary.genericExternalLinks?.length)
-    @IsUrl(undefined, { each: true, message: `Each generic external link must be a URL address` })
+    @IsUrl(undefined, { each: true, message: `Each generic external link should be a valid URL address.` })
     @IsArray()
     @IsOptional()
     genericExternalLinks?: string[];
