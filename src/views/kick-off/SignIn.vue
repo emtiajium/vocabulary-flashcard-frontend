@@ -122,6 +122,8 @@ export default defineComponent({
             }
         },
         async persistUser(user: User): Promise<void> {
+            // TODO stop sending payload
+            // as it is valueless due to the fact that the payload will be generated from the token
             const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
             await NativeStorage.setAuthorizedUser(persistedUser);
         },
