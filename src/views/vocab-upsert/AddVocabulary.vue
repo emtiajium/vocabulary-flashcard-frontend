@@ -382,7 +382,7 @@ export default defineComponent({
         },
         async onAddingDefinition(): Promise<void> {
             if (!this.word) {
-                await Toast.present(`Please insert the word before adding the definition`);
+                await Toast.present(`Please add the word before adding the definition.`);
             } else {
                 const isExists = await this.assertExistence();
                 if (!isExists) {
