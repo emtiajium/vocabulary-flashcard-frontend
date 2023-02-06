@@ -16,7 +16,8 @@
         "serve:android:anew": "rm -rf android/ && ionic build --prod --release && npx cap add android && npx cap sync android",
         "serve:android:anew:prod": "node cloud-server.js && node server-validator-before-release.js && npm run serve:android:anew && node local-server.js",
         "deploy:firebase": "node cloud-server.js && node server-validator-before-release.js && npm run build && firebase deploy --only hosting && node local-server.js",
-        "replace-generated-android-files": "bash ./replace-generated-android-files.sh"
+        "replace-generated-android-files": "bash ./replace-generated-android-files.sh",
+        "android-pre-bundle": "npm run serve:android:anew:prod && npm run replace-generated-android-files"
     },
     "dependencies": {
         "@capacitor/android": "^4.0.0",

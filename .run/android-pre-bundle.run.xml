@@ -3,9 +3,8 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="serve:android:anew:prod" />
+      <script value="android-pre-bundle" />
     </scripts>
-    <arguments value="npm run serve:android:anew:prod &amp;&amp; npm run replace-generated-android-files" />
     <node-interpreter value="project" />
     <envs />
     <method v="2" />
