@@ -58,30 +58,34 @@
                             <ion-card-title class="display-flex ion-justify-content-center capitalize">
                                 {{ boxItem.word }}
                             </ion-card-title>
-                            <ion-card-subtitle
-                                class="display-flex ion-justify-content-center capitalize ion-margin-top"
-                            >
-                                <ion-row>
-                                    <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
-                                    <ion-datetime
-                                        :value="boxItem.updatedAt"
-                                        display-format="MMMM DD, YYYY"
-                                        class="updated-at ion-padding-end"
-                                        :disabled="true"
-                                        :readonly="true"
-                                    />
-                                    <font-awesome-icon :icon="faClock" class="firecracker-primary-color-icon" />
-                                    <ion-datetime
-                                        :value="boxItem.updatedAt"
-                                        display-format="hh:mm A"
-                                        class="updated-at"
-                                        :disabled="true"
-                                        :readonly="true"
-                                    />
-                                </ion-row>
-                            </ion-card-subtitle>
                         </ion-card-header>
                         <ion-card-content>
+                            <ion-row
+                                class="
+                                    display-flex
+                                    ion-justify-content-center ion-align-items-center
+                                    capitalize
+                                    ion-margin-top
+                                "
+                            >
+                                <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
+                                <ion-datetime
+                                    :value="boxItem.updatedAt"
+                                    display-format="MMMM DD, YYYY"
+                                    class="updated-at ion-padding-end"
+                                    :disabled="true"
+                                    :readonly="true"
+                                />
+                                <font-awesome-icon :icon="faClock" class="firecracker-primary-color-icon" />
+                                <ion-datetime
+                                    :value="boxItem.updatedAt"
+                                    display-format="hh:mm A"
+                                    class="updated-at"
+                                    :disabled="true"
+                                    :readonly="true"
+                                />
+                            </ion-row>
+
                             <ion-row class="ion-justify-content-center">
                                 <ion-button
                                     aria-label="Move to the previous box"
