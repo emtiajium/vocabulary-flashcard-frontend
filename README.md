@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.30.0`: Removed forward, backward icon from last, first box list respectively + Fixed vocab settings, minified leitner item UI issues + Logout notification
 -   `0.29.0`: Improved the vocab upsert validation related error messages
 -   `0.28.0`: Changed vocab upsert's tips UI + increased profile pic's width
 -   `0.27.1`: Added info on modifying a cohort using email + Changed dark mode colors
@@ -216,6 +217,7 @@
 
 ## Android Release Log
 
+-   `90`: `0.30.0`
 -   `89`: `0.29.0`
 -   `88`: `0.28.0`
 -   `87`: `0.27.1`
