@@ -26,7 +26,6 @@
 
                     <ion-item
                         v-show="accordionGroup.isSearchingAccordionOpen"
-                        class="content"
                         v-for="(value, option) in searchingOptions"
                         :key="option"
                     >
@@ -59,7 +58,6 @@
                         <ion-label> Without definition only </ion-label>
                         <ion-toggle
                             slot="end"
-                            mode="ios"
                             :checked="innerFetchNotHavingDefinitionOnly"
                             @ionChange="setSelectedFiltering($event.detail.checked)"
                         />
