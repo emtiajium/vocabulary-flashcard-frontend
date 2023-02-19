@@ -1,4 +1,4 @@
-[![CI](https://github.com/emtiajium/ielts-gibberish-android/actions/workflows/ci.yml/badge.svg)](https://github.com/emtiajium/ielts-gibberish-android/actions/workflows/ci.yml)
+[![CI](https://github.com/emtiajium/vocabulary-flashcard-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/emtiajium/vocabulary-flashcard-frontend/actions/workflows/ci.yml)
 
 # How to Run
 
