@@ -88,6 +88,7 @@
 
                             <ion-row class="ion-justify-content-center">
                                 <ion-button
+                                    v-if="!isFirstBox()"
                                     aria-label="Move to the previous box"
                                     fill="outline"
                                     size="small"
@@ -95,12 +96,12 @@
                                     :strong="true"
                                     color="warning"
                                     class="ion-margin"
-                                    :disabled="isFirstBox()"
                                     @click="moveBackward(boxItem.vocabularyId)"
                                 >
                                     <font-awesome-icon :icon="faThumbsDown" />
                                 </ion-button>
                                 <ion-button
+                                    v-if="!isLastBox()"
                                     aria-label="Move to the next box"
                                     fill="outline"
                                     size="small"
@@ -108,7 +109,6 @@
                                     :strong="true"
                                     color="primary"
                                     class="ion-margin"
-                                    :disabled="isLastBox()"
                                     @click="moveForward(boxItem.vocabularyId)"
                                 >
                                     <font-awesome-icon :icon="faThumbsUp" />
