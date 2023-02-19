@@ -109,6 +109,7 @@ import Platform from '@/utils/Platform';
 import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import PolicyIcon from '@/media/PolicyIcon.vue';
 import LightModeIcon from '@/media/LightModeIcon.vue';
+import Toast from '@/utils/Toast';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -180,6 +181,9 @@ export default defineComponent({
             await GoogleAuthentication.signOut();
             await menuController.close();
             this.isAuthenticated = false;
+            await Toast.present(
+                `You have been signed out successfully. Thanks for using Firecracker Vocabulary Flashcards. We hope to see you again soon.`,
+            );
             await this.$router.replace('/sign-in');
         },
         setThemeStatus(): void {
