@@ -6,7 +6,7 @@
 
 ➜ Install Node 14 LTS using [nvm](https://github.com/nvm-sh/nvm)
 
-➜ <https://github.com/emtiajium/ielts-gibberish>
+➜ <https://github.com/emtiajium/vocabulary-flashcard-backend>
 
 ➜ Add Firebase to the Android project
 
@@ -20,9 +20,9 @@
 
 ###### Clone the repo and install all dependencies
 
-➜ `git clone git@github.com:emtiajium/ielts-gibberish.git`
+➜ `git clone git@github.com:emtiajium/vocabulary-flashcard-frontend.git`
 
-➜ `cd ielts-gibberish-android`
+➜ `cd vocabulary-flashcard-frontend`
 
 ➜ `npm install`
 
