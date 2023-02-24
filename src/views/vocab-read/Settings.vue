@@ -55,11 +55,22 @@
                     </ion-list-header>
 
                     <ion-item v-show="accordionGroup.isFilteringAccordionOpen">
-                        <ion-label> Without definition only </ion-label>
+                        <ion-label> Show only draft vocab </ion-label>
                         <ion-toggle
                             slot="end"
                             :checked="innerFetchNotHavingDefinitionOnly"
-                            @ionChange="setSelectedFiltering($event.detail.checked)"
+                            @ionChange="
+                                setSelectedFiltering('innerFetchNotHavingDefinitionOnly', $event.detail.checked)
+                            "
+                        />
+                    </ion-item>
+
+                    <ion-item v-show="accordionGroup.isFilteringAccordionOpen">
+                        <ion-label> Show flashcard in boxes </ion-label>
+                        <ion-toggle
+                            slot="end"
+                            :checked="innerFetchFlashcard"
+                            @ionChange="setSelectedFiltering('innerFetchFlashcard', $event.detail.checked)"
                         />
                     </ion-item>
                 </ion-list>
@@ -154,6 +165,7 @@ export default defineComponent({
             },
             innerSelectedSort: this.selectedSort,
             innerFetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
+            innerFetchFlashcard: this.fetchFlashcard,
             searchingOptions: {
                 word: { label: 'Word', isDisabled: true },
                 meaning: { label: 'Meaning', isDisabled: false },
@@ -182,7 +194,9 @@ export default defineComponent({
         'onChangeSort',
         'applySettings',
         'fetchNotHavingDefinitionOnly',
+        'fetchFlashcard',
         'onChangeFetchNotHavingDefinitionOnly',
+        'onChangeFetchFlashcard',
         'vocabularySearchCoverage',
         'onChangeSearchingCoverage',
     ],
@@ -205,6 +219,7 @@ export default defineComponent({
         async onApplyingSettings(): Promise<void> {
             this.onChangeSort(this.innerSelectedSort);
             this.onChangeFetchNotHavingDefinitionOnly(this.innerFetchNotHavingDefinitionOnly);
+            this.onChangeFetchFlashcard(this.innerFetchFlashcard);
             this.onChangeSearchingCoverage(this.innerVocabularySearchCoverage);
             this.closeSettingsPopover();
             await this.applySettings();
@@ -214,8 +229,11 @@ export default defineComponent({
             this.innerSelectedSort = innerSelectedSort;
         },
 
-        setSelectedFiltering(isChecked: boolean): void {
-            this.innerFetchNotHavingDefinitionOnly = isChecked;
+        setSelectedFiltering(
+            type: 'innerFetchNotHavingDefinitionOnly' | 'innerFetchFlashcard',
+            isChecked: boolean,
+        ): void {
+            this[type] = isChecked;
         },
 
         setSearchingOption(property: string, isChecked: boolean): void {
@@ -224,7 +242,8 @@ export default defineComponent({
 
         setCurrentSettings(): void {
             this.setSelectedSortingOption(this.selectedSort);
-            this.setSelectedFiltering(this.fetchNotHavingDefinitionOnly);
+            this.setSelectedFiltering('innerFetchNotHavingDefinitionOnly', this.fetchNotHavingDefinitionOnly);
+            this.setSelectedFiltering('innerFetchFlashcard', this.fetchFlashcard);
             Object.keys(this.vocabularySearchCoverage).forEach((key) => {
                 this.setSearchingOption(key, this.vocabularySearchCoverage[key]);
             });
