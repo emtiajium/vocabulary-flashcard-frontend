@@ -18,6 +18,7 @@
                     allQuietOnTheWesternFront &&
                     !searchKeyword.length &&
                     !fetchNotHavingDefinitionOnly &&
+                    fetchFlashcard &&
                     !isNetworkError
                 "
                 class="display-flex ion-justify-content-center"
@@ -65,7 +66,29 @@
                 "
             >
                 <ion-card-subtitle class="ion-text-center ion-padding">
-                    No vocabulary was found without definition
+                    No vocabulary was found without definition.
+                    {{
+                        !fetchFlashcard
+                            ? `However, as "Show flashcard in boxes" is turned off, you may try to find draft vocab by turning on "Show flashcard in boxes".`
+                            : ''
+                    }}
+                </ion-card-subtitle>
+                <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-60pt" />
+                </view>
+            </view>
+
+            <view
+                v-if="
+                    vocabularies.length === 0 &&
+                    !fetchNotHavingDefinitionOnly &&
+                    !fetchFlashcard &&
+                    !isNetworkError &&
+                    !searchKeyword.length
+                "
+            >
+                <ion-card-subtitle class="ion-text-center ion-padding">
+                    No vocabulary was found that is not in boxes.
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-60pt" />
@@ -136,7 +159,9 @@
                 :apply-settings="applySettings"
                 :on-change-sort="onChangeSort"
                 :fetch-not-having-definition-only="fetchNotHavingDefinitionOnly"
+                :fetch-flashcard="fetchFlashcard"
                 :on-change-fetch-not-having-definition-only="onChangeFetchNotHavingDefinitionOnly"
+                :on-change-fetch-flashcard="onChangeFetchFlashcard"
                 :vocabulary-search-coverage="vocabularySearchCoverage"
                 :on-change-searching-coverage="onChangeSearchingCoverage"
             />
@@ -228,6 +253,7 @@ export default defineComponent({
                 direction: SortDirection.DESC,
             } as Sort,
             fetchNotHavingDefinitionOnly: false,
+            fetchFlashcard: true,
             vocabularySearchCoverage: {
                 word: true,
                 linkerWords: false,
@@ -271,10 +297,17 @@ export default defineComponent({
         async setSettingsStuff(): Promise<void> {
             const vocabSettings = await NativeStorage.getVocabSettings();
             if (!_.isEmpty(vocabSettings)) {
-                const { sort: selectedSort, fetchNotHavingDefinitionOnly, vocabularySearchCoverage } = vocabSettings;
+                const {
+                    sort: selectedSort,
+                    fetchNotHavingDefinitionOnly,
+                    fetchFlashcard,
+                    vocabularySearchCoverage,
+                } = vocabSettings;
+                const defaultFetchFlashcard = true;
                 this.onChangeSort(`${selectedSort.field}_${selectedSort.direction}`);
                 this.onChangeSearchingCoverage(vocabularySearchCoverage);
                 this.onChangeFetchNotHavingDefinitionOnly(fetchNotHavingDefinitionOnly);
+                this.onChangeFetchFlashcard(fetchFlashcard ?? defaultFetchFlashcard);
             }
         },
 
@@ -351,6 +384,7 @@ export default defineComponent({
                 searchKeyword: this.searchKeyword,
                 vocabularySearchCoverage: this.vocabularySearchCoverage,
                 fetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
+                fetchFlashcard: this.fetchFlashcard,
                 pagination: {
                     pageSize: this.pageSize,
                     pageNumber: this.pageNumber,
@@ -380,8 +414,16 @@ export default defineComponent({
         },
 
         disappearVocabularyFromUI(id: string): void {
-            this.vocabularies = this.vocabularies.filter(({ id: vocabularyId }) => id !== vocabularyId);
-            this.totalVocabularies -= 1;
+            let hasFound = false;
+            this.vocabularies = this.vocabularies.filter(({ id: vocabularyId }) => {
+                if (id === vocabularyId) {
+                    hasFound = true;
+                }
+                return id !== vocabularyId;
+            });
+            if (hasFound) {
+                this.totalVocabularies -= 1;
+            }
             if (!this.vocabularies.length) {
                 this.allQuietOnTheWesternFront = true;
             }
@@ -391,18 +433,24 @@ export default defineComponent({
         updateVocabulary(updatedVocabulary: Vocabulary): void {
             try {
                 this.vocabularies[this.findVocabIndex(updatedVocabulary.id)] = updatedVocabulary;
-                NativeStorage.removeUpdatedVocabulary().finally();
             } catch {
                 // I don't care about it!
+            } finally {
+                NativeStorage.removeUpdatedVocabulary().finally();
             }
         },
 
         updateLeitnerBoxExistence(id: string): void {
             try {
                 this.vocabularies[this.findVocabIndex(id)].isInLeitnerBox = true;
-                NativeStorage.removeLeitnerBoxExistence().finally();
+                if (!this.fetchFlashcard) {
+                    const oneSecondInMilliseconds = 1000;
+                    setTimeout(() => this.disappearVocabularyFromUI(id), oneSecondInMilliseconds);
+                }
             } catch {
                 // I don't care about it!
+            } finally {
+                NativeStorage.removeLeitnerBoxExistence().finally();
             }
         },
 
@@ -448,6 +496,7 @@ export default defineComponent({
             const vocabSettings = {
                 sort: this.sort,
                 fetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
+                fetchFlashcard: this.fetchFlashcard,
                 vocabularySearchCoverage: this.vocabularySearchCoverage,
             };
             if (
@@ -470,6 +519,10 @@ export default defineComponent({
 
         onChangeFetchNotHavingDefinitionOnly(fetchNotHavingDefinitionOnly: boolean): void {
             this.fetchNotHavingDefinitionOnly = fetchNotHavingDefinitionOnly;
+        },
+
+        onChangeFetchFlashcard(fetchFlashcard: boolean): void {
+            this.fetchFlashcard = fetchFlashcard;
         },
 
         onChangeSearchingCoverage(vocabularySearchCoverage: VocabularySearchCoverage): void {

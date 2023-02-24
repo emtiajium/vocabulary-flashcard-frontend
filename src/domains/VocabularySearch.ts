@@ -9,6 +9,8 @@ export default class VocabularySearch {
 
     fetchNotHavingDefinitionOnly: boolean;
 
+    fetchFlashcard: boolean;
+
     pagination: Pagination;
 
     sort: Sort;
