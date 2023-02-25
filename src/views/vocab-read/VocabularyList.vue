@@ -53,7 +53,7 @@
                     {{
                         `No vocabulary was found for "${searchKeyword}". ${
                             !fetchFlashcard || !fetchNotHavingDefinitionOnly
-                                ? `No vocabulary was found for "${searchKeyword}". You may get better search results if you change your filtering preference.`
+                                ? `You may get better search results if you change your filtering preference.`
                                 : ``
                         }`
                     }}
