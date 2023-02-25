@@ -2,10 +2,10 @@
     "name": "vocabulary-flashcard-frontend",
     "version": "0.30.0",
     "private": true,
-    "description": "Build your own dictionary, create flashcards, memorize vocabulary",
+    "description": "Build your own dictionary, create flashcards, memorize vocabularies",
     "scripts": {
         "create:capacitor.config": "node -r fs -e \"fs.copyFileSync('capacitor.config.json.text', 'capacitor.config.json', fs.constants.COPYFILE_EXCL)\" && prettier --write \"capacitor.config.json\"",
-        "create:config": "node -r fs -e \"fs.copyFileSync('config.json.text', 'config.json', fs.constants.COPYFILE_EXCL)\"  && prettier --write \"config.json\"",
+        "create:config": "node -r fs -e \"fs.copyFileSync('config.json.text', 'config.json', fs.constants.COPYFILE_EXCL)\" && prettier --write \"config.json\"",
         "serve": "vue-cli-service serve --port 8090",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint --fix",
