@@ -268,7 +268,7 @@ export default defineComponent({
                 examples: false,
                 notes: false,
             },
-            cssStyleToClearlyDisplayVocabCountChip: `margin-bottom: 50px`,
+            cssStyleToClearlyDisplayVocabCountChip: `margin-bottom: calc(var(--ion-margin) * 3);`,
             criticalErrorMessage: '',
         };
     },
