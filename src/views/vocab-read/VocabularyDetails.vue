@@ -250,6 +250,9 @@ ion-card:first-of-type {
 .linker-word-chip {
     max-width: 20rem;
 }
+ul > li:has(span.image-container):has(img) {
+    list-style-type: none;
+}
 li {
     padding-bottom: var(--ion-padding);
 }

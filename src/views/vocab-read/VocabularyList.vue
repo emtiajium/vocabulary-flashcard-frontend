@@ -50,7 +50,13 @@
 
             <view v-if="isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError">
                 <ion-card-subtitle class="ion-padding ion-text-center">
-                    {{ `No vocabulary was found for "${searchKeyword}"` }}
+                    {{
+                        `No vocabulary was found for "${searchKeyword}". ${
+                            !fetchFlashcard || !fetchNotHavingDefinitionOnly
+                                ? `You may get better search results if you change your filtering preference.`
+                                : ``
+                        }`
+                    }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
                     <span class="material-icons firecracker-primary-color-icon-60pt"> manage_search </span>
@@ -262,7 +268,7 @@ export default defineComponent({
                 examples: false,
                 notes: false,
             },
-            cssStyleToClearlyDisplayVocabCountChip: `margin-bottom: 50px`,
+            cssStyleToClearlyDisplayVocabCountChip: `margin-bottom: calc(var(--ion-margin) * 3);`,
             criticalErrorMessage: '',
         };
     },
