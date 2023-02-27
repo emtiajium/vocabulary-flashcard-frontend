@@ -138,7 +138,7 @@
                 sizeMd="8"
                 sizeLg="6"
                 sizeXl="6"
-                class="ion-padding-bottom"
+                class="ion-padding-bottom ion-padding-start ion-padding-end"
             >
                 <ion-card-subtitle class="ion-text-center">
                     Other items will only appear when it is the right time. For example, the vocabulary "{{
