@@ -128,6 +128,22 @@
                             </ion-row>
                         </ion-card-content>
                     </ion-card>
+
+                    <ion-card-subtitle
+                        v-if="!allQuietOnTheWesternFront && singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary"
+                        class="ion-padding ion-text-center"
+                    >
+                        Other items will only appear when it is the right time. For example, the vocabulary "{{
+                            singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
+                        }}" will appear on
+                        <ion-datetime
+                            :value="singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate"
+                            display-format="MMMM, DD."
+                            class="updated-at"
+                            :disabled="true"
+                            :readonly="true"
+                        />
+                    </ion-card-subtitle>
                 </ion-col>
             </ion-row>
 
@@ -278,6 +294,10 @@ export default defineComponent({
         async renderBoxItems(event?: CustomEvent<void>): Promise<void> {
             const { results, total, singleLeitnerItemEarlierToBoxAppearanceDate } = await this.findBoxItems();
             this.singleLeitnerItemEarlierToBoxAppearanceDate = singleLeitnerItemEarlierToBoxAppearanceDate;
+            console.log(
+                'this.singleLeitnerItemEarlierToBoxAppearanceDate',
+                this.singleLeitnerItemEarlierToBoxAppearanceDate,
+            );
             if (!total) {
                 this.allQuietOnTheWesternFront = true;
             }
