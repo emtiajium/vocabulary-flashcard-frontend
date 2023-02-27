@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.32.0`: Notified users about other flashcards that are supposed to have appeared in future
 -   `0.31.0`: New filtering preference to filter flashcard in the home screen
 -   `0.30.0`: Removed forward, backward icon from last, first box list respectively + Fixed vocab settings, minified leitner item UI issues + Logout notification
 -   `0.29.0`: Improved the vocab upsert validation related error messages
@@ -218,6 +219,7 @@
 
 ## Android Release Log
 
+-   `92`: `0.32.0`
 -   `91`: `0.31.0`
 -   `90`: `0.30.0`
 -   `89`: `0.29.0`
