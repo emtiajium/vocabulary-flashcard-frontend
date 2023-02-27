@@ -169,10 +169,10 @@ export default defineComponent({
             searchingOptions: {
                 word: { label: 'Word', isDisabled: true },
                 meaning: { label: 'Meaning', isDisabled: false },
-                examples: { label: 'Examples', isDisabled: false },
-                notes: { label: 'Notes', isDisabled: false },
-                linkerWords: { label: 'Relatable words', isDisabled: false },
-                genericNotes: { label: 'Generic Notes', isDisabled: false },
+                examples: { label: 'Example', isDisabled: false },
+                notes: { label: 'Note', isDisabled: false },
+                linkerWords: { label: 'Relatable word', isDisabled: false },
+                genericNotes: { label: 'Generic note', isDisabled: false },
             },
             innerVocabularySearchCoverage: this.vocabularySearchCoverage,
             accordionGroup: {
