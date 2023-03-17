@@ -17,7 +17,10 @@ $RECYCLE.BIN/
 log.txt
 npm-debug.log*
 
-/.idea
+.idea/*
+!.idea/jsLinters
+!.idea/jsLinters/eslint.xml
+!.idea/prettier.xml
 /.ionic
 /.sass-cache
 /.sourcemaps
