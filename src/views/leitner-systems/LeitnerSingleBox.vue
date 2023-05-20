@@ -9,12 +9,6 @@
             </ion-row>
             <ion-row class="display-flex ion-justify-content-center count-container">
                 <spinner v-if="count === -1 && error === false" />
-                <font-awesome-icon
-                    v-if="count === -1 && error === true"
-                    class="firecracker-warning-color-icon ion-margin-top"
-                    size="2x"
-                    :icon="faTriangleExclamation"
-                />
                 <ion-card-subtitle v-if="count !== -1 && error === false">
                     {{ count }} {{ count > 1 ? 'Vocabs' : 'Vocab' }}
                 </ion-card-subtitle>
@@ -30,8 +24,6 @@ import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import Spinner from '@/views/shared/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import EmptyBoxIcon from '@/media/EmptyBoxIcon.vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'LeitnerSingleBox',
@@ -42,7 +34,6 @@ export default defineComponent({
         IonCardContent,
         IonCardSubtitle,
         IonRow,
-        FontAwesomeIcon,
     },
     props: ['box', 'count', 'error'],
     data() {
@@ -55,7 +46,6 @@ export default defineComponent({
                 '4': '--leitner-box-4',
                 '5': '--leitner-box-5',
             },
-            faTriangleExclamation,
         };
     },
     methods: {
