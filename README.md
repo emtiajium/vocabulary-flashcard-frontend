@@ -28,9 +28,9 @@
 
 ###### Create and edit your configuration
 
-➜ `config.json.text` -> `config.json`
+➜ `npm run create:config`
 
-➜ `capacitor.config.json.text` -> `capacitor.config.json`
+➜ `npm run create:capacitor.config`
 
 ###### Start the development environment
 
