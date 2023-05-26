@@ -14,13 +14,7 @@
 
         <ion-content :fullscreen="true" id="vocabulary-list">
             <ion-row
-                v-if="
-                    allQuietOnTheWesternFront &&
-                    !searchKeyword.length &&
-                    !fetchNotHavingDefinitionOnly &&
-                    fetchFlashcard &&
-                    !isNetworkError
-                "
+                v-if="allQuietOnTheWesternFront && !fetchNotHavingDefinitionOnly && fetchFlashcard && !isNetworkError"
                 class="display-flex ion-justify-content-center"
             >
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
