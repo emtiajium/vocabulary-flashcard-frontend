@@ -473,8 +473,8 @@ export default defineComponent({
                 this.pageNumber = Number.parseInt((total / this.pageSize).toString(), 10) + 1;
                 this.isDisabled = true;
                 this.totalVocabularies = total;
-            } catch {
-                this.isNetworkError = true;
+            } catch (error) {
+                this.isNetworkError = error.name !== 'ExistingVocabConflict';
             } finally {
                 this.showSpinner = false;
             }
