@@ -13,10 +13,7 @@
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-row
-                v-if="allQuietOnTheWesternFront && !fetchNotHavingDefinitionOnly && fetchFlashcard && !isNetworkError"
-                class="display-flex ion-justify-content-center"
-            >
+            <ion-row v-if="shouldDisplayFetchButton()" class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <ion-card class="margin-top-unset">
                         <ion-card-content>
@@ -42,7 +39,7 @@
 
             <spinner v-if="showSpinner" />
 
-            <view v-if="isDisabled && vocabularies.length === 0 && searchKeyword.length > 2 && !isNetworkError">
+            <view v-if="shouldDisplayNoSearchResultMessage()">
                 <ion-card-subtitle class="ion-padding ion-text-center">
                     {{
                         `No vocabulary was found for "${searchKeyword}". ${
@@ -57,14 +54,7 @@
                 </view>
             </view>
 
-            <view
-                v-if="
-                    vocabularies.length === 0 &&
-                    fetchNotHavingDefinitionOnly &&
-                    !isNetworkError &&
-                    !searchKeyword.length
-                "
-            >
+            <view v-if="shouldDisplayEmptyDraftVocabMessage()">
                 <ion-card-subtitle class="ion-text-center ion-padding">
                     No vocabulary was found without definition.
                     {{
@@ -78,15 +68,7 @@
                 </view>
             </view>
 
-            <view
-                v-if="
-                    vocabularies.length === 0 &&
-                    !fetchNotHavingDefinitionOnly &&
-                    !fetchFlashcard &&
-                    !isNetworkError &&
-                    !searchKeyword.length
-                "
-            >
+            <view v-if="shouldDisplayEmptyNonFlashcardMessage()">
                 <ion-card-subtitle class="ion-text-center ion-padding">
                     No vocabulary was found that is not in boxes.
                 </ion-card-subtitle>
@@ -527,6 +509,43 @@ export default defineComponent({
 
         onChangeSearchingCoverage(vocabularySearchCoverage: VocabularySearchCoverage): void {
             this.vocabularySearchCoverage = vocabularySearchCoverage;
+        },
+
+        shouldDisplayFetchButton(): boolean {
+            return (
+                this.allQuietOnTheWesternFront &&
+                !this.fetchNotHavingDefinitionOnly &&
+                this.fetchFlashcard &&
+                !this.isNetworkError
+            );
+        },
+
+        shouldDisplayNoSearchResultMessage(): boolean {
+            return (
+                this.isDisabled &&
+                this.vocabularies.length === 0 &&
+                this.searchKeyword.length > 2 &&
+                !this.isNetworkError
+            );
+        },
+
+        shouldDisplayEmptyDraftVocabMessage(): boolean {
+            return (
+                this.vocabularies.length === 0 &&
+                this.fetchNotHavingDefinitionOnly &&
+                !this.isNetworkError &&
+                !this.searchKeyword.length
+            );
+        },
+
+        shouldDisplayEmptyNonFlashcardMessage(): boolean {
+            return (
+                this.vocabularies.length === 0 &&
+                !this.fetchNotHavingDefinitionOnly &&
+                !this.fetchFlashcard &&
+                !this.isNetworkError &&
+                !this.searchKeyword.length
+            );
         },
     },
 });
