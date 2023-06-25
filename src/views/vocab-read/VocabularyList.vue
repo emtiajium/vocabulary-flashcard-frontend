@@ -270,7 +270,6 @@ export default defineComponent({
             this.isDisabled = false;
             this.allQuietOnTheWesternFront = false;
             this.isNetworkError = false;
-            this.searchKeyword = '';
             this.totalVocabularies = 0;
             this.isSettingsPopoverOpened = false;
             // no resetting of "sort" and other settings
