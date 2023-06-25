@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.34.0`: Increased the spinner dimension + Fixed the bug of vanishing search keyword after setting the vocab preference
 -   `0.33.0`: Prevented showing error icon when the count API failed to fetch box items' number
 -   `0.32.1`: Fixed padding issue due to the last version
 -   `0.32.0`: Notified users about other flashcards that are supposed to have appeared in future
@@ -221,6 +222,7 @@
 
 ## Android Release Log
 
+-   `95`: `0.34.0`
 -   `94`: `0.33.0`
 -   `93`: `0.32.1`
 -   `92`: `0.32.0`
