@@ -8,6 +8,9 @@ export default class AxiosAdapter {
         if (error.message === 'Network Error') {
             throw new Error(MessageDB.networkError);
         }
+        if (error.response?.status === 403) {
+            throw new Error(MessageDB.forbiddenError);
+        }
         if (error.response?.status === 500) {
             throw new Error(MessageDB.genericError);
         }
