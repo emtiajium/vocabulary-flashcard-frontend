@@ -106,7 +106,7 @@ export default class GoogleAuthentication {
         if (!token) {
             // backward compatibility
             const user = (await NativeStorage.getAuthorizedUser()) as Record<string, string>;
-            if (user.jwToken) {
+            if (user?.jwToken) {
                 token = user.jwToken;
                 await NativeStorage.setJwToken(token);
                 delete user.jwToken;
