@@ -15,10 +15,12 @@ enum Route {
     LeitnerBoxItems = 'LeitnerBoxItems',
     PrivacyPolicy = 'PrivacyPolicy',
     LinkerWord = 'LinkerWord',
+    Deletion = 'Deletion',
 }
 
 export enum PublicRoute {
     PrivacyPolicy = 'PrivacyPolicy',
+    Deletion = 'Deletion',
 }
 
 export default Route;

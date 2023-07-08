@@ -14,6 +14,7 @@ import LeitnerBoxItems from '@/views/leitner-systems/LeitnerBoxItems.vue';
 import PrivacyPolicy from '@/views/privacy-policy/PrivacyPolicy.vue';
 import LinkerWord from '@/views/vocab-read/LinkerWord.vue';
 import VocabularyDetailsPage from '@/views/vocab-read/VocabularyDetailsPage.vue';
+import Deletion from '@/views/kick-the-bucket/Deletion.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -85,6 +86,11 @@ const routes: RouteRecordRaw[] = [
         path: '/privacy-policy',
         name: Route.PrivacyPolicy,
         component: PrivacyPolicy,
+    },
+    {
+        path: '/goodbye',
+        name: Route.Deletion,
+        component: Deletion,
     },
 ];
 
