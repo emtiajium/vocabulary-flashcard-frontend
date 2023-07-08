@@ -89,7 +89,7 @@ export default defineComponent({
     methods: {
         // eslint-disable-next-line consistent-return
         async handleClick(): Promise<void> {
-            if ((await NativeStorage.getGoodBye()) === 'okay!') {
+            if (await this.isGoodbye()) {
                 return this.handleSignIn();
             }
 
@@ -115,7 +115,7 @@ export default defineComponent({
                 if (this.isAndroid) {
                     await GoogleAuthentication.androidSignIn();
                 }
-                if ((await NativeStorage.getGoodBye()) === 'okay!') {
+                if (await this.isGoodbye()) {
                     await this.$router.replace('/goodbye');
                 } else {
                     const { user } = GoogleAuthentication;
@@ -138,6 +138,10 @@ export default defineComponent({
         },
         async loadGetItOnGooglePlay(): Promise<void> {
             this.isAndroid = await Platform.isAndroid();
+        },
+
+        async isGoodbye(): Promise<boolean> {
+            return (await NativeStorage.getGoodBye()) === 'okay!';
         },
     },
 });
