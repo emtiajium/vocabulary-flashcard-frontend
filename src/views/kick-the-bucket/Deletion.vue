@@ -12,8 +12,13 @@
 
                             <ion-row class="ion-justify-content-center ion-padding">
                                 <ion-text class="ion-text-center">
-                                    We hope you enjoyed <strong>Vocabulary Flashcards</strong> and would love to have
-                                    you back someday.
+                                    We hope you enjoyed
+                                    <a
+                                        href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice"
+                                        target="_blank"
+                                        >Vocabulary Flashcards</a
+                                    >
+                                    and would love to have you back someday.
                                 </ion-text>
                             </ion-row>
 
