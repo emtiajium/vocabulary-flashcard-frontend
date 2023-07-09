@@ -177,6 +177,7 @@ export default defineComponent({
             await this.$router.push(url);
         },
         async signOut(): Promise<void> {
+            await NativeStorage.removeGoodBye();
             await NativeStorage.removeAuthorizedUser();
             await GoogleAuthentication.signOut();
             await menuController.close();
