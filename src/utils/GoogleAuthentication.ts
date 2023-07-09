@@ -54,7 +54,7 @@ export default class GoogleAuthentication {
 
     static async signOut(): Promise<void> {
         try {
-            NativeStorage.removeJwToken().finally();
+            await NativeStorage.removeJwToken();
             if (!GoogleAuthentication.isAndroid) {
                 window.google.accounts.id.disableAutoSelect();
             } else {
