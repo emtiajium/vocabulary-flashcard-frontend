@@ -47,7 +47,8 @@
                             <ion-row class="ion-justify-content-center ion-padding" v-if="isAuthenticated">
                                 <ion-text class="ion-text-center">
                                     By clicking the below button, we will initiate the deletion of all vocabularies,
-                                    your flashcards, and the account detail.
+                                    your flashcards, and the account detail. After the successful deletion, you will be
+                                    navigated to the home page.
                                 </ion-text>
                             </ion-row>
 
