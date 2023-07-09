@@ -46,6 +46,15 @@
                             <ion-row class="ion-justify-content-center ion-padding" v-if="isAuthenticated">
                                 <ion-button @click="assertDeletion"> Delete Myself </ion-button>
                             </ion-row>
+
+                            <ion-row class="ion-justify-content-center ion-padding">
+                                <ion-text class="ion-text-center">
+                                    If you want us to keep the account but keep all or partial data, do not hesitate to
+                                    contact the app admin via
+                                    <a href="mailto:271emtiaj@gmail.com?subject=Data Deletion Request!">email</a> with
+                                    your specific deletion request.
+                                </ion-text>
+                            </ion-row>
                         </ion-card-subtitle>
                     </view>
                 </ion-col>
