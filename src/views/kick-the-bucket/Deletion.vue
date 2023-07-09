@@ -38,8 +38,16 @@
                                 v-if="isAuthenticated && !isTheUserAlone()"
                             >
                                 <ion-text class="ion-text-center">
-                                    You belong to the "{{ cohort.name }}" cohort. We will not delete any vocabularies as
-                                    these are necessary to serve other members.
+                                    You belong to the "{{ cohort.name }}" cohort. Therefore, we will not delete any
+                                    vocabularies as these are necessary to serve other members. However, you will be
+                                    removed from the cohort.
+                                </ion-text>
+                            </ion-row>
+
+                            <ion-row class="ion-justify-content-center ion-padding" v-if="isAuthenticated">
+                                <ion-text class="ion-text-center">
+                                    By clicking the below button, we will initiate the deletion of all vocabularies,
+                                    your flashcards, and the account detail.
                                 </ion-text>
                             </ion-row>
 
