@@ -10,6 +10,13 @@
                                 <ion-text class="ion-text-center"> We are sorry to say goodbye, honestly. </ion-text>
                             </ion-row>
 
+                            <ion-row class="ion-justify-content-center ion-padding">
+                                <ion-text class="ion-text-center">
+                                    We hope you enjoyed <strong>Vocabulary Flashcards</strong> and would love to have
+                                    you back someday.
+                                </ion-text>
+                            </ion-row>
+
                             <ion-row class="ion-justify-content-center ion-padding" v-if="!isAuthenticated">
                                 <ion-text class="ion-text-center">
                                     Before we delete your account, we must ensure you are not a bot behind the screen.
@@ -33,12 +40,6 @@
 
                             <ion-row class="ion-justify-content-center ion-padding" v-if="isAuthenticated">
                                 <ion-button @click="deleteSelf"> Delete Myself </ion-button>
-                            </ion-row>
-
-                            <ion-row class="ion-justify-content-center ion-padding" v-if="isAuthenticated">
-                                <ion-text class="ion-text-center">
-                                    We hope you enjoyed the service and would love to have you back someday.
-                                </ion-text>
                             </ion-row>
                         </ion-card-subtitle>
                     </view>
