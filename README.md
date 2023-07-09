@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.36.0`: Implemented [Google Play’s app account deletion requirements](https://support.google.com/googleplay/android-developer/answer/13327111)
 -   `0.35.0`: Fixed the bug of always showing spinner just beneath the header in the cohort page
 -   `0.34.0`: Increased the spinner dimension + Fixed the bug of vanishing search keyword after setting the vocab preference
 -   `0.33.0`: Prevented showing error icon when the count API failed to fetch box items' number
@@ -223,6 +224,7 @@
 
 ## Android Release Log
 
+-   `97`: `0.36.0`
 -   `96`: `0.35.0`
 -   `95`: `0.34.0`
 -   `94`: `0.33.0`
