@@ -44,7 +44,7 @@
                             </ion-row>
 
                             <ion-row class="ion-justify-content-center ion-padding" v-if="isAuthenticated">
-                                <ion-button @click="deleteSelf"> Delete Myself </ion-button>
+                                <ion-button @click="assertDeletion"> Delete Myself </ion-button>
                             </ion-row>
                         </ion-card-subtitle>
                     </view>
@@ -62,6 +62,8 @@ import Cohort from '@/domains/Cohort';
 import HttpHandler from '@/utils/HttpHandler';
 import MessageDB from '@/utils/MessageDB';
 import NativeStorage from '@/utils/NativeStorage';
+import Alert from '@/utils/Alert';
+import Toast from '@/utils/Toast';
 
 export default defineComponent({
     name: 'Deletion',
@@ -107,6 +109,15 @@ export default defineComponent({
         async signIn(): Promise<void> {
             await NativeStorage.setGoodBye();
             await this.$router.replace('/sign-in');
+        },
+        async assertDeletion(): Promise<void> {
+            await Alert.presentAlertConfirm(
+                '',
+                `You are about to delete your account. All associated data will have lost permanently. There is no undo. Are you confident to proceed?`,
+                async () => {
+                    return this.deleteSelf();
+                },
+            );
         },
         async deleteSelf(): Promise<void> {
             try {
