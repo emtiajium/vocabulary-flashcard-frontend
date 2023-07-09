@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <firecracker-header header-title="Goodbye!" content-id="deletion" menu-id="deletion-menu" />
+        <firecracker-header header-title="Goodbye" content-id="deletion" menu-id="deletion-menu" />
         <ion-content :fullscreen="true" id="deletion">
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
