@@ -63,7 +63,6 @@ import HttpHandler from '@/utils/HttpHandler';
 import MessageDB from '@/utils/MessageDB';
 import NativeStorage from '@/utils/NativeStorage';
 import Alert from '@/utils/Alert';
-import Toast from '@/utils/Toast';
 
 export default defineComponent({
     name: 'Deletion',
