@@ -112,6 +112,7 @@
 
 ## Change Log
 
+-   `0.36.1`: Fixed UI issues related to the last release
 -   `0.36.0`: Implemented [Google Play’s app account deletion requirements](https://support.google.com/googleplay/android-developer/answer/13327111)
 -   `0.35.0`: Fixed the bug of always showing spinner just beneath the header in the cohort page
 -   `0.34.0`: Increased the spinner dimension + Fixed the bug of vanishing search keyword after setting the vocab preference
@@ -224,6 +225,7 @@
 
 ## Android Release Log
 
+-   `98`: `0.36.1`
 -   `97`: `0.36.0`
 -   `96`: `0.35.0`
 -   `95`: `0.34.0`
