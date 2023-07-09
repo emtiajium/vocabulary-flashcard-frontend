@@ -87,7 +87,12 @@ export default defineComponent({
         return { isAndroid: true, faGoogle };
     },
     methods: {
+        // eslint-disable-next-line consistent-return
         async handleClick(): Promise<void> {
+            if (await this.isGoodbye()) {
+                return this.handleSignIn();
+            }
+
             await Alert.presentAlertConfirm(
                 '',
                 `"Firecracker Vocabulary Flashcards" will collect your name, email address, and photo.`,
@@ -110,9 +115,13 @@ export default defineComponent({
                 if (this.isAndroid) {
                     await GoogleAuthentication.androidSignIn();
                 }
-                const { user } = GoogleAuthentication;
-                await this.persistUser(user);
-                await this.$router.replace('/authenticated-home');
+                if (await this.isGoodbye()) {
+                    await this.$router.replace('/goodbye');
+                } else {
+                    const { user } = GoogleAuthentication;
+                    await this.persistUser(user);
+                    await this.$router.replace('/authenticated-home');
+                }
             } catch (error) {
                 if (error.error && ['popup_closed_by_user', 'access_denied'].includes(error.error)) {
                     // https://developers.google.com/identity/sign-in/web/reference
@@ -129,6 +138,10 @@ export default defineComponent({
         },
         async loadGetItOnGooglePlay(): Promise<void> {
             this.isAndroid = await Platform.isAndroid();
+        },
+
+        async isGoodbye(): Promise<boolean> {
+            return (await NativeStorage.getGoodBye()) === 'okay!';
         },
     },
 });

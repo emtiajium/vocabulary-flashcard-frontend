@@ -126,4 +126,16 @@ export default class NativeStorage {
     static async removeShouldReloadLeitnerItems(): Promise<void> {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.SHOULD_RELOAD_LEITNER_ITEMS);
     }
+
+    static async setGoodBye(): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.GOOD_BYE, 'okay!');
+    }
+
+    static getGoodBye(): Promise<string> {
+        return NativeStorage.getByKey<string>(NativeStorageKey.GOOD_BYE);
+    }
+
+    static async removeGoodBye(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.GOOD_BYE);
+    }
 }
