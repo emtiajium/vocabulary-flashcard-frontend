@@ -20,7 +20,7 @@
                         <div v-show="!isAndroid" id="google-sign-in"></div>
                     </ion-row>
                     <ion-row class="ion-justify-content-center ion-padding">
-                        <ion-text class="ion-text-center">
+                        <ion-text class="ion-text-center link-container">
                             By creating your account, you agree with our
                             <router-link to="/privacy-policy"> Privacy Policy </router-link>
                         </ion-text>
