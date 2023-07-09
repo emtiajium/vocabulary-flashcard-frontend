@@ -11,7 +11,7 @@
                             </ion-row>
 
                             <ion-row class="ion-justify-content-center ion-padding">
-                                <ion-text class="ion-text-center">
+                                <ion-text class="ion-text-center link-container">
                                     We hope you enjoyed
                                     <a
                                         href="https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice"
@@ -57,7 +57,7 @@
                             </ion-row>
 
                             <ion-row class="ion-justify-content-center ion-padding">
-                                <ion-text class="ion-text-center">
+                                <ion-text class="ion-text-center email-container">
                                     If you want us to keep the account but remove all or partial data, do not hesitate
                                     to contact the app admin via
                                     <a href="mailto:271emtiaj@gmail.com?subject=Data Deletion Request!">email</a> with

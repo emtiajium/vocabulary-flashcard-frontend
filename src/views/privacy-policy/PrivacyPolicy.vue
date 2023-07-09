@@ -72,7 +72,7 @@
 
                             <ion-card-subtitle class="ion-padding-top header"> Information Deletion</ion-card-subtitle>
 
-                            <ion-card-subtitle class="ion-padding-top">
+                            <ion-card-subtitle class="ion-padding-top link-container">
                                 We have a <router-link to="goodbye">deletion request page</router-link> if you want to
                                 delete your Google-provided info, your created vocabulary, or any data we have.
                             </ion-card-subtitle>
