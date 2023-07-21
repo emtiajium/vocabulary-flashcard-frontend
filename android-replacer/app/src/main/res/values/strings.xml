@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Firecracker Vocabulary Flashcards</string>
+    <string name="title_activity_main">Firecracker Vocabulary Flashcards</string>
+    <string name="package_name">com.emtiajium.firecracker.collaborative.vocab.practice</string>
+    <string name="custom_url_scheme">com.emtiajium.firecracker.collaborative.vocab.practice</string>
+    <string name="server_client_id">***-***.apps.googleusercontent.com</string>
+</resources>

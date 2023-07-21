@@ -23,6 +23,7 @@ cp -R ./android-replacer/app/src/main/res/mipmap-xxxhdpi ./android/app/src/main/
 # Values
 cp ./android-replacer/app/src/main/res/values/ic_launcher_background.xml ./android/app/src/main/res/values/ic_launcher_background.xml
 cp ./android-replacer/app/src/main/res/values/strings.xml ./android/app/src/main/res/values/strings.xml
+node set-firebase-server-client-id.js
 cp ./android-replacer/app/src/main/res/values/styles.xml ./android/app/src/main/res/values/styles.xml
 rm -rf ./android/app/src/main/res/values-v26 && mkdir ./android/app/src/main/res/values-v26
 cp ./android-replacer/app/src/main/res/values-v26/styles-v26.xml ./android/app/src/main/res/values-v26/styles.xml

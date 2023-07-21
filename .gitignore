@@ -39,6 +39,8 @@ capacitor.config.json
 capacitor.config.prod.json
 
 android
-android-replacer
+!android-replacer/android
+android-replacer/app/google-services.json
+
 resources
 .firebase

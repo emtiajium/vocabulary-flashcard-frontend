@@ -46,13 +46,11 @@
 
 ➜ Read [these](https://reactnative.dev/docs/0.65/running-on-device) and `Enable Debugging over USB`, `Plug in your device via USB`, `Connect to the development server`
 
-➜ `npm run serve:android:anew`
+➜ Add `google-services.json` at `./android-replacer/app`
+
+➜ `npm run android-pre-bundle:local`
 
 ➜ Open the project (`/android`) in Android Studio
-
-➜ Modify generated files
-
-> Add `<string name="server_client_id">***-***.apps.googleusercontent.com</string>` at `./android/app/src/main/res/values/strings.xml`
 
 ➜ Sync project with gradle files
 
@@ -88,9 +86,11 @@
 
 ➜ Check and double-check the configurations
 
-➜ `npm run android-pre-bundle`
+➜ Ensure the existence of `google-services.json` at `./android/app`
 
-➜ Set application version information (`versionCode`, `versionName`) at `./android/app/build.gradle`
+➜ Set application version information (`versionCode`, `versionName`) at `./android-replacer/app/build.gradle`
+
+➜ `npm run android-pre-bundle`
 
 ➜ Generate the signed app bundle
 
