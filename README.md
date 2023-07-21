@@ -86,7 +86,7 @@
 
 ➜ Check and double-check the configurations
 
-➜ Ensure the existence of `google-services.json` at `./android/app`
+➜ Ensure the existence of `google-services.json` at `./android-replacer/app`
 
 ➜ Set application version information (`versionCode`, `versionName`) at `./android-replacer/app/build.gradle`
 
