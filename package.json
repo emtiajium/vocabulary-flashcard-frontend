@@ -53,8 +53,8 @@
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.5.5",
         "uuid": "^8.3.2",
-        "vue": "^3.0.0-0",
-        "vue-router": "^4.0.0-0"
+        "vue": "^3.3.4",
+        "vue-router": "^4.2.4"
     },
     "devDependencies": {
         "@capacitor/cli": "^4.0.0",
@@ -64,6 +64,7 @@
         "@types/uuid": "^8.3.0",
         "@typescript-eslint/eslint-plugin": "^2.34.0",
         "@typescript-eslint/parser": "^2.33.0",
+        "@vue/cli": "^5.0.6",
         "@vue/cli-plugin-babel": "~4.5.0",
         "@vue/cli-plugin-eslint": "~4.5.0",
         "@vue/cli-plugin-router": "~4.5.0",
