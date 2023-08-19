@@ -5,6 +5,7 @@ module.exports = {
     },
     globals: {
         gapi: true,
+        google: true,
     },
     extends: [
         'plugin:vue/vue3-essential',
@@ -16,15 +17,21 @@ module.exports = {
     ],
     parserOptions: {
         ecmaVersion: 2020,
+        parser: '@typescript-eslint/parser',
     },
     rules: {
         'no-console': 'off',
         'no-debugger': 'off',
-        'no-unused-vars': 'warn',
+        'no-unused-vars': 'off',
         'vue/no-deprecated-slot-attribute': 'off',
         '@typescript-eslint/no-explicit-any': 'error',
         '@typescript-eslint/explicit-function-return-type': 'error',
-        '@typescript-eslint/no-unused-vars': 'warn',
+        '@typescript-eslint/no-unused-vars': 'off',
+        'no-shadow': 'off',
+        'no-use-before-define': 'off',
+        'vue/multi-word-component-names': 'off',
+        'vuejs-accessibility/click-events-have-key-events': 'off',
+        'vue/no-unused-components': 'off',
     },
     overrides: [
         {

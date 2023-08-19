@@ -81,6 +81,7 @@ import HttpHandler from '@/utils/HttpHandler';
 import MessageDB from '@/utils/MessageDB';
 import NativeStorage from '@/utils/NativeStorage';
 import Alert from '@/utils/Alert';
+import { FirecrackerError } from '@/domains/FirecrackerError';
 
 export default defineComponent({
     name: 'Deletion',
@@ -113,7 +114,7 @@ export default defineComponent({
                 this.cohort = (await HttpHandler.get<Cohort>(`/v1/cohorts/self`)) as Cohort;
                 this.isAuthenticated = true;
             } catch (error) {
-                if (error.message === MessageDB.forbiddenError) {
+                if ((error as FirecrackerError).message === MessageDB.forbiddenError) {
                     this.isAuthenticated = false;
                 }
             } finally {
@@ -144,7 +145,7 @@ export default defineComponent({
                 await NativeStorage.removeJwToken();
                 await this.$router.replace('/sign-in');
             } catch (error) {
-                if (error.message === MessageDB.forbiddenError) {
+                if ((error as FirecrackerError).message === MessageDB.forbiddenError) {
                     this.clean();
                     await this.$router.replace('/goodbye');
                 }

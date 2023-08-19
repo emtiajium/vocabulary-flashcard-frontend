@@ -154,14 +154,12 @@ export default defineComponent({
             faChevronDown,
             faChevronUp,
             sortingOptions: {
-                /* eslint-disable @typescript-eslint/camelcase */
                 createdAt_DESC: 'Date created (newest first)',
                 createdAt_ASC: 'Date created (oldest first)',
                 updatedAt_DESC: 'Date updated (newest first)',
                 updatedAt_ASC: 'Date updated (oldest first)',
                 word_ASC: 'Word (alphabetically first)',
                 word_DESC: 'Word (alphabetically last)',
-                /* eslint-enable @typescript-eslint/camelcase */
             },
             innerSelectedSort: this.selectedSort,
             innerFetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,

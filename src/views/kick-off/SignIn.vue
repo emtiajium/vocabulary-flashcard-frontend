@@ -61,6 +61,7 @@ import Alert from '@/utils/Alert';
 import Intro from '@/views/kick-off/Intro.vue';
 import Platform from '@/utils/Platform';
 import ContinueWithGoogle from '@/views/kick-off/ContinueWithGoogle.vue';
+import { FirecrackerError } from '@/domains/FirecrackerError';
 
 export default defineComponent({
     name: 'SignIn',
@@ -123,7 +124,10 @@ export default defineComponent({
                     await this.$router.replace('/authenticated-home');
                 }
             } catch (error) {
-                if (error.error && ['popup_closed_by_user', 'access_denied'].includes(error.error)) {
+                if (
+                    (error as FirecrackerError).error &&
+                    ['popup_closed_by_user', 'access_denied'].includes((error as FirecrackerError).error as string)
+                ) {
                     // https://developers.google.com/identity/sign-in/web/reference
                 } else {
                     await Toast.present(MessageDB.networkError);

@@ -5,5 +5,5 @@
     font-family: 'Font Awesome 6 Solid Firecracker';
     font-style: normal;
     font-weight: 900;
-    src: url('/assets/fonts/Font Awesome 6 Free-Solid-900.otf') format('woff2');
+    src: url('/public/assets/fonts/Font Awesome 6 Free-Solid-900.otf') format('woff2');
 }
