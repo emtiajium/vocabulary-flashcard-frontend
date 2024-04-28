@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/camelcase */
 
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';

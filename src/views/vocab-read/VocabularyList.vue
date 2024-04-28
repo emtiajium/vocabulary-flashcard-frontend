@@ -135,6 +135,7 @@
             </ion-fab>
 
             <settings
+                v-if="isSettingsPopoverOpened"
                 :is-settings-popover-opened="isSettingsPopoverOpened"
                 :selected-sort="selectedSort"
                 :close-settings-popover="closeSettingsPopover"
@@ -186,6 +187,7 @@ import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/vocab-read/Settings.vue';
 import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
+import { FirecrackerError } from '@/domains/FirecrackerError';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -264,15 +266,15 @@ export default defineComponent({
         clean(): void {
             this.criticalErrorMessage = '';
             this.showSpinner = false;
+            this.totalVocabularies = 0;
             this.vocabularies = [] as Vocabulary[];
             this.pageNumber = 1;
             this.pageSize = 10;
             this.isDisabled = false;
             this.allQuietOnTheWesternFront = false;
             this.isNetworkError = false;
-            this.totalVocabularies = 0;
             this.isSettingsPopoverOpened = false;
-            // no resetting of "sort" and other settings
+            // no resetting of "sort", search keyword and other settings
         },
 
         async setSettingsStuff(): Promise<void> {
@@ -381,8 +383,8 @@ export default defineComponent({
                 this.isNetworkError = false;
                 this.totalVocabularies = searchResult.total;
             } catch (error) {
-                if (error.name === 'CriticalError') {
-                    this.criticalErrorMessage = error.message;
+                if ((error as FirecrackerError).name === 'CriticalError') {
+                    this.criticalErrorMessage = (error as FirecrackerError).message;
                 }
                 this.isNetworkError = true;
                 searchResult = { results: [], total: 0 };
@@ -449,7 +451,7 @@ export default defineComponent({
                 this.isDisabled = true;
                 this.totalVocabularies = total;
             } catch (error) {
-                this.isNetworkError = error.name !== 'ExistingVocabConflict';
+                this.isNetworkError = (error as FirecrackerError).name !== 'ExistingVocabConflict';
             } finally {
                 this.showSpinner = false;
             }

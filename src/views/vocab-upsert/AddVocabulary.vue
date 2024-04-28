@@ -223,6 +223,7 @@ import * as _ from 'lodash';
 import { isArrayOfStringEqual, isArrayOfObjectEqual } from '@/utils/is-equal';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { BackButtonUnsubscribeHandler, ProcessNextHandler } from '@/domains/Handlers';
+import { FirecrackerError } from '@/domains/FirecrackerError';
 
 enum PageType {
     VOCABULARY_CU = 'VOCABULARY_CU',
@@ -495,7 +496,7 @@ export default defineComponent({
                 }
                 await this.$router.back();
             } catch (error) {
-                await Toast.present(error.message);
+                await Toast.present((error as FirecrackerError).message);
             } finally {
                 this.disableSaveButton = false;
             }

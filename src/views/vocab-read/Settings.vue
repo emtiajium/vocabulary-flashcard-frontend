@@ -8,100 +8,69 @@
                 </ion-button>
             </ion-list-header>
 
-            <view class="contents-container">
-                <ion-list lines="none">
-                    <ion-list-header
-                        lines="inset"
-                        class="cursor-pointer"
-                        @click="accordionGroup.isSearchingAccordionOpen = !accordionGroup.isSearchingAccordionOpen"
-                    >
-                        <ion-card-subtitle class="content-title"> Searching Preference </ion-card-subtitle>
-                        <ion-button shape="round" size="small" color="white" class="content-icon-container">
-                            <font-awesome-icon
-                                :icon="accordionGroup.isSearchingAccordionOpen ? faChevronUp : faChevronDown"
-                                class="accordion-status-icon"
-                            />
-                        </ion-button>
-                    </ion-list-header>
-
-                    <ion-item
-                        v-show="accordionGroup.isSearchingAccordionOpen"
-                        v-for="(value, option) in searchingOptions"
-                        :key="option"
-                    >
-                        <ion-label> {{ value.label }} </ion-label>
-                        <ion-toggle
-                            slot="end"
-                            :checked="innerVocabularySearchCoverage[option]"
-                            :disabled="value.isDisabled"
-                            @ionChange="setSearchingOption(option, $event.detail.checked)"
-                        />
-                    </ion-item>
-                </ion-list>
-
-                <ion-list lines="none">
-                    <ion-list-header
-                        lines="inset"
-                        class="cursor-pointer"
-                        @click="accordionGroup.isFilteringAccordionOpen = !accordionGroup.isFilteringAccordionOpen"
-                    >
-                        <ion-card-subtitle class="content-title"> Filtering Preference </ion-card-subtitle>
-                        <ion-button shape="round" size="small" color="white" class="content-icon-container">
-                            <font-awesome-icon
-                                :icon="accordionGroup.isFilteringAccordionOpen ? faChevronUp : faChevronDown"
-                                class="accordion-status-icon"
-                            />
-                        </ion-button>
-                    </ion-list-header>
-
-                    <ion-item v-show="accordionGroup.isFilteringAccordionOpen">
-                        <ion-label> Show only draft vocab </ion-label>
-                        <ion-toggle
-                            slot="end"
-                            :checked="innerFetchNotHavingDefinitionOnly"
-                            @ionChange="
-                                setSelectedFiltering('innerFetchNotHavingDefinitionOnly', $event.detail.checked)
-                            "
-                        />
+            <ion-accordion-group class="contents-container" :multiple="true" :value="['first']">
+                <ion-accordion value="first" class="ion-padding-bottom">
+                    <ion-item slot="header" lines="inset">
+                        <ion-card-subtitle> Searching Preference </ion-card-subtitle>
                     </ion-item>
 
-                    <ion-item v-show="accordionGroup.isFilteringAccordionOpen">
-                        <ion-label> Show flashcard in boxes </ion-label>
-                        <ion-toggle
-                            slot="end"
-                            :checked="innerFetchFlashcard"
-                            @ionChange="setSelectedFiltering('innerFetchFlashcard', $event.detail.checked)"
-                        />
-                    </ion-item>
-                </ion-list>
-
-                <ion-list lines="none">
-                    <ion-list-header
-                        lines="inset"
-                        class="cursor-pointer"
-                        @click="accordionGroup.isSortingAccordionOpen = !accordionGroup.isSortingAccordionOpen"
-                    >
-                        <ion-card-subtitle class="content-title"> Sorting Preference </ion-card-subtitle>
-                        <ion-button shape="round" size="small" color="white" class="content-icon-container">
-                            <font-awesome-icon
-                                :icon="accordionGroup.isSortingAccordionOpen ? faChevronUp : faChevronDown"
-                                class="accordion-status-icon"
+                    <div slot="content">
+                        <ion-item v-for="(value, option) in searchingOptions" :key="option" lines="none">
+                            <ion-label> {{ value.label }} </ion-label>
+                            <ion-toggle
+                                slot="end"
+                                :checked="innerVocabularySearchCoverage[option]"
+                                :disabled="value.isDisabled"
+                                @ionChange="setSearchingOption(option, $event.detail.checked)"
                             />
-                        </ion-button>
-                    </ion-list-header>
-
-                    <ion-radio-group
-                        v-show="accordionGroup.isSortingAccordionOpen"
-                        :value="innerSelectedSort"
-                        @ionChange="setSelectedSortingOption($event.detail.value)"
-                    >
-                        <ion-item v-for="(label, value) in sortingOptions" :key="value">
-                            <ion-label> {{ label }} </ion-label>
-                            <ion-radio slot="end" :value="value" />
                         </ion-item>
-                    </ion-radio-group>
-                </ion-list>
-            </view>
+                    </div>
+                </ion-accordion>
+
+                <ion-accordion value="second" class="ion-padding-bottom">
+                    <ion-item slot="header" lines="inset">
+                        <ion-card-subtitle> Filtering Preference </ion-card-subtitle>
+                    </ion-item>
+                    <div slot="content">
+                        <ion-item lines="none">
+                            <ion-label> Show only draft vocab </ion-label>
+                            <ion-toggle
+                                slot="end"
+                                :checked="innerFetchNotHavingDefinitionOnly"
+                                @ionChange="
+                                    setSelectedFiltering('innerFetchNotHavingDefinitionOnly', $event.detail.checked)
+                                "
+                            />
+                        </ion-item>
+
+                        <ion-item lines="none">
+                            <ion-label> Show flashcard in boxes </ion-label>
+                            <ion-toggle
+                                slot="end"
+                                :checked="innerFetchFlashcard"
+                                @ionChange="setSelectedFiltering('innerFetchFlashcard', $event.detail.checked)"
+                            />
+                        </ion-item>
+                    </div>
+                </ion-accordion>
+
+                <ion-accordion value="third" class="ion-padding-bottom">
+                    <ion-item slot="header" lines="inset">
+                        <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
+                    </ion-item>
+                    <div slot="content">
+                        <ion-radio-group
+                            :value="innerSelectedSort"
+                            @ionChange="setSelectedSortingOption($event.detail.value)"
+                        >
+                            <ion-item v-for="(label, value) in sortingOptions" :key="value" lines="none">
+                                <ion-label> {{ label }} </ion-label>
+                                <ion-radio slot="end" :value="value" />
+                            </ion-item>
+                        </ion-radio-group>
+                    </div>
+                </ion-accordion>
+            </ion-accordion-group>
 
             <ion-list-header class="footer-container">
                 <ion-button color="success" fill="solid" class="apply-button" @click="onApplyingSettings">
@@ -116,7 +85,6 @@
 import { defineComponent } from 'vue';
 import {
     IonPopover,
-    IonList,
     IonItem,
     IonLabel,
     IonRadioGroup,
@@ -127,16 +95,17 @@ import {
     IonButton,
     IonContent,
     IonToggle,
+    IonAccordionGroup,
+    IonAccordion,
 } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTimesCircle, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'Settings',
     components: {
         FontAwesomeIcon,
         IonPopover,
-        IonList,
         IonItem,
         IonLabel,
         IonRadioGroup,
@@ -147,21 +116,19 @@ export default defineComponent({
         IonCardTitle,
         IonContent,
         IonToggle,
+        IonAccordionGroup,
+        IonAccordion,
     },
     data() {
         return {
             faTimesCircle,
-            faChevronDown,
-            faChevronUp,
             sortingOptions: {
-                /* eslint-disable @typescript-eslint/camelcase */
                 createdAt_DESC: 'Date created (newest first)',
                 createdAt_ASC: 'Date created (oldest first)',
                 updatedAt_DESC: 'Date updated (newest first)',
                 updatedAt_ASC: 'Date updated (oldest first)',
                 word_ASC: 'Word (alphabetically first)',
                 word_DESC: 'Word (alphabetically last)',
-                /* eslint-enable @typescript-eslint/camelcase */
             },
             innerSelectedSort: this.selectedSort,
             innerFetchNotHavingDefinitionOnly: this.fetchNotHavingDefinitionOnly,
@@ -175,11 +142,6 @@ export default defineComponent({
                 genericNotes: { label: 'Generic note', isDisabled: false },
             },
             innerVocabularySearchCoverage: this.vocabularySearchCoverage,
-            accordionGroup: {
-                isSortingAccordionOpen: false,
-                isFilteringAccordionOpen: false,
-                isSearchingAccordionOpen: true,
-            },
             setAppHeight: (): void => {
                 // reading material: https://ilxanlar.medium.com/you-shouldnt-rely-on-css-100vh-and-here-s-why-1b4721e74487
                 // had to do it because the apply  button doesn't show when I browse the "web" app using "Android mobile"
@@ -274,16 +236,6 @@ export default defineComponent({
     overflow-y: auto;
     background-color: var(--ion-item-background);
 }
-.content-title {
-    width: 80vw;
-}
-.content-icon-container {
-    width: 20vw;
-}
-.accordion-status-icon {
-    font-size: 20px;
-    color: var(--ion-color-primary);
-}
 .footer-container {
     height: 62px;
     background-color: var(--ion-item-background);
@@ -292,8 +244,5 @@ export default defineComponent({
 .apply-button {
     width: 100vw;
     margin-inline: unset;
-}
-.cursor-pointer {
-    cursor: pointer;
 }
 </style>

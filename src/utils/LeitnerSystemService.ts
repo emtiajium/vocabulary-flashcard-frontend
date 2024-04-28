@@ -2,6 +2,7 @@ import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
 import NativeStorage from '@/utils/NativeStorage';
+import { FirecrackerError } from '@/domains/FirecrackerError';
 
 export default class LeitnerSystemService {
     static async insertIntoLeitnerBox(vocabularyId: string): Promise<void> {
@@ -12,7 +13,7 @@ export default class LeitnerSystemService {
             );
             NativeStorage.setLeitnerBoxExistence(vocabularyId).finally();
         } catch (error) {
-            await Toast.present(error.message);
+            await Toast.present((error as FirecrackerError).message);
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <ion-card button="true" class="margin-top-bottom-unset">
+    <ion-card :button="true" class="margin-top-bottom-unset">
         <ion-row>
             <div class="contents" @click="seeMore(vocabulary.id, vocabulary.word)">
                 <ion-card-header>

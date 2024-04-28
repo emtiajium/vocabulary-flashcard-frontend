@@ -35,7 +35,7 @@ export default class AxiosAdapter {
             const axiosResponse = await Axios.post(url, payload, requestConfig);
             response = axiosResponse.data;
         } catch (error) {
-            AxiosAdapter.throwProcessedError(error);
+            AxiosAdapter.throwProcessedError(error as AxiosError);
         }
         return response;
     }
@@ -46,7 +46,7 @@ export default class AxiosAdapter {
             const axiosResponse = await Axios.get(url, requestConfig);
             response = axiosResponse.data;
         } catch (error) {
-            AxiosAdapter.throwProcessedError(error);
+            AxiosAdapter.throwProcessedError(error as AxiosError);
         }
         return response;
     }
@@ -55,7 +55,7 @@ export default class AxiosAdapter {
         try {
             await Axios.delete(url, requestConfig);
         } catch (error) {
-            AxiosAdapter.throwProcessedError(error);
+            AxiosAdapter.throwProcessedError(error as AxiosError);
         }
     }
 
@@ -63,7 +63,7 @@ export default class AxiosAdapter {
         try {
             await Axios.put(url, undefined, requestConfig);
         } catch (error) {
-            AxiosAdapter.throwProcessedError(error);
+            AxiosAdapter.throwProcessedError(error as AxiosError);
         }
     }
 }

@@ -207,6 +207,7 @@ import NativeStorage from '@/utils/NativeStorage';
 import LeitnerBoxItemSearchResult, {
     SingleLeitnerItemEarlierToBoxAppearanceDate,
 } from '@/domains/LeitnerBoxItemSearchResult';
+import { FirecrackerError } from '@/domains/FirecrackerError';
 
 interface Payload {
     pagination: Pagination;
@@ -348,7 +349,7 @@ export default defineComponent({
                     );
                     await this.onKickingOutItem(vocabularyId);
                 } catch (error) {
-                    await Toast.present(error.message);
+                    await Toast.present((error as FirecrackerError).message);
                 }
             }
         },
@@ -364,7 +365,7 @@ export default defineComponent({
                     );
                     await this.onKickingOutItem(vocabularyId);
                 } catch (error) {
-                    await Toast.present(error.message);
+                    await Toast.present((error as FirecrackerError).message);
                 }
             }
         },
