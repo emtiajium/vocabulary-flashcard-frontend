@@ -36,13 +36,7 @@
                         Items will only appear when it is the right time. For example, the vocabulary "{{
                             singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
                         }}" will appear on
-                        <ion-datetime
-                            :value="singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate"
-                            display-format="MMMM, DD."
-                            class="updated-at"
-                            :disabled="true"
-                            :readonly="true"
-                        />
+                        {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}
                     </span>
                 </ion-card-subtitle>
             </view>
@@ -69,21 +63,13 @@
                                 "
                             >
                                 <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
-                                <ion-datetime
-                                    :value="boxItem.updatedAt"
-                                    display-format="MMMM DD, YYYY"
-                                    class="updated-at ion-padding-end"
-                                    :disabled="true"
-                                    :readonly="true"
-                                />
+                                <span class="updated-at ion-padding-start ion-padding-end">
+                                    {{ format(boxItem.updatedAt, 'MMMM dd, yyyy') }}
+                                </span>
                                 <font-awesome-icon :icon="faClock" class="firecracker-primary-color-icon" />
-                                <ion-datetime
-                                    :value="boxItem.updatedAt"
-                                    display-format="hh:mm A"
-                                    class="updated-at"
-                                    :disabled="true"
-                                    :readonly="true"
-                                />
+                                <span class="updated-at ion-padding-start">
+                                    {{ format(boxItem.updatedAt, 'hh:mm aa') }}
+                                </span>
                             </ion-row>
 
                             <ion-row class="ion-justify-content-center">
@@ -143,13 +129,7 @@
                     Other items will only appear when it is the right time. For example, the vocabulary "{{
                         singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
                     }}" will appear on
-                    <ion-datetime
-                        :value="singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate"
-                        display-format="MMMM, DD."
-                        class="updated-at"
-                        :disabled="true"
-                        :readonly="true"
-                    />
+                    {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}
                 </ion-card-subtitle>
             </ion-col>
 
@@ -178,7 +158,6 @@ import {
     IonCardTitle,
     IonCol,
     IonContent,
-    IonDatetime,
     IonInfiniteScroll,
     IonPage,
     IonRow,
@@ -208,6 +187,7 @@ import LeitnerBoxItemSearchResult, {
     SingleLeitnerItemEarlierToBoxAppearanceDate,
 } from '@/domains/LeitnerBoxItemSearchResult';
 import { FirecrackerError } from '@/domains/FirecrackerError';
+import { format } from 'date-fns';
 
 interface Payload {
     pagination: Pagination;
@@ -233,7 +213,6 @@ export default defineComponent({
         IonCol,
         IonButton,
         FontAwesomeIcon,
-        IonDatetime,
     },
     data() {
         const box = this.$route.params.box.toString();
@@ -267,6 +246,7 @@ export default defineComponent({
         this.assertRefreshWord().finally();
     },
     methods: {
+        format,
         clean(): void {
             this.showSpinner = false;
             this.boxItems = [] as LeitnerBoxItem[];
