@@ -1,5 +1,11 @@
 [![CI](https://github.com/emtiajium/vocabulary-flashcard-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/emtiajium/vocabulary-flashcard-frontend/actions/workflows/ci.yml)
 
+# What is this repository for?
+
+<https://firecrackervocabulary.com>
+
+<https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice>
+
 # How to Run
 
 ###### Prerequisites
@@ -112,6 +118,7 @@
 
 ## Change Log
 
+-   `1.37.0`: Updated app to target Android 13 (API level 33)
 -   `0.36.1`: Fixed UI issues related to the last release
 -   `0.36.0`: Implemented [Google Play’s app account deletion requirements](https://support.google.com/googleplay/android-developer/answer/13327111)
 -   `0.35.0`: Fixed the bug of always showing spinner just beneath the header in the cohort page
@@ -225,6 +232,7 @@
 
 ## Android Release Log
 
+-   `99`: `1.37.0`
 -   `98`: `0.36.1`
 -   `97`: `0.36.0`
 -   `96`: `0.35.0`

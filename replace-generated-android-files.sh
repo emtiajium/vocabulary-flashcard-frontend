@@ -35,3 +35,5 @@ cp ./android-replacer/app/build.gradle ./android/app/build.gradle
 cp ./android-replacer/app/google-services.json ./android/app/google-services.json
 # Project-level build.gradle
 cp ./android-replacer/android/build.gradle ./android/build.gradle
+# Project-level variables.gradle
+cp ./android-replacer/android/variables.gradle ./android/variables.gradle
