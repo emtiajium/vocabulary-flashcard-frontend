@@ -29,7 +29,7 @@
 
                 <ion-accordion value="second" class="ion-padding-bottom">
                     <ion-item slot="header" lines="inset">
-                        <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
+                        <ion-card-subtitle> Filtering Preference </ion-card-subtitle>
                     </ion-item>
                     <div slot="content">
                         <ion-item lines="none">
@@ -47,7 +47,7 @@
 
                 <ion-accordion value="third" class="ion-padding-bottom">
                     <ion-item slot="header" lines="inset">
-                        <ion-card-subtitle> Filtering Preference </ion-card-subtitle>
+                        <ion-card-subtitle> Sorting Preference </ion-card-subtitle>
                     </ion-item>
                     <div slot="content">
                         <ion-radio-group
