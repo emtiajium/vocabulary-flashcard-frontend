@@ -31,7 +31,7 @@ module.exports = {
         'no-use-before-define': 'error',
         'vue/multi-word-component-names': 'off',
         'vuejs-accessibility/click-events-have-key-events': 'off',
-        'vue/no-unused-components': 'off',
+        'vue/no-unused-components': 'error',
     },
     overrides: [
         {

@@ -85,7 +85,6 @@
 import { defineComponent } from 'vue';
 import {
     IonPopover,
-    IonList,
     IonItem,
     IonLabel,
     IonRadioGroup,
@@ -107,7 +106,6 @@ export default defineComponent({
     components: {
         FontAwesomeIcon,
         IonPopover,
-        IonList,
         IonItem,
         IonLabel,
         IonRadioGroup,
