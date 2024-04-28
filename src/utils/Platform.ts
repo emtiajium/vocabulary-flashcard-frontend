@@ -1,7 +1,7 @@
 import { Device } from '@capacitor/device';
 import { App } from '@capacitor/app';
 import { isBoolean, isString } from 'lodash';
-import * as packageInfo from '../../package.json';
+import { version as packageVersion } from '../../package.json';
 
 export default class Platform {
     private static isPlatformAndroid: null | boolean = null;
@@ -43,7 +43,7 @@ export default class Platform {
             versionCode = build;
             version = androidVersion;
         } else {
-            version = packageInfo.version;
+            version = packageVersion;
             versionCode = 'NA';
         }
 
