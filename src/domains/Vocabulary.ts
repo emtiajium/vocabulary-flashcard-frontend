@@ -14,8 +14,6 @@ import {
 import { Type } from 'class-transformer';
 import * as _ from 'lodash';
 
-export type VocabularyExistenceResponse = Pick<Vocabulary, 'id' | 'word'>;
-
 export default class Vocabulary {
     @IsUUID()
     id: string;
@@ -61,3 +59,5 @@ export default class Vocabulary {
     @IsOptional()
     isInLeitnerBox?: boolean;
 }
+
+export type VocabularyExistenceResponse = Pick<Vocabulary, 'id' | 'word'>;

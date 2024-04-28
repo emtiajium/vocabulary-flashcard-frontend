@@ -28,7 +28,7 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'error',
         '@typescript-eslint/no-unused-vars': 'off',
         'no-shadow': 'off',
-        'no-use-before-define': 'off',
+        'no-use-before-define': 'error',
         'vue/multi-word-component-names': 'off',
         'vuejs-accessibility/click-events-have-key-events': 'off',
         'vue/no-unused-components': 'off',
