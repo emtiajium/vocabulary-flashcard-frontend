@@ -135,6 +135,7 @@
             </ion-fab>
 
             <settings
+                v-if="isSettingsPopoverOpened"
                 :is-settings-popover-opened="isSettingsPopoverOpened"
                 :selected-sort="selectedSort"
                 :close-settings-popover="closeSettingsPopover"
