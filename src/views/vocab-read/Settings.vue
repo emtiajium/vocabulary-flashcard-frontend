@@ -42,6 +42,15 @@
                                 "
                             />
                         </ion-item>
+
+                        <ion-item lines="none">
+                            <ion-label> Show flashcard in boxes </ion-label>
+                            <ion-toggle
+                                slot="end"
+                                :checked="innerFetchFlashcard"
+                                @ionChange="setSelectedFiltering('innerFetchFlashcard', $event.detail.checked)"
+                            />
+                        </ion-item>
                     </div>
                 </ion-accordion>
 
