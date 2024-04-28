@@ -118,6 +118,7 @@
 
 ## Change Log
 
+-   `2.0.0`: Upgraded Ionic@6
 -   `1.37.0`: Updated app to target Android 13 (API level 33)
 -   `0.36.1`: Fixed UI issues related to the last release
 -   `0.36.0`: Implemented [Google Play’s app account deletion requirements](https://support.google.com/googleplay/android-developer/answer/13327111)
