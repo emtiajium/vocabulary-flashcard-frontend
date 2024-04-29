@@ -7,18 +7,12 @@
                 <empty-container :message="defaultMessage" />
             </ion-card>
 
-            <view v-for="(definition, definitionIndex) in vocabulary.definitions" :key="definition.id">
+            <view v-for="definition in vocabulary.definitions" :key="definition.id">
                 <ion-card>
                     <ion-card-header>
                         <ion-card-title>
-                            <span>
-                                {{ definitionIndex === 0 ? 'Meaning of' : 'Another meaning of' }}
-                                <strong> {{ vocabulary.word }} </strong>
-                            </span>
-                        </ion-card-title>
-                        <ion-card-subtitle>
                             <span class="capitalize"> {{ definition.meaning }} </span>
-                        </ion-card-subtitle>
+                        </ion-card-title>
                     </ion-card-header>
 
                     <ion-card-content>
@@ -146,7 +140,6 @@ import {
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    IonCardSubtitle,
     IonFab,
     IonFabButton,
     IonChip,
@@ -173,7 +166,6 @@ export default defineComponent({
         FontAwesomeIcon,
         IonCardHeader,
         IonCardTitle,
-        IonCardSubtitle,
         IonFab,
         IonFabButton,
         IonChip,

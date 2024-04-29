@@ -46,7 +46,7 @@ export default class Vocabulary {
     @IsOptional()
     genericExternalLinks?: string[];
 
-    @ValidateIf((vocabulary) => !!vocabulary.genericNotes?.length)
+    @ValidateIf((vocabulary) => !!vocabulary.linkerWords?.length)
     @IsNotEmpty({ each: true })
     @IsArray()
     @IsOptional()
