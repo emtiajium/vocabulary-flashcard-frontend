@@ -36,7 +36,7 @@
                         Items will only appear when it is the right time. For example, the vocabulary "{{
                             singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
                         }}" will appear on
-                        {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}
+                        {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}.
                     </span>
                 </ion-card-subtitle>
             </view>
@@ -129,7 +129,7 @@
                     Other items will only appear when it is the right time. For example, the vocabulary "{{
                         singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
                     }}" will appear on
-                    {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}
+                    {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}.`
                 </ion-card-subtitle>
             </ion-col>
 
