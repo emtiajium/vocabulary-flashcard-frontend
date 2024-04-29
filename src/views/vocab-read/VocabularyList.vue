@@ -257,7 +257,7 @@ export default defineComponent({
         this.showSpinner = false;
     },
     ionViewDidEnter() {
-        // executing in parallel
+        // executing concurrently
         this.assertRefreshList();
         this.assertRefreshVocabulary();
         this.assertRefreshIsInLeitnerBox();
