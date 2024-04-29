@@ -236,6 +236,9 @@ export default defineComponent({
     overflow-y: auto;
     background-color: var(--ion-item-background);
 }
+ion-accordion {
+    background-color: var(--ion-item-background);
+}
 .footer-container {
     height: 62px;
     background-color: var(--ion-item-background);
