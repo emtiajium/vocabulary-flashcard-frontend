@@ -50,7 +50,7 @@
 
 ###### Run the app natively on Android
 
-➜ Read [these](https://reactnative.dev/docs/0.65/running-on-device) and `Enable Debugging over USB`, `Plug in your device via USB`, `Connect to the development server`
+➜ Read [these](https://reactnative.dev/docs/running-on-device) and `Enable Debugging over USB`, `Plug in your device via USB`, `Connect to the development server`
 
 ➜ Add `google-services.json` at `./android-replacer/app`
 
