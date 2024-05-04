@@ -1,7 +1,13 @@
 <template>
     <ion-card :button="true" class="margin-top-bottom-unset">
         <ion-row>
-            <div class="contents" @click="seeMore(vocabulary.id, vocabulary.word)">
+            <div
+                class="contents"
+                tabindex="0"
+                role="button"
+                @click="seeMore(vocabulary.id, vocabulary.word)"
+                @keydown="onKeyDown($event, vocabulary.id, vocabulary.word)"
+            >
                 <ion-card-header>
                     <ion-card-title class="capitalize overflowed-content"> {{ vocabulary.word }} </ion-card-title>
                 </ion-card-header>
@@ -137,6 +143,11 @@ export default defineComponent({
     methods: {
         async seeMore(id: string, word: string): Promise<void> {
             await this.$router.push(`/vocabulary/read/${id}/${word}/${false}`);
+        },
+        async onKeyDown(keyboardEvent: KeyboardEvent, id: string, word: string): Promise<void> {
+            if (keyboardEvent.code === 'Enter' || keyboardEvent.key === 'Enter') {
+                await this.seeMore(id, word);
+            }
         },
         async presentAlertConfirm(vocabulary: Vocabulary): Promise<void> {
             await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"?`, async () => {
