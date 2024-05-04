@@ -14,6 +14,9 @@
                         <intro />
                     </ion-row>
                     <ion-row class="ion-justify-content-center ion-padding">
+                        <!-- disabling the rule as this <div /> is supposed to have appeared only on the Android native app -->
+                        <!-- not sure how to navigate on Android native app using the keyboard -->
+                        <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
                         <div v-if="isAndroid" @click="handleClick">
                             <continue-with-google />
                         </div>
