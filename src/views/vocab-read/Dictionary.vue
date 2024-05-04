@@ -8,7 +8,7 @@
         <ion-row class="display-flex ion-justify-content-center">
             <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="3">
                 <ion-card
-                    button="true"
+                    :button="true"
                     :href="`https://dictionary.cambridge.org/dictionary/english/${word.toLowerCase()}`"
                     target="_blank"
                     class="transparent"
@@ -24,7 +24,7 @@
             </ion-col>
             <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="3">
                 <ion-card
-                    button="true"
+                    :button="true"
                     :href="`https://www.merriam-webster.com/dictionary/${word.toLowerCase()}`"
                     target="_blank"
                     class="transparent"
@@ -40,7 +40,7 @@
             </ion-col>
             <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="3">
                 <ion-card
-                    button="true"
+                    :button="true"
                     :href="`https://www.oxfordlearnersdictionaries.com/definition/english/${word
                         .toLowerCase()
                         .replace(' ', '-')}_1?q=${word.toLowerCase().replace(' ', '+')}`"
