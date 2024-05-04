@@ -118,6 +118,7 @@
 
 ## Change Log
 
+-   `2.1.0`: Enabled eslint rule `vuejs-accessibility/click-events-have-key-events`
 -   `2.0.0`: Upgraded Ionic@6
 -   `1.37.0`: Updated app to target Android 13 (API level 33)
 -   `0.36.1`: Fixed UI issues related to the last release
