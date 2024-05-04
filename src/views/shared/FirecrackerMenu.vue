@@ -3,7 +3,12 @@
         <view class="container">
             <ion-grid class="display-grid">
                 <ion-row v-if="isAuthenticated" class="profile">
-                    <img :src="profilePictureUrl" alt="Avatar" class="rounded-circle ion-padding" width="120" />
+                    <img
+                        :src="profilePictureUrl"
+                        :alt="`${name}'s avatar`"
+                        class="rounded-circle ion-padding"
+                        width="120"
+                    />
                     <div class="ion-padding-bottom">
                         <strong class="display-flex ion-justify-content-center item-text ion-text-capitalize">
                             {{ name }}
