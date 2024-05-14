@@ -15,6 +15,7 @@ import PrivacyPolicy from '@/views/privacy-policy/PrivacyPolicy.vue';
 import LinkerWord from '@/views/vocab-read/LinkerWord.vue';
 import VocabularyDetailsPage from '@/views/vocab-read/VocabularyDetailsPage.vue';
 import Deletion from '@/views/kick-the-bucket/Deletion.vue';
+import GuessingGame from '@/views/vocab-read/GuessingGame.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -81,6 +82,11 @@ const routes: RouteRecordRaw[] = [
         path: '/leitner-box/items/:box/:count',
         name: Route.LeitnerBoxItems,
         component: LeitnerBoxItems,
+    },
+    {
+        path: '/guessing-game',
+        name: Route.GuessingGame,
+        component: GuessingGame,
     },
     {
         path: '/privacy-policy',

@@ -12,6 +12,7 @@ enum Route {
     DisplayCohort = 'DisplayCohort',
     Dictionary = 'Dictionary',
     LeitnerSystems = 'LeitnerSystems',
+    GuessingGame = 'GuessingGame',
     LeitnerBoxItems = 'LeitnerBoxItems',
     PrivacyPolicy = 'PrivacyPolicy',
     LinkerWord = 'LinkerWord',
