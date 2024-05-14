@@ -8,7 +8,7 @@
         />
         <ion-content :fullscreen="true" id="guessing-game">
             <ion-row class="display-flex ion-justify-content-center ion-padding-top">
-                <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="3">
+                <ion-col sizeXs="12" sizeSm="10" sizeMd="8" sizeLg="6" sizeXl="6">
                     <spinner v-if="isLoading" />
                     <div v-if="!isLoading && vocabularies.length">
                         <ion-card-subtitle class="ion-text-center ion-padding-bottom">
@@ -118,6 +118,7 @@ export default defineComponent({
             sound.currentTime = 0;
             sound.play();
         },
+
         clean(): void {
             this.isLoading = true;
             this.vocabularies = [];
