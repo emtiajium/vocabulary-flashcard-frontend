@@ -8,7 +8,7 @@
         />
         <ion-content :fullscreen="true" id="guessing-game">
             <ion-row class="display-flex ion-justify-content-center ion-padding-top">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
+                <ion-col sizeXs="4" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="3">
                     <spinner v-if="isLoading" />
                     <div v-if="!isLoading && vocabularies.length">
                         <ion-card-subtitle class="ion-text-center ion-padding-bottom">
@@ -25,7 +25,7 @@
                         </ion-card-subtitle>
                         <div class="display-flex ion-justify-content-end ion-padding-top">
                             <ion-button @click="checkAnswer()">Check</ion-button>
-                            <ion-button @click="onClickNextButton()">Next</ion-button>
+                            <ion-button @click="onClickNext()">Next</ion-button>
                         </div>
                     </div>
                 </ion-col>
@@ -71,6 +71,9 @@ export default defineComponent({
     async ionViewDidEnter() {
         await this.loadVocabularies();
     },
+    ionViewWillLeave() {
+        this.clean();
+    },
     methods: {
         async loadVocabularies(): Promise<void> {
             try {
@@ -100,7 +103,7 @@ export default defineComponent({
             }
         },
 
-        onClickNextButton(): void {
+        onClickNext(): void {
             this.currentVocabularyIndex += 1;
             if (this.currentVocabularyIndex >= this.vocabularies.length) {
                 this.currentVocabularyIndex = 0;
@@ -114,6 +117,13 @@ export default defineComponent({
             // eslint-disable-next-line no-param-reassign
             sound.currentTime = 0;
             sound.play();
+        },
+        clean(): void {
+            this.isLoading = true;
+            this.vocabularies = [];
+            this.givenAnswer = '';
+            this.resultMessage = '';
+            this.currentVocabularyIndex = 0;
         },
     },
 });
