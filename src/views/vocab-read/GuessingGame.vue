@@ -25,6 +25,7 @@
                         </ion-card-subtitle>
                         <div class="display-flex ion-justify-content-end ion-padding-top">
                             <ion-button @click="checkAnswer()">Check</ion-button>
+                            <ion-button @click="onClickPrevious()">Previous</ion-button>
                             <ion-button @click="onClickNext()">Next</ion-button>
                         </div>
                     </div>
@@ -89,7 +90,7 @@ export default defineComponent({
 
         checkAnswer(): void {
             const correctVocabulary = this.vocabularies[this.currentVocabularyIndex];
-            if (this.givenAnswer.trim().toLowerCase() === correctVocabulary?.word.trim().toLowerCase()) {
+            if (this.givenAnswer.trim().toLowerCase() === correctVocabulary.word.trim().toLowerCase()) {
                 this.resultMessage = 'Correct!';
                 this.playSound(this.correctSound);
             } else {
@@ -103,6 +104,15 @@ export default defineComponent({
         onClickNext(): void {
             this.currentVocabularyIndex += 1;
             if (this.currentVocabularyIndex >= this.vocabularies.length) {
+                this.currentVocabularyIndex = 0;
+            }
+            this.resultMessage = '';
+            this.givenAnswer = '';
+        },
+
+        onClickPrevious(): void {
+            this.currentVocabularyIndex -= 1;
+            if (this.currentVocabularyIndex < 0) {
                 this.currentVocabularyIndex = 0;
             }
             this.resultMessage = '';
