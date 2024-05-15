@@ -44,6 +44,8 @@ import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
 import { RandomlyChosenMeaningResponse } from '@/domains/RandomlyChosenMeaningResponse';
+import { format } from 'date-fns';
+import NativeStorage from '@/utils/NativeStorage';
 
 export default defineComponent({
     name: 'GuessingGame',
@@ -70,17 +72,34 @@ export default defineComponent({
         };
     },
     async ionViewDidEnter() {
-        await this.loadVocabularies();
+        await this.init();
     },
     ionViewWillLeave() {
         this.clean();
     },
     methods: {
+        async init(): Promise<void> {
+            const cachedRandomlyChosenMeaningResponse = await NativeStorage.getGuessingGameVocabularies();
+            const today = format(new Date(), 'yyyy-MM-dd');
+            if (cachedRandomlyChosenMeaningResponse?.createdAt !== today) {
+                await NativeStorage.removeGuessingGameVocabularies().catch();
+                await this.loadVocabularies();
+            } else {
+                this.vocabularies = cachedRandomlyChosenMeaningResponse.data;
+            }
+        },
+
         async loadVocabularies(): Promise<void> {
             try {
-                this.vocabularies = await HttpHandler.get<RandomlyChosenMeaningResponse[]>(
+                const vocabularies = await HttpHandler.get<RandomlyChosenMeaningResponse[]>(
                     `/v1/vocabularies/definitions/random-search`,
                 );
+                this.vocabularies = vocabularies;
+                const today = format(new Date(), 'yyyy-MM-dd');
+                await NativeStorage.setGuessingGameVocabularies({
+                    createdAt: today,
+                    data: vocabularies,
+                });
             } catch {
                 await Toast.present(MessageDB.genericError);
             } finally {

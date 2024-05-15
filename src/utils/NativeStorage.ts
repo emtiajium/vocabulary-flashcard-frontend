@@ -5,6 +5,7 @@ import User from '@/domains/User';
 import Vocabulary from '@/domains/Vocabulary';
 import Platform from '@/utils/Platform';
 import VocabSettings from '@/domains/VocabSettings';
+import { CachedRandomlyChosenMeaningResponse } from '@/domains/RandomlyChosenMeaningResponse';
 
 let storage: Storage;
 
@@ -137,5 +138,21 @@ export default class NativeStorage {
 
     static async removeGoodBye(): Promise<void> {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.GOOD_BYE);
+    }
+
+    static getGuessingGameVocabularies(): Promise<CachedRandomlyChosenMeaningResponse> {
+        return NativeStorage.getByKey<CachedRandomlyChosenMeaningResponse>(NativeStorageKey.GUESSING_GAME_VOCABULARIES);
+    }
+
+    static async setGuessingGameVocabularies(
+        cachedRandomlyChosenMeaningResponse: CachedRandomlyChosenMeaningResponse,
+    ): Promise<void> {
+        await (
+            await NativeStorage.getStorage()
+        ).set(NativeStorageKey.GUESSING_GAME_VOCABULARIES, cachedRandomlyChosenMeaningResponse);
+    }
+
+    static async removeGuessingGameVocabularies(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.GUESSING_GAME_VOCABULARIES);
     }
 }
