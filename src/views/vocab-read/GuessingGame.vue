@@ -86,6 +86,7 @@ export default defineComponent({
                 await this.loadVocabularies();
             } else {
                 this.vocabularies = cachedRandomlyChosenMeaningResponse.data;
+                this.isLoading = false;
             }
         },
 
