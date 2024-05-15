@@ -10,7 +10,7 @@
             <ion-row class="display-flex ion-justify-content-center ion-padding-top">
                 <ion-col sizeXs="12" sizeSm="10" sizeMd="8" sizeLg="6" sizeXl="6">
                     <spinner v-if="isLoading" />
-                    <div v-if="!isLoading && vocabularies.length">
+                    <div v-if="!isLoading && vocabularies.length" class="ion-padding-start ion-padding-end">
                         <ion-card-subtitle class="ion-text-center ion-padding-bottom">
                             {{ vocabularies[currentVocabularyIndex].meaning }}
                         </ion-card-subtitle>
