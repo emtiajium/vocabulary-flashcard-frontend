@@ -3,7 +3,7 @@
         <div class="contents">
             <ion-item lines="none" :class="itemClass">
                 <ion-textarea
-                    autoGrow="true"
+                    :auto-grow="true"
                     inputmode="text"
                     autocapitalize="sentences"
                     placeholder="Type something"
