@@ -32,6 +32,7 @@
                             {{ resultMessage }}
                         </ion-card-subtitle>
                         <div class="display-flex ion-justify-content-end ion-padding-top">
+                            <ion-button aria-label="Skip and try next" @click="skip()"> Skip </ion-button>
                             <ion-button aria-label="Check the answer" @click="checkAnswer()"> Check </ion-button>
                             <ion-button aria-label="Back to the previous" @click="onClickPrevious()">
                                 Previous
@@ -132,6 +133,15 @@ export default defineComponent({
         },
 
         onClickNext(): void {
+            this.currentVocabularyIndex += 1;
+            if (this.currentVocabularyIndex >= this.vocabularies.length) {
+                this.currentVocabularyIndex = 0;
+            }
+            this.resultMessage = '';
+            this.givenAnswer = '';
+        },
+
+        skip(): void {
             this.currentVocabularyIndex += 1;
             if (this.currentVocabularyIndex >= this.vocabularies.length) {
                 this.currentVocabularyIndex = 0;
