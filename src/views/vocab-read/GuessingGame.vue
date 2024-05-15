@@ -88,10 +88,7 @@ export default defineComponent({
         },
 
         checkAnswer(): void {
-            const correctVocabulary = this.vocabularies.find(
-                (vocabulary) => vocabulary.word === this.vocabularies[this.currentVocabularyIndex].word,
-            );
-
+            const correctVocabulary = this.vocabularies[this.currentVocabularyIndex];
             if (this.givenAnswer.trim().toLowerCase() === correctVocabulary?.word.trim().toLowerCase()) {
                 this.resultMessage = 'Correct!';
                 this.playSound(this.correctSound);
