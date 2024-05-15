@@ -10,6 +10,13 @@
             <ion-row class="display-flex ion-justify-content-center ion-padding-top">
                 <ion-col sizeXs="12" sizeSm="10" sizeMd="8" sizeLg="6" sizeXl="6">
                     <spinner v-if="isLoading" />
+
+                    <div v-if="isLoading" class="ion-padding-start ion-padding-end">
+                        <ion-card-subtitle class="ion-text-center ion-padding-bottom">
+                            Preparing the guessing game for today ...
+                        </ion-card-subtitle>
+                    </div>
+
                     <div v-if="!isLoading && vocabularies.length" class="ion-padding-start ion-padding-end">
                         <ion-card-subtitle class="ion-text-center ion-padding-bottom">
                             {{ vocabularies[currentVocabularyIndex].meaning }}
@@ -17,6 +24,7 @@
                         <ion-textarea
                             placeholder="Guess the word"
                             inputmode="text"
+                            :auto-grow="true"
                             :value="givenAnswer"
                             @ionChange="givenAnswer = $event.target.value"
                         />
@@ -24,11 +32,11 @@
                             {{ resultMessage }}
                         </ion-card-subtitle>
                         <div class="display-flex ion-justify-content-end ion-padding-top">
-                            <ion-button aria-label="Check the answer" @click="checkAnswer()">Check</ion-button>
-                            <ion-button aria-label="Back to the previous" @click="onClickPrevious()"
-                                >Previous</ion-button
-                            >
-                            <ion-button aria-label="Navigate to the next" @click="onClickNext()">Next</ion-button>
+                            <ion-button aria-label="Check the answer" @click="checkAnswer()"> Check </ion-button>
+                            <ion-button aria-label="Back to the previous" @click="onClickPrevious()">
+                                Previous
+                            </ion-button>
+                            <ion-button aria-label="Navigate to the next" @click="onClickNext()"> Next </ion-button>
                         </div>
                     </div>
                 </ion-col>
