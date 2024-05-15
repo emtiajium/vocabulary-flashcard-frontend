@@ -24,9 +24,11 @@
                             {{ resultMessage }}
                         </ion-card-subtitle>
                         <div class="display-flex ion-justify-content-end ion-padding-top">
-                            <ion-button @click="checkAnswer()">Check</ion-button>
-                            <ion-button @click="onClickPrevious()">Previous</ion-button>
-                            <ion-button @click="onClickNext()">Next</ion-button>
+                            <ion-button aria-label="Check the answer" @click="checkAnswer()">Check</ion-button>
+                            <ion-button aria-label="Back to the previous" @click="onClickPrevious()"
+                                >Previous</ion-button
+                            >
+                            <ion-button aria-label="Navigate to the next" @click="onClickNext()">Next</ion-button>
                         </div>
                     </div>
                 </ion-col>
