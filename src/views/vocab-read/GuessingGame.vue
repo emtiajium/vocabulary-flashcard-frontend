@@ -105,6 +105,7 @@ export default defineComponent({
     ionViewWillLeave() {
         this.clean();
         this.swiper.destroy();
+        this.swiper.disable();
     },
     methods: {
         async init(): Promise<void> {
