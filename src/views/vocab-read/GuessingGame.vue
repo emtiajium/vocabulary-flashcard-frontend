@@ -137,7 +137,15 @@ export default defineComponent({
                 },
             });
 
-            this.swiper.on('slideChange', () => {
+            // this.swiper.on('slideChange', (a: string) => {
+            //     console.log('a', a);
+            // });
+
+            this.swiper.on('navigationNext', () => {
+                this.onChangeVocabulary();
+            });
+
+            this.swiper.on('navigationPrev', () => {
                 this.onChangeVocabulary();
             });
         },
