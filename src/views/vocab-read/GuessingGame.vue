@@ -109,16 +109,8 @@ export default defineComponent({
     methods: {
         async init(): Promise<void> {
             this.initSwiper();
-            const cachedRandomlyChosenMeaningResponse = await NativeStorage.getGuessingGameVocabularies();
-            const today = format(new Date(), 'yyyy-MM-dd');
-            if (cachedRandomlyChosenMeaningResponse?.createdAt !== today) {
-                await NativeStorage.removeGuessingGameVocabularies().catch();
-                await this.loadVocabularies();
-                this.isLoading = false;
-            } else {
-                this.vocabularies = cachedRandomlyChosenMeaningResponse.data;
-                this.isLoading = false;
-            }
+            await this.loadVocabularies();
+            this.isLoading = false;
             this.swiper.init();
         },
 
