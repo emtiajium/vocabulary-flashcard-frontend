@@ -43,7 +43,7 @@ ion-radio {
 
 ion-card {
     box-shadow: unset;
-    border-radius: var(--defaul-border-radius);
+    border-radius: var(--default-border-radius);
     margin-left: calc(var(--ion-margin) / 4);
     margin-right: calc(var(--ion-margin) / 4);
 }
@@ -95,7 +95,7 @@ body.dark ion-alert {
 }
 
 ion-button:not(.button-round) {
-    --border-radius: var(--defaul-border-radius);
+    --border-radius: var(--default-border-radius);
 }
 
 ion-popover::part(content) {
@@ -112,7 +112,7 @@ ion-popover::part(content) {
 
 ion-textarea {
     border: thin solid var(--ion-color-lightest);
-    border-radius: var(--defaul-border-radius);
+    border-radius: var(--default-border-radius);
     padding-left: var(--ion-padding);
     padding-right: var(--ion-padding);
 }

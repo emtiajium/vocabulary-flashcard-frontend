@@ -1,0 +1,19 @@
+@import url('../../node_modules/swiper/swiper.min.css');
+@import url('../../node_modules/swiper/modules/navigation.min.css');
+@import url('../../node_modules/swiper/modules/pagination.min.css');
+
+.swiper-pagination-bullet {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    opacity: 1;
+    color: var(--ion-color-light-contrast);
+    background: var(--ion-color-light);
+}
+
+.swiper-pagination-bullet-active {
+    color: var(--ion-color-white);
+    background: var(--ion-color-primary);
+}
