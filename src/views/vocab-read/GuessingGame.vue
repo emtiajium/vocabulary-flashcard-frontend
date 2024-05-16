@@ -118,6 +118,8 @@ export default defineComponent({
             this.swiper = new Swiper('.swiper', {
                 modules: [Navigation, Pagination],
                 init: false,
+                loop: true,
+                rewind: true,
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
