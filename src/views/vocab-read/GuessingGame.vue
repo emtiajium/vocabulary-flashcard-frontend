@@ -51,8 +51,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
                         <div class="swiper-pagination"></div>
                     </div>
                 </ion-col>
@@ -73,7 +71,7 @@ import { RandomlyChosenMeaningResponse } from '@/domains/RandomlyChosenMeaningRe
 import { format } from 'date-fns';
 import NativeStorage from '@/utils/NativeStorage';
 import Swiper from 'swiper';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 
 export default defineComponent({
     name: 'GuessingGame',
@@ -117,14 +115,10 @@ export default defineComponent({
 
         initSwiper(): void {
             this.swiper = new Swiper('.swiper', {
-                modules: [Navigation, Pagination],
+                modules: [Pagination],
                 init: false,
                 loop: true,
                 rewind: true,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
