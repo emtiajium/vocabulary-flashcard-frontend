@@ -35,9 +35,7 @@
                                     <ion-card-subtitle class="ion-padding-top ion-text-center" v-if="resultMessage">
                                         {{ resultMessage }}
                                     </ion-card-subtitle>
-                                    <div
-                                        class="display-flex ion-justify-content-end ion-padding-top ion-padding-bottom"
-                                    >
+                                    <div class="display-flex ion-justify-content-end ion-padding-top">
                                         <ion-button
                                             aria-label="Check the answer"
                                             size="small"
@@ -49,7 +47,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-pagination ion-margin-top"></div>
+                        <div class="swiper-pagination"></div>
                     </div>
                 </ion-col>
             </ion-row>
