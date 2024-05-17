@@ -12,46 +12,43 @@
                     <spinner v-if="isLoading" />
 
                     <div v-if="isLoading" class="ion-padding-start ion-padding-end">
-                        <ion-card-subtitle class="ion-text-center ion-padding-bottom">
+                        <ion-card-subtitle class="ion-text-center">
                             Preparing the guessing game for today ...
                         </ion-card-subtitle>
                     </div>
 
-                    <div class="swiper ion-margin-start ion-margin-end" v-show="!isLoading && vocabularies.length">
+                    <div class="swiper" v-show="!isLoading && vocabularies.length">
                         <div class="swiper-wrapper">
                             <div v-for="(vocabulary, index) of vocabularies" :key="index" class="swiper-slide">
-                                <div class="ion-padding ion-margin">
+                                <div class="ion-padding ion-margin-bottom">
                                     <ion-card-subtitle class="ion-text-center ion-padding-bottom">
                                         {{ vocabulary.meaning }}
                                     </ion-card-subtitle>
-                                    <div class="ion-padding-start ion-padding-end">
-                                        <ion-textarea
-                                            placeholder="Guess the word"
-                                            inputmode="text"
-                                            :auto-grow="true"
-                                            :value="givenAnswer"
-                                            @ionChange="givenAnswer = $event.target.value"
-                                        />
-                                    </div>
-                                    <ion-card-subtitle
-                                        class="ion-padding-top ion-padding-start ion-padding-end ion-text-center"
-                                    >
+                                    <ion-textarea
+                                        placeholder="Guess the word"
+                                        inputmode="text"
+                                        :auto-grow="true"
+                                        :value="givenAnswer"
+                                        @ionChange="givenAnswer = $event.target.value"
+                                    />
+                                    <ion-card-subtitle class="ion-padding-top ion-text-center" v-if="resultMessage">
                                         {{ resultMessage }}
                                     </ion-card-subtitle>
                                     <div
-                                        class="
-                                            display-flex
-                                            ion-justify-content-end ion-padding-top ion-padding-bottom ion-padding-end
-                                        "
+                                        class="display-flex ion-justify-content-end ion-padding-top ion-padding-bottom"
                                     >
-                                        <ion-button aria-label="Check the answer" @click="checkAnswer(vocabulary)">
+                                        <ion-button
+                                            aria-label="Check the answer"
+                                            size="small"
+                                            @click="checkAnswer(vocabulary)"
+                                        >
                                             Check
                                         </ion-button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-pagination"></div>
+                        <div class="swiper-pagination ion-margin-top"></div>
                     </div>
                 </ion-col>
             </ion-row>
