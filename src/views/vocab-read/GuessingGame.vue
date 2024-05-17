@@ -62,13 +62,45 @@
                     </div>
                 </ion-col>
             </ion-row>
+
+            <ion-modal
+                :is-open="isInfoModalOpened"
+                @willDismiss="isInfoModalOpened = false"
+                :initial-breakpoint="0.25"
+                :breakpoints="[0, 0.25, 0.5, 0.75]"
+            >
+                <div class="ion-padding">
+                    <ion-card-subtitle class="ion-text-center">
+                        In this Vocabulary Guessing Game, you will be presented with a series of meanings. Your task is
+                        to guess the correct word that matches each meaning. For each correct guess, your score will
+                        increase. Challenge yourself to see how many words you can get right!
+                    </ion-card-subtitle>
+                </div>
+            </ion-modal>
+
+            <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                <ion-fab-button @click="isInfoModalOpened = true">
+                    <font-awesome-icon :icon="faCircleCheck" />
+                </ion-fab-button>
+            </ion-fab>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, IonRow, IonCol, IonTextarea, IonButton, IonCardSubtitle } from '@ionic/vue';
+import {
+    IonPage,
+    IonContent,
+    IonRow,
+    IonCol,
+    IonTextarea,
+    IonButton,
+    IonCardSubtitle,
+    IonFab,
+    IonFabButton,
+    IonModal,
+} from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import Spinner from '@/views/shared/Spinner.vue';
 import HttpHandler from '@/utils/HttpHandler';
@@ -85,6 +117,8 @@ import { faTimesCircle, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 export default defineComponent({
     name: 'GuessingGame',
     components: {
+        IonFabButton,
+        IonFab,
         FirecrackerHeader,
         IonPage,
         IonContent,
@@ -95,6 +129,7 @@ export default defineComponent({
         IonButton,
         IonCardSubtitle,
         FontAwesomeIcon,
+        IonModal,
     },
     data() {
         return {
@@ -109,6 +144,7 @@ export default defineComponent({
             isCorrect: false,
             correctAnswerCount: 0,
             swiper: {} as Swiper,
+            isInfoModalOpened: false,
         };
     },
     async ionViewDidEnter() {
