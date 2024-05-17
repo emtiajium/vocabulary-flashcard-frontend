@@ -183,8 +183,9 @@ export default defineComponent({
 
 <style scoped>
 .swiper {
-    width: 100%;
+    width: calc(100% - var(--ion-margin) / 4 - var(--ion-margin) / 4);
     height: 100%;
+    border-radius: var(--default-border-radius);
 }
 
 .swiper-slide {
