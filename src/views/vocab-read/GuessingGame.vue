@@ -19,6 +19,9 @@
                         <div class="swiper-wrapper">
                             <div v-for="(vocabulary, index) of vocabularies" :key="index" class="swiper-slide">
                                 <div class="ion-padding ion-margin-bottom">
+                                    <ion-card-subtitle class="ion-text-end ion-padding-bottom">
+                                        {{ correctAnswerCount }} / {{ vocabularies.length }}
+                                    </ion-card-subtitle>
                                     <ion-card-subtitle class="ion-text-center ion-padding-bottom">
                                         {{ vocabulary.meaning }}
                                     </ion-card-subtitle>
@@ -89,6 +92,7 @@ export default defineComponent({
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             givenAnswer: '',
             resultMessage: '',
+            correctAnswerCount: 0,
             swiper: {} as Swiper,
         };
     },
@@ -147,14 +151,25 @@ export default defineComponent({
             }
         },
 
+        /* eslint-disable no-param-reassign */
         checkAnswer(correctVocabulary: RandomlyChosenMeaningResponse): void {
             if (this.givenAnswer.trim().toLowerCase() === correctVocabulary.word.trim().toLowerCase()) {
                 this.resultMessage = 'Correct!';
                 this.playSound(this.correctSound);
+                correctVocabulary.isCorrect = true;
             } else {
                 this.resultMessage = `Incorrect. The correct word is "${correctVocabulary.word}".`;
                 this.playSound(this.incorrectSound);
+                correctVocabulary.isCorrect = false;
             }
+            this.calculateCorrectAnswerCount();
+            /* eslint-enable no-param-reassign */
+        },
+
+        calculateCorrectAnswerCount(): void {
+            this.correctAnswerCount = this.vocabularies.reduce((accumulator, currentValue) => {
+                return currentValue.isCorrect ? accumulator + 1 : accumulator;
+            }, 0);
         },
 
         onChangeVocabulary(): void {
@@ -174,6 +189,7 @@ export default defineComponent({
             this.vocabularies = [];
             this.givenAnswer = '';
             this.resultMessage = '';
+            this.correctAnswerCount = 0;
         },
     },
 });
