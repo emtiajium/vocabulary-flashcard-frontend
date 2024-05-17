@@ -20,7 +20,8 @@
                             <div v-for="(vocabulary, index) of vocabularies" :key="index" class="swiper-slide">
                                 <div class="ion-padding ion-margin-bottom">
                                     <ion-card-subtitle class="ion-text-end ion-padding-bottom">
-                                        {{ correctAnswerCount }} / {{ vocabularies.length }}
+                                        <span class="correct-count"> {{ correctAnswerCount }} </span> /
+                                        {{ vocabularies.length }}
                                     </ion-card-subtitle>
                                     <ion-card-subtitle class="ion-text-center ion-padding-bottom">
                                         {{ vocabulary.meaning }}
@@ -39,7 +40,7 @@
                                         <ion-button
                                             aria-label="Check the answer"
                                             size="small"
-                                            @click="checkAnswer(vocabulary)"
+                                            @click="checkAnswer(vocabulary, index)"
                                         >
                                             Check
                                         </ion-button>
@@ -150,8 +151,10 @@ export default defineComponent({
         },
 
         /* eslint-disable no-param-reassign */
-        checkAnswer(correctVocabulary: RandomlyChosenMeaningResponse): void {
+        checkAnswer(correctVocabulary: RandomlyChosenMeaningResponse, index: number): void {
+            let isCorrect = false;
             if (this.givenAnswer.trim().toLowerCase() === correctVocabulary.word.trim().toLowerCase()) {
+                isCorrect = true;
                 this.resultMessage = 'Correct!';
                 this.playSound(this.correctSound);
                 correctVocabulary.isCorrect = true;
@@ -161,6 +164,9 @@ export default defineComponent({
                 correctVocabulary.isCorrect = false;
             }
             this.calculateCorrectAnswerCount();
+            if (isCorrect) {
+                this.animateCount(index);
+            }
             /* eslint-enable no-param-reassign */
         },
 
@@ -168,6 +174,18 @@ export default defineComponent({
             this.correctAnswerCount = this.vocabularies.reduce((accumulator, currentValue) => {
                 return currentValue.isCorrect ? accumulator + 1 : accumulator;
             }, 0);
+        },
+
+        animateCount(index: number): void {
+            const element = document.getElementsByClassName('correct-count')[index];
+            element.classList.add('animate-count');
+            element.addEventListener(
+                'animationend',
+                () => {
+                    element.classList.remove('animate-count');
+                },
+                { once: true },
+            );
         },
 
         onChangeVocabulary(): void {
@@ -203,5 +221,22 @@ export default defineComponent({
 .swiper-slide {
     background: var(--ion-card-background);
     border-radius: var(--default-border-radius);
+}
+
+@keyframes update-count {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-count {
+    display: inline-block;
+    animation: update-count 0.5s ease-out;
 }
 </style>
