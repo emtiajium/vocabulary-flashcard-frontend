@@ -12,9 +12,7 @@
                     <spinner v-if="isLoading" />
 
                     <div v-if="isLoading" class="ion-padding-start ion-padding-end">
-                        <ion-card-subtitle class="ion-text-center">
-                            Preparing the guessing game for today ...
-                        </ion-card-subtitle>
+                        <ion-card-subtitle class="ion-text-center"> Preparing the guessing game ... </ion-card-subtitle>
                     </div>
 
                     <div class="swiper" v-show="!isLoading && vocabularies.length">
