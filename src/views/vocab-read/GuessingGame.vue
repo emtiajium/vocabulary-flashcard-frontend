@@ -80,7 +80,7 @@
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                 <ion-fab-button @click="isInfoModalOpened = true">
-                    <font-awesome-icon :icon="faCircleCheck" />
+                    <font-awesome-icon :icon="faLightbulb" />
                 </ion-fab-button>
             </ion-fab>
         </ion-content>
@@ -112,7 +112,7 @@ import NativeStorage from '@/utils/NativeStorage';
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTimesCircle, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faCircleCheck, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'GuessingGame',
@@ -135,6 +135,7 @@ export default defineComponent({
         return {
             faCircleCheck,
             faTimesCircle,
+            faLightbulb,
             correctSound: new Audio('/assets/audio-clips/correct-answer.mp3'),
             incorrectSound: new Audio('/assets/audio-clips/wrong-answer.mp3'),
             isLoading: true,
