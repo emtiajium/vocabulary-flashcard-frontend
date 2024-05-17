@@ -33,8 +33,18 @@
                                         :value="givenAnswer"
                                         @ionChange="givenAnswer = $event.target.value"
                                     />
-                                    <ion-card-subtitle class="ion-padding-top ion-text-center" v-if="resultMessage">
-                                        {{ resultMessage }}
+                                    <ion-card-subtitle class="ion-padding-top" v-if="resultMessage">
+                                        <span class="display-flex ion-justify-content-center ion-align-items-center">
+                                            <font-awesome-icon
+                                                :icon="isCorrect ? faCircleCheck : faTimesCircle"
+                                                :class="
+                                                    isCorrect
+                                                        ? 'firecracker-primary-color-icon'
+                                                        : 'firecracker-warning-color-icon'
+                                                "
+                                            />
+                                            <span class="ion-padding-start"> {{ resultMessage }} </span>
+                                        </span>
                                     </ion-card-subtitle>
                                     <div class="display-flex ion-justify-content-end ion-padding-top">
                                         <ion-button
@@ -69,6 +79,8 @@ import { format } from 'date-fns';
 import NativeStorage from '@/utils/NativeStorage';
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faTimesCircle, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'GuessingGame',
@@ -82,15 +94,19 @@ export default defineComponent({
         Spinner,
         IonButton,
         IonCardSubtitle,
+        FontAwesomeIcon,
     },
     data() {
         return {
+            faCircleCheck,
+            faTimesCircle,
             correctSound: new Audio('/assets/audio-clips/correct-answer.mp3'),
             incorrectSound: new Audio('/assets/audio-clips/wrong-answer.mp3'),
             isLoading: true,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             givenAnswer: '',
             resultMessage: '',
+            isCorrect: false,
             correctAnswerCount: 0,
             swiper: {} as Swiper,
         };
@@ -163,6 +179,7 @@ export default defineComponent({
                 this.playSound(this.incorrectSound);
                 correctVocabulary.isCorrect = false;
             }
+            this.isCorrect = isCorrect;
             this.calculateCorrectAnswerCount();
             if (isCorrect) {
                 this.animateCount(index);
