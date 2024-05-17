@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <firecracker-header
-            header-title="Guessing Game"
+            header-title="Guessing Word"
             content-id="guessing-game"
             menu-id="guessing-game-menu"
             type="MENU"
