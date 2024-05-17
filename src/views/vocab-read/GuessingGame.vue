@@ -240,20 +240,24 @@ export default defineComponent({
     border-radius: var(--default-border-radius);
 }
 
-@keyframes update-count {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.5);
-    }
+@keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
     100% {
-        transform: scale(1);
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
     }
 }
 
 .animate-count {
     display: inline-block;
-    animation: update-count 0.5s ease-out;
+    animation: bounce 1s ease-out;
 }
 </style>
