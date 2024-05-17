@@ -189,9 +189,6 @@ export default defineComponent({
 
 .swiper-slide {
     background: var(--ion-card-background);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: var(--default-border-radius);
 }
 </style>
