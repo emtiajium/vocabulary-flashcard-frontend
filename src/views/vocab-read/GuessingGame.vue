@@ -359,6 +359,8 @@ export default defineComponent({
 }
 
 .swiper-slide {
+    height: 70vh;
+    top: 25%;
     background: var(--ion-card-background);
     border-radius: var(--default-border-radius);
 }
