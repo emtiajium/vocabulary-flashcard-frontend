@@ -43,14 +43,17 @@
                                             </ion-card-subtitle>
                                         </div>
                                     </div>
+
                                     <ion-card-subtitle class="ion-text-center ion-padding-bottom">
                                         {{ vocabulary.meaning }}
                                     </ion-card-subtitle>
+
                                     <div
                                         class="
                                             display-flex
                                             ion-justify-content-between ion-align-items-center
                                             submit-answer-container
+                                            ion-margin-bottom
                                         "
                                     >
                                         <ion-textarea
@@ -62,6 +65,17 @@
                                             :value="vocabulary.isCorrect ? vocabulary.word : givenAnswer"
                                             @ionChange="givenAnswer = $event.target.value"
                                         />
+                                        <ion-button
+                                            aria-label="Show the correct word"
+                                            fill="clear"
+                                            size="large"
+                                            shape="round"
+                                            color="primary"
+                                            :strong="true"
+                                            @click="showCorrectAnswer = true"
+                                        >
+                                            <font-awesome-icon :icon="faEye" class="firecracker-primary-color-icon" />
+                                        </ion-button>
                                         <ion-button
                                             aria-label="Submit the answer"
                                             fill="clear"
@@ -75,9 +89,10 @@
                                             <font-awesome-icon :icon="faCircleArrowUp" />
                                         </ion-button>
                                     </div>
+
                                     <ion-card-subtitle
-                                        class="ion-padding-top"
                                         v-if="resultMessage && !showCorrectAnswer"
+                                        class="ion-padding-bottom"
                                     >
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
@@ -91,7 +106,8 @@
                                             <span class="ion-padding-start"> {{ resultMessage }} </span>
                                         </span>
                                     </ion-card-subtitle>
-                                    <ion-card-subtitle class="ion-padding-top" v-if="showCorrectAnswer">
+
+                                    <ion-card-subtitle v-if="showCorrectAnswer" class="ion-padding-bottom">
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
                                                 :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
@@ -106,19 +122,6 @@
                                             </span>
                                         </span>
                                     </ion-card-subtitle>
-                                    <div class="display-flex ion-justify-content-end ion-padding-top">
-                                        <ion-button
-                                            aria-label="Show the correct word"
-                                            fill="clear"
-                                            size="large"
-                                            shape="round"
-                                            color="primary"
-                                            :strong="true"
-                                            @click="showCorrectAnswer = true"
-                                        >
-                                            <font-awesome-icon :icon="faEye" class="firecracker-primary-color-icon" />
-                                        </ion-button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
