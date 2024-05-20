@@ -166,8 +166,8 @@ export default defineComponent({
             this.swiper = new Swiper('.swiper', {
                 modules: [Pagination],
                 init: false,
-                loop: true,
                 rewind: true,
+                spaceBetween: 10,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
