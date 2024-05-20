@@ -159,8 +159,7 @@ export default defineComponent({
     methods: {
         async init(): Promise<void> {
             this.initSwiper();
-            await this.loadVocabularies();
-            this.isLoading = false;
+            await this.assertLoadingVocabularies();
             this.swiper.init();
         },
 
@@ -185,6 +184,19 @@ export default defineComponent({
             this.swiper.on('realIndexChange', (a: string) => {
                 this.onChangeVocabulary();
             });
+        },
+
+        async assertLoadingVocabularies(): Promise<void> {
+            this.isLoading = true;
+            const cachedRandomlyChosenMeaningResponse = await NativeStorage.getGuessingGameVocabularies();
+            const today = format(new Date(), 'yyyy-MM-dd');
+            if (cachedRandomlyChosenMeaningResponse?.createdAt !== today) {
+                await NativeStorage.removeGuessingGameVocabularies().catch();
+                await this.loadVocabularies();
+            } else {
+                this.vocabularies = cachedRandomlyChosenMeaningResponse.data;
+            }
+            this.isLoading = false;
         },
 
         async loadVocabularies(): Promise<void> {
