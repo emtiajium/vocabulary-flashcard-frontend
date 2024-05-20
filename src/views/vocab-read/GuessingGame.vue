@@ -257,7 +257,7 @@ export default defineComponent({
             const cachedRandomlyChosenMeaningResponse = await NativeStorage.getGuessingGameVocabularies();
             const today = format(new Date(), 'yyyy-MM-dd');
             if (cachedRandomlyChosenMeaningResponse?.createdAt !== today) {
-                await NativeStorage.removeGuessingGameVocabularies().catch();
+                NativeStorage.removeGuessingGameVocabularies().catch();
                 await this.loadVocabularies();
             } else {
                 this.vocabularies = cachedRandomlyChosenMeaningResponse.data;
@@ -285,6 +285,7 @@ export default defineComponent({
         submitAnswer(correctVocabulary: RandomlyChosenMeaningResponse, index: number): void {
             this.showCorrectAnswer = false;
             let isCorrect = false;
+            const previousCorrectAnswerCount = this.correctAnswerCount;
             if (this.givenAnswer.trim().toLowerCase() === correctVocabulary.word.trim().toLowerCase()) {
                 isCorrect = true;
                 this.resultMessage = 'Correct!';
@@ -296,11 +297,11 @@ export default defineComponent({
                 correctVocabulary.isCorrect = false;
             }
             this.calculateCorrectAnswerCount();
-            if (isCorrect) {
+            if (this.correctAnswerCount !== previousCorrectAnswerCount) {
                 this.animateCount(index);
             }
             if (this.correctAnswerCount === this.vocabularies.length) {
-                await NativeStorage.removeGuessingGameVocabularies().catch();
+                NativeStorage.removeGuessingGameVocabularies().catch();
             }
             /* eslint-enable no-param-reassign */
         },
