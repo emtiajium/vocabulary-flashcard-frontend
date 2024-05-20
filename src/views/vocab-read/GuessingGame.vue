@@ -299,6 +299,9 @@ export default defineComponent({
             if (isCorrect) {
                 this.animateCount(index);
             }
+            if (this.correctAnswerCount === this.vocabularies.length) {
+                await NativeStorage.removeGuessingGameVocabularies().catch();
+            }
             /* eslint-enable no-param-reassign */
         },
 
