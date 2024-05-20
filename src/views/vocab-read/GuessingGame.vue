@@ -46,15 +46,39 @@
                                     <ion-card-subtitle class="ion-text-center ion-padding-bottom">
                                         {{ vocabulary.meaning }}
                                     </ion-card-subtitle>
-                                    <ion-textarea
-                                        placeholder="Guess the word"
-                                        inputmode="text"
-                                        autocapitalize="sentences"
-                                        :auto-grow="true"
-                                        :value="vocabulary.isCorrect ? vocabulary.word : givenAnswer"
-                                        @ionChange="givenAnswer = $event.target.value"
-                                    />
-                                    <ion-card-subtitle class="ion-padding-top" v-if="resultMessage">
+                                    <div
+                                        class="
+                                            display-flex
+                                            ion-justify-content-between ion-align-items-center
+                                            submit-answer-container
+                                        "
+                                    >
+                                        <ion-textarea
+                                            class="no-border"
+                                            placeholder="Guess the word"
+                                            inputmode="text"
+                                            autocapitalize="sentences"
+                                            :auto-grow="true"
+                                            :value="vocabulary.isCorrect ? vocabulary.word : givenAnswer"
+                                            @ionChange="givenAnswer = $event.target.value"
+                                        />
+                                        <ion-button
+                                            aria-label="Submit the answer"
+                                            fill="clear"
+                                            size="large"
+                                            shape="round"
+                                            color="primary"
+                                            class="ion-padding-end"
+                                            :strong="true"
+                                            @click="submitAnswer(vocabulary, index)"
+                                        >
+                                            <font-awesome-icon :icon="faCircleArrowUp" />
+                                        </ion-button>
+                                    </div>
+                                    <ion-card-subtitle
+                                        class="ion-padding-top"
+                                        v-if="resultMessage && !showCorrectAnswer"
+                                    >
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
                                                 :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
@@ -67,13 +91,32 @@
                                             <span class="ion-padding-start"> {{ resultMessage }} </span>
                                         </span>
                                     </ion-card-subtitle>
+                                    <ion-card-subtitle class="ion-padding-top" v-if="showCorrectAnswer">
+                                        <span class="display-flex ion-justify-content-center ion-align-items-center">
+                                            <font-awesome-icon
+                                                :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
+                                                :class="
+                                                    vocabulary.isCorrect
+                                                        ? 'firecracker-primary-color-icon'
+                                                        : 'firecracker-warning-color-icon'
+                                                "
+                                            />
+                                            <span class="ion-padding-start">
+                                                The correct word is "{{ vocabulary.word }}".
+                                            </span>
+                                        </span>
+                                    </ion-card-subtitle>
                                     <div class="display-flex ion-justify-content-end ion-padding-top">
                                         <ion-button
-                                            aria-label="Check the answer"
-                                            size="small"
-                                            @click="checkAnswer(vocabulary, index)"
+                                            aria-label="Show the correct word"
+                                            fill="clear"
+                                            size="large"
+                                            shape="round"
+                                            color="primary"
+                                            :strong="true"
+                                            @click="showCorrectAnswer = true"
                                         >
-                                            Check
+                                            <font-awesome-icon :icon="faEye" class="firecracker-primary-color-icon" />
                                         </ion-button>
                                     </div>
                                 </div>
@@ -133,7 +176,7 @@ import NativeStorage from '@/utils/NativeStorage';
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCircleCheck, faLightbulb, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faLightbulb, faBan, faCircleArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'GuessingGame',
@@ -157,12 +200,15 @@ export default defineComponent({
             faCircleCheck,
             faBan,
             faLightbulb,
+            faCircleArrowUp,
+            faEye,
             correctSound: new Audio('/assets/audio-clips/correct-answer.mp3'),
             incorrectSound: new Audio('/assets/audio-clips/wrong-answer.mp3'),
             isLoading: true,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             givenAnswer: '',
             resultMessage: '',
+            showCorrectAnswer: false,
             correctAnswerCount: 0,
             swiper: {} as Swiper,
             isInfoModalOpened: false,
@@ -236,7 +282,8 @@ export default defineComponent({
         },
 
         /* eslint-disable no-param-reassign */
-        checkAnswer(correctVocabulary: RandomlyChosenMeaningResponse, index: number): void {
+        submitAnswer(correctVocabulary: RandomlyChosenMeaningResponse, index: number): void {
+            this.showCorrectAnswer = false;
             let isCorrect = false;
             if (this.givenAnswer.trim().toLowerCase() === correctVocabulary.word.trim().toLowerCase()) {
                 isCorrect = true;
@@ -244,7 +291,7 @@ export default defineComponent({
                 this.playSound(this.correctSound);
                 correctVocabulary.isCorrect = true;
             } else {
-                this.resultMessage = `Incorrect. The correct word is "${correctVocabulary.word}".`;
+                this.resultMessage = `Incorrect!`;
                 this.playSound(this.incorrectSound);
                 correctVocabulary.isCorrect = false;
             }
@@ -276,6 +323,7 @@ export default defineComponent({
         onChangeVocabulary(): void {
             this.resultMessage = '';
             this.givenAnswer = '';
+            this.showCorrectAnswer = false;
         },
 
         playSound(sound: HTMLAudioElement): void {
@@ -305,6 +353,11 @@ export default defineComponent({
 
 .swiper-slide {
     background: var(--ion-card-background);
+    border-radius: var(--default-border-radius);
+}
+
+.submit-answer-container {
+    border: thin solid var(--text-area-border-color);
     border-radius: var(--default-border-radius);
 }
 
