@@ -29,6 +29,7 @@
                                     <ion-textarea
                                         placeholder="Guess the word"
                                         inputmode="text"
+                                        autocapitalize="sentences"
                                         :auto-grow="true"
                                         :value="givenAnswer"
                                         @ionChange="givenAnswer = $event.target.value"
