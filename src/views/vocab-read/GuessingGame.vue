@@ -19,10 +19,30 @@
                         <div class="swiper-wrapper">
                             <div v-for="(vocabulary, index) of vocabularies" :key="index" class="swiper-slide">
                                 <div class="ion-padding ion-margin-bottom">
-                                    <ion-card-subtitle class="ion-text-end ion-padding-bottom">
-                                        <span class="correct-count"> {{ correctAnswerCount }} </span> /
-                                        {{ vocabularies.length }}
-                                    </ion-card-subtitle>
+                                    <div
+                                        class="
+                                            display-flex
+                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
+                                        "
+                                    >
+                                        <div>
+                                            <font-awesome-icon
+                                                v-if="typeof vocabulary.isCorrect === 'boolean'"
+                                                :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
+                                                :class="
+                                                    vocabulary.isCorrect
+                                                        ? 'firecracker-primary-color-icon'
+                                                        : 'firecracker-warning-color-icon'
+                                                "
+                                            />
+                                        </div>
+                                        <div>
+                                            <ion-card-subtitle class="ion-text-end">
+                                                <span class="correct-count"> {{ correctAnswerCount }} </span> /
+                                                {{ vocabularies.length }}
+                                            </ion-card-subtitle>
+                                        </div>
+                                    </div>
                                     <ion-card-subtitle class="ion-text-center ion-padding-bottom">
                                         {{ vocabulary.meaning }}
                                     </ion-card-subtitle>
@@ -31,13 +51,13 @@
                                         inputmode="text"
                                         autocapitalize="sentences"
                                         :auto-grow="true"
-                                        :value="givenAnswer"
+                                        :value="vocabulary.isCorrect ? vocabulary.word : givenAnswer"
                                         @ionChange="givenAnswer = $event.target.value"
                                     />
                                     <ion-card-subtitle class="ion-padding-top" v-if="resultMessage">
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
-                                                :icon="vocabulary.isCorrect ? faCircleCheck : faTimesCircle"
+                                                :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
                                                 :class="
                                                     vocabulary.isCorrect
                                                         ? 'firecracker-primary-color-icon'
@@ -113,7 +133,7 @@ import NativeStorage from '@/utils/NativeStorage';
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTimesCircle, faCircleCheck, faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faLightbulb, faBan } from '@fortawesome/free-solid-svg-icons';
 
 export default defineComponent({
     name: 'GuessingGame',
@@ -135,7 +155,7 @@ export default defineComponent({
     data() {
         return {
             faCircleCheck,
-            faTimesCircle,
+            faBan,
             faLightbulb,
             correctSound: new Audio('/assets/audio-clips/correct-answer.mp3'),
             incorrectSound: new Audio('/assets/audio-clips/wrong-answer.mp3'),
