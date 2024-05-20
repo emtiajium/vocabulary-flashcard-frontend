@@ -36,9 +36,9 @@
                                     <ion-card-subtitle class="ion-padding-top" v-if="resultMessage">
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
-                                                :icon="isCorrect ? faCircleCheck : faTimesCircle"
+                                                :icon="vocabulary.isCorrect ? faCircleCheck : faTimesCircle"
                                                 :class="
-                                                    isCorrect
+                                                    vocabulary.isCorrect
                                                         ? 'firecracker-primary-color-icon'
                                                         : 'firecracker-warning-color-icon'
                                                 "
@@ -142,7 +142,6 @@ export default defineComponent({
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             givenAnswer: '',
             resultMessage: '',
-            isCorrect: false,
             correctAnswerCount: 0,
             swiper: {} as Swiper,
             isInfoModalOpened: false,
@@ -228,7 +227,6 @@ export default defineComponent({
                 this.playSound(this.incorrectSound);
                 correctVocabulary.isCorrect = false;
             }
-            this.isCorrect = isCorrect;
             this.calculateCorrectAnswerCount();
             if (isCorrect) {
                 this.animateCount(index);
