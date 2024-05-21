@@ -47,7 +47,7 @@
                                     </div>
 
                                     <ion-card-header>
-                                        <ion-card-title class="ion-text-center ion-padding-bottom">
+                                        <ion-card-title class="ion-text-center capitalize ion-padding-bottom">
                                             {{ vocabulary.meaning }}
                                         </ion-card-title>
                                     </ion-card-header>
