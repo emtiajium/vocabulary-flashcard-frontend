@@ -28,14 +28,6 @@
                             <font-awesome-icon :icon="faBook" class="menu-icon" />
                             <ion-label class="ion-padding-start"> Vocabularies </ion-label>
                         </ion-item>
-                        <ion-item v-if="isAuthenticated" button @click="navigate('/guessing-game')">
-                            <font-awesome-icon :icon="faBullseye" class="menu-icon" />
-                            <ion-label class="ion-padding-start"> Guessing Word </ion-label>
-                        </ion-item>
-                        <ion-item v-if="isAuthenticated" button @click="navigate('/cohort/read')">
-                            <font-awesome-icon :icon="faUsers" class="menu-icon" />
-                            <ion-label class="ion-padding-start"> My Cohort </ion-label>
-                        </ion-item>
                         <ion-item v-if="isAuthenticated" button @click="navigate('/leitner-systems')">
                             <flashcard-icon
                                 :fill-color-variable="'--ion-color-primary'"
@@ -43,6 +35,14 @@
                                 class="menu-icon"
                             />
                             <ion-label class="ion-padding-start"> My Flashcards </ion-label>
+                        </ion-item>
+                        <ion-item v-if="isAuthenticated" button @click="navigate('/guessing-game')">
+                            <font-awesome-icon :icon="faBullseye" class="menu-icon" />
+                            <ion-label class="ion-padding-start"> Guessing Word </ion-label>
+                        </ion-item>
+                        <ion-item v-if="isAuthenticated" button @click="navigate('/cohort/read')">
+                            <font-awesome-icon :icon="faUsers" class="menu-icon" />
+                            <ion-label class="ion-padding-start"> My Cohort </ion-label>
                         </ion-item>
                         <ion-item v-if="!isAuthenticated" button @click="navigate('/sign-in')">
                             <font-awesome-icon :icon="faSignInAlt" class="menu-icon" />
