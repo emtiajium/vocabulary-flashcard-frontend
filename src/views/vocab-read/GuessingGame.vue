@@ -44,9 +44,11 @@
                                         </div>
                                     </div>
 
-                                    <ion-card-subtitle class="ion-text-center ion-padding-bottom">
-                                        {{ vocabulary.meaning }}
-                                    </ion-card-subtitle>
+                                    <ion-card-header>
+                                        <ion-card-title class="ion-text-center ion-padding-bottom">
+                                            {{ vocabulary.meaning }}
+                                        </ion-card-title>
+                                    </ion-card-header>
 
                                     <div
                                         class="
@@ -167,6 +169,8 @@ import {
     IonFab,
     IonFabButton,
     IonModal,
+    IonCardTitle,
+    IonCardHeader,
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import Spinner from '@/views/shared/Spinner.vue';
@@ -197,6 +201,8 @@ export default defineComponent({
         IonCardSubtitle,
         FontAwesomeIcon,
         IonModal,
+        IonCardTitle,
+        IonCardHeader,
     },
     data() {
         return {
@@ -359,8 +365,7 @@ export default defineComponent({
 }
 
 .swiper-slide {
-    height: 70vh;
-    top: 25%;
+    min-height: 70vh;
     background: var(--ion-card-background);
     border-radius: var(--default-border-radius);
 }
