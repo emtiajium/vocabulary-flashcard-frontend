@@ -31,11 +31,11 @@
                                             <font-awesome-icon
                                                 v-if="typeof vocabulary.isCorrect === 'boolean'"
                                                 :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
-                                                :class="
+                                                :class="`${
                                                     vocabulary.isCorrect
                                                         ? 'firecracker-primary-color-icon'
                                                         : 'firecracker-warning-color-icon'
-                                                "
+                                                } icon-font`"
                                             />
                                         </div>
                                         <div>
@@ -101,11 +101,11 @@
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
                                                 :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
-                                                :class="
+                                                :class="`${
                                                     vocabulary.isCorrect
                                                         ? 'firecracker-primary-color-icon'
                                                         : 'firecracker-warning-color-icon'
-                                                "
+                                                } icon-font`"
                                             />
                                             <span class="ion-padding-start"> {{ resultMessage }} </span>
                                         </span>
@@ -115,7 +115,7 @@
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
                                                 :icon="faInfoCircle"
-                                                class="firecracker-primary-color-icon"
+                                                class="firecracker-primary-color-icon icon-font"
                                             />
                                             <span class="ion-padding-start">
                                                 The correct word is "{{ vocabulary.word }}".
@@ -406,5 +406,9 @@ export default defineComponent({
 .animate-count {
     display: inline-block;
     animation: bounce 1s ease-out;
+}
+
+.icon-font {
+    font-size: 20px;
 }
 </style>
