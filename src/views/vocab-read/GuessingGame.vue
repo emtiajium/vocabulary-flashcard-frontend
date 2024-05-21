@@ -184,6 +184,7 @@ import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faCircleCheck, faLightbulb, faBan, faCircleArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
+import { cloneDeep } from 'lodash';
 
 export default defineComponent({
     name: 'GuessingGame',
@@ -227,6 +228,7 @@ export default defineComponent({
         await this.init();
     },
     ionViewWillLeave() {
+        this.storeInCache(cloneDeep(this.vocabularies));
         this.clean();
         this.swiper.destroy();
         this.swiper.disable();
@@ -280,11 +282,7 @@ export default defineComponent({
                     `/v1/vocabularies/definitions/random-search`,
                 );
                 this.vocabularies = vocabularies;
-                const today = format(new Date(), 'yyyy-MM-dd');
-                await NativeStorage.setGuessingGameVocabularies({
-                    createdAt: today,
-                    data: vocabularies,
-                });
+                this.storeInCache(vocabularies);
             } catch {
                 await Toast.present(MessageDB.genericError);
             }
@@ -344,6 +342,14 @@ export default defineComponent({
             // eslint-disable-next-line no-param-reassign
             sound.currentTime = 0;
             sound.play();
+        },
+
+        storeInCache(vocabularies: RandomlyChosenMeaningResponse[]): void {
+            const today = format(new Date(), 'yyyy-MM-dd');
+            NativeStorage.setGuessingGameVocabularies({
+                createdAt: today,
+                data: vocabularies,
+            }).finally();
         },
 
         clean(): void {
