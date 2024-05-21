@@ -1,5 +1,4 @@
 @import url('../../node_modules/swiper/swiper.min.css');
-@import url('../../node_modules/swiper/modules/navigation.min.css');
 @import url('../../node_modules/swiper/modules/pagination.min.css');
 
 .swiper-pagination-bullet {
@@ -14,6 +13,6 @@
 }
 
 .swiper-pagination-bullet-active {
-    color: var(--ion-color-white);
+    color: var(--ion-color-primary-contrast);
     background: var(--ion-color-primary);
 }
