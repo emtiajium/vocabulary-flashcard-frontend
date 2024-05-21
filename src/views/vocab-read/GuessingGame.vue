@@ -112,12 +112,8 @@
                                     <ion-card-subtitle v-if="showCorrectAnswer" class="ion-padding-bottom">
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
-                                                :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
-                                                :class="
-                                                    vocabulary.isCorrect
-                                                        ? 'firecracker-primary-color-icon'
-                                                        : 'firecracker-warning-color-icon'
-                                                "
+                                                :icon="faInfoCircle"
+                                                class="firecracker-primary-color-icon"
                                             />
                                             <span class="ion-padding-start">
                                                 The correct word is "{{ vocabulary.word }}".
@@ -183,7 +179,14 @@ import NativeStorage from '@/utils/NativeStorage';
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCircleCheck, faLightbulb, faBan, faCircleArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleCheck,
+    faLightbulb,
+    faBan,
+    faCircleArrowUp,
+    faEye,
+    faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { cloneDeep } from 'lodash';
 
 export default defineComponent({
@@ -212,6 +215,7 @@ export default defineComponent({
             faLightbulb,
             faCircleArrowUp,
             faEye,
+            faInfoCircle,
             correctSound: new Audio('/assets/audio-clips/correct-answer.mp3'),
             incorrectSound: new Audio('/assets/audio-clips/wrong-answer.mp3'),
             isLoading: true,
