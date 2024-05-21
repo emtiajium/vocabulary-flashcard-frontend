@@ -262,8 +262,8 @@ export default defineComponent({
                 },
             });
 
-            this.swiper.on('realIndexChange', (a: string) => {
-                this.onChangeVocabulary();
+            this.swiper.on('realIndexChange', (swiper: Swiper) => {
+                this.onChangeVocabulary(swiper.activeIndex);
             });
         },
 
@@ -276,6 +276,7 @@ export default defineComponent({
                 await this.loadVocabularies();
             } else {
                 this.vocabularies = cachedRandomlyChosenMeaningResponse.data;
+                this.calculateCorrectAnswerCount();
             }
             this.isLoading = false;
         },
@@ -335,9 +336,9 @@ export default defineComponent({
             );
         },
 
-        onChangeVocabulary(): void {
+        onChangeVocabulary(index: number): void {
             this.resultMessage = '';
-            this.givenAnswer = '';
+            this.givenAnswer = this.vocabularies[index].isCorrect ? this.vocabularies[index].word : '';
             this.showCorrectAnswer = false;
         },
 
