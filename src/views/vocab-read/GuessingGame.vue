@@ -41,7 +41,7 @@
                                         <div>
                                             <ion-card-subtitle
                                                 class="ion-text-end"
-                                                aria-label="{{ correctAnswerCount }} correct words out of {{ vocabularies.length }}"
+                                                :aria-label="`${correctAnswerCount} correct words out of ${vocabularies.length}`"
                                             >
                                                 <span class="correct-count"> {{ correctAnswerCount }} </span> /
                                                 {{ vocabularies.length }}
