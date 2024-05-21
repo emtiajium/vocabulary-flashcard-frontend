@@ -30,7 +30,7 @@
                                         <div>
                                             <font-awesome-icon
                                                 v-if="typeof vocabulary.isCorrect === 'boolean'"
-                                                :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
+                                                :icon="vocabulary.isCorrect ? correctIcon : incorrectIcon"
                                                 :class="`${
                                                     vocabulary.isCorrect
                                                         ? 'firecracker-primary-color-icon'
@@ -78,7 +78,10 @@
                                             :strong="true"
                                             @click="showCorrectAnswer = true"
                                         >
-                                            <font-awesome-icon :icon="faEye" class="firecracker-primary-color-icon" />
+                                            <font-awesome-icon
+                                                :icon="viewIcon"
+                                                class="firecracker-primary-color-icon"
+                                            />
                                         </ion-button>
                                         <ion-button
                                             aria-label="Submit the answer"
@@ -90,7 +93,7 @@
                                             :strong="true"
                                             @click="submitAnswer(vocabulary, index)"
                                         >
-                                            <font-awesome-icon :icon="faCircleArrowUp" />
+                                            <font-awesome-icon :icon="submitIcon" />
                                         </ion-button>
                                     </div>
 
@@ -100,7 +103,7 @@
                                     >
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
-                                                :icon="vocabulary.isCorrect ? faCircleCheck : faBan"
+                                                :icon="vocabulary.isCorrect ? correctIcon : incorrectIcon"
                                                 :class="`${
                                                     vocabulary.isCorrect
                                                         ? 'firecracker-primary-color-icon'
@@ -114,7 +117,7 @@
                                     <ion-card-subtitle v-if="showCorrectAnswer" class="ion-padding-bottom">
                                         <span class="display-flex ion-justify-content-center ion-align-items-center">
                                             <font-awesome-icon
-                                                :icon="faInfoCircle"
+                                                :icon="correctIcon"
                                                 class="firecracker-primary-color-icon icon-font"
                                             />
                                             <span class="ion-padding-start">
@@ -147,7 +150,7 @@
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                 <ion-fab-button @click="isInfoModalOpened = true">
-                    <font-awesome-icon :icon="faLightbulb" />
+                    <font-awesome-icon :icon="ideaIcon" />
                 </ion-fab-button>
             </ion-fab>
         </ion-content>
@@ -184,7 +187,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
     faCircleCheck,
     faLightbulb,
-    faBan,
+    faCircleXmark,
     faCircleArrowUp,
     faEye,
     faInfoCircle,
@@ -212,12 +215,12 @@ export default defineComponent({
     },
     data() {
         return {
-            faCircleCheck,
-            faBan,
-            faLightbulb,
-            faCircleArrowUp,
-            faEye,
-            faInfoCircle,
+            correctIcon: faCircleCheck,
+            incorrectIcon: faCircleXmark,
+            ideaIcon: faLightbulb,
+            submitIcon: faCircleArrowUp,
+            viewIcon: faEye,
+            infoIcon: faInfoCircle,
             correctSound: new Audio('/assets/audio-clips/correct-answer.mp3'),
             incorrectSound: new Audio('/assets/audio-clips/wrong-answer.mp3'),
             isLoading: true,
