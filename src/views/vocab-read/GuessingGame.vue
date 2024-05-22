@@ -68,6 +68,7 @@
                                             placeholder="Guess the word"
                                             inputmode="text"
                                             autocapitalize="sentences"
+                                            :clear-on-edit="true"
                                             :auto-grow="true"
                                             :value="vocabulary.isCorrect ? vocabulary.word : givenAnswer"
                                             @ionChange="onGivingAnswer($event.target.value)"
@@ -369,8 +370,6 @@ export default defineComponent({
 
         onGivingAnswer(givenAnswer: string): void {
             this.givenAnswer = givenAnswer;
-            this.showCorrectAnswer = false;
-            this.resultMessage = '';
         },
 
         playSound(sound: HTMLAudioElement): void {
