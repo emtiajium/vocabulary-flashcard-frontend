@@ -301,7 +301,6 @@ export default defineComponent({
             }
         },
 
-        /* eslint-disable no-param-reassign */
         submitAnswer(correctVocabulary: RandomlyChosenMeaningResponse, index: number): void {
             this.showCorrectAnswer = false;
             let isCorrect = false;
@@ -311,11 +310,11 @@ export default defineComponent({
                 isCorrect = true;
                 this.resultMessage = 'Correct!';
                 this.playSound(this.correctSound);
-                correctVocabulary.isCorrect = true;
+                this.vocabularies[index].isCorrect = true;
             } else {
                 this.resultMessage = `Incorrect!`;
                 this.playSound(this.incorrectSound);
-                correctVocabulary.isCorrect = this.givenAnswer ? false : undefined;
+                this.vocabularies[index].isCorrect = this.givenAnswer ? false : undefined;
             }
             this.calculateCorrectAnswerCount();
             if (this.correctAnswerCount !== previousCorrectAnswerCount) {
@@ -324,7 +323,6 @@ export default defineComponent({
             if (this.correctAnswerCount === this.vocabularies.length) {
                 NativeStorage.removeGuessingGameVocabularies().catch();
             }
-            /* eslint-enable no-param-reassign */
         },
 
         calculateCorrectAnswerCount(): void {
