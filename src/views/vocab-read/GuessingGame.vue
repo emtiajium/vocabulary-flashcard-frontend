@@ -266,7 +266,7 @@ export default defineComponent({
                     clickable: true,
                     type: 'bullets',
                     dynamicBullets: true,
-                    dynamicMainBullets: 10,
+                    dynamicMainBullets: 5,
                     renderBullet: (index: number, className: string): string => {
                         return `<span class="${className}">${index + 1}</span>`;
                     },
