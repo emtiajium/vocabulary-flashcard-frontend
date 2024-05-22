@@ -24,6 +24,16 @@
                 </ion-card-subtitle>
             </ion-card>
         </ion-col>
+
+        <ion-col sizeXs="12" sizeSm="12" sizeMd="4" sizeLg="3" sizeXl="2">
+            <ion-card class="margin-top-bottom-unset ion-padding">
+                <ion-card-subtitle>
+                    Don't miss the <strong>word guessing game</strong> to challenge yourself to think critically and
+                    make connections between words and meanings to enhance your cognitive abilities. It's a fun and
+                    engaging way to learn.
+                </ion-card-subtitle>
+            </ion-card>
+        </ion-col>
     </ion-row>
 </template>
 
