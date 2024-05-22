@@ -306,7 +306,8 @@ export default defineComponent({
             this.showCorrectAnswer = false;
             let isCorrect = false;
             const previousCorrectAnswerCount = this.correctAnswerCount;
-            if (this.givenAnswer.trim().toLowerCase() === correctVocabulary.word.trim().toLowerCase()) {
+            this.givenAnswer = this.givenAnswer.trim().toLowerCase();
+            if (this.givenAnswer === correctVocabulary.word.trim().toLowerCase()) {
                 isCorrect = true;
                 this.resultMessage = 'Correct!';
                 this.playSound(this.correctSound);
@@ -314,7 +315,7 @@ export default defineComponent({
             } else {
                 this.resultMessage = `Incorrect!`;
                 this.playSound(this.incorrectSound);
-                correctVocabulary.isCorrect = false;
+                correctVocabulary.isCorrect = this.givenAnswer ? false : undefined;
             }
             this.calculateCorrectAnswerCount();
             if (this.correctAnswerCount !== previousCorrectAnswerCount) {
