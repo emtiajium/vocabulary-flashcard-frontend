@@ -70,7 +70,7 @@
                                             autocapitalize="sentences"
                                             :auto-grow="true"
                                             :value="vocabulary.isCorrect ? vocabulary.word : givenAnswer"
-                                            @ionChange="givenAnswer = $event.target.value"
+                                            @ionChange="onGivingAnswer($event.target.value)"
                                         />
                                         <ion-button
                                             aria-label="Show the correct word"
@@ -100,11 +100,14 @@
                                         </ion-button>
                                     </div>
 
-                                    <ion-card-subtitle
+                                    <div
                                         v-if="resultMessage && !showCorrectAnswer"
-                                        class="ion-padding-bottom"
+                                        class="
+                                            display-flex
+                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
+                                        "
                                     >
-                                        <span class="display-flex ion-justify-content-center ion-align-items-center">
+                                        <div>
                                             <font-awesome-icon
                                                 :icon="vocabulary.isCorrect ? correctIcon : incorrectIcon"
                                                 :class="`${
@@ -113,24 +116,36 @@
                                                         : 'firecracker-warning-color-icon'
                                                 } icon-font`"
                                             />
-                                            <span class="ion-padding-start"> {{ resultMessage }} </span>
-                                        </span>
-                                    </ion-card-subtitle>
+                                        </div>
+                                        <div>
+                                            <ion-card-subtitle>
+                                                {{ resultMessage }}
+                                            </ion-card-subtitle>
+                                        </div>
+                                    </div>
 
-                                    <ion-card-subtitle v-if="showCorrectAnswer" class="ion-padding-bottom">
-                                        <span class="display-flex ion-justify-content-center ion-align-items-center">
+                                    <div
+                                        v-if="showCorrectAnswer"
+                                        class="
+                                            display-flex
+                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
+                                        "
+                                    >
+                                        <div>
                                             <font-awesome-icon
-                                                :icon="correctIcon"
+                                                :icon="infoIcon"
                                                 class="firecracker-primary-color-icon icon-font"
                                             />
-                                            <span class="ion-padding-start">
+                                        </div>
+                                        <div>
+                                            <ion-card-subtitle>
                                                 The correct word is "<span class="capitalize">{{
                                                     vocabulary.word
                                                 }}</span
                                                 >".
-                                            </span>
-                                        </span>
-                                    </ion-card-subtitle>
+                                            </ion-card-subtitle>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -350,6 +365,12 @@ export default defineComponent({
             this.resultMessage = '';
             this.givenAnswer = this.vocabularies[index].isCorrect ? this.vocabularies[index].word : '';
             this.showCorrectAnswer = false;
+        },
+
+        onGivingAnswer(givenAnswer: string): void {
+            this.givenAnswer = givenAnswer;
+            this.showCorrectAnswer = false;
+            this.resultMessage = '';
         },
 
         playSound(sound: HTMLAudioElement): void {
