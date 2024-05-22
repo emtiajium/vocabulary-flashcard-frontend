@@ -124,7 +124,10 @@
                                                 class="firecracker-primary-color-icon icon-font"
                                             />
                                             <span class="ion-padding-start">
-                                                The correct word is "{{ vocabulary.word }}".
+                                                The correct word is "<span class="capitalize">{{
+                                                    vocabulary.word
+                                                }}</span
+                                                >".
                                             </span>
                                         </span>
                                     </ion-card-subtitle>
