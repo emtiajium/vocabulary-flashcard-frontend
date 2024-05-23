@@ -157,9 +157,9 @@
 
             <ion-modal
                 :is-open="isInfoModalOpened"
-                @willDismiss="isInfoModalOpened = false"
                 :initial-breakpoint="0.25"
                 :breakpoints="[0, 0.25, 0.5, 0.75]"
+                @willDismiss="isInfoModalOpened = false"
             >
                 <div class="ion-padding">
                     <ion-card-subtitle class="ion-text-center">
