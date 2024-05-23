@@ -163,9 +163,11 @@
             >
                 <div class="ion-padding">
                     <ion-card-subtitle class="ion-text-center">
-                        In this Vocabulary Guessing Game, you will be presented with a series of meanings. Your task is
-                        to guess the correct word that matches each meaning. For each correct guess, your score will
-                        increase. Challenge yourself to see how many words you can get right!
+                        In this Vocabulary Guessing Game, you'll be presented with a series of meanings to guess the
+                        correct word for each one. Each day, a new game will be generated for you to challenge your
+                        vocabulary skills. For every correct guess, your score will increase. If you successfully guess
+                        all the words correctly, you'll unlock another game to play even on the same day. Challenge
+                        yourself daily and see how many words you can get right!
                     </ion-card-subtitle>
                 </div>
             </ion-modal>
