@@ -68,7 +68,6 @@
                                             placeholder="Guess the word"
                                             inputmode="text"
                                             autocapitalize="sentences"
-                                            :clear-on-edit="true"
                                             :auto-grow="true"
                                             :value="vocabulary.isCorrect ? vocabulary.word : givenAnswer"
                                             @ionChange="onGivingAnswer($event.target.value)"
@@ -307,6 +306,7 @@ export default defineComponent({
                 this.vocabularies = cachedRandomlyChosenMeaningResponse.data;
                 this.calculateCorrectAnswerCount();
             }
+            this.setInitialGivenAnswer();
             this.isLoading = false;
         },
 
@@ -364,6 +364,10 @@ export default defineComponent({
                 },
                 { once: true },
             );
+        },
+
+        setInitialGivenAnswer(): void {
+            this.givenAnswer = this.vocabularies[0].isCorrect ? this.vocabularies[0].word : '';
         },
 
         onChangeVocabulary(index: number): void {
