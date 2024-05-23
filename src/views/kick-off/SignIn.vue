@@ -83,7 +83,7 @@ export default defineComponent({
             await App.exitApp();
         });
     },
-    async mounted() {
+    async ionViewDidEnter() {
         await GoogleAuthentication.load('google-sign-in', this.handleClick);
         this.loadGetItOnGooglePlay().finally();
     },
