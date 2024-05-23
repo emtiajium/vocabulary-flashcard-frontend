@@ -244,8 +244,8 @@ export default defineComponent({
             submitIcon: faCircleArrowUp,
             viewIcon: faEye,
             infoIcon: faInfoCircle,
-            correctSound: new Audio('/assets/audio-clips/correct-answer.mp3'),
-            incorrectSound: new Audio('/assets/audio-clips/wrong-answer.mp3'),
+            correctSound: {} as HTMLAudioElement,
+            incorrectSound: {} as HTMLAudioElement,
             isLoading: true,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             givenAnswer: '',
@@ -270,6 +270,8 @@ export default defineComponent({
             this.initSwiper();
             await this.assertLoadingVocabularies();
             this.swiper.init();
+            this.correctSound = new Audio('/assets/audio-clips/correct-answer.mp3');
+            this.incorrectSound = new Audio('/assets/audio-clips/wrong-answer.mp3');
         },
 
         initSwiper(): void {
