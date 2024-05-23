@@ -137,10 +137,8 @@ export default defineComponent({
                 init: true,
                 rewind: true,
                 spaceBetween: 10,
-                initialSlide: 0,
                 pagination: {
                     el: '.swiper-pagination',
-                    dynamicBullets: true,
                 },
             });
         },
