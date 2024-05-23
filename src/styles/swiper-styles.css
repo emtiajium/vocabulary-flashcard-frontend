@@ -12,6 +12,11 @@
     background: var(--ion-color-light);
 }
 
+body.dark .swiper-pagination-bullet {
+    color: var(--ion-color-white-contrast);
+    background: var(--ion-color-white);
+}
+
 .swiper-pagination-bullet-active {
     color: var(--ion-color-primary-contrast);
     background: var(--ion-color-primary);
