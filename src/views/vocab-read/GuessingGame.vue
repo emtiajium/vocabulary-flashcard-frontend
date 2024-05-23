@@ -343,6 +343,8 @@ export default defineComponent({
             }
             if (this.correctAnswerCount === this.vocabularies.length) {
                 NativeStorage.removeGuessingGameVocabularies().catch();
+            } else {
+                this.storeInCache(cloneDeep(this.vocabularies));
             }
         },
 
