@@ -189,6 +189,7 @@ export default defineComponent({
         async signOut(): Promise<void> {
             await NativeStorage.removeGoodBye();
             await NativeStorage.removeAuthorizedUser();
+            await NativeStorage.removeGuessingGameVocabularies();
             await GoogleAuthentication.signOut();
             await menuController.close();
             this.isAuthenticated = false;
