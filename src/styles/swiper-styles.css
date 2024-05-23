@@ -8,8 +8,8 @@
     line-height: 20px;
     font-size: 12px;
     opacity: 1;
-    color: var(--ion-color-light-contrast);
-    background: var(--ion-color-light);
+    color: var(--ion-color-lightest-contrast);
+    background: var(--ion-color-lightest);
 }
 
 body.dark .swiper-pagination-bullet {
@@ -18,6 +18,11 @@ body.dark .swiper-pagination-bullet {
 }
 
 .swiper-pagination-bullet-active {
+    color: var(--ion-color-primary-contrast);
+    background: var(--ion-color-primary);
+}
+
+body.dark .swiper-pagination-bullet-active {
     color: var(--ion-color-primary-contrast);
     background: var(--ion-color-primary);
 }
