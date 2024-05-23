@@ -138,6 +138,7 @@ export default defineComponent({
                 rewind: true,
                 spaceBetween: 10,
                 pagination: {
+                    clickable: true,
                     el: '.swiper-pagination',
                 },
             });
