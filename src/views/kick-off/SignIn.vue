@@ -122,13 +122,17 @@ export default defineComponent({
     },
     data() {
         return {
+            swiper: undefined as Swiper,
             isAndroid: true,
             faGoogle,
         };
     },
     methods: {
         initSwiper(): void {
-            const swiper = new Swiper('.swiper', {
+            if (this.swiper) {
+                return;
+            }
+            this.swiper = new Swiper('.swiper', {
                 modules: [Pagination],
                 init: true,
                 rewind: true,
