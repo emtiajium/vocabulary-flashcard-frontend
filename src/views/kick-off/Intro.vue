@@ -80,6 +80,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+strong {
+    color: var(--ion-color-primary);
+}
+
 .icon-container {
     width: 50%;
 }
