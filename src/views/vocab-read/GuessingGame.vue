@@ -390,7 +390,7 @@ export default defineComponent({
         },
 
         storeInCache(vocabularies: RandomlyChosenMeaningResponse[]): void {
-            if (!isEmpty(vocabularies.length)) {
+            if (!isEmpty(vocabularies)) {
                 const today = format(new Date(), 'yyyy-MM-dd');
                 NativeStorage.setGuessingGameVocabularies({
                     createdAt: today,
