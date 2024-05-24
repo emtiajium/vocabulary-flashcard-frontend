@@ -270,8 +270,7 @@ export default defineComponent({
             this.initSwiper();
             await this.assertLoadingVocabularies();
             this.swiper.init();
-            this.correctSound = new Audio('/assets/audio-clips/correct-answer.mp3');
-            this.incorrectSound = new Audio('/assets/audio-clips/wrong-answer.mp3');
+            this.initAudioClips();
         },
 
         initSwiper(): void {
@@ -295,6 +294,17 @@ export default defineComponent({
             this.swiper.on('realIndexChange', (swiper: Swiper) => {
                 this.onChangeVocabulary(swiper.activeIndex);
             });
+        },
+
+        initAudioClips(): void {
+            try {
+                this.correctSound = new Audio('/assets/audio-clips/correct-answer.mp3');
+                this.incorrectSound = new Audio('/assets/audio-clips/wrong-answer.mp3');
+            } catch {
+                // do nothing
+                this.correctSound = {};
+                this.incorrectSound = {};
+            }
         },
 
         async assertLoadingVocabularies(): Promise<void> {
@@ -383,10 +393,18 @@ export default defineComponent({
         },
 
         playSound(sound: HTMLAudioElement): void {
-            sound.pause();
-            // eslint-disable-next-line no-param-reassign
-            sound.currentTime = 0;
-            sound.play();
+            try {
+                if (!isEmpty(sound)) {
+                    sound.pause();
+                    // eslint-disable-next-line no-param-reassign
+                    sound.currentTime = 0;
+                    sound.play();
+                }
+            } catch {
+                // do nothing
+                // I noticed sometimes (in the Android app), an error is thrown
+                // "NotSupportedError: The element has no supported sources"
+            }
         },
 
         storeInCache(vocabularies: RandomlyChosenMeaningResponse[]): void {
