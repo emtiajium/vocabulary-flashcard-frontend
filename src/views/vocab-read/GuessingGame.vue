@@ -302,8 +302,8 @@ export default defineComponent({
                 this.incorrectSound = new Audio('/assets/audio-clips/wrong-answer.mp3');
             } catch {
                 // do nothing
-                this.correctSound = {};
-                this.incorrectSound = {};
+                this.correctSound = {} as HTMLAudioElement;
+                this.incorrectSound = {} as HTMLAudioElement;
             }
         },
 
