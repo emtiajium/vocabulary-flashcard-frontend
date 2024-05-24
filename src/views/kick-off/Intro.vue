@@ -50,9 +50,10 @@
             />
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            Don't miss the <strong>word guessing game</strong> to challenge yourself to think critically and make
-            connections between words and meanings to enhance your cognitive abilities. It's a fun and engaging way to
-            learn.
+            To make your learning experience more enjoyable and effective, try our <strong>word guessing game</strong>.
+            This fun and engaging activity challenges you to think critically and make connections between words and
+            their meanings, enhancing your cognitive abilities while reinforcing what you've learned through spaced
+            repetition.
         </ion-card-title>
     </ion-card>
 </template>
