@@ -215,7 +215,7 @@ import {
     faEye,
     faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 
 export default defineComponent({
     name: 'GuessingGame',
@@ -390,11 +390,13 @@ export default defineComponent({
         },
 
         storeInCache(vocabularies: RandomlyChosenMeaningResponse[]): void {
-            const today = format(new Date(), 'yyyy-MM-dd');
-            NativeStorage.setGuessingGameVocabularies({
-                createdAt: today,
-                data: vocabularies,
-            }).finally();
+            if (!isEmpty(vocabularies.length)) {
+                const today = format(new Date(), 'yyyy-MM-dd');
+                NativeStorage.setGuessingGameVocabularies({
+                    createdAt: today,
+                    data: vocabularies,
+                }).finally();
+            }
         },
 
         clean(): void {
