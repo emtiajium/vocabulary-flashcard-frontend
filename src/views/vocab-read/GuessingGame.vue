@@ -69,7 +69,7 @@
                                             inputmode="text"
                                             autocapitalize="sentences"
                                             :auto-grow="true"
-                                            :value="vocabulary.isCorrect ? vocabulary.word : givenAnswer"
+                                            :value="givenAnswer"
                                             @ionChange="onGivingAnswer($event.target.value)"
                                         />
                                         <ion-button
