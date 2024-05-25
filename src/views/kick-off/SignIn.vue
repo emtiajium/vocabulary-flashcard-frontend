@@ -256,7 +256,8 @@ export default defineComponent({
 
 .swiper {
     width: 100%;
-    height: 100vh;
+    /* why svh? check https://www.youtube.com/watch?v=ru3U8MHbFFI */
+    height: 100svh;
 }
 
 .swiper-slide {
