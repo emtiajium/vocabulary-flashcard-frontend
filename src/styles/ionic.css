@@ -25,6 +25,10 @@
     --ion-color-tint: var(--ion-color-fern-green-tint);
 }
 
+ion-modal {
+    --background: var(--ion-card-background);
+}
+
 ion-toggle {
     --background: var(--ion-color-step-400);
     --handle-background: var(--ion-color-warning);
@@ -43,7 +47,7 @@ ion-radio {
 
 ion-card {
     box-shadow: unset;
-    border-radius: var(--defaul-border-radius);
+    border-radius: var(--default-border-radius);
     margin-left: calc(var(--ion-margin) / 4);
     margin-right: calc(var(--ion-margin) / 4);
 }
@@ -95,7 +99,7 @@ body.dark ion-alert {
 }
 
 ion-button:not(.button-round) {
-    --border-radius: var(--defaul-border-radius);
+    --border-radius: var(--default-border-radius);
 }
 
 ion-popover::part(content) {
@@ -111,12 +115,19 @@ ion-popover::part(content) {
 }
 
 ion-textarea {
-    border: thin solid var(--ion-color-lightest);
-    border-radius: var(--defaul-border-radius);
+    border: thin solid var(--text-area-border-color);
+    border-radius: var(--default-border-radius);
+    padding-left: var(--ion-padding);
+    padding-right: var(--ion-padding);
+}
+
+ion-textarea.no-border {
+    border: unset;
+    border-radius: unset;
     padding-left: var(--ion-padding);
     padding-right: var(--ion-padding);
 }
 
 body.dark ion-textarea {
-    border-color: var(--ion-color-white-shade);
+    border-color: var(--text-area-border-color);
 }

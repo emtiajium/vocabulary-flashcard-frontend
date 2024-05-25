@@ -1,0 +1,28 @@
+@import url('../../node_modules/swiper/swiper.min.css');
+@import url('../../node_modules/swiper/modules/pagination.min.css');
+
+.swiper-pagination-bullet {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    opacity: 1;
+    color: var(--ion-color-lightest-contrast);
+    background: var(--ion-color-lightest);
+}
+
+body.dark .swiper-pagination-bullet {
+    color: var(--ion-color-white-contrast);
+    background: var(--ion-color-white);
+}
+
+.swiper-pagination-bullet-active {
+    color: var(--ion-color-primary-contrast);
+    background: var(--ion-color-primary);
+}
+
+body.dark .swiper-pagination-bullet-active {
+    color: var(--ion-color-primary-contrast);
+    background: var(--ion-color-primary);
+}

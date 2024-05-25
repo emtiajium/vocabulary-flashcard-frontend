@@ -29,7 +29,7 @@
                             <ion-card-content>
                                 <ion-item lines="none" class="vocab-upsert-item">
                                     <ion-textarea
-                                        autoGrow="true"
+                                        :auto-grow="true"
                                         inputmode="text"
                                         autocapitalize="sentences"
                                         placeholder="Type something"

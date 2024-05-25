@@ -118,6 +118,7 @@
 
 ## Change Log
 
+-   `3.0.0`: Guessing the word game + Redesigned landing page
 -   `2.1.0`: Enabled eslint rule `vuejs-accessibility/click-events-have-key-events`
 -   `2.0.0`: Upgraded Ionic@6
 -   `1.37.0`: Updated app to target Android 13 (API level 33)
@@ -234,6 +235,7 @@
 
 ## Android Release Log
 
+-   `102`: `3.0.0`
 -   `101`: `2.1.0`
 -   `100`: `2.0.0`
 -   `99`: `1.37.0`

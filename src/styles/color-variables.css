@@ -120,6 +120,8 @@ body.light {
     --leitner-box-3: #2e8b56;
     --leitner-box-4: #287a4b;
     --leitner-box-5: #1f5a37;
+
+    --text-area-border-color: var(--ion-color-lightest);
 }
 
 body.dark {
@@ -232,4 +234,6 @@ body.dark {
     --leitner-box-3: #3dac6d;
     --leitner-box-4: #369d62;
     --leitner-box-5: #2e8b56;
+
+    --text-area-border-color: var(--ion-color-white-shade);
 }
