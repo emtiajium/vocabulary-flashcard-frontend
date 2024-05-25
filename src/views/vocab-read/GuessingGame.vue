@@ -252,7 +252,7 @@ export default defineComponent({
             resultMessage: '',
             showCorrectAnswer: false,
             correctAnswerCount: 0,
-            swiper: {} as Swiper,
+            swiper: undefined as Swiper,
             isInfoModalOpened: false,
         };
     },
