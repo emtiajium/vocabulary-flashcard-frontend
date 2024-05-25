@@ -260,7 +260,6 @@ export default defineComponent({
         await this.init();
     },
     ionViewWillLeave() {
-        this.storeInCache(cloneDeep(this.vocabularies));
         this.clean();
         this.swiper.destroy();
         this.swiper.disable();
