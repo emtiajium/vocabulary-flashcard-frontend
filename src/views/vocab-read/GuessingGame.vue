@@ -302,8 +302,6 @@ export default defineComponent({
                 this.incorrectSound = new Audio('/assets/audio-clips/wrong-answer.mp3');
             } catch {
                 // do nothing
-                this.correctSound = {} as HTMLAudioElement;
-                this.incorrectSound = {} as HTMLAudioElement;
             }
         },
 
@@ -394,12 +392,10 @@ export default defineComponent({
 
         playSound(sound: HTMLAudioElement): void {
             try {
-                if (!isEmpty(sound)) {
-                    sound.pause();
-                    // eslint-disable-next-line no-param-reassign
-                    sound.currentTime = 0;
-                    sound.play();
-                }
+                sound.pause();
+                // eslint-disable-next-line no-param-reassign
+                sound.currentTime = 0;
+                sound.play();
             } catch {
                 // do nothing
                 // I noticed sometimes (in the Android app), an error is thrown
