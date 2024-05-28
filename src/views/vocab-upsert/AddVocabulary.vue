@@ -34,7 +34,7 @@
                                         autocapitalize="sentences"
                                         placeholder="Type something"
                                         :value="word"
-                                        @ionChange="setWord($event.target.value)"
+                                        @ionChange="setWord($event.detail.value)"
                                     />
                                 </ion-item>
                             </ion-card-content>

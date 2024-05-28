@@ -70,7 +70,7 @@
                                             autocapitalize="sentences"
                                             :auto-grow="true"
                                             :value="givenAnswer"
-                                            @ionChange="onGivingAnswer($event.target.value)"
+                                            @ionChange="onGivingAnswer($event.detail.value)"
                                         />
                                         <ion-button
                                             aria-label="Show the correct word"

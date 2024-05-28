@@ -8,7 +8,7 @@
                     autocapitalize="sentences"
                     placeholder="Type something"
                     :value="items[index] || ''"
-                    @ionChange="insertItem($event.target.value, index)"
+                    @ionChange="insertItem($event.detail.value, index)"
                 />
             </ion-item>
         </div>
