@@ -29,7 +29,7 @@
                                     >
                                         <div>
                                             <font-awesome-icon
-                                                v-if="typeof vocabulary.isCorrect === 'boolean'"
+                                                v-show="typeof vocabulary.isCorrect === 'boolean'"
                                                 :icon="vocabulary.isCorrect ? correctIcon : incorrectIcon"
                                                 :class="`${
                                                     vocabulary.isCorrect
@@ -101,7 +101,7 @@
                                     </div>
 
                                     <div
-                                        v-if="resultMessage && !showCorrectAnswer"
+                                        v-show="resultMessage && !showCorrectAnswer"
                                         class="
                                             display-flex
                                             ion-justify-content-between ion-align-items-center ion-padding-bottom
@@ -125,7 +125,7 @@
                                     </div>
 
                                     <div
-                                        v-if="showCorrectAnswer"
+                                        v-show="showCorrectAnswer"
                                         class="
                                             display-flex
                                             ion-justify-content-between ion-align-items-center ion-padding-bottom
@@ -210,10 +210,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
     faCircleCheck,
     faLightbulb,
-    faCircleXmark,
     faCircleArrowUp,
     faEye,
     faInfoCircle,
+    faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { cloneDeep, isEmpty } from 'lodash';
 
@@ -239,13 +239,11 @@ export default defineComponent({
     data() {
         return {
             correctIcon: faCircleCheck,
-            incorrectIcon: faCircleXmark,
+            incorrectIcon: faTriangleExclamation,
             ideaIcon: faLightbulb,
             submitIcon: faCircleArrowUp,
             viewIcon: faEye,
             infoIcon: faInfoCircle,
-            correctSound: undefined as unknown as HTMLAudioElement,
-            incorrectSound: undefined as unknown as HTMLAudioElement,
             isLoading: true,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             givenAnswer: '',
@@ -269,7 +267,6 @@ export default defineComponent({
             this.initSwiper();
             await this.assertLoadingVocabularies();
             this.swiper.init();
-            this.initAudioClips();
         },
 
         initSwiper(): void {
@@ -293,15 +290,6 @@ export default defineComponent({
             this.swiper.on('realIndexChange', (swiper: Swiper) => {
                 this.onChangeVocabulary(swiper.activeIndex);
             });
-        },
-
-        initAudioClips(): void {
-            try {
-                this.correctSound = new Audio('/assets/audio-clips/correct-answer.mp3');
-                this.incorrectSound = new Audio('/assets/audio-clips/wrong-answer.mp3');
-            } catch {
-                // do nothing
-            }
         },
 
         async assertLoadingVocabularies(): Promise<void> {
@@ -338,11 +326,11 @@ export default defineComponent({
             if (this.givenAnswer.trim().toLowerCase() === correctVocabulary.word.trim().toLowerCase()) {
                 isCorrect = true;
                 this.resultMessage = 'Correct!';
-                this.playSound(this.correctSound);
+                this.playSound('correct');
                 this.vocabularies[index].isCorrect = true;
             } else {
                 this.resultMessage = `Incorrect!`;
-                this.playSound(this.incorrectSound);
+                this.playSound('wrong');
                 this.vocabularies[index].isCorrect = this.givenAnswer.trim() ? false : undefined;
             }
             this.calculateCorrectAnswerCount();
@@ -388,8 +376,14 @@ export default defineComponent({
             this.givenAnswer = givenAnswer;
         },
 
-        playSound(sound: HTMLAudioElement): void {
+        playSound(type: 'correct' | 'wrong'): void {
             try {
+                let sound: HTMLAudioElement;
+                if (type === 'correct') {
+                    sound = new Audio('/assets/audio-clips/correct-answer.mp3');
+                } else {
+                    sound = new Audio('/assets/audio-clips/wrong-answer.mp3');
+                }
                 sound.pause();
                 // eslint-disable-next-line no-param-reassign
                 sound.currentTime = 0;
