@@ -65,6 +65,7 @@
                                     >
                                         <ion-textarea
                                             class="no-border no-focus"
+                                            aria-label="Guess the word"
                                             placeholder="Guess the word"
                                             inputmode="text"
                                             autocapitalize="sentences"
