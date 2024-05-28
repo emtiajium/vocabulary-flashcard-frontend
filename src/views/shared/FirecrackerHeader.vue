@@ -21,9 +21,11 @@
                     <ion-searchbar
                         v-if="enableSearching"
                         mode="ios"
+                        enterkeyhint="search"
                         :placeholder="searchPlaceholder"
                         :value="searchKeyword"
                         :debounce="1000"
+                        :animated="true"
                         @ionInput="onChangeSearchKeyword"
                     />
                     <ion-button
