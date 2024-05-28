@@ -109,9 +109,9 @@ ion-popover::part(content) {
     border-radius: unset !important;
 }
 
-.header-md::after {
-    /* unsetting box-shadow */
-    background: unset;
+ion-header.header-md {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 ion-textarea {
