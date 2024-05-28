@@ -24,7 +24,7 @@
                         :placeholder="searchPlaceholder"
                         :value="searchKeyword"
                         :debounce="1000"
-                        @ionChange="onChangeSearchKeyword"
+                        @ionInput="onChangeSearchKeyword"
                     />
                     <ion-button
                         v-if="enableSettings"
