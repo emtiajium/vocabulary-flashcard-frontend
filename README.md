@@ -118,6 +118,7 @@
 
 ## Change Log
 
+-   `3.0.1`: A bit of UI changes related to the guessing game
 -   `3.0.0`: Guessing the word game + Redesigned landing page
 -   `2.1.0`: Enabled eslint rule `vuejs-accessibility/click-events-have-key-events`
 -   `2.0.0`: Upgraded Ionic@6
@@ -235,6 +236,7 @@
 
 ## Android Release Log
 
+-   `103`: `3.0.1`
 -   `102`: `3.0.0`
 -   `101`: `2.1.0`
 -   `100`: `2.0.0`

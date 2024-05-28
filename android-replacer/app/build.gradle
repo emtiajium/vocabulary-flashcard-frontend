@@ -7,8 +7,8 @@ android {
         applicationId "com.emtiajium.firecracker.collaborative.vocab.practice"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 102
-        versionName "3.0.0"
+        versionCode 103
+        versionName "3.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
