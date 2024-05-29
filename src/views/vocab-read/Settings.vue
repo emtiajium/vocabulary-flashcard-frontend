@@ -89,7 +89,6 @@
 import { defineComponent } from 'vue';
 import {
     IonItem,
-    IonLabel,
     IonRadioGroup,
     IonRadio,
     IonListHeader,
@@ -110,7 +109,6 @@ export default defineComponent({
     components: {
         FontAwesomeIcon,
         IonItem,
-        IonLabel,
         IonRadioGroup,
         IonRadio,
         IonListHeader,
