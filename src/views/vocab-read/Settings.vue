@@ -145,7 +145,7 @@ export default defineComponent({
             setAppHeight: (): void => {
                 // reading material: https://ilxanlar.medium.com/you-shouldnt-rely-on-css-100vh-and-here-s-why-1b4721e74487
                 // had to do it because the apply  button doesn't show when I browse the "web" app using "Android mobile"
-                // May 29, 2024: Try using svs instead of vh
+                // May 29, 2024: Try using svh instead of vh
                 document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
             },
         };
