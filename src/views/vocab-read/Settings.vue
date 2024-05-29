@@ -159,13 +159,8 @@ export default defineComponent({
         'vocabularySearchCoverage',
         'onChangeSearchingCoverage',
     ],
-    watch: {
-        isSettingsPopoverOpened(newValue: boolean, oldValue: boolean): void {
-            const isOpen = newValue && !oldValue;
-            if (isOpen) {
-                this.setCurrentSettings();
-            }
-        },
+    mounted() {
+        this.setCurrentSettings();
     },
     methods: {
         async onApplyingSettings(): Promise<void> {
