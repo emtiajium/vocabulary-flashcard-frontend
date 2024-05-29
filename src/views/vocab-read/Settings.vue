@@ -16,13 +16,14 @@
 
                     <div slot="content">
                         <ion-item v-for="(value, option) in searchingOptions" :key="option" lines="none">
-                            <ion-label> {{ value.label }} </ion-label>
                             <ion-toggle
-                                slot="end"
+                                justify="space-between"
                                 :checked="innerVocabularySearchCoverage[option]"
                                 :disabled="value.isDisabled"
                                 @ionChange="setSearchingOption(option, $event.detail.checked)"
-                            />
+                            >
+                                {{ value.label }}
+                            </ion-toggle>
                         </ion-item>
                     </div>
                 </ion-accordion>
@@ -33,23 +34,25 @@
                     </ion-item>
                     <div slot="content">
                         <ion-item lines="none">
-                            <ion-label> Show only draft vocab </ion-label>
                             <ion-toggle
-                                slot="end"
+                                justify="space-between"
                                 :checked="innerFetchNotHavingDefinitionOnly"
                                 @ionChange="
                                     setSelectedFiltering('innerFetchNotHavingDefinitionOnly', $event.detail.checked)
                                 "
-                            />
+                            >
+                                Show only draft vocab
+                            </ion-toggle>
                         </ion-item>
 
                         <ion-item lines="none">
-                            <ion-label> Show flashcard in boxes </ion-label>
                             <ion-toggle
-                                slot="end"
+                                justify="space-between"
                                 :checked="innerFetchFlashcard"
                                 @ionChange="setSelectedFiltering('innerFetchFlashcard', $event.detail.checked)"
-                            />
+                            >
+                                Show flashcard in boxes
+                            </ion-toggle>
                         </ion-item>
                     </div>
                 </ion-accordion>
@@ -64,8 +67,9 @@
                             @ionChange="setSelectedSortingOption($event.detail.value)"
                         >
                             <ion-item v-for="(label, value) in sortingOptions" :key="value" lines="none">
-                                <ion-label> {{ label }} </ion-label>
-                                <ion-radio slot="end" :value="value" />
+                                <ion-radio justify="space-between" :value="value">
+                                    {{ label }}
+                                </ion-radio>
                             </ion-item>
                         </ion-radio-group>
                     </div>
