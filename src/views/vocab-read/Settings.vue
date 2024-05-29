@@ -1,5 +1,5 @@
 <template>
-    <ion-modal :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" css-class="settings-modal">
+    <ion-modal :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" id="settings-modal">
         <ion-content class="settings-container">
             <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
@@ -216,10 +216,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.settings-modal {
+#settings-modal {
     --width: 295px;
     --height: 100vh;
+    --height: 100svh;
     --max-height: 100vh;
+    --max-height: 100svh;
     display: flex;
     justify-content: flex-end;
 }

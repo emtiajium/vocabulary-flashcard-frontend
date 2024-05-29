@@ -97,13 +97,6 @@ ion-button:not(.button-round) {
     --border-radius: var(--default-border-radius);
 }
 
-ion-popover::part(content) {
-    top: 0 !important;
-    left: unset !important;
-    right: 0 !important;
-    border-radius: unset !important;
-}
-
 .header-md::after {
     /* unsetting box-shadow */
     background: unset;
