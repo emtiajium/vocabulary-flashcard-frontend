@@ -174,7 +174,6 @@ export default defineComponent({
             this.isAndroid = await Platform.isAndroid();
         },
         async openMenu(): Promise<void> {
-            await menuController.enable(true, this.menuId);
             await menuController.open(this.menuId);
         },
         async closeMenu(): Promise<void> {
