@@ -34,11 +34,6 @@ ion-toggle {
     --handle-background: var(--ion-color-warning);
     --background-checked: var(--ion-color-step-400);
     --handle-background-checked: var(--ion-color-warning);
-    width: 45px;
-    height: 25px;
-    --handle-width: 20px;
-    --handle-spacing: 3px;
-    --handle-box-shadow: unset;
 }
 
 ion-radio {
