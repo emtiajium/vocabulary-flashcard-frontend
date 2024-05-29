@@ -177,9 +177,7 @@ export default defineComponent({
             await menuController.open(this.menuId);
         },
         async closeMenu(): Promise<void> {
-            if (await menuController.isOpen()) {
-                await menuController.close(this.menuId);
-            }
+            await menuController.close();
         },
         async navigate(url: string): Promise<void> {
             await this.closeMenu();
