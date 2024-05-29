@@ -97,9 +97,9 @@ ion-button:not(.button-round) {
     --border-radius: var(--default-border-radius);
 }
 
-.header-md::after {
-    /* unsetting box-shadow */
-    background: unset;
+ion-header.header-md {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 ion-textarea {
