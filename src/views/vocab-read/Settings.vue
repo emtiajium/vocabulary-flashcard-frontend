@@ -1,5 +1,12 @@
 <template>
-    <ion-modal :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" id="settings-modal">
+    <ion-modal
+        :is-open="isModalOpened"
+        @didDismiss="
+            closeSettingsPopover();
+            isModalOpened = false;
+        "
+        id="settings-modal"
+    >
         <ion-content class="settings-container">
             <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
@@ -123,6 +130,7 @@ export default defineComponent({
     },
     data() {
         return {
+            isModalOpened: true,
             faTimesCircle,
             sortingOptions: {
                 createdAt_DESC: 'Date created (newest first)',
@@ -147,7 +155,6 @@ export default defineComponent({
         };
     },
     props: [
-        'isSettingsPopoverOpened',
         'selectedSort',
         'closeSettingsPopover',
         'onChangeSort',
