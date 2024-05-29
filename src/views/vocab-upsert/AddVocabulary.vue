@@ -109,7 +109,7 @@
 
                         <ion-card>
                             <ion-card-header>
-                                <ion-card-title> Is Draft </ion-card-title>
+                                <ion-card-title> Draft </ion-card-title>
                                 <ion-card-subtitle class="tips">
                                     <span class="material-icons"> tips_and_updates </span>
                                     <span class="info">
