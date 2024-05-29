@@ -1,5 +1,5 @@
 <template>
-    <ion-popover :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" css-class="settings-popover">
+    <ion-modal :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" id="settings-modal">
         <ion-content class="settings-container">
             <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
@@ -78,13 +78,12 @@
                 </ion-button>
             </ion-list-header>
         </ion-content>
-    </ion-popover>
+    </ion-modal>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {
-    IonPopover,
     IonItem,
     IonLabel,
     IonRadioGroup,
@@ -97,6 +96,7 @@ import {
     IonToggle,
     IonAccordionGroup,
     IonAccordion,
+    IonModal,
 } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -105,7 +105,6 @@ export default defineComponent({
     name: 'Settings',
     components: {
         FontAwesomeIcon,
-        IonPopover,
         IonItem,
         IonLabel,
         IonRadioGroup,
@@ -118,6 +117,7 @@ export default defineComponent({
         IonToggle,
         IonAccordionGroup,
         IonAccordion,
+        IonModal,
     },
     data() {
         return {
@@ -142,11 +142,6 @@ export default defineComponent({
                 genericNotes: { label: 'Generic note', isDisabled: false },
             },
             innerVocabularySearchCoverage: this.vocabularySearchCoverage,
-            setAppHeight: (): void => {
-                // reading material: https://ilxanlar.medium.com/you-shouldnt-rely-on-css-100vh-and-here-s-why-1b4721e74487
-                // had to do it because the apply  button doesn't show when I browse the "web" app using "Android mobile"
-                document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
-            },
         };
     },
     props: [
@@ -169,13 +164,6 @@ export default defineComponent({
                 this.setCurrentSettings();
             }
         },
-    },
-    mounted(): void {
-        window.addEventListener('resize', this.setAppHeight);
-        this.setAppHeight();
-    },
-    beforeUnmount(): void {
-        window.removeEventListener('resize', this.setAppHeight);
     },
     methods: {
         async onApplyingSettings(): Promise<void> {
@@ -215,6 +203,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
+#settings-modal {
+    --width: 295px;
+    --height: 100vh;
+    --height: 100svh;
+    --max-height: 100vh;
+    --max-height: 100svh;
+    display: flex;
+    justify-content: flex-end;
+}
 .header-container {
     height: 62px; /* toolbar's height */
     background-color: var(--ion-toolbar-background);
@@ -231,6 +228,8 @@ export default defineComponent({
     color: var(--ion-color-white);
 }
 .contents-container {
+    --app-height: 100vh;
+    --app-height: 100svh;
     display: block;
     height: calc(var(--app-height) - 124px); /* 124 = 62 + 62; 62 = toolbar's height */
     overflow-y: auto;

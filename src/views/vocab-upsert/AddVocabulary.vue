@@ -120,7 +120,7 @@
                             <ion-card-content>
                                 <ion-toggle
                                     class="draft-toggle"
-                                    mode="ios"
+                                    area-label="Save the vocabulary as draft"
                                     :checked="isDraft"
                                     @ionChange="setIsDraft($event.target.checked)"
                                 />

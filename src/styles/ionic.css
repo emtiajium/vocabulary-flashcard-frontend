@@ -34,11 +34,6 @@ ion-toggle {
     --handle-background: var(--ion-color-warning);
     --track-background-checked: var(--ion-color-step-400);
     --handle-background-checked: var(--ion-color-warning);
-    width: 45px;
-    height: 25px;
-    --handle-width: 20px;
-    --handle-spacing: 3px;
-    --handle-box-shadow: unset;
 }
 
 ion-radio {
@@ -102,16 +97,9 @@ ion-button:not(.button-round) {
     --border-radius: var(--default-border-radius);
 }
 
-ion-popover::part(content) {
-    top: 0 !important;
-    left: unset !important;
-    right: 0 !important;
-    border-radius: unset !important;
-}
-
-ion-header.header-md {
-    -webkit-box-shadow: none;
-    box-shadow: none;
+.header-md::after {
+    /* unsetting box-shadow */
+    background: unset;
 }
 
 ion-textarea {

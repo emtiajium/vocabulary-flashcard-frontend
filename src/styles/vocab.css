@@ -34,16 +34,10 @@
     margin-inline-end: unset;
 }
 
-/* below two styles should be at
+/* below style should be at
  src/views/vocab-read/Settings.vue
  but unfortunately it (scoped css) doesn't work
  */
-.settings-popover {
-    --width: 295px;
-    --height: 100vh;
-    --max-height: 100vh;
-}
-
 .ion-accordion-toggle-icon {
     color: var(--ion-color-primary);
 }
