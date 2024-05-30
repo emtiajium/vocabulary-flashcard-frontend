@@ -188,7 +188,7 @@ export default defineComponent({
             await NativeStorage.removeAuthorizedUser();
             await NativeStorage.removeGuessingGameVocabularies();
             await GoogleAuthentication.signOut();
-            await menuController.close();
+            await this.closeMenu();
             this.isAuthenticated = false;
             await Toast.present(
                 `You have been signed out successfully. Thanks for using Firecracker Vocabulary Flashcards. We hope to see you again soon.`,
