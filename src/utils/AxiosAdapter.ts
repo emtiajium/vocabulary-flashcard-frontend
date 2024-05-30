@@ -1,4 +1,4 @@
-import Axios, { AxiosError } from 'axios';
+import Axios, { AxiosError, AxiosResponse } from 'axios';
 import MessageDB from '@/utils/MessageDB';
 
 type RequestConfig = Record<string, unknown>;
@@ -8,21 +8,22 @@ export default class AxiosAdapter {
         if (error.message === 'Network Error') {
             throw new Error(MessageDB.networkError);
         }
-        if (error.response?.status === 403) {
+        const errorResponse = error.response as AxiosResponse;
+        if (errorResponse?.status === 403) {
             throw new Error(MessageDB.forbiddenError);
         }
-        if (error.response?.status === 500) {
+        if (errorResponse?.status === 500) {
             throw new Error(MessageDB.genericError);
         }
-        if (Array.isArray(error.response?.data?.message)) {
-            throw new Error(error.response?.data.message[0]);
+        if (Array.isArray(errorResponse?.data?.message)) {
+            throw new Error(errorResponse?.data.message[0]);
         }
-        if (error.response?.data?.name) {
-            const modifiedError = new Error(error.response?.data.message);
-            modifiedError.name = error.response?.data.name;
+        if (errorResponse?.data?.name) {
+            const modifiedError = new Error(errorResponse?.data.message);
+            modifiedError.name = errorResponse?.data.name;
             throw modifiedError;
         }
-        throw new Error(error.response?.data.message);
+        throw new Error(errorResponse?.data.message);
     }
 
     static async post<TPayload, UResponse>(
