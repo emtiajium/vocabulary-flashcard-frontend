@@ -1,12 +1,5 @@
 <template>
-    <ion-modal
-        :is-open="isModalOpened"
-        @didDismiss="
-            closeSettingsPopover();
-            isModalOpened = false;
-        "
-        id="settings-modal"
-    >
+    <ion-popover :is-open="isPopoverOpened" @didDismiss="closeSettingsPopover" class="settings-popover">
         <ion-content class="settings-container">
             <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
@@ -89,12 +82,13 @@
                 </ion-button>
             </ion-list-header>
         </ion-content>
-    </ion-modal>
+    </ion-popover>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {
+    IonPopover,
     IonItem,
     IonRadioGroup,
     IonRadio,
@@ -106,7 +100,6 @@ import {
     IonToggle,
     IonAccordionGroup,
     IonAccordion,
-    IonModal,
 } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -115,6 +108,7 @@ export default defineComponent({
     name: 'Settings',
     components: {
         FontAwesomeIcon,
+        IonPopover,
         IonItem,
         IonRadioGroup,
         IonRadio,
@@ -126,11 +120,10 @@ export default defineComponent({
         IonToggle,
         IonAccordionGroup,
         IonAccordion,
-        IonModal,
     },
     data() {
         return {
-            isModalOpened: true,
+            isPopoverOpened: true,
             faTimesCircle,
             sortingOptions: {
                 createdAt_DESC: 'Date created (newest first)',
@@ -207,14 +200,18 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#settings-modal {
+ion-popover::part(content) {
+    top: 0 !important;
+    left: unset !important;
+    right: 0 !important;
+    border-radius: unset !important;
+}
+.settings-popover {
     --width: 295px;
     --height: 100vh;
     --height: 100svh;
     --max-height: 100vh;
     --max-height: 100svh;
-    display: flex;
-    justify-content: flex-end;
 }
 .header-container {
     height: 62px; /* toolbar's height */

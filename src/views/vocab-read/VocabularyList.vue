@@ -136,6 +136,7 @@
 
             <settings
                 v-if="isSettingsPopoverOpened"
+                ref="VocabSettingsRef"
                 :selected-sort="selectedSort"
                 :close-settings-popover="closeSettingsPopover"
                 :apply-settings="applySettings"
@@ -471,6 +472,7 @@ export default defineComponent({
         },
 
         closeSettingsPopover(): void {
+            (this.$refs.VocabSettingsRef as InstanceType<typeof Settings>).isPopoverOpened = false;
             this.isSettingsPopoverOpened = false;
         },
 
