@@ -21,13 +21,13 @@
         "android-pre-bundle:local": "npm run serve:android:anew && npm run replace-generated-android-files"
     },
     "dependencies": {
-        "@capacitor/android": "^4.0.0",
-        "@capacitor/app": "^4.0.0",
-        "@capacitor/core": "^4.0.0",
-        "@capacitor/device": "^4.0.0",
-        "@capacitor/haptics": "^4.0.0",
-        "@capacitor/keyboard": "^4.0.0",
-        "@capacitor/status-bar": "^4.0.0",
+        "@capacitor/android": "^5.0.0",
+        "@capacitor/app": "^5.0.0",
+        "@capacitor/core": "^5.0.0",
+        "@capacitor/device": "^5.0.0",
+        "@capacitor/haptics": "^5.0.0",
+        "@capacitor/keyboard": "^5.0.0",
+        "@capacitor/status-bar": "^5.0.0",
         "@codetrix-studio/capacitor-google-auth": "3.0.1",
         "@fortawesome/fontawesome-svg-core": "^6.1.1",
         "@fortawesome/free-brands-svg-icons": "^6.1.1",
@@ -59,7 +59,7 @@
         "vue-router": "^4.3.2"
     },
     "devDependencies": {
-        "@capacitor/cli": "^4.0.0",
+        "@capacitor/cli": "^5.0.0",
         "@ionic/cli": "^6.16.3",
         "@types/google.accounts": "0.0.2",
         "@types/lodash": "^4.14.170",
