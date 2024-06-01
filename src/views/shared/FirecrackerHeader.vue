@@ -31,7 +31,6 @@
                     <ion-button
                         v-if="enableSettings"
                         aria-label="Vocabulary settings preferences"
-                        color="white"
                         size="small"
                         shape="round"
                         fill="clear"

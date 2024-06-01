@@ -494,7 +494,7 @@ export default defineComponent({
                             : Promise.resolve(),
                     ]);
                 }
-                await this.$router.back();
+                this.$router.back();
             } catch (error) {
                 await Toast.present((error as FirecrackerError).message);
             } finally {

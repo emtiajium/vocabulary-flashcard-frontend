@@ -214,25 +214,25 @@ ion-popover::part(content) {
     --max-height: 100svh;
 }
 .header-container {
-    height: 62px; /* toolbar's height */
+    height: var(--vocab-settings-header-height);
     background-color: var(--ion-toolbar-background);
 }
 .title {
     width: 80vw;
-    color: var(--ion-color-white);
+    color: var(--ion-toolbar-color);
 }
 .close {
     width: 20vw;
 }
 .close-icon {
     font-size: 20px;
-    color: var(--ion-color-white);
+    color: var(--ion-toolbar-color);
 }
 .contents-container {
     --app-height: 100vh;
     --app-height: 100svh;
     display: block;
-    height: calc(var(--app-height) - 124px); /* 124 = 62 + 62; 62 = toolbar's height */
+    height: calc(var(--app-height) - var(--vocab-settings-header-height) - var(--vocab-settings-footer-height));
     overflow-y: auto;
     background-color: var(--ion-item-background);
 }
@@ -240,7 +240,7 @@ ion-accordion {
     background-color: var(--ion-item-background);
 }
 .footer-container {
-    height: 62px;
+    height: var(--vocab-settings-footer-height);
     background-color: var(--ion-item-background);
     padding-right: var(--ion-padding);
 }
