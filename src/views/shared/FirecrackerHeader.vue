@@ -9,7 +9,6 @@
                     <ion-button
                         v-if="['BACK', 'MANUAL_BACK'].includes(type)"
                         aria-label="Back to the previous page"
-                        color="white"
                         shape="round"
                         fill="clear"
                         class="back-icon"
