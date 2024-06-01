@@ -182,7 +182,7 @@ export default defineComponent({
         async navigate(url: string): Promise<void> {
             await this.closeMenu();
             await this.$router.push(url);
-            // close the menu that is opened for unknown reason
+            // try to close the menu again that remained opened for unknown reason
             this.closeMenu().finally();
         },
         async signOut(): Promise<void> {
