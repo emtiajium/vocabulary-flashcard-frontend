@@ -72,10 +72,6 @@ ion-card-subtitle {
     --color: var(--ion-card-sub-title-color);
 }
 
-.searchbar-input.sc-ion-searchbar-ios {
-    font-size: 16px;
-}
-
 body.light ion-searchbar {
     --icon-color: var(--ion-color-primary-contrast);
     --cancel-button-color: var(--ion-color-primary-contrast);

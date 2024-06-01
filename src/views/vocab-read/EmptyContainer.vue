@@ -33,6 +33,6 @@ export default defineComponent({
 
 <style scoped>
 .empty-container-message {
-    font-size: 12pt;
+    font-size: 1.25rem;
 }
 </style>
