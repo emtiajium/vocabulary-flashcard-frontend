@@ -258,6 +258,6 @@ li:last-of-type {
     padding-bottom: unset;
 }
 .leitner-icon {
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 </style>

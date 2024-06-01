@@ -225,7 +225,7 @@ ion-popover::part(content) {
     width: 20vw;
 }
 .close-icon {
-    font-size: 20px;
+    font-size: 1.25rem;
     color: var(--ion-toolbar-color);
 }
 .contents-container {

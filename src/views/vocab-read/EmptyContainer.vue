@@ -5,7 +5,7 @@
         </view>
         <br />
         <view class="display-flex ion-justify-content-center">
-            <font-awesome-icon :icon="faMehBlank" class="firecracker-primary-color-icon-60pt" />
+            <font-awesome-icon :icon="faMehBlank" class="firecracker-primary-color-icon-large" />
         </view>
     </view>
 </template>

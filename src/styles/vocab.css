@@ -1,10 +1,10 @@
 .tips .material-icons {
     color: var(--ion-color-primary);
     padding-right: calc(var(--ion-padding) / 4);
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 .tips .info {
-    font-size: 15px;
+    font-size: 1rem;
 }
 
 .vocab-upsert-item {

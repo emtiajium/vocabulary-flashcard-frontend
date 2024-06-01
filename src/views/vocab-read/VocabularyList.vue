@@ -19,7 +19,7 @@
                         <ion-card-content>
                             <view class="display-flex ion-justify-content-center">
                                 <ion-item lines="none">
-                                    <span class="material-icons firecracker-primary-color-icon-60pt"> campaign </span>
+                                    <span class="material-icons firecracker-primary-color-icon-large"> campaign </span>
                                 </ion-item>
                             </view>
                             <ion-card-subtitle class="ion-text-center ion-padding">
@@ -50,7 +50,7 @@
                     }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <span class="material-icons firecracker-primary-color-icon-60pt"> manage_search </span>
+                    <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
                 </view>
             </view>
 
@@ -64,7 +64,7 @@
                     }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-60pt" />
+                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-large" />
                 </view>
             </view>
 
@@ -73,7 +73,7 @@
                     No vocabulary was found that is not in boxes.
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-60pt" />
+                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-large" />
                 </view>
             </view>
 
@@ -103,7 +103,7 @@
                     class="display-flex ion-justify-content-center ion-padding-bottom"
                     :style="cssStyleToClearlyDisplayVocabCountChip"
                 >
-                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
+                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
                 </view>
             </view>
 

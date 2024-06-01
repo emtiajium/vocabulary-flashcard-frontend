@@ -15,7 +15,7 @@
                 </ion-card-subtitle>
 
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
+                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
                 </view>
 
                 <ion-card-subtitle v-if="box === '1' && totalItems === 0" class="ion-padding ion-text-center">
