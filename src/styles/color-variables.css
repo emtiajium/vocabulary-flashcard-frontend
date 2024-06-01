@@ -275,5 +275,5 @@ body.dark {
     --leitner-box-4: #369d62;
     --leitner-box-5: #2e8b56;
 
-    --text-area-border-color: var(--ion-color-white-shade);
+    --text-area-border-color: var(--ion-color-light-tint);
 }
