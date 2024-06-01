@@ -10,7 +10,7 @@
 
 ###### Prerequisites
 
-➜ Install Node 14 LTS using [nvm](https://github.com/nvm-sh/nvm)
+➜ Install Node 18 LTS using [nvm](https://github.com/nvm-sh/nvm)
 
 ➜ <https://github.com/emtiajium/vocabulary-flashcard-backend>
 

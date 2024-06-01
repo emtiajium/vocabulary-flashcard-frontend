@@ -55,12 +55,7 @@
                         </ion-card-header>
                         <ion-card-content>
                             <ion-row
-                                class="
-                                    display-flex
-                                    ion-justify-content-center ion-align-items-center
-                                    capitalize
-                                    ion-margin-top
-                                "
+                                class="display-flex ion-justify-content-center ion-align-items-center capitalize ion-margin-top"
                             >
                                 <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
                                 <span class="updated-at ion-padding-start ion-padding-end">

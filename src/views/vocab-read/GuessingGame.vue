@@ -22,10 +22,7 @@
                             <div v-for="(vocabulary, index) of vocabularies" :key="index" class="swiper-slide">
                                 <div class="ion-padding ion-margin-bottom">
                                     <div
-                                        class="
-                                            display-flex
-                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
-                                        "
+                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
                                     >
                                         <div>
                                             <font-awesome-icon
@@ -56,12 +53,7 @@
                                     </ion-card-header>
 
                                     <div
-                                        class="
-                                            display-flex
-                                            ion-justify-content-between ion-align-items-center
-                                            submit-answer-container
-                                            ion-margin-bottom
-                                        "
+                                        class="display-flex ion-justify-content-between ion-align-items-center submit-answer-container ion-margin-bottom"
                                     >
                                         <ion-textarea
                                             class="no-border no-focus"
@@ -103,10 +95,7 @@
 
                                     <div
                                         v-show="resultMessage && !showCorrectAnswer"
-                                        class="
-                                            display-flex
-                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
-                                        "
+                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
                                     >
                                         <div>
                                             <font-awesome-icon
@@ -127,10 +116,7 @@
 
                                     <div
                                         v-show="showCorrectAnswer"
-                                        class="
-                                            display-flex
-                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
-                                        "
+                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
                                     >
                                         <div>
                                             <font-awesome-icon
