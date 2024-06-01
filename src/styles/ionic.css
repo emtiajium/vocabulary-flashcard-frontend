@@ -109,17 +109,15 @@ ion-textarea {
     padding-right: var(--ion-padding);
 }
 
+body.dark ion-textarea {
+    border-color: var(--text-area-border-color);
+}
+
 ion-textarea.no-border {
     border: unset;
     border-radius: unset;
-    padding-left: var(--ion-padding);
-    padding-right: var(--ion-padding);
 }
 
 ion-textarea.no-focus {
     --highlight-color-focused: unset;
-}
-
-body.dark ion-textarea {
-    border-color: var(--text-area-border-color);
 }
