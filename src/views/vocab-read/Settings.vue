@@ -1,5 +1,5 @@
 <template>
-    <ion-popover :is-open="isSettingsPopoverOpened" @didDismiss="closeSettingsPopover" css-class="settings-popover">
+    <ion-popover :is-open="isPopoverOpened" @didDismiss="closeSettingsPopover" class="settings-popover">
         <ion-content class="settings-container">
             <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
@@ -16,13 +16,14 @@
 
                     <div slot="content">
                         <ion-item v-for="(value, option) in searchingOptions" :key="option" lines="none">
-                            <ion-label> {{ value.label }} </ion-label>
                             <ion-toggle
-                                slot="end"
+                                justify="space-between"
                                 :checked="innerVocabularySearchCoverage[option]"
                                 :disabled="value.isDisabled"
                                 @ionChange="setSearchingOption(option, $event.detail.checked)"
-                            />
+                            >
+                                {{ value.label }}
+                            </ion-toggle>
                         </ion-item>
                     </div>
                 </ion-accordion>
@@ -33,23 +34,25 @@
                     </ion-item>
                     <div slot="content">
                         <ion-item lines="none">
-                            <ion-label> Show only draft vocab </ion-label>
                             <ion-toggle
-                                slot="end"
+                                justify="space-between"
                                 :checked="innerFetchNotHavingDefinitionOnly"
                                 @ionChange="
                                     setSelectedFiltering('innerFetchNotHavingDefinitionOnly', $event.detail.checked)
                                 "
-                            />
+                            >
+                                Show only draft vocab
+                            </ion-toggle>
                         </ion-item>
 
                         <ion-item lines="none">
-                            <ion-label> Show flashcard in boxes </ion-label>
                             <ion-toggle
-                                slot="end"
+                                justify="space-between"
                                 :checked="innerFetchFlashcard"
                                 @ionChange="setSelectedFiltering('innerFetchFlashcard', $event.detail.checked)"
-                            />
+                            >
+                                Show flashcard in boxes
+                            </ion-toggle>
                         </ion-item>
                     </div>
                 </ion-accordion>
@@ -64,8 +67,9 @@
                             @ionChange="setSelectedSortingOption($event.detail.value)"
                         >
                             <ion-item v-for="(label, value) in sortingOptions" :key="value" lines="none">
-                                <ion-label> {{ label }} </ion-label>
-                                <ion-radio slot="end" :value="value" />
+                                <ion-radio justify="space-between" :value="value">
+                                    {{ label }}
+                                </ion-radio>
                             </ion-item>
                         </ion-radio-group>
                     </div>
@@ -86,7 +90,6 @@ import { defineComponent } from 'vue';
 import {
     IonPopover,
     IonItem,
-    IonLabel,
     IonRadioGroup,
     IonRadio,
     IonListHeader,
@@ -107,7 +110,6 @@ export default defineComponent({
         FontAwesomeIcon,
         IonPopover,
         IonItem,
-        IonLabel,
         IonRadioGroup,
         IonRadio,
         IonListHeader,
@@ -121,6 +123,7 @@ export default defineComponent({
     },
     data() {
         return {
+            isPopoverOpened: true,
             faTimesCircle,
             sortingOptions: {
                 createdAt_DESC: 'Date created (newest first)',
@@ -142,15 +145,9 @@ export default defineComponent({
                 genericNotes: { label: 'Generic note', isDisabled: false },
             },
             innerVocabularySearchCoverage: this.vocabularySearchCoverage,
-            setAppHeight: (): void => {
-                // reading material: https://ilxanlar.medium.com/you-shouldnt-rely-on-css-100vh-and-here-s-why-1b4721e74487
-                // had to do it because the apply  button doesn't show when I browse the "web" app using "Android mobile"
-                document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
-            },
         };
     },
     props: [
-        'isSettingsPopoverOpened',
         'selectedSort',
         'closeSettingsPopover',
         'onChangeSort',
@@ -162,20 +159,8 @@ export default defineComponent({
         'vocabularySearchCoverage',
         'onChangeSearchingCoverage',
     ],
-    watch: {
-        isSettingsPopoverOpened(newValue: boolean, oldValue: boolean): void {
-            const isOpen = newValue && !oldValue;
-            if (isOpen) {
-                this.setCurrentSettings();
-            }
-        },
-    },
-    mounted(): void {
-        window.addEventListener('resize', this.setAppHeight);
-        this.setAppHeight();
-    },
-    beforeUnmount(): void {
-        window.removeEventListener('resize', this.setAppHeight);
+    mounted() {
+        this.setCurrentSettings();
     },
     methods: {
         async onApplyingSettings(): Promise<void> {
@@ -215,24 +200,39 @@ export default defineComponent({
 </script>
 
 <style scoped>
+ion-popover::part(content) {
+    top: 0 !important;
+    left: unset !important;
+    right: 0 !important;
+    border-radius: unset !important;
+}
+.settings-popover {
+    --width: 295px;
+    --height: 100vh;
+    --height: 100svh;
+    --max-height: 100vh;
+    --max-height: 100svh;
+}
 .header-container {
-    height: 62px; /* toolbar's height */
+    height: var(--vocab-settings-header-height);
     background-color: var(--ion-toolbar-background);
 }
 .title {
     width: 80vw;
-    color: var(--ion-color-white);
+    color: var(--ion-toolbar-color);
 }
 .close {
     width: 20vw;
 }
 .close-icon {
-    font-size: 20px;
-    color: var(--ion-color-white);
+    font-size: 1.25rem;
+    color: var(--ion-toolbar-color);
 }
 .contents-container {
+    --app-height: 100vh;
+    --app-height: 100svh;
     display: block;
-    height: calc(var(--app-height) - 124px); /* 124 = 62 + 62; 62 = toolbar's height */
+    height: calc(var(--app-height) - var(--vocab-settings-header-height) - var(--vocab-settings-footer-height));
     overflow-y: auto;
     background-color: var(--ion-item-background);
 }
@@ -240,7 +240,7 @@ ion-accordion {
     background-color: var(--ion-item-background);
 }
 .footer-container {
-    height: 62px;
+    height: var(--vocab-settings-footer-height);
     background-color: var(--ion-item-background);
     padding-right: var(--ion-padding);
 }

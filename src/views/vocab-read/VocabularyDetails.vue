@@ -116,6 +116,7 @@
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button
             v-if="!isLoading && Object.keys(vocabulary).length && !disableInsertingIntoLeitnerBox"
+            aria-label="Make flashcard"
             size="small"
             color="lightest"
             :disabled="disableBoxInsertionButton"
@@ -127,7 +128,12 @@
             />
         </ion-fab-button>
         <span class="ion-margin-top" />
-        <ion-fab-button size="small" color="warning" @click="$router.push(`/vocabulary/update/${vocabulary.id}`)">
+        <ion-fab-button
+            aria-label="Edit"
+            size="small"
+            color="warning"
+            @click="$router.push(`/vocabulary/update/${vocabulary.id}`)"
+        >
             <font-awesome-icon :icon="faPencilAlt" />
         </ion-fab-button>
     </ion-fab>
@@ -252,6 +258,6 @@ li:last-of-type {
     padding-bottom: unset;
 }
 .leitner-icon {
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 </style>

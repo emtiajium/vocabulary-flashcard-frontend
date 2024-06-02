@@ -17,7 +17,7 @@ public class MainActivity extends BridgeActivity {
 
     private void toggleTheme(Configuration configuration) {
         try {
-            WebView mainWebView = findViewById(R.id.webview);
+            WebView mainWebView = findViewById(com.getcapacitor.android.R.id.webview);
             mainWebView.setWebViewClient(new WebViewClient());
             WebSettings webSettings = mainWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);

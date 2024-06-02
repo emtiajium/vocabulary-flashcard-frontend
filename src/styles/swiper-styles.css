@@ -6,7 +6,7 @@
     height: 20px;
     text-align: center;
     line-height: 20px;
-    font-size: 12px;
+    font-size: 0.75rem;
     opacity: 1;
     color: var(--ion-color-lightest-contrast);
     background: var(--ion-color-lightest);

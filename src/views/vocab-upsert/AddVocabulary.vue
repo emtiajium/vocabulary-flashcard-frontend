@@ -34,7 +34,7 @@
                                         autocapitalize="sentences"
                                         placeholder="Type something"
                                         :value="word"
-                                        @ionChange="setWord($event.target.value)"
+                                        @ionChange="setWord($event.detail.value as string)"
                                     />
                                 </ion-item>
                             </ion-card-content>
@@ -109,7 +109,7 @@
 
                         <ion-card>
                             <ion-card-header>
-                                <ion-card-title> Is Draft </ion-card-title>
+                                <ion-card-title> Draft </ion-card-title>
                                 <ion-card-subtitle class="tips">
                                     <span class="material-icons"> tips_and_updates </span>
                                     <span class="info">
@@ -120,7 +120,7 @@
                             <ion-card-content>
                                 <ion-toggle
                                     class="draft-toggle"
-                                    mode="ios"
+                                    area-label="Save the vocabulary as draft"
                                     :checked="isDraft"
                                     @ionChange="setIsDraft($event.target.checked)"
                                 />
@@ -494,7 +494,7 @@ export default defineComponent({
                             : Promise.resolve(),
                     ]);
                 }
-                await this.$router.back();
+                this.$router.back();
             } catch (error) {
                 await Toast.present((error as FirecrackerError).message);
             } finally {

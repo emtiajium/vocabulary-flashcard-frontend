@@ -15,7 +15,7 @@
                 </ion-card-subtitle>
 
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
+                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
                 </view>
 
                 <ion-card-subtitle v-if="box === '1' && totalItems === 0" class="ion-padding ion-text-center">
@@ -55,12 +55,7 @@
                         </ion-card-header>
                         <ion-card-content>
                             <ion-row
-                                class="
-                                    display-flex
-                                    ion-justify-content-center ion-align-items-center
-                                    capitalize
-                                    ion-margin-top
-                                "
+                                class="display-flex ion-justify-content-center ion-align-items-center capitalize ion-margin-top"
                             >
                                 <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
                                 <span class="updated-at ion-padding-start ion-padding-end">

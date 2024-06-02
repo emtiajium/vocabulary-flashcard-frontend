@@ -30,15 +30,10 @@ ion-modal {
 }
 
 ion-toggle {
-    --background: var(--ion-color-step-400);
+    --track-background: var(--ion-background-color-step-400);
     --handle-background: var(--ion-color-warning);
-    --background-checked: var(--ion-color-step-400);
+    --track-background-checked: var(--ion-background-color-step-400);
     --handle-background-checked: var(--ion-color-warning);
-    width: 45px;
-    height: 25px;
-    --handle-width: 20px;
-    --handle-spacing: 3px;
-    --handle-box-shadow: unset;
 }
 
 ion-radio {
@@ -77,17 +72,14 @@ ion-card-subtitle {
     --color: var(--ion-card-sub-title-color);
 }
 
-.searchbar-input.sc-ion-searchbar-ios {
-    font-size: 16px;
-}
-
 body.light ion-searchbar {
-    --ion-text-color: var(--ion-color-white);
-    --ion-color-step-600: var(--ion-color-white);
+    --icon-color: var(--ion-color-primary-contrast);
+    --cancel-button-color: var(--ion-color-primary-contrast);
+    --clear-button-color: var(--ion-color-primary-contrast);
 }
 
 body.dark ion-menu {
-    --ion-background-color: var(--ion-color-step-100);
+    --ion-background-color: var(--ion-background-color-step-100);
 }
 
 .alert-message {
@@ -95,23 +87,16 @@ body.dark ion-menu {
 }
 
 body.dark ion-alert {
-    --background: var(--ion-color-step-100);
+    --background: var(--ion-background-color-step-100);
 }
 
 ion-button:not(.button-round) {
     --border-radius: var(--default-border-radius);
 }
 
-ion-popover::part(content) {
-    top: 0 !important;
-    left: unset !important;
-    right: 0 !important;
-    border-radius: unset !important;
-}
-
-.header-md::after {
-    /* unsetting box-shadow */
-    background: unset;
+ion-header.header-md {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 ion-textarea {
@@ -121,13 +106,15 @@ ion-textarea {
     padding-right: var(--ion-padding);
 }
 
+body.dark ion-textarea {
+    border-color: var(--text-area-border-color);
+}
+
 ion-textarea.no-border {
     border: unset;
     border-radius: unset;
-    padding-left: var(--ion-padding);
-    padding-right: var(--ion-padding);
 }
 
-body.dark ion-textarea {
-    border-color: var(--text-area-border-color);
+ion-textarea.no-focus {
+    --highlight-color-focused: unset;
 }

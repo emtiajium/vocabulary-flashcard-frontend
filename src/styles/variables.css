@@ -3,4 +3,7 @@
     --ion-margin: 16px;
     --default-border-radius: 8px;
     --default-spinner-dimension: 48px;
+    --toolbar-height: 62px;
+    --vocab-settings-header-height: var(--toolbar-height);
+    --vocab-settings-footer-height: var(--toolbar-height);
 }

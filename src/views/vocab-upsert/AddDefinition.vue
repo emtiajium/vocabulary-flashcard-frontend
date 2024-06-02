@@ -28,7 +28,7 @@
                                     autocapitalize="sentences"
                                     placeholder="Type something"
                                     :value="$props.definition ? definition.meaning : meaning"
-                                    @ionChange="setMeaning($event.target.value)"
+                                    @ionChange="setMeaning($event.detail.value as string)"
                                 />
                             </ion-item>
                         </ion-card-content>

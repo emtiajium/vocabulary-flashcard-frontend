@@ -9,32 +9,32 @@
                     <ion-button
                         v-if="['BACK', 'MANUAL_BACK'].includes(type)"
                         aria-label="Back to the previous page"
-                        color="white"
                         shape="round"
                         fill="clear"
                         class="back-icon"
                         @click="onClickBackIcon"
                     >
-                        <font-awesome-icon :icon="faLongArrowAltLeft" />
+                        <font-awesome-icon :icon="faArrowLeft" />
                     </ion-button>
                     <ion-title v-if="!enableSearching" class="overflowed-content"> {{ headerTitle }} </ion-title>
                     <ion-searchbar
                         v-if="enableSearching"
                         mode="ios"
+                        enterkeyhint="search"
                         :placeholder="searchPlaceholder"
                         :value="searchKeyword"
                         :debounce="1000"
-                        @ionChange="onChangeSearchKeyword"
+                        :animated="true"
+                        @ionInput="onChangeSearchKeyword"
                     />
                     <ion-button
                         v-if="enableSettings"
                         aria-label="Vocabulary settings preferences"
-                        color="white"
                         size="small"
                         shape="round"
                         fill="clear"
                         class="settings-button"
-                        @click="modifySettings"
+                        @click="modifySettings()"
                     >
                         <font-awesome-icon :icon="faEllipsisV" />
                     </ion-button>
@@ -49,7 +49,7 @@
 import { defineComponent } from 'vue';
 import { IonHeader, IonTitle, IonToolbar, IonRow, IonCol, IonMenuButton, IonSearchbar, IonButton } from '@ionic/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBars, faArrowLeft, faEllipsisV, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faArrowLeft, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerMenu from '@/views/shared/FirecrackerMenu.vue';
 
 export default defineComponent({
@@ -131,7 +131,6 @@ export default defineComponent({
             faBars,
             faArrowLeft,
             faEllipsisV,
-            faLongArrowAltLeft,
         };
     },
     methods: {
@@ -165,7 +164,7 @@ ion-toolbar .sc-ion-searchbar-ios-h {
 .settings-button {
     --padding-start: calc(var(--ion-padding) / 2);
     --padding-end: calc(var(--ion-padding) / 2);
-    font-size: 20px;
+    font-size: 1.25rem;
     width: 40px;
     height: 40px;
 }
@@ -173,6 +172,6 @@ ion-toolbar .sc-ion-searchbar-ios-h {
 .back-icon {
     width: 48px;
     height: 48px;
-    font-size: 24px;
+    font-size: 1.25rem;
 }
 </style>

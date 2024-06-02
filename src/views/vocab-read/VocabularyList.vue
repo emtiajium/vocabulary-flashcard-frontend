@@ -19,7 +19,7 @@
                         <ion-card-content>
                             <view class="display-flex ion-justify-content-center">
                                 <ion-item lines="none">
-                                    <span class="material-icons firecracker-primary-color-icon-60pt"> campaign </span>
+                                    <span class="material-icons firecracker-primary-color-icon-large"> campaign </span>
                                 </ion-item>
                             </view>
                             <ion-card-subtitle class="ion-text-center ion-padding">
@@ -50,7 +50,7 @@
                     }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <span class="material-icons firecracker-primary-color-icon-60pt"> manage_search </span>
+                    <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
                 </view>
             </view>
 
@@ -64,7 +64,7 @@
                     }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-60pt" />
+                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-large" />
                 </view>
             </view>
 
@@ -73,7 +73,7 @@
                     No vocabulary was found that is not in boxes.
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-60pt" />
+                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-large" />
                 </view>
             </view>
 
@@ -103,7 +103,7 @@
                     class="display-flex ion-justify-content-center ion-padding-bottom"
                     :style="cssStyleToClearlyDisplayVocabCountChip"
                 >
-                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-60pt" />
+                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
                 </view>
             </view>
 
@@ -123,7 +123,7 @@
             </ion-refresher>
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                <ion-fab-button @click="$router.push('/vocabulary/create')">
+                <ion-fab-button aria-label="Create vocabulary" @click="$router.push('/vocabulary/create')">
                     <font-awesome-icon :icon="faPlus" />
                 </ion-fab-button>
             </ion-fab>
@@ -136,7 +136,7 @@
 
             <settings
                 v-if="isSettingsPopoverOpened"
-                :is-settings-popover-opened="isSettingsPopoverOpened"
+                ref="VocabSettingsRef"
                 :selected-sort="selectedSort"
                 :close-settings-popover="closeSettingsPopover"
                 :apply-settings="applySettings"
@@ -472,6 +472,7 @@ export default defineComponent({
         },
 
         closeSettingsPopover(): void {
+            (this.$refs.VocabSettingsRef as InstanceType<typeof Settings>).isPopoverOpened = false;
             this.isSettingsPopoverOpened = false;
         },
 

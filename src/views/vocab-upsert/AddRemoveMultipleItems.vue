@@ -8,7 +8,7 @@
                     autocapitalize="sentences"
                     placeholder="Type something"
                     :value="items[index] || ''"
-                    @ionChange="insertItem($event.target.value, index)"
+                    @ionInput="insertItem($event.detail.value as string, index)"
                 />
             </ion-item>
         </div>
@@ -101,6 +101,10 @@ export default defineComponent({
 <style scoped>
 .container {
     display: flex;
+    margin-bottom: var(--ion-margin);
+}
+.container:last-of-type {
+    margin-bottom: unset;
 }
 .contents {
     width: 100%;

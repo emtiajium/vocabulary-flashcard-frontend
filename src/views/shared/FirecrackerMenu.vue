@@ -174,24 +174,22 @@ export default defineComponent({
             this.isAndroid = await Platform.isAndroid();
         },
         async openMenu(): Promise<void> {
-            await menuController.enable(true, this.menuId);
             await menuController.open(this.menuId);
         },
         async closeMenu(): Promise<void> {
-            if (await menuController.isOpen()) {
-                await menuController.close(this.menuId);
-            }
+            await menuController.close();
         },
         async navigate(url: string): Promise<void> {
             await this.closeMenu();
             await this.$router.push(url);
+            // try to close the menu again that remained opened for unknown reason
+            this.closeMenu().finally();
         },
         async signOut(): Promise<void> {
             await NativeStorage.removeGoodBye();
             await NativeStorage.removeAuthorizedUser();
-            await NativeStorage.removeGuessingGameVocabularies();
             await GoogleAuthentication.signOut();
-            await menuController.close();
+            await this.closeMenu();
             this.isAuthenticated = false;
             await Toast.present(
                 `You have been signed out successfully. Thanks for using Firecracker Vocabulary Flashcards. We hope to see you again soon.`,

@@ -22,10 +22,7 @@
                             <div v-for="(vocabulary, index) of vocabularies" :key="index" class="swiper-slide">
                                 <div class="ion-padding ion-margin-bottom">
                                     <div
-                                        class="
-                                            display-flex
-                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
-                                        "
+                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
                                     >
                                         <div>
                                             <font-awesome-icon
@@ -56,21 +53,17 @@
                                     </ion-card-header>
 
                                     <div
-                                        class="
-                                            display-flex
-                                            ion-justify-content-between ion-align-items-center
-                                            submit-answer-container
-                                            ion-margin-bottom
-                                        "
+                                        class="display-flex ion-justify-content-between ion-align-items-center submit-answer-container ion-margin-bottom"
                                     >
                                         <ion-textarea
-                                            class="no-border"
+                                            class="no-border no-focus"
+                                            aria-label="Guess the word"
                                             placeholder="Guess the word"
                                             inputmode="text"
                                             autocapitalize="sentences"
                                             :auto-grow="true"
                                             :value="givenAnswer"
-                                            @ionChange="onGivingAnswer($event.target.value)"
+                                            @ionChange="onGivingAnswer($event.detail.value as string)"
                                         />
                                         <ion-button
                                             aria-label="Show the correct word"
@@ -102,10 +95,7 @@
 
                                     <div
                                         v-show="resultMessage && !showCorrectAnswer"
-                                        class="
-                                            display-flex
-                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
-                                        "
+                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
                                     >
                                         <div>
                                             <font-awesome-icon
@@ -126,10 +116,7 @@
 
                                     <div
                                         v-show="showCorrectAnswer"
-                                        class="
-                                            display-flex
-                                            ion-justify-content-between ion-align-items-center ion-padding-bottom
-                                        "
+                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
                                     >
                                         <div>
                                             <font-awesome-icon
@@ -455,6 +442,6 @@ export default defineComponent({
 }
 
 .icon-font {
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 </style>

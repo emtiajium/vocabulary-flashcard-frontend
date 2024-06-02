@@ -43,7 +43,7 @@ a {
     color: var(--ion-color-warning);
 }
 
-.firecracker-primary-color-icon-60pt {
-    font-size: 60pt;
+.firecracker-primary-color-icon-large {
+    font-size: 6rem;
     color: var(--ion-color-primary);
 }
