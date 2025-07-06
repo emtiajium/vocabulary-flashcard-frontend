@@ -23,6 +23,8 @@
 ➜ Enable Google Sign-In in the Firebase console and add SHA1 fingerprint in the Firebase console
 
 > `keytool -list -alias androiddebugkey -keystore ~/.android/debug.keystore -v`
+>
+> > set `android` as the password when `Enter keystore password` prompt appears
 
 ###### Clone the repo and install all dependencies
 
