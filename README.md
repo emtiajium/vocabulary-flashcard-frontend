@@ -20,7 +20,7 @@
 
 > [Add test users](https://console.cloud.google.com/apis/credentials/consent)
 
-➜ Enable Google Sign-In in the Firebase console and add SHA1 fingerprint in the Firebase console
+➜ Enable Google Sign-In in the Firebase console and add SHA1 and/or SHA256 fingerprint in the Firebase console
 
 > `keytool -list -alias androiddebugkey -keystore ~/.android/debug.keystore -v`
 >
