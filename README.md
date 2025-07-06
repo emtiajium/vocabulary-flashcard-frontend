@@ -120,6 +120,7 @@
 
 ## Change Log
 
+-   `4.0.2`: Targeting Android 15 (API level 35)
 -   `4.0.1`: Added delay to avoid error relating Google auth pop-up
 -   `4.0.0`: Ionic@8 + Node@18 + Capacitor@6
 -   `3.0.1`: A bit of UI changes related to the guessing game

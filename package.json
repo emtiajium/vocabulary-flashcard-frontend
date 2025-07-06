@@ -1,6 +1,6 @@
 {
     "name": "vocabulary-flashcard-frontend",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "private": true,
     "description": "Build your own dictionary, create flashcards, memorize vocabularies",
     "scripts": {
