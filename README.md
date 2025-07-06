@@ -20,9 +20,11 @@
 
 > [Add test users](https://console.cloud.google.com/apis/credentials/consent)
 
-➜ Enable Google Sign-In in the Firebase console and add SHA1 fingerprint in the Firebase console
+➜ Enable Google Sign-In in the Firebase console and add SHA1 and/or SHA256 fingerprint in the Firebase console
 
 > `keytool -list -alias androiddebugkey -keystore ~/.android/debug.keystore -v`
+>
+> > set `android` as the password when `Enter keystore password` prompt appears
 
 ###### Clone the repo and install all dependencies
 
@@ -118,6 +120,7 @@
 
 ## Change Log
 
+-   `4.0.2`: Targeting Android 15 (API level 35)
 -   `4.0.1`: Added delay to avoid error relating Google auth pop-up
 -   `4.0.0`: Ionic@8 + Node@18 + Capacitor@6
 -   `3.0.1`: A bit of UI changes related to the guessing game

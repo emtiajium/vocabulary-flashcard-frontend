@@ -1,6 +1,7 @@
 import { ThemeDetection } from '@ionic-native/theme-detection';
 import Platform from '@/utils/Platform';
 import { StatusBar } from '@capacitor/status-bar';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 declare global {
     interface Window {
@@ -22,6 +23,7 @@ export function setDarkMode(): void {
         StatusBar.setBackgroundColor({
             color: getStatusBarBackgroundColor(),
         }).finally();
+        EdgeToEdge.setBackgroundColor({ color: getStatusBarBackgroundColor() }).finally();
     }
 }
 
@@ -32,6 +34,7 @@ export function setLightMode(): void {
         StatusBar.setBackgroundColor({
             color: getStatusBarBackgroundColor(),
         }).finally();
+        EdgeToEdge.setBackgroundColor({ color: getStatusBarBackgroundColor() }).finally();
     }
 }
 
