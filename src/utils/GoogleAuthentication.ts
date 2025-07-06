@@ -65,15 +65,18 @@ export default class GoogleAuthentication {
     }
 
     private static renderTemplate(elementId: string): void {
-        window.google.accounts.id.renderButton(document.getElementById(elementId) as HTMLElement, {
-            type: 'standard',
-            size: 'large',
-            shape: 'rectangular',
-            theme: 'outline',
-            text: 'continue_with',
-            logo_alignment: 'left',
-        });
-        window.google.accounts.id.prompt();
+        // addling delay to avoid the error `Failed to render button before calling initialize()`
+        setTimeout(() => {
+            window.google.accounts.id.renderButton(document.getElementById(elementId) as HTMLElement, {
+                type: 'standard',
+                size: 'large',
+                shape: 'rectangular',
+                theme: 'outline',
+                text: 'continue_with',
+                logo_alignment: 'left',
+            });
+            window.google.accounts.id.prompt();
+        }, 2000);
     }
 
     private static getOAuth2Client(): OAuth2Client {

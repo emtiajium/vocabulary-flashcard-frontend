@@ -118,6 +118,7 @@
 
 ## Change Log
 
+-   `4.0.1`: Added delay to avoid error relating Google auth pop-up
 -   `4.0.0`: Ionic@8 + Node@18 + Capacitor@6
 -   `3.0.1`: A bit of UI changes related to the guessing game
 -   `3.0.0`: Guessing the word game + Redesigned landing page
