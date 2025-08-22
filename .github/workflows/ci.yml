@@ -1,38 +1,37 @@
 name: CI
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 jobs:
-  build:
+    build:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [18.13.0]
 
-    strategy:
-      matrix:
-        node-version: [ 18.13.0 ]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+            - name: Install dependencies
+              run: npm i
 
-      - name: Install dependencies
-        run: npm i
+            - name: Create environment variables
+              run: |
+                  npm run create:capacitor.config
+                  npm run create:config
 
-      - name: Create environment variables
-        run: |  
-          npm run create:capacitor.config
-          npm run create:config
+            - name: Prettier
+              run: npm run format:check
 
-      - name: Prettier
-        run: npm run format:check
+            - name: ESLint
+              run: npm run lint:check
 
-      - name: ESLint
-        run: npm run lint:check
-
-      - name: Build
-        run: npm run serve:android:anew
+            - name: Build
+              run: npm run serve:android:anew
