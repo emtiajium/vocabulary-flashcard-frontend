@@ -10,7 +10,7 @@
 
 ###### Prerequisites
 
-➜ Install Node 18 LTS using [nvm](https://github.com/nvm-sh/nvm)
+➜ Install Node 22 LTS using [nvm](https://github.com/nvm-sh/nvm)
 
 ➜ <https://github.com/emtiajium/vocabulary-flashcard-backend>
 
@@ -60,7 +60,7 @@
 
 ➜ Open the project (`/android`) in Android Studio
 
-➜ Sync project with gradle files
+➜ Sync project with Gradle files
 
 ➜ Run the app
 
