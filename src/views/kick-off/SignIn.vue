@@ -122,7 +122,7 @@ export default defineComponent({
     },
     data() {
         return {
-            swiper: undefined as Swiper,
+            swiper: undefined as unknown as Swiper,
             isAndroid: true,
             faGoogle,
         };
