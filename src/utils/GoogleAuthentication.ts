@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { SocialLogin, GoogleLoginResponseOnline } from '@capgo/capacitor-social-login';
 import Platform from '@/utils/Platform';
 import User from '@/domains/User';
 import NativeStorage from '@/utils/NativeStorage';
@@ -31,13 +31,27 @@ export default class GoogleAuthentication {
     }
 
     static async androidSignIn(): Promise<void> {
-        const user = await GoogleAuth.signIn();
-        GoogleAuthentication.setToken(user.authentication.idToken);
+        await SocialLogin.initialize({
+            google: {
+                webClientId: Config.google.webClientId,
+                mode: 'online',
+            },
+        });
+        const loginResponse = await SocialLogin.login<'google'>({
+            provider: 'google',
+            options: {
+                scopes: ['email', 'profile'],
+                forceRefreshToken: true,
+            },
+        });
+        const user = loginResponse.result as GoogleLoginResponseOnline;
+
+        GoogleAuthentication.setToken(user.idToken as string);
         GoogleAuthentication.generateAuthenticatedUserPayload({
-            email: user.email,
-            given_name: user.givenName,
-            family_name: user.familyName,
-            picture: user.imageUrl,
+            email: user.profile.email as string,
+            given_name: user.profile.givenName as string,
+            family_name: user.profile.familyName as string,
+            picture: user.profile.imageUrl as string,
         });
     }
 
@@ -57,7 +71,9 @@ export default class GoogleAuthentication {
             if (!GoogleAuthentication.isAndroid) {
                 window.google.accounts.id.disableAutoSelect();
             } else {
-                await GoogleAuth.signOut();
+                await SocialLogin.logout({
+                    provider: 'google',
+                });
             }
         } catch {
             // just smile, and wave!
