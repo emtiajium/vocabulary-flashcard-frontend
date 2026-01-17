@@ -10,7 +10,7 @@
 
 ###### Prerequisites
 
-➜ Install Node 18 LTS using [nvm](https://github.com/nvm-sh/nvm)
+➜ Install Node 22 LTS using [nvm](https://github.com/nvm-sh/nvm)
 
 ➜ <https://github.com/emtiajium/vocabulary-flashcard-backend>
 
@@ -60,7 +60,7 @@
 
 ➜ Open the project (`/android`) in Android Studio
 
-➜ Sync project with gradle files
+➜ Sync project with Gradle files
 
 ➜ Run the app
 
@@ -120,6 +120,7 @@
 
 ## Change Log
 
+-   `5.0.0`: Capacitor@8 + Node@22
 -   `4.0.2`: Targeting Android 15 (API level 35)
 -   `4.0.1`: Added delay to avoid error relating Google auth pop-up
 -   `4.0.0`: Ionic@8 + Node@18 + Capacitor@6
@@ -241,6 +242,7 @@
 
 ## Android Release Log
 
+-   `106`: `5.0.0`
 -   `105`: `4.0.2`
 -   `104`: `4.0.0`
 -   `103`: `3.0.1`

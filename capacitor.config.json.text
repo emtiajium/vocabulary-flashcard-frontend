@@ -4,10 +4,13 @@
     "webDir": "dist",
     "bundledWebRuntime": false,
     "plugins": {
-        "GoogleAuth": {
-            "scopes": ["profile", "email"],
-            "serverClientId": "***-***.apps.googleusercontent.com",
-            "forceCodeForRefreshToken" : true
+        "SocialLogin": {
+            "providers": {
+                "google": true,
+                "facebook": false,
+                "apple": false,
+                "twitter": false
+            }
         }
     }
 }

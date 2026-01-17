@@ -79,7 +79,7 @@
                                     class="ion-margin"
                                     @click="moveBackward(boxItem.vocabularyId)"
                                 >
-                                    <font-awesome-icon :icon="faThumbsDown" />
+                                    <font-awesome-icon :icon="faArrowLeft" />
                                 </ion-button>
                                 <ion-button
                                     v-if="!isLastBox()"
@@ -92,7 +92,7 @@
                                     class="ion-margin"
                                     @click="moveForward(boxItem.vocabularyId)"
                                 >
-                                    <font-awesome-icon :icon="faThumbsUp" />
+                                    <font-awesome-icon :icon="faArrowRight" />
                                 </ion-button>
                                 <ion-button
                                     aria-label="View vocabulary details"
@@ -169,9 +169,9 @@ import {
     faCalendarAlt,
     faClock,
     faGlassCheers,
-    faThumbsDown,
-    faThumbsUp,
     faUnlockAlt,
+    faArrowLeft,
+    faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import Toast from '@/utils/Toast';
@@ -224,12 +224,12 @@ export default defineComponent({
             allQuietOnTheWesternFront: false,
             isNetworkError: false,
             faUnlockAlt,
-            faThumbsUp,
-            faThumbsDown,
             faGlassCheers,
             faClock,
             faCalendarAlt,
             faHeartRegular,
+            faArrowLeft,
+            faArrowRight,
             headerTitle: `${MappedLeitnerBoxWithDays[`BOX_${box}`]} Box` || '',
         };
     },

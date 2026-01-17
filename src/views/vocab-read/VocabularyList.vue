@@ -5,7 +5,7 @@
             content-id="vocabulary-list"
             menu-id="vocabulary-list-menu"
             :enable-searching="true"
-            search-placeholder="Type at least 3 characters"
+            search-placeholder="Search in vocabularies"
             :search-keyword="searchKeyword"
             :set-search-keyword="setSearchKeyword"
             :enable-settings="true"
