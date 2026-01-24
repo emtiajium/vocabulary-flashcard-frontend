@@ -22,38 +22,37 @@ export default class Vocabulary {
     @IsOptional()
     cohortId?: string;
 
-    @IsNotEmpty({ message: `The word should not be empty.` })
+    @IsNotEmpty({ message: `Please enter a word. This field can't be left blank.` })
     word: string;
 
+    @Type(() => Definition)
     @ValidateIf((vocabulary) => vocabulary.isDraft === false || !_.isEmpty(vocabulary.definitions))
     @ValidateNested({ each: true })
     @ArrayNotEmpty({
-        message: `Definitions should not be empty. Alternatively, a vocabulary can be added without definitions in the draft mode.`,
+        message: `You need at least one definition. If you're not ready yet, save this as a draft instead.`,
     })
-    @IsArray()
-    @Type(() => Definition)
+    @IsArray({ message: `You need at least one definition. If you're not ready yet, save this as a draft instead.` })
     definitions?: Definition[];
 
     @ValidateIf((vocabulary) => !!vocabulary.genericNotes?.length)
-    @IsNotEmpty({ each: true })
-    @IsArray()
+    @IsNotEmpty({ each: true, message: `Notes can't be empty. Either write something meaningful or remove the note.` })
+    @IsArray({ message: `Notes can't be empty. Either write something meaningful or remove the note.` })
     @IsOptional()
     genericNotes?: string[];
 
     @ValidateIf((vocabulary) => !!vocabulary.genericExternalLinks?.length)
-    @IsUrl(undefined, { each: true, message: `Each generic external link should be a valid URL address.` })
-    @IsArray()
+    @IsUrl(undefined, { each: true, message: `That doesn't look like a valid URL. Please double-check the link.` })
+    @IsArray({ message: `That doesn't look like a valid URL. Please double-check the link.` })
     @IsOptional()
     genericExternalLinks?: string[];
 
     @ValidateIf((vocabulary) => !!vocabulary.linkerWords?.length)
-    @IsNotEmpty({ each: true })
-    @IsArray()
+    @IsNotEmpty({ each: true, message: `Linker words can't be empty. Remove it or add a real word.` })
+    @IsArray({ message: `Linker words can't be empty. Remove it or add a real word.` })
     @IsOptional()
     linkerWords?: string[];
 
-    @IsBoolean()
-    @IsDefined()
+    @IsBoolean({ message: `Please specify whether this vocabulary is a draft or final.` })
     isDraft: boolean;
 
     @IsOptional()

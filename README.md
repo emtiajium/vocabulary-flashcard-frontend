@@ -120,6 +120,7 @@
 
 ## Change Log
 
+-   `5.0.1`: Improved error messages
 -   `5.0.0`: Capacitor@8 + Node@22
 -   `4.0.2`: Targeting Android 15 (API level 35)
 -   `4.0.1`: Added delay to avoid error relating Google auth pop-up
@@ -242,6 +243,7 @@
 
 ## Android Release Log
 
+-   `107`: `5.0.1`
 -   `106`: `5.0.0`
 -   `105`: `4.0.2`
 -   `104`: `4.0.0`
