@@ -66,7 +66,7 @@
 
 ## Assets generator
 
-➜ Square + Round (Launcher icon): Visit [here](https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html)
+➜ Square + Round (Launcher icon): Visit [here](https://icon.kitchen/)
 
 ➜ Foreground (Launcher icon): Visit [here](https://easyappicon.com/)
 
