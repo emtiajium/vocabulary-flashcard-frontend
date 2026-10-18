@@ -29,8 +29,8 @@
 #add-vocabulary .buttons-container,
 #add-definition .buttons-container {
     justify-content: flex-end;
+    flex-wrap: nowrap;
     margin: calc(var(--ion-margin) + var(--ion-margin) / 2) calc(var(--ion-margin) / 4);
-    gap: var(--space-sm);
 }
 #add-vocabulary .cancel-button-container,
 #add-definition .cancel-button-container {
