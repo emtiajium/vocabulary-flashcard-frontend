@@ -24,6 +24,10 @@
 .vocab-upsert-item {
     --padding-start: unset;
     --inner-padding-end: unset;
+    /* Keep the wrapping item invisible so only the rounded textarea is painted,
+       and don't let it clip the textarea's rounded corners / focus ring. */
+    --background: transparent;
+    overflow: visible;
 }
 
 #add-vocabulary .buttons-container,
