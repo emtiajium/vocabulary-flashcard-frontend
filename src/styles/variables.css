@@ -1,7 +1,74 @@
 :root {
+    /* Spacing scale */
     --ion-padding: 16px;
     --ion-margin: 16px;
-    --default-border-radius: 8px;
+    --space-2xs: 4px;
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    /* Radii */
+    --radius-xs: 6px;
+    --radius-sm: 10px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 28px;
+    --radius-pill: 999px;
+    --default-border-radius: var(--radius-md);
+
+    /* Elevation */
+    --shadow-xs: 0 1px 2px rgba(var(--app-shadow-color), 0.06);
+    --shadow-sm: 0 1px 3px rgba(var(--app-shadow-color), 0.08), 0 1px 2px rgba(var(--app-shadow-color), 0.05);
+    --shadow-md: 0 4px 12px rgba(var(--app-shadow-color), 0.09), 0 2px 4px rgba(var(--app-shadow-color), 0.05);
+    --shadow-lg: 0 12px 28px rgba(var(--app-shadow-color), 0.12), 0 4px 10px rgba(var(--app-shadow-color), 0.06);
+    --shadow-xl: 0 24px 48px rgba(var(--app-shadow-color), 0.16);
+    --shadow-focus: 0 0 0 3px rgba(var(--ion-color-primary-rgb), 0.35);
+
+    /* Motion */
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+    --duration-fast: 150ms;
+    --duration-base: 220ms;
+    --duration-slow: 320ms;
+
+    /* Type */
+    --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --letter-spacing-tight: -0.01em;
+    --letter-spacing-wide: 0.01em;
+
+    /* Type scale (rem so it respects the user's browser font size) */
+    --text-2xs: 0.6875rem; /* 11px - rare meta */
+    --text-xs: 0.8125rem; /* 13px - captions */
+    --text-sm: 0.9375rem; /* 15px - secondary / controls */
+    --text-base: 1rem; /* 16px - body */
+    --text-md: 1.125rem; /* 18px - lead */
+    --text-lg: 1.25rem; /* 20px */
+    --text-xl: 1.5rem; /* 24px - card titles */
+    --text-2xl: 1.875rem; /* 30px */
+    --text-3xl: 2.25rem; /* 36px */
+
+    --leading-tight: 1.25;
+    --leading-snug: 1.4;
+    --leading-normal: 1.55;
+    --leading-relaxed: 1.7;
+
+    /* Icon scale */
+    --icon-sm: 1rem; /* 16px */
+    --icon-md: 1.25rem; /* 20px */
+    --icon-lg: 1.5rem; /* 24px */
+    --icon-xl: 2rem; /* 32px */
+
+    /* Minimum interactive target (WCAG 2.5.5) */
+    --touch-target: 44px;
+
     --default-spinner-dimension: 48px;
     --toolbar-height: 62px;
     --vocab-settings-header-height: var(--toolbar-height);

@@ -236,26 +236,47 @@ export default defineComponent({
     padding-bottom: unset;
 }
 .intro {
-    background-color: var(--ion-toolbar-background);
+    background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
     align-items: center;
     padding-top: var(--ion-padding);
     padding-bottom: var(--ion-padding);
 }
 .profile {
-    background-color: var(--ion-toolbar-background);
+    background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    padding-bottom: var(--space-md);
+}
+.profile img {
+    border: 3px solid rgba(250, 250, 250, 0.7);
+    box-shadow: var(--shadow-md);
 }
 .item-text {
-    color: var(--ion-toolbar-color);
+    color: var(--ion-color-primary-contrast);
 }
 ion-list {
     width: 100%;
+    background: transparent;
+    padding: var(--space-xs);
+}
+ion-item {
+    --background: transparent;
+    --background-hover: var(--ion-color-primary);
+    --background-hover-opacity: 0.12;
+    --background-activated: var(--ion-color-primary);
+    --background-activated-opacity: 0.2;
+    --border-radius: var(--radius-md);
+    --min-height: 48px;
+    --padding-start: var(--space-sm);
+    --inner-padding-end: var(--space-sm);
+    margin-bottom: var(--space-2xs);
+    font-weight: var(--font-weight-medium);
 }
 .menu-icon {
     color: var(--ion-color-primary);
-    width: 25px;
+    width: var(--icon-lg);
+    height: var(--icon-lg);
 }
 .google-play {
     width: 60%;

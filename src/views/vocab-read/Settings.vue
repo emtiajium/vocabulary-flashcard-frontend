@@ -204,10 +204,12 @@ ion-popover::part(content) {
     top: 0 !important;
     left: unset !important;
     right: 0 !important;
-    border-radius: unset !important;
+    border-top-left-radius: var(--radius-xl) !important;
+    border-bottom-left-radius: var(--radius-xl) !important;
+    box-shadow: var(--shadow-xl) !important;
 }
 .settings-popover {
-    --width: 295px;
+    --width: 320px;
     --height: 100vh;
     --height: 100svh;
     --max-height: 100vh;
@@ -215,37 +217,62 @@ ion-popover::part(content) {
 }
 .header-container {
     height: var(--vocab-settings-header-height);
-    background-color: var(--ion-toolbar-background);
+    background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+    padding-inline: var(--space-md);
+    box-sizing: border-box;
 }
 .title {
-    width: 80vw;
-    color: var(--ion-toolbar-color);
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    color: var(--ion-color-primary-contrast);
+    font-weight: var(--font-weight-semibold);
 }
 .close {
-    width: 20vw;
+    flex: 0 0 auto;
+    width: auto;
+    --background: transparent;
+    --color: var(--ion-color-primary-contrast);
+    --border-radius: var(--radius-pill);
+    color: var(--ion-color-primary-contrast);
 }
 .close-icon {
-    font-size: 1.25rem;
-    color: var(--ion-toolbar-color);
+    font-size: var(--icon-md);
+    color: var(--ion-color-primary-contrast);
 }
 .contents-container {
     --app-height: 100vh;
     --app-height: 100svh;
     display: block;
+    box-sizing: border-box;
+    padding: var(--space-sm) var(--space-xs);
     height: calc(var(--app-height) - var(--vocab-settings-header-height) - var(--vocab-settings-footer-height));
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: var(--ion-item-background);
 }
 ion-accordion {
-    background-color: var(--ion-item-background);
+    --background: transparent;
+    background-color: transparent;
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+ion-accordion + ion-accordion {
+    margin-top: var(--space-sm);
+}
+ion-accordion ion-item {
+    --ion-item-background: transparent;
 }
 .footer-container {
     height: var(--vocab-settings-footer-height);
     background-color: var(--ion-item-background);
-    padding-right: var(--ion-padding);
+    padding: var(--space-xs) var(--space-md);
+    box-sizing: border-box;
 }
 .apply-button {
-    width: 100vw;
+    width: 100%;
     margin-inline: unset;
+    --border-radius: var(--radius-md);
 }
 </style>

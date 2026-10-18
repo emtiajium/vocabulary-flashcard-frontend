@@ -114,11 +114,15 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
+    gap: var(--space-2xs);
     padding-top: calc(var(--ion-padding) / 2);
 }
 .action-buttons > ion-button {
-    width: 28px;
+    width: 36px;
+    height: 36px;
     margin-left: calc(var(--ion-margin) / 4);
+    --padding-start: 0;
+    --padding-end: 0;
 }
 ion-item {
     --min-height: unset;

@@ -245,6 +245,16 @@ export default defineComponent({
 ion-card:first-of-type {
     margin-top: unset;
 }
+ion-card-content ion-card-title {
+    font-size: var(--text-sm);
+    color: var(--ion-color-primary);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-2xs);
+    font-weight: var(--font-weight-semibold);
+}
+ion-card-content ion-card-title:first-child {
+    margin-top: unset;
+}
 .linker-word-chip {
     max-width: 20rem;
 }
@@ -252,12 +262,13 @@ ul > li:has(span.image-container):has(img) {
     list-style-type: none;
 }
 li {
-    padding-bottom: var(--ion-padding);
+    padding-bottom: var(--space-sm);
+    line-height: 1.55;
 }
 li:last-of-type {
     padding-bottom: unset;
 }
 .leitner-icon {
-    font-size: 1.25rem;
+    font-size: var(--icon-md);
 }
 </style>

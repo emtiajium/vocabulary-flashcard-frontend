@@ -121,6 +121,8 @@ export default defineComponent({
 
 <style scoped>
 .header {
-    font-weight: bold;
+    font-weight: var(--font-weight-semibold);
+    color: var(--ion-color-primary);
+    font-size: var(--text-md);
 }
 </style>

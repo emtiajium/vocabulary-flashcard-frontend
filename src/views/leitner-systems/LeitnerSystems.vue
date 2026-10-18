@@ -142,5 +142,6 @@ export default defineComponent({
 }
 .see-less > span {
     color: var(--ion-color-primary);
+    font-weight: var(--font-weight-semibold);
 }
 </style>

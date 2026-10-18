@@ -33,6 +33,8 @@ export default defineComponent({
 
 <style scoped>
 .empty-container-message {
-    font-size: 1.25rem;
+    font-size: var(--text-md);
+    line-height: var(--leading-normal);
+    color: var(--ion-text-color-step-300);
 }
 </style>

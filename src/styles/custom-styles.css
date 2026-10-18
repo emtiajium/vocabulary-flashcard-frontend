@@ -3,6 +3,22 @@
 a {
     text-decoration: none;
     color: var(--ion-color-primary);
+    font-weight: var(--font-weight-medium);
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+a:hover {
+    color: var(--ion-color-primary-tint);
+}
+
+:focus-visible {
+    outline: 2px solid var(--ion-color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+}
+
+::selection {
+    background: rgba(var(--ion-color-primary-rgb), 0.22);
 }
 
 .display-flex {
@@ -44,6 +60,15 @@ a {
 }
 
 .firecracker-primary-color-icon-large {
-    font-size: 6rem;
+    font-size: clamp(3rem, 9vw, 4.5rem);
     color: var(--ion-color-primary);
+    opacity: 0.9;
+}
+
+/* Subtle divider */
+.divider {
+    height: 1px;
+    background: var(--app-border-color);
+    border: none;
+    margin: var(--space-md) 0;
 }

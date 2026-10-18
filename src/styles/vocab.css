@@ -1,10 +1,24 @@
+.tips {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2xs);
+    padding: var(--space-xs) var(--space-sm);
+    margin-top: var(--space-xs);
+    border-radius: var(--radius-sm);
+    background: var(--app-surface-sunken);
+}
+
 .tips .material-icons {
     color: var(--ion-color-primary);
     padding-right: calc(var(--ion-padding) / 4);
-    font-size: 1.25rem;
+    font-size: var(--icon-sm);
+    line-height: var(--leading-normal);
 }
+
 .tips .info {
-    font-size: 1rem;
+    font-size: var(--text-sm);
+    color: var(--ion-text-color-step-300);
+    line-height: var(--leading-normal);
 }
 
 .vocab-upsert-item {
@@ -16,6 +30,7 @@
 #add-definition .buttons-container {
     justify-content: flex-end;
     margin: calc(var(--ion-margin) + var(--ion-margin) / 2) calc(var(--ion-margin) / 4);
+    gap: var(--space-sm);
 }
 #add-vocabulary .cancel-button-container,
 #add-definition .cancel-button-container {
@@ -46,4 +61,6 @@
     background-color: var(--ion-color-primary);
     color: var(--ion-color-primary-contrast);
     margin-left: calc(-1 * var(--ion-margin));
+    box-shadow: var(--shadow-md);
+    font-weight: var(--font-weight-semibold);
 }
