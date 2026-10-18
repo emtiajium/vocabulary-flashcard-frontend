@@ -120,6 +120,7 @@
 
 ## Change Log
 
+-   `6.0.0`: UI improvement
 -   `5.0.1`: Improved error messages
 -   `5.0.0`: Capacitor@8 + Node@22
 -   `4.0.2`: Targeting Android 15 (API level 35)
@@ -243,6 +244,7 @@
 
 ## Android Release Log
 
+-   `109`: `6.0.0`
 -   `108`: `5.0.1`
 -   `107`: `5.0.1`
 -   `106`: `5.0.0`
