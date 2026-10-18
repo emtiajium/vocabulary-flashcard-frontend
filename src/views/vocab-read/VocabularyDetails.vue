@@ -97,7 +97,10 @@
                             <a :href="genericExternalLink" target="_blank">
                                 <span>
                                     Browse the link
-                                    <font-awesome-icon :icon="faExternalLinkAlt" />
+                                    <font-awesome-icon
+                                        :icon="faExternalLinkAlt"
+                                        class="firecracker-primary-color-icon"
+                                    />
                                 </span>
                             </a>
                         </li>
