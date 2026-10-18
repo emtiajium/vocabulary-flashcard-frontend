@@ -17,7 +17,7 @@
 
                     <ion-card-content>
                         <ion-card-title> Examples </ion-card-title>
-                        <ul>
+                        <ul class="examples-list">
                             <li v-for="(example, exampleIndex) in definition.examples" :key="exampleIndex">
                                 <span class="capitalize"> {{ example }} </span>
                             </li>
@@ -25,7 +25,7 @@
 
                         <view v-if="definition.notes.length">
                             <ion-card-title> Notes </ion-card-title>
-                            <ul>
+                            <ul class="notes-list">
                                 <li v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
                                     <span v-html="note" class="capitalize link-container image-container" />
                                 </li>
@@ -34,7 +34,7 @@
 
                         <view v-if="definition.externalLinks.length">
                             <ion-card-title> External Links </ion-card-title>
-                            <ul>
+                            <ul class="links-list">
                                 <li
                                     v-for="(externalLink, externalLinkIndex) in definition.externalLinks"
                                     :key="externalLinkIndex"
@@ -73,7 +73,7 @@
                     <ion-card-title> Generic Notes </ion-card-title>
                 </ion-card-header>
                 <ion-card-content>
-                    <ul>
+                    <ul class="notes-list">
                         <li
                             v-for="(genericNote, genericNotesIndex) in vocabulary.genericNotes"
                             :key="genericNotesIndex"
@@ -89,7 +89,7 @@
                     <ion-card-title> Generic External Links </ion-card-title>
                 </ion-card-header>
                 <ion-card-content>
-                    <ul>
+                    <ul class="links-list">
                         <li
                             v-for="(genericExternalLink, genericExternalLinkIndex) in vocabulary.genericExternalLinks"
                             :key="genericExternalLinkIndex"
@@ -258,15 +258,66 @@ ion-card-content ion-card-title:first-child {
 .linker-word-chip {
     max-width: 20rem;
 }
-ul > li:has(span.image-container):has(img) {
-    list-style-type: none;
+/* Modern list styling (replaces default bullets / indentation) */
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
 }
-li {
-    padding-bottom: var(--space-sm);
-    line-height: 1.55;
+
+.examples-list li,
+.notes-list li {
+    position: relative;
+    padding-inline-start: calc(var(--space-md) + var(--space-2xs));
+    line-height: 1.6;
 }
-li:last-of-type {
-    padding-bottom: unset;
+
+.examples-list li::before,
+.notes-list li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0.6em;
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-pill);
+    background: var(--ion-color-primary);
+}
+
+/* Rich notes that embed media shouldn't get a marker or indent */
+.notes-list li:has(img) {
+    padding-inline-start: 0;
+}
+.notes-list li:has(img)::before {
+    display: none;
+}
+
+/* External links render as tappable rows */
+.links-list li a {
+    display: flex;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--radius-md);
+    background: var(--app-surface-raised);
+    color: var(--ion-color-primary);
+    font-weight: var(--font-weight-medium);
+    transition: background-color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard);
+}
+.links-list li a span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    width: 100%;
+}
+.links-list li a:hover {
+    border-color: transparent;
+    background: var(--ion-color-lightest);
+    color: var(--ion-color-lightest-contrast);
 }
 .leitner-icon {
     font-size: var(--icon-md);
