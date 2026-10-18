@@ -246,26 +246,24 @@ ion-popover {
 }
 
 ion-toggle {
-    /* Light knob in both themes/states; the track carries the on/off meaning.
-       Off/on tracks tuned for >= 3:1 against the surface AND the knob (WCAG 1.4.11). */
+    /* 48x28 track, 22px knob, 4px spacing, pill radii, no knob shadow.
+       Off-track uses the project's accessible neutral (>= 3:1 vs knob & surface, WCAG 1.4.11):
+       a light #dfe4e0 track with --handle-box-shadow: none would make the white knob invisible. */
     --track-background: var(--ion-background-color-step-500);
     --track-background-checked: var(--ion-color-primary);
     --handle-background: #fafafa;
     --handle-background-checked: #fafafa;
     --handle-width: 22px;
     --handle-height: 22px;
-    --handle-max-height: none;
+    --handle-spacing: 4px;
+    --handle-box-shadow: none;
+    --border-radius: 999px;
+    --handle-border-radius: 50%;
 }
 
-/* Track sized so the knob sits inside it (no overhang onto the card) */
 ion-toggle::part(track) {
     width: 48px;
-    height: 26px;
-    box-shadow: inset 0 0 0 1px rgba(var(--ion-text-color-rgb), 0.12);
-}
-
-ion-toggle::part(handle) {
-    box-shadow: 0 1px 2px rgba(var(--app-shadow-color), 0.35);
+    height: 28px;
 }
 
 body.dark ion-toggle {
