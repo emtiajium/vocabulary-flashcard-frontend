@@ -87,9 +87,9 @@ export default defineComponent({
 }
 
 ion-card.transparent {
-    --background: var(--app-surface);
-    border: 1px solid var(--app-border-color);
-    box-shadow: var(--shadow-xs);
+    --background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 /* Extra small devices (phones, 600px and down) */
