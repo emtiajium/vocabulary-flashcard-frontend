@@ -211,9 +211,9 @@ ion-popover::part(content) {
 .settings-popover {
     --width: 320px;
     --height: 100vh;
-    --height: 100svh;
+    --height: 100dvh;
     --max-height: 100vh;
-    --max-height: 100svh;
+    --max-height: 100dvh;
 }
 .header-container {
     height: var(--vocab-settings-header-height);
@@ -242,7 +242,7 @@ ion-popover::part(content) {
 }
 .contents-container {
     --app-height: 100vh;
-    --app-height: 100svh;
+    --app-height: 100dvh;
     display: block;
     box-sizing: border-box;
     padding: var(--space-sm) var(--space-xs);
