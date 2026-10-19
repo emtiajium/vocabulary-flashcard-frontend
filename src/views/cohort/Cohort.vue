@@ -163,7 +163,7 @@ export default defineComponent({
     justify-content: flex-end;
 }
 .avatar img {
-    border: 2px solid var(--app-border-color);
+    border: 1px solid var(--app-border-color);
 }
 .profile-info {
     display: flex;

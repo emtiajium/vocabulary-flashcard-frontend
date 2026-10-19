@@ -249,7 +249,7 @@ export default defineComponent({
     padding-bottom: var(--space-md);
 }
 .profile img {
-    border: 3px solid rgba(250, 250, 250, 0.7);
+    border: 1px solid var(--app-border-color);
     box-shadow: var(--shadow-md);
 }
 .item-text {
