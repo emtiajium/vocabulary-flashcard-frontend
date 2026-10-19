@@ -2,7 +2,7 @@
     <ion-header class="margin-bottom-4">
         <ion-toolbar>
             <ion-row>
-                <ion-col size="12" class="display-flex">
+                <ion-col size="12" class="toolbar-items">
                     <ion-menu-button v-if="type === 'MENU'" aria-label="Menu" @click="onClickMenuIcon">
                         <font-awesome-icon :icon="faBars" />
                     </ion-menu-button>
@@ -161,7 +161,8 @@ ion-toolbar .sc-ion-searchbar-ios-h {
     padding-bottom: unset;
 }
 
-.display-flex {
+.toolbar-items {
+    display: flex;
     align-items: center;
     padding-inline: 0;
 }

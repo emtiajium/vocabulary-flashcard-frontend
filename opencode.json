@@ -24,7 +24,8 @@
             "*": "allow",
             "*.env": "deny",
             "*.env.*": "deny",
-            "*.env.example": "allow",
+            "*.env.test": "allow",
+            "*.env.sample": "allow",
             "**/.bashrc": "deny"
         },
         "edit": "ask",
