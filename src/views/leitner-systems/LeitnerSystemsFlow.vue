@@ -35,7 +35,7 @@
                             mastered: currentBox === lastBox && box.number === lastBox,
                         }"
                     >
-                        <ion-card class="box-card">
+                        <ion-card class="transparent box-card">
                             <empty-box-icon
                                 class="box-icon"
                                 :color-variable="`--leitner-box-${box.number}`"
