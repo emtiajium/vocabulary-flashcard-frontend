@@ -102,7 +102,7 @@ import { IonBadge, IonButton, IonCard, IonCardContent, IonCardSubtitle, IonCol, 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faArrowLeft, faArrowRight, faRefresh } from '@fortawesome/free-solid-svg-icons';
 import EmptyBoxIcon from '@/media/EmptyBoxIcon.vue';
-import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
+import MappedLeitnerBoxWithDays, { MappedLeitnerBoxWithDueText } from '@/domains/MappedLeitnerBoxWithDays';
 
 type StatusType = 'forward' | 'backward' | 'info';
 
@@ -113,13 +113,6 @@ interface LeitnerBoxView {
 }
 
 const boxNumbers = [1, 2, 3, 4, 5];
-const boxDueText: Record<number, string> = {
-    1: 'Due today',
-    2: 'Due tomorrow',
-    3: 'Due in 2 days',
-    4: 'Due in 3 days',
-    5: 'Review anytime',
-};
 
 export default defineComponent({
     name: 'LeitnerSystemsFlow',
@@ -155,7 +148,7 @@ export default defineComponent({
                 return {
                     number,
                     dayLabel: MappedLeitnerBoxWithDays[`BOX_${number}`],
-                    dueText: boxDueText[number],
+                    dueText: MappedLeitnerBoxWithDueText[`BOX_${number}`],
                 };
             });
         },
@@ -177,7 +170,7 @@ export default defineComponent({
             } else {
                 this.statusMessage = `Well done! Your word moved from Box ${previousBox} to Box ${
                     this.currentBox
-                }. Review it again ${boxDueText[this.currentBox].replace('Due ', '')}.`;
+                }. Review it again ${MappedLeitnerBoxWithDueText[`BOX_${this.currentBox}`].replace('Due ', '')}.`;
             }
         },
 
