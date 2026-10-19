@@ -112,9 +112,8 @@ interface LeitnerBoxView {
     dueText: string;
 }
 
-// Mirrors the backend LeitnerBoxAppearanceDifference / LeitnerBoxType definitions.
-const BOX_NUMBERS = [1, 2, 3, 4, 5];
-const BOX_DUE_TEXT: Record<number, string> = {
+const boxNumbers = [1, 2, 3, 4, 5];
+const boxDueText: Record<number, string> = {
     1: 'Due today',
     2: 'Due tomorrow',
     3: 'Due in 2 days',
@@ -140,9 +139,9 @@ export default defineComponent({
             faArrowLeft,
             faArrowRight,
             faRefresh,
-            firstBox: BOX_NUMBERS[0],
-            lastBox: BOX_NUMBERS[BOX_NUMBERS.length - 1],
-            currentBox: BOX_NUMBERS[0],
+            firstBox: boxNumbers[0],
+            lastBox: boxNumbers[boxNumbers.length - 1],
+            currentBox: boxNumbers[0],
             statusType: 'info' as StatusType,
             statusMessage: 'Your word starts in Box 1. Select "Remembered" or "Forgot" to see what happens next.',
         };
@@ -152,11 +151,11 @@ export default defineComponent({
             return this.dayLabel(this.currentBox);
         },
         boxes(): LeitnerBoxView[] {
-            return BOX_NUMBERS.map((number) => {
+            return boxNumbers.map((number) => {
                 return {
                     number,
                     dayLabel: MappedLeitnerBoxWithDays[`BOX_${number}`],
-                    dueText: BOX_DUE_TEXT[number],
+                    dueText: boxDueText[number],
                 };
             });
         },
@@ -178,7 +177,7 @@ export default defineComponent({
             } else {
                 this.statusMessage = `Well done! Your word moved from Box ${previousBox} to Box ${
                     this.currentBox
-                }. Review it again ${BOX_DUE_TEXT[this.currentBox].replace('Due ', '')}.`;
+                }. Review it again ${boxDueText[this.currentBox].replace('Due ', '')}.`;
             }
         },
 

@@ -246,9 +246,6 @@ ion-popover {
 }
 
 ion-toggle {
-    /* 48x28 track, 22px knob, 4px spacing, pill radii, no knob shadow.
-       Off-track uses the project's accessible neutral (>= 3:1 vs knob & surface, WCAG 1.4.11):
-       a light #dfe4e0 track with --handle-box-shadow: none would make the white knob invisible. */
     --track-background: var(--ion-background-color-step-500);
     --track-background-checked: var(--ion-color-primary);
     --handle-background: #fafafa;
@@ -267,7 +264,6 @@ ion-toggle::part(track) {
 }
 
 body.dark ion-toggle {
-    /* On-state uses a mid green so the light knob clears 3:1 against it */
     --track-background: var(--ion-background-color-step-400);
     --track-background-checked: #3c8e6a;
     --handle-background: #fafafa;
