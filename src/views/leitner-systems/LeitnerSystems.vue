@@ -20,26 +20,24 @@
                             </ion-card-subtitle>
                             <leitner-systems-flow v-show="!seeLess" class="see-more" @click.stop />
                             <ion-card-subtitle v-show="!seeLess" class="see-more">
-                                <p>
-                                    The Leitner System uses five boxes to organise your flashcards based on how well you
-                                    remember them.
-                                </p>
-                                <p>
-                                    Start by placing a new word in Box 1. Review it according to the schedule shown for
-                                    each box.
-                                </p>
-                                <p>
-                                    If you remember the word, move it to the next box. If you forget it, move it back to
-                                    the previous box. Words in Box 1 stay there until you remember them.
-                                </p>
-                                <p>
-                                    As you move through the boxes, the time between reviews increases. This helps you
-                                    focus more on difficult words while reviewing familiar ones less often.
-                                </p>
-                                <p>
-                                    Once a word reaches Box 5, you've mastered it! You can still review it whenever you
-                                    like.
-                                </p>
+                                The Leitner System uses five boxes to organise your flashcards based on how well you
+                                remember them.
+                            </ion-card-subtitle>
+                            <ion-card-subtitle v-show="!seeLess" class="see-more">
+                                Start by placing a new word in Box 1. Review it according to the schedule shown for each
+                                box.
+                            </ion-card-subtitle>
+                            <ion-card-subtitle v-show="!seeLess" class="see-more">
+                                If you remember the word, move it to the next box. If you forget it, move it back to the
+                                previous box. Words in Box 1 stay there until you remember them.
+                            </ion-card-subtitle>
+                            <ion-card-subtitle v-show="!seeLess" class="see-more">
+                                As you move through the boxes, the time between reviews increases. This helps you focus
+                                more on difficult words while reviewing familiar ones less often.
+                            </ion-card-subtitle>
+                            <ion-card-subtitle v-show="!seeLess" class="see-more">
+                                Once a word reaches Box 5, you've mastered it! You can still review it whenever you
+                                like.
                             </ion-card-subtitle>
                         </ion-card-content>
                     </ion-card>
