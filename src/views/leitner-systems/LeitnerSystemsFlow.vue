@@ -23,7 +23,7 @@
                     }"
                     :aria-current="box.number === currentBox ? 'step' : undefined"
                 >
-                    <ion-card class="box-card">
+                    <ion-card class="transparent box-card">
                         <empty-box-icon
                             class="box-icon"
                             :color-variable="`--leitner-box-${box.number}`"
