@@ -19,19 +19,19 @@
                                 help you remember them for longer.
                             </ion-card-subtitle>
                             <leitner-systems-flow v-show="!seeLess" class="see-more" @click.stop />
-                            <ion-card-subtitle v-show="!seeLess" class="see-more">
+                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
                                 The Leitner System uses five boxes to organise your flashcards based on how well you
                                 remember them.
                             </ion-card-subtitle>
-                            <ion-card-subtitle v-show="!seeLess" class="see-more">
+                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
                                 Start by placing a new word in Box 1. Review it according to the schedule shown for each
                                 box.
                             </ion-card-subtitle>
-                            <ion-card-subtitle v-show="!seeLess" class="see-more">
-                                If you remember the word, move it to the next box. If you forget it, move it back to the
-                                previous box. Words in Box 1 stay there until you remember them.
+                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
+                                If you remember a word, move it to the next box. If you forget it, move it back to the
+                                previous box. Words in Box 1 stay there until you remember them correctly.
                             </ion-card-subtitle>
-                            <ion-card-subtitle v-show="!seeLess" class="see-more">
+                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
                                 As you move through the boxes, the time between reviews increases. This helps you focus
                                 more on difficult words while reviewing familiar ones less often.
                             </ion-card-subtitle>

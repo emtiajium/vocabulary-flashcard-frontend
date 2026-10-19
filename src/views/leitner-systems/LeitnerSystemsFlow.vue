@@ -46,7 +46,7 @@
                                 focusable="false"
                             />
                             <span class="box-day-text">{{ box.dayLabel }}</span>
-                            <span class="box-schedule-text">Due {{ box.dueText }}</span>
+                            <span class="box-schedule-text">{{ box.dueText }}</span>
                         </ion-card>
                     </div>
                 </ion-col>
@@ -113,11 +113,11 @@ interface LeitnerBoxView {
 // Mirrors the backend LeitnerBoxAppearanceDifference / LeitnerBoxType definitions.
 const BOX_NUMBERS = [1, 2, 3, 4, 5];
 const BOX_DUE_TEXT: Record<number, string> = {
-    1: 'today',
-    2: 'tomorrow',
-    3: 'in 2 days',
-    4: 'in 3 days',
-    5: 'anytime',
+    1: 'Due today',
+    2: 'Due tomorrow',
+    3: 'Due in 2 days',
+    4: 'Due in 3 days',
+    5: 'Review anytime',
 };
 
 export default defineComponent({
@@ -176,7 +176,7 @@ export default defineComponent({
             } else {
                 this.statusMessage = `Well done! Your word moved from Box ${previousBox} to Box ${
                     this.currentBox
-                }. Review it again ${BOX_DUE_TEXT[this.currentBox]}.`;
+                }. Review it again ${BOX_DUE_TEXT[this.currentBox].replace('Due ', '')}.`;
             }
         },
 
@@ -186,7 +186,7 @@ export default defineComponent({
             }
             this.currentBox -= 1;
             this.statusType = 'backward';
-            this.statusMessage = `Your word moved back to Box ${this.currentBox}. Keep practising—you'll remember it with time!`;
+            this.statusMessage = `Your word moved back to Box ${this.currentBox}. Keep practising! You'll remember it with time!`;
         },
 
         resetFlow(): void {
