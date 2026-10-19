@@ -7,26 +7,39 @@
                     <ion-card :button="true" class="margin-top-bottom-unset" @click="toggle">
                         <ion-card-content>
                             <ion-card-subtitle>
-                                We often struggle to memorize vocabulary in the long run. Fortunately, there are several
-                                methods available to overcome this difficulty. One of these is Leitner System.
+                                Remembering new vocabulary can be challenging, especially over time. The Leitner System
+                                makes it easier by helping you review words at the right intervals.
                             </ion-card-subtitle>
                             <ion-card-subtitle v-show="seeLess" class="see-less">
                                 ... <span> See More </span>
                             </ion-card-subtitle>
                             <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
-                                Sebastian Leitner, a German journalist, proposed this method based on the principle of
-                                spaced repetition in which items can be repetitively reviewed until the learner gets
-                                fully satisfied.
+                                The Leitner System was developed by Sebastian Leitner, a German journalist. It uses a
+                                technique called spaced repetition, where you review words at increasing intervals to
+                                help you remember them for longer.
                             </ion-card-subtitle>
                             <leitner-systems-flow v-show="!seeLess" class="see-more" @click.stop />
                             <ion-card-subtitle v-show="!seeLess" class="see-more">
-                                In this method, there are several boxes containing flashcards. If you wish to remember a
-                                newly introduced vocab, move the word into the first box. Review it the next day, either
-                                move it to the next one if you remember the meaning or keep it within the box. In this
-                                way, review the items in the second box. Move it back to the previous box if you forget
-                                the definitions, but forward it to the next box if everything is okay. As you have
-                                already read the same vocabulary for two days, rest for the next day. Review it on the
-                                fourth day and move it forward or backwards. Then on the seventh day, review it again.
+                                <p>
+                                    The Leitner System uses five boxes to organise your flashcards based on how well you
+                                    remember them.
+                                </p>
+                                <p>
+                                    Start by placing a new word in Box 1. Review it according to the schedule shown for
+                                    each box.
+                                </p>
+                                <p>
+                                    If you remember the word, move it to the next box. If you forget it, move it back to
+                                    the previous box. Words in Box 1 stay there until you remember them.
+                                </p>
+                                <p>
+                                    As you move through the boxes, the time between reviews increases. This helps you
+                                    focus more on difficult words while reviewing familiar ones less often.
+                                </p>
+                                <p>
+                                    Once a word reaches Box 5, you've mastered it! You can still review it whenever you
+                                    like.
+                                </p>
                             </ion-card-subtitle>
                         </ion-card-content>
                     </ion-card>

@@ -2,14 +2,17 @@
     <ion-card class="flow-container">
         <ion-card-content>
             <div class="flow-header">
-                <ion-card-subtitle id="leitner-flow-title" class="flow-title"> Leitner System Flow </ion-card-subtitle>
+                <ion-card-subtitle id="leitner-flow-title" class="flow-title">
+                    How the Leitner System Works
+                </ion-card-subtitle>
                 <ion-badge color="primary" class="flow-badge">
                     {{ currentBoxDayLabel }}
                 </ion-badge>
             </div>
 
             <p class="flow-hint">
-                Each review moves a word a single box at a time. Use the controls below to follow it.
+                See how words move between boxes as you remember or forget them. Use the buttons below to try it
+                yourself.
             </p>
 
             <ion-row
@@ -50,7 +53,7 @@
             </ion-row>
 
             <ion-row class="action-row">
-                <ion-col size="12" size-sm="5">
+                <ion-col size="12" size-sm="4">
                     <ion-button
                         expand="block"
                         color="success"
@@ -59,11 +62,11 @@
                         @click="moveForward"
                     >
                         <font-awesome-icon :icon="faArrowRight" class="ion-padding-end" />
-                        I Know
+                        Remembered
                     </ion-button>
                 </ion-col>
 
-                <ion-col size="12" size-sm="5">
+                <ion-col size="12" size-sm="4">
                     <ion-button
                         expand="block"
                         color="warning"
@@ -72,13 +75,14 @@
                         @click="moveBackward"
                     >
                         <font-awesome-icon :icon="faArrowLeft" class="ion-padding-end" />
-                        I Forgot
+                        Forgot
                     </ion-button>
                 </ion-col>
 
-                <ion-col size="12" size-sm="2">
+                <ion-col size="12" size-sm="4">
                     <ion-button expand="block" color="medium" aria-label="Reset the word to Box 1" @click="resetFlow">
-                        <font-awesome-icon :icon="faRefresh" />
+                        <font-awesome-icon :icon="faRefresh" class="ion-padding-end" />
+                        Reset
                     </ion-button>
                 </ion-col>
             </ion-row>
@@ -110,10 +114,10 @@ interface LeitnerBoxView {
 const BOX_NUMBERS = [1, 2, 3, 4, 5];
 const BOX_DUE_TEXT: Record<number, string> = {
     1: 'today',
-    2: 'in 1 day',
+    2: 'tomorrow',
     3: 'in 2 days',
     4: 'in 3 days',
-    5: 'any time',
+    5: 'anytime',
 };
 
 export default defineComponent({
@@ -138,8 +142,7 @@ export default defineComponent({
             lastBox: BOX_NUMBERS[BOX_NUMBERS.length - 1],
             currentBox: BOX_NUMBERS[0],
             statusType: 'info' as StatusType,
-            statusMessage:
-                'This word starts in Box 1 (Day 1). Press "I Know" to move it forward or "I Forgot" to move it back.',
+            statusMessage: 'Your word starts in Box 1. Select "Remembered" or "Forgot" to see what happens next.',
         };
     },
     computed: {
@@ -169,11 +172,11 @@ export default defineComponent({
             this.currentBox += 1;
             this.statusType = 'forward';
             if (this.currentBox === this.lastBox) {
-                this.statusMessage = `The word advanced from Box ${previousBox} to Box ${this.currentBox} (${this.currentBoxDayLabel}) and is now mastered. It stays due any time.`;
+                this.statusMessage = `Excellent! Your word has reached the final box. You've mastered it!`;
             } else {
-                this.statusMessage = `The word advanced from Box ${previousBox} to Box ${this.currentBox} (${
-                    this.currentBoxDayLabel
-                }). Next review is due ${BOX_DUE_TEXT[this.currentBox]}.`;
+                this.statusMessage = `Well done! Your word moved from Box ${previousBox} to Box ${
+                    this.currentBox
+                }. Review it again ${BOX_DUE_TEXT[this.currentBox]}.`;
             }
         },
 
@@ -183,13 +186,13 @@ export default defineComponent({
             }
             this.currentBox -= 1;
             this.statusType = 'backward';
-            this.statusMessage = `The word moved back from the current box to the previous one and is ready to review again.`;
+            this.statusMessage = `Your word moved back to Box ${this.currentBox}. Keep practising—you'll remember it with time!`;
         },
 
         resetFlow(): void {
             this.currentBox = this.firstBox;
             this.statusType = 'info';
-            this.statusMessage = 'Reset to Box 1 (Day 1). The word is due today.';
+            this.statusMessage = `Back to Box 1! Your word is ready for review today.`;
         },
     },
 });
