@@ -10,10 +10,7 @@
                 </ion-badge>
             </div>
 
-            <p class="flow-hint">
-                See how words move between boxes as you remember or forget them. Use the buttons below to try it
-                yourself.
-            </p>
+            <p class="flow-hint">See how a word moves between boxes as you remember or forget it.</p>
 
             <ion-row
                 class="boxes-grid display-flex ion-justify-content-center"
@@ -52,16 +49,16 @@
                 </ion-col>
             </ion-row>
 
-            <ion-row class="action-row">
+            <ion-row>
                 <ion-col size="12" size-sm="4">
                     <ion-button
                         expand="block"
                         color="success"
-                        aria-label="I know this word, move it forward one box"
+                        aria-label="Remembered, move this word forward one box"
                         :disabled="currentBox === lastBox"
                         @click="moveForward"
                     >
-                        <font-awesome-icon :icon="faArrowRight" class="ion-padding-end" />
+                        <font-awesome-icon :icon="faArrowRight" class="ion-padding-end" aria-hidden="true" />
                         Remembered
                     </ion-button>
                 </ion-col>
@@ -70,24 +67,29 @@
                     <ion-button
                         expand="block"
                         color="warning"
-                        aria-label="I forgot this word, move it back one box"
+                        aria-label="Forgot, move this word back one box"
                         :disabled="currentBox === firstBox"
                         @click="moveBackward"
                     >
-                        <font-awesome-icon :icon="faArrowLeft" class="ion-padding-end" />
+                        <font-awesome-icon :icon="faArrowLeft" class="ion-padding-end" aria-hidden="true" />
                         Forgot
                     </ion-button>
                 </ion-col>
 
                 <ion-col size="12" size-sm="4">
-                    <ion-button expand="block" color="medium" aria-label="Reset the word to Box 1" @click="resetFlow">
-                        <font-awesome-icon :icon="faRefresh" class="ion-padding-end" />
+                    <ion-button
+                        expand="block"
+                        color="medium"
+                        aria-label="Reset, move this word back to Box 1"
+                        @click="resetFlow"
+                    >
+                        <font-awesome-icon :icon="faRefresh" class="ion-padding-end" aria-hidden="true" />
                         Reset
                     </ion-button>
                 </ion-col>
             </ion-row>
 
-            <p class="status-banner" :class="statusType" role="status" aria-live="polite">
+            <p class="status-banner" :class="statusType" role="status">
                 {{ statusMessage }}
             </p>
         </ion-card-content>
@@ -186,13 +188,13 @@ export default defineComponent({
             }
             this.currentBox -= 1;
             this.statusType = 'backward';
-            this.statusMessage = `Your word moved back to Box ${this.currentBox}. Keep practising! You'll remember it with time!`;
+            this.statusMessage = `Your word moved back to Box ${this.currentBox}. Keep practising! You'll get there.`;
         },
 
         resetFlow(): void {
             this.currentBox = this.firstBox;
             this.statusType = 'info';
-            this.statusMessage = `Back to Box 1! Your word is ready for review today.`;
+            this.statusMessage = `Back to Box 1! Your word is ready to review.`;
         },
     },
 });
@@ -202,15 +204,11 @@ export default defineComponent({
 ion-card.flow-container {
     --background: var(--app-surface, var(--ion-color-card));
     width: 100%;
-    margin: var(--space-sm) auto;
+    margin: var(--space-md) auto;
     border: 1px solid var(--app-border-color);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     overflow: visible;
-}
-
-ion-card.flow-container ion-card-content {
-    width: 100%;
 }
 
 .flow-header {
@@ -285,16 +283,12 @@ ion-card.box-card {
 }
 
 .box-schedule-text {
-    font-size: var(--text-2xs);
+    font-size: var(--text-xs);
     color: var(--ion-text-color-step-300);
 }
 
-.action-row {
-    margin-top: var(--space-xs);
-}
-
 .status-banner {
-    margin: var(--space-sm) 0 0;
+    margin: var(--space-md) 0 0;
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-sm);
     font-size: var(--text-sm);

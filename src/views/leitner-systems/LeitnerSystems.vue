@@ -4,41 +4,53 @@
         <ion-content :fullscreen="true" id="leitner-boxes">
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
-                    <ion-card :button="true" class="margin-top-bottom-unset" @click="toggle">
+                    <ion-card class="margin-top-bottom-unset">
                         <ion-card-content>
                             <ion-card-subtitle>
                                 Remembering new vocabulary can be challenging, especially over time. The Leitner System
                                 makes it easier by helping you review words at the right intervals.
                             </ion-card-subtitle>
-                            <ion-card-subtitle v-show="seeLess" class="see-less">
-                                ... <span> See More </span>
-                            </ion-card-subtitle>
-                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
-                                The Leitner System was developed by Sebastian Leitner, a German journalist. It uses a
-                                technique called spaced repetition, where you review words at increasing intervals to
-                                help you remember them for longer.
-                            </ion-card-subtitle>
-                            <leitner-systems-flow v-show="!seeLess" class="see-more" @click.stop />
-                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
-                                The Leitner System uses five boxes to organise your flashcards based on how well you
-                                remember them.
-                            </ion-card-subtitle>
-                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
-                                Start by placing a new word in Box 1. Review it according to the schedule shown for each
-                                box.
-                            </ion-card-subtitle>
-                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
-                                If you remember a word, move it to the next box. If you forget it, move it back to the
-                                previous box. Words in Box 1 stay there until you remember them correctly.
-                            </ion-card-subtitle>
-                            <ion-card-subtitle v-show="!seeLess" class="see-more ion-padding-top">
-                                As you move through the boxes, the time between reviews increases. This helps you focus
-                                more on difficult words while reviewing familiar ones less often.
-                            </ion-card-subtitle>
-                            <ion-card-subtitle v-show="!seeLess" class="see-more">
-                                Once a word reaches Box 5, you've mastered it! You can still review it whenever you
-                                like.
-                            </ion-card-subtitle>
+
+                            <div id="leitner-details" v-show="!seeLess" class="see-more">
+                                <ion-card-subtitle class="ion-padding-top">
+                                    The Leitner System was developed by Sebastian Leitner, a German journalist. It uses
+                                    a technique called spaced repetition, where you review words at increasing intervals
+                                    to help you remember them for longer.
+                                </ion-card-subtitle>
+                                <leitner-systems-flow />
+                                <ion-card-subtitle class="ion-padding-top">
+                                    The Leitner System uses five boxes to organise your flashcards based on how well you
+                                    remember them.
+                                </ion-card-subtitle>
+                                <ion-card-subtitle class="ion-padding-top">
+                                    Start by placing a new word in Box 1. Review it according to the schedule shown for
+                                    each box.
+                                </ion-card-subtitle>
+                                <ion-card-subtitle class="ion-padding-top">
+                                    If you remember a word, move it to the next box. If you forget it, move it back to
+                                    the previous box. Words in Box 1 stay there until you remember them correctly.
+                                </ion-card-subtitle>
+                                <ion-card-subtitle class="ion-padding-top">
+                                    As you move through the boxes, the time between reviews increases. This helps you
+                                    focus more on difficult words while reviewing familiar ones less often.
+                                </ion-card-subtitle>
+                                <ion-card-subtitle class="ion-padding-top">
+                                    Once a word reaches Box 5, you've mastered it! You can still review it whenever you
+                                    like.
+                                </ion-card-subtitle>
+                            </div>
+
+                            <div class="see-more-toggle">
+                                <ion-button
+                                    fill="clear"
+                                    color="primary"
+                                    :aria-expanded="!seeLess"
+                                    aria-controls="leitner-details"
+                                    @click="toggle"
+                                >
+                                    {{ seeLess ? 'Learn More' : 'See Less' }}
+                                </ion-button>
+                            </div>
                         </ion-card-content>
                     </ion-card>
                 </ion-col>
@@ -67,7 +79,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonContent, IonPage, IonRow, IonCol, IonCardSubtitle, IonCardContent, IonCard } from '@ionic/vue';
+import { IonContent, IonPage, IonRow, IonCol, IonCardSubtitle, IonCardContent, IonCard, IonButton } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import LeitnerSingleBox from '@/views/leitner-systems/LeitnerSingleBox.vue';
 import LeitnerSystemsFlow from '@/views/leitner-systems/LeitnerSystemsFlow.vue';
@@ -87,6 +99,7 @@ export default defineComponent({
         IonCard,
         IonCardSubtitle,
         IonCardContent,
+        IonButton,
     },
     data() {
         return {
@@ -143,16 +156,17 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.see-more-toggle {
+    margin-top: var(--space-xs);
+    text-align: center;
+}
+
 @media only screen and (min-width: 768px) {
     .see-more {
-        display: flex !important;
+        display: block !important;
     }
-    .see-less {
+    .see-more-toggle {
         display: none !important;
     }
-}
-.see-less > span {
-    color: var(--ion-color-primary);
-    font-weight: var(--font-weight-semibold);
 }
 </style>
