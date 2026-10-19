@@ -18,7 +18,7 @@
                                 spaced repetition in which items can be repetitively reviewed until the learner gets
                                 fully satisfied.
                             </ion-card-subtitle>
-                            <leitner-systems-flow v-show="!seeLess" class="see-more" />
+                            <leitner-systems-flow v-show="!seeLess" class="see-more" @click.stop />
                             <ion-card-subtitle v-show="!seeLess" class="see-more">
                                 In this method, there are several boxes containing flashcards. If you wish to remember a
                                 newly introduced vocab, move the word into the first box. Review it the next day, either
@@ -59,7 +59,7 @@ import { defineComponent } from 'vue';
 import { IonContent, IonPage, IonRow, IonCol, IonCardSubtitle, IonCardContent, IonCard } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import LeitnerSingleBox from '@/views/leitner-systems/LeitnerSingleBox.vue';
-import LeitnerSystemsFlow from '@/media/LeitnerSystemsFlow.vue';
+import LeitnerSystemsFlow from '@/views/leitner-systems/LeitnerSystemsFlow.vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 
