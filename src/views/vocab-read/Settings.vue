@@ -204,8 +204,6 @@ ion-popover::part(content) {
     top: 0 !important;
     left: unset !important;
     right: 0 !important;
-    border-top-left-radius: var(--radius-xl) !important;
-    border-bottom-left-radius: var(--radius-xl) !important;
     box-shadow: var(--shadow-xl) !important;
 }
 .settings-popover {
