@@ -267,5 +267,11 @@ export default defineComponent({
     justify-content: center;
     padding: var(--ion-padding);
     background: var(--ion-card-background);
+    background-image: radial-gradient(circle at 50% 0%, rgba(var(--ion-color-primary-rgb), 0.1), transparent 60%);
+}
+
+.link-container {
+    max-width: 32rem;
+    --color: var(--ion-text-color-step-300);
 }
 </style>

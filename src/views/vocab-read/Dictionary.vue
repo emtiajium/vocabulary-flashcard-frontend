@@ -81,8 +81,15 @@ export default defineComponent({
 
 <style scoped>
 .dictionary-logo-extra {
-    border-radius: 50%;
+    border-radius: var(--radius-md);
     width: 80%;
+    object-fit: contain;
+}
+
+ion-card.transparent {
+    --background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -123,5 +130,7 @@ export default defineComponent({
 .label-block {
     padding-top: calc(var(--ion-padding) / 2);
     padding-bottom: calc(var(--ion-padding) / 2);
+    border: none;
+    box-shadow: none;
 }
 </style>

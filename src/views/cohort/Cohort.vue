@@ -153,11 +153,17 @@ export default defineComponent({
 .name-container {
     padding-top: calc(var(--ion-padding) / 2);
     padding-bottom: calc(var(--ion-padding) / 2);
+    color: var(--ion-color-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-lg);
 }
 .avatar {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+.avatar img {
+    border: 1px solid var(--app-border-color);
 }
 .profile-info {
     display: flex;

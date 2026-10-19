@@ -66,7 +66,7 @@
 
 ## Assets generator
 
-➜ Square + Round (Launcher icon): Visit [here](https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html)
+➜ Square + Round (Launcher icon): Visit [here](https://icon.kitchen/)
 
 ➜ Foreground (Launcher icon): Visit [here](https://easyappicon.com/)
 
@@ -120,6 +120,7 @@
 
 ## Change Log
 
+-   `6.0.0`: UI improvement + Targeting API level 36 + Min SDK Version to 24
 -   `5.0.1`: Improved error messages
 -   `5.0.0`: Capacitor@8 + Node@22
 -   `4.0.2`: Targeting Android 15 (API level 35)
@@ -243,6 +244,7 @@
 
 ## Android Release Log
 
+-   `109`: `6.0.0`
 -   `108`: `5.0.1`
 -   `107`: `5.0.1`
 -   `106`: `5.0.0`

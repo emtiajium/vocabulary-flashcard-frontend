@@ -34,7 +34,7 @@
                 <ion-row>
                     <ion-button
                         aria-label="Remove vocabulary"
-                        fill="outline"
+                        fill="clear"
                         size="small"
                         shape="round"
                         :strong="true"
@@ -45,7 +45,7 @@
                     </ion-button>
                     <ion-button
                         aria-label="Update vocabulary"
-                        fill="outline"
+                        fill="clear"
                         size="small"
                         shape="round"
                         :strong="true"
@@ -73,7 +73,7 @@
                     </ion-button>
                     <ion-button
                         aria-label="View vocabulary details"
-                        fill="outline"
+                        fill="clear"
                         size="small"
                         shape="round"
                         :strong="true"
@@ -168,17 +168,28 @@ export default defineComponent({
 
 <style scoped>
 .contents {
-    width: calc(100% - 120px);
+    width: calc(100% - 116px);
 }
 .action-buttons {
-    width: 120px;
+    width: 116px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: flex-end;
-    padding-inline: var(--ion-padding);
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+}
+.action-buttons ion-row {
+    gap: var(--space-2xs);
+}
+.action-buttons ion-button {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    --padding-start: 0;
+    --padding-end: 0;
 }
 .leitner-icon {
-    font-size: 1.5rem;
+    font-size: var(--icon-md);
 }
 </style>

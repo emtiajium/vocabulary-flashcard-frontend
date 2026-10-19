@@ -83,10 +83,25 @@ export default defineComponent({
 <style scoped>
 strong {
     color: var(--ion-color-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+ion-card {
+    --background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+ion-card-title {
+    font-size: clamp(1.125rem, 1.05rem + 0.5vw, 1.35rem);
+    line-height: var(--leading-normal);
+    font-weight: var(--font-weight-medium);
+    --color: var(--ion-card-title-color);
 }
 
 .icon-container {
     width: 50%;
+    max-width: 220px;
 }
 
 /* Large devices (laptops/desktops, 992px and up) */

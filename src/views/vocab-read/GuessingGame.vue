@@ -405,19 +405,28 @@ export default defineComponent({
 
 <style scoped>
 .swiper {
-    width: calc(100% - var(--ion-margin) / 4 - var(--ion-margin) / 4);
+    width: calc(100% - var(--ion-margin) / 2);
     height: 100%;
-    border-radius: var(--default-border-radius);
+    border-radius: var(--radius-lg);
 }
 
 .swiper-slide {
     background: var(--ion-card-background);
-    border-radius: var(--default-border-radius);
+    border: 1px solid var(--app-border-color);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-lg);
 }
 
 .submit-answer-container {
-    border: thin solid var(--text-area-border-color);
-    border-radius: var(--default-border-radius);
+    border: 1.5px solid var(--text-area-border-color);
+    border-radius: var(--radius-md);
+    background: var(--app-surface-raised);
+    transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.submit-answer-container:focus-within {
+    border-color: var(--ion-color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--ion-color-primary-rgb), 0.18);
 }
 
 @keyframes bounce {
@@ -442,6 +451,6 @@ export default defineComponent({
 }
 
 .icon-font {
-    font-size: 1.25rem;
+    font-size: var(--icon-md);
 }
 </style>

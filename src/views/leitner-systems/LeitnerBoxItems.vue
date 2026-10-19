@@ -383,19 +383,29 @@ export default defineComponent({
     padding-top: unset;
     padding-bottom: unset;
     opacity: inherit;
+    color: var(--ion-text-color-step-300);
+    font-weight: var(--font-weight-medium);
 }
 
 ion-card-header {
-    padding-bottom: unset;
+    padding-bottom: var(--space-2xs);
 }
 
 ion-card-content {
-    padding-top: unset;
-    padding-bottom: unset;
+    padding-top: var(--space-2xs);
+    padding-bottom: var(--space-sm);
 }
 
 .item-container:last-of-type {
     margin-bottom: calc(var(--ion-margin) / 2);
+}
+
+.item-container ion-button {
+    margin: var(--space-2xs);
+    width: 40px;
+    height: 40px;
+    --padding-start: 0;
+    --padding-end: 0;
 }
 
 .leitner-icon {

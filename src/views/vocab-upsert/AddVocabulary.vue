@@ -617,29 +617,30 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.added-definition-card-content {
-    padding-inline-start: unset;
-    padding-inline-end: unset;
-}
 .added-definition-container {
     display: flex;
+    align-items: center;
+    padding: var(--space-2xs) var(--space-xs);
+    margin-bottom: var(--space-xs);
+    background: var(--app-surface-sunken);
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--radius-md);
 }
 .added-definition-container:last-of-type {
     margin-bottom: unset;
 }
 .added-definition-action-buttons {
     display: flex;
-    width: 100px;
+    width: 96px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-left: calc(-1 * var(--ion-padding) / 2);
 }
 .added-definition-contents {
     display: flex;
     align-items: center;
-    width: calc(100% - 100px - var(--ion-padding));
-    padding-right: var(--ion-padding);
+    width: calc(100% - 96px - var(--space-xs));
+    padding-right: var(--space-xs);
 }
 .add-definition-button-container {
     display: flex;

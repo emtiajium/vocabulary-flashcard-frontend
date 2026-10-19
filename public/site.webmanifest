@@ -1,6 +1,6 @@
 {
     "name": "Firecracker Vocabulary Flashcards",
-    "short_name": "Firecracker Vocabulary Flashcards",
+    "short_name": "Firecracker",
     "description": "Memorize Vocabulary Effectively",
     "icons": [
         {
@@ -58,8 +58,8 @@
             "purpose": "any maskable"
         }
     ],
-    "theme_color": "#2e8b57",
-    "background_color": "#2e8b57",
+    "theme_color": "#18794e",
+    "background_color": "#18794e",
     "start_url": ".",
     "display": "standalone",
     "related_applications": [

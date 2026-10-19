@@ -62,11 +62,19 @@ export default defineComponent({
     padding-top: unset;
     padding-bottom: unset;
 }
+ion-card.transparent {
+    --background: transparent;
+    border: none;
+    box-shadow: none;
+}
 .icon-container {
     margin-top: var(--ion-margin);
     margin-bottom: calc(var(--ion-margin) / 2);
 }
 .count-container {
     margin-bottom: var(--ion-margin);
+}
+ion-card-subtitle {
+    font-weight: var(--font-weight-medium);
 }
 </style>

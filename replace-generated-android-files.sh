@@ -20,6 +20,7 @@ cp -R ./android-replacer/app/src/main/res/mipmap-mdpi ./android/app/src/main/res
 cp -R ./android-replacer/app/src/main/res/mipmap-xhdpi ./android/app/src/main/res
 cp -R ./android-replacer/app/src/main/res/mipmap-xxhdpi ./android/app/src/main/res
 cp -R ./android-replacer/app/src/main/res/mipmap-xxxhdpi ./android/app/src/main/res
+cp -R ./android-replacer/app/src/main/res/mipmap-anydpi-v26 ./android/app/src/main/res
 # Values
 cp ./android-replacer/app/src/main/res/values/ic_launcher_background.xml ./android/app/src/main/res/values/ic_launcher_background.xml
 cp ./android-replacer/app/src/main/res/values/strings.xml ./android/app/src/main/res/values/strings.xml

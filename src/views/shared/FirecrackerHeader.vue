@@ -2,7 +2,7 @@
     <ion-header class="margin-bottom-4">
         <ion-toolbar>
             <ion-row>
-                <ion-col size="12" class="display-flex">
+                <ion-col size="12" class="toolbar-items">
                     <ion-menu-button v-if="type === 'MENU'" aria-label="Menu" @click="onClickMenuIcon">
                         <font-awesome-icon :icon="faBars" />
                     </ion-menu-button>
@@ -161,17 +161,45 @@ ion-toolbar .sc-ion-searchbar-ios-h {
     padding-bottom: unset;
 }
 
-.settings-button {
-    --padding-start: calc(var(--ion-padding) / 2);
-    --padding-end: calc(var(--ion-padding) / 2);
-    font-size: 1.25rem;
-    width: 40px;
-    height: 40px;
+.toolbar-items {
+    display: flex;
+    align-items: center;
+    padding-inline: 0;
 }
 
+ion-title {
+    padding-inline: var(--space-2xs);
+    min-width: 0;
+}
+
+ion-searchbar {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+ion-menu-button {
+    --color: var(--ion-toolbar-color);
+    color: var(--ion-toolbar-color);
+    flex: 0 0 auto;
+}
+
+.settings-button,
 .back-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 1.25rem;
+    --padding-start: 0;
+    --padding-end: 0;
+    --border-radius: var(--radius-pill);
+    --color: var(--ion-toolbar-color);
+    color: var(--ion-toolbar-color);
+    border-radius: 50%;
+    font-size: var(--icon-md);
+    width: var(--touch-target);
+    height: var(--touch-target);
+    flex: 0 0 auto;
+    transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.settings-button:hover,
+.back-icon:hover {
+    background-color: rgba(250, 250, 250, 0.16);
 }
 </style>
