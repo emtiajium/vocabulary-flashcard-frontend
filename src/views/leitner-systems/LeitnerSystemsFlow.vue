@@ -12,29 +12,42 @@
                 Each review moves a word a single box at a time. Use the controls below to follow it.
             </p>
 
-            <ol class="boxes-grid" aria-labelledby="leitner-flow-title">
-                <li
+            <ion-row
+                class="boxes-grid display-flex ion-justify-content-center"
+                role="list"
+                aria-labelledby="leitner-flow-title"
+            >
+                <ion-col
                     v-for="box in boxes"
                     :key="box.number"
-                    class="box-item"
-                    :class="{
-                        active: box.number === currentBox,
-                        mastered: currentBox === lastBox && box.number === lastBox,
-                    }"
+                    sizeXs="6"
+                    sizeSm="4"
+                    sizeMd="3"
+                    sizeLg="3"
+                    sizeXl="2"
+                    role="listitem"
                     :aria-current="box.number === currentBox ? 'step' : undefined"
                 >
-                    <ion-card class="transparent box-card">
-                        <empty-box-icon
-                            class="box-icon"
-                            :color-variable="`--leitner-box-${box.number}`"
-                            aria-hidden="true"
-                            focusable="false"
-                        />
-                        <span class="box-day-text">{{ box.dayLabel }}</span>
-                        <span class="box-schedule-text">Due {{ box.dueText }}</span>
-                    </ion-card>
-                </li>
-            </ol>
+                    <div
+                        class="box-item"
+                        :class="{
+                            active: box.number === currentBox,
+                            mastered: currentBox === lastBox && box.number === lastBox,
+                        }"
+                    >
+                        <ion-card class="box-card">
+                            <empty-box-icon
+                                class="box-icon"
+                                :color-variable="`--leitner-box-${box.number}`"
+                                aria-hidden="true"
+                                focusable="false"
+                            />
+                            <span class="box-day-text">{{ box.dayLabel }}</span>
+                            <span class="box-schedule-text">Due {{ box.dueText }}</span>
+                        </ion-card>
+                    </div>
+                </ion-col>
+            </ion-row>
 
             <ion-row class="action-row">
                 <ion-col size="12" size-sm="5">
@@ -224,12 +237,7 @@ ion-card.flow-container ion-card-content {
 }
 
 .boxes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
-    gap: var(--space-xs);
     margin: 0 0 var(--space-md);
-    padding: 0;
-    list-style: none;
 }
 
 .box-item {
