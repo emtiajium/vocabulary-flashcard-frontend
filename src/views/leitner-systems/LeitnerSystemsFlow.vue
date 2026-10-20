@@ -79,7 +79,7 @@
                 <ion-col size="12" size-sm="4">
                     <ion-button
                         expand="block"
-                        color="medium"
+                        color="lightest"
                         aria-label="Reset, move this word back to Box 1"
                         @click="resetFlow"
                     >
