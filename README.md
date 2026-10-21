@@ -120,6 +120,7 @@
 
 ## Change Log
 
+-   `6.0.3`: Upgraded `class-validator` and `class-transformer`, removed `iterare` + Integration tests for the upsert flows
 -   `6.0.2`: Fixed vocab edit bug
 -   `6.0.1`: Fixed reset button's UI issue
 -   `6.0.0`: UI improvement + Targeting API level 36 + Min SDK Version to 24
