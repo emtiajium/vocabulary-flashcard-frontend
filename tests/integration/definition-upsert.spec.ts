@@ -193,7 +193,7 @@ describe('Definition upsert view (integration)', () => {
     describe('WHEN the definition is valid', () => {
         it('SHOULD hand the definition back to the vocabulary view', async () => {
             const onComingBackToVocab = jest.fn();
-            examplesFromChildView = ['Project 550 went successful. Poggers!'];
+            examplesFromChildView = ['Project 550 was successful. Poggers!'];
             const wrapper = mountView({ onComingBackToVocab });
             vm(wrapper).setMeaning('  (Pop-culture) To express excitement when something exciting occurs.  ');
 
@@ -205,7 +205,7 @@ describe('Definition upsert view (integration)', () => {
                 expect.objectContaining({
                     vocabularyId: apiDefinitionPayload.vocabularyId,
                     meaning: '(Pop-culture) To express excitement when something exciting occurs.',
-                    examples: ['Project 550 went successful. Poggers!'],
+                    examples: ['Project 550 was successful. Poggers!'],
                     notes: [],
                     externalLinks: [],
                 }),
@@ -213,7 +213,7 @@ describe('Definition upsert view (integration)', () => {
         });
 
         it('SHOULD clear the form after a successful save', async () => {
-            examplesFromChildView = ['Project 550 went successful. Poggers!'];
+            examplesFromChildView = ['Project 550 was successful. Poggers!'];
             const wrapper = mountView();
             vm(wrapper).setMeaning('(Pop-culture) To express excitement when something exciting occurs.');
 
@@ -237,7 +237,7 @@ describe('Definition upsert view (integration)', () => {
     describe('WHEN the definition is invalid', () => {
         it('SHOULD show the message and SHOULD NOT hand anything back WHEN the meaning is blank', async () => {
             const onComingBackToVocab = jest.fn();
-            examplesFromChildView = ['Project 550 went successful. Poggers!'];
+            examplesFromChildView = ['Project 550 was successful. Poggers!'];
             const wrapper = mountView({ onComingBackToVocab });
             vm(wrapper).setMeaning('   ');
 
@@ -260,7 +260,7 @@ describe('Definition upsert view (integration)', () => {
 
         it('SHOULD show the message WHEN an external link provided by a child view is invalid', async () => {
             const onComingBackToVocab = jest.fn();
-            examplesFromChildView = ['Project 550 went successful. Poggers!'];
+            examplesFromChildView = ['Project 550 was successful. Poggers!'];
             externalLinksFromChildView = ['not-a-url'];
             const wrapper = mountView({ onComingBackToVocab });
             vm(wrapper).setMeaning('(Pop-culture) To express excitement when something exciting occurs.');

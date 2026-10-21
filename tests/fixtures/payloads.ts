@@ -9,7 +9,7 @@ export const apiDefinitionPayload: Definition = {
     id: 'ecbb9049-7f47-482e-8b6c-1a68d0f14a63',
     vocabularyId: '0cbc44a7-cf93-4358-b454-60267f1ea56f',
     meaning: '(Pop-culture) To express excitement when something exciting occurs. ',
-    examples: ['Project 550 went successful. Poggers!'],
+    examples: ['Project 550 was successful. Poggers!'],
     notes: [],
     externalLinks: [],
 };
@@ -33,7 +33,7 @@ export function buildDefinitionInstance(overrides: Partial<Definition> = {}): De
     definition.id = 'ecbb9049-7f47-482e-8b6c-1a68d0f14a63';
     definition.vocabularyId = '0cbc44a7-cf93-4358-b454-60267f1ea56f';
     definition.meaning = '(Pop-culture) To express excitement when something exciting occurs.';
-    definition.examples = ['Project 550 went successful. Poggers!'];
+    definition.examples = ['Project 550 was successful. Poggers!'];
     definition.notes = [];
     definition.externalLinks = [];
     return Object.assign(definition, overrides);
