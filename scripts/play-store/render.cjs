@@ -219,7 +219,9 @@ async function renderScreen(device, screen) {
         .toBuffer();
 
     const outDir = path.join(renderedDir, device.id);
-    const outPath = path.join(outDir, `${screen.id}.png`);
+    // Prefix the file name with the device (folder) name so every generated image
+    // is self-describing, e.g. `phone/phone-01-build-your-dictionary.png`.
+    const outPath = path.join(outDir, `${device.id}-${screen.id}.png`);
 
     await sharp(buildBackgroundSvg(device, screen, layout))
         .composite([
@@ -247,8 +249,8 @@ async function main() {
         for (const screen of config.screens) {
             total += 1;
             try {
-                const { width, height } = await renderScreen(device, screen);
-                console.log(`  rendered ${device.id}/${screen.id} (screenshot ${width}x${height})`);
+                const { outPath, width, height } = await renderScreen(device, screen);
+                console.log(`  rendered ${path.relative(projectRoot, outPath)} (screenshot ${width}x${height})`);
             } catch (error) {
                 failures += 1;
                 console.error(`  FAILED ${device.id}/${screen.id}: ${error.message}`);
