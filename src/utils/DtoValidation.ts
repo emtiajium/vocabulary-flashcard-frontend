@@ -1,4 +1,4 @@
-import { ClassConstructor, plainToClass } from 'class-transformer';
+import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
 
@@ -16,7 +16,7 @@ export default class DtoValidation {
      * @throws {Error} with the first user-facing validation message
      */
     static validate<T extends object>(type: ClassConstructor<T>, payload: object): void {
-        const [firstError] = ValidationErrorTransform.transform(validateSync(plainToClass(type, payload)));
+        const [firstError] = ValidationErrorTransform.transform(validateSync(plainToInstance(type, payload)));
         if (firstError) {
             throw new Error(firstError);
         }
