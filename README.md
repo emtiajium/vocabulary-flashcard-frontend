@@ -120,6 +120,7 @@
 
 ## Change Log
 
+-   `6.0.2`: Fixed vocab edit bug
 -   `6.0.1`: Fixed reset button's UI issue
 -   `6.0.0`: UI improvement + Targeting API level 36 + Min SDK Version to 24
 -   `5.0.1`: Improved error messages
@@ -245,6 +246,7 @@
 
 ## Android Release Log
 
+-   `112`: `6.0.2`
 -   `111`: `6.0.1`
 -   `110`: `6.0.0`
 -   `109`: `6.0.0`

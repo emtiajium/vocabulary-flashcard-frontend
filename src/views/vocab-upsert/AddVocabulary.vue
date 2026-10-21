@@ -211,6 +211,7 @@ import AddGenericExternalLinks from '@/views/vocab-upsert/AddGenericExternalLink
 import Definition from '@/domains/Definition';
 import AddDefinition from '@/views/vocab-upsert/AddDefinition.vue';
 import { validateSync } from 'class-validator';
+import { plainToClass } from 'class-transformer';
 import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
 import Spinner from '@/views/shared/Spinner.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -469,7 +470,7 @@ export default defineComponent({
             return vocabulary;
         },
         validatePayload(vocabulary: Vocabulary): void {
-            const errors = validateSync(vocabulary);
+            const errors = validateSync(plainToClass(Vocabulary, vocabulary));
             if (errors.length > 0) {
                 throw new Error(ValidationErrorTransform.transform(errors)[0]);
             }
