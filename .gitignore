@@ -44,3 +44,6 @@ android-replacer/app/google-services.json
 
 resources
 .firebase
+
+# Play Store screenshot pipeline: raw captures, rendered images and previews
+/play-store/

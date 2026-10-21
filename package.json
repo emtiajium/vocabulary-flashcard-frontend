@@ -1,6 +1,6 @@
 {
     "name": "vocabulary-flashcard-frontend",
-    "version": "6.0.3",
+    "version": "7.0.0",
     "private": true,
     "description": "Build your own dictionary, create flashcards, memorize vocabularies",
     "scripts": {
@@ -10,8 +10,8 @@
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint --fix",
         "lint:check": "vue-cli-service lint --no-fix",
-        "format": "prettier --write \"{public,src,tests}/**/*.{html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
-        "format:check": "prettier --check \"{public,src,tests}/**/*.{html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
+        "format": "prettier --write \"{public,scripts,src,tests}/**/*.{cjs,json,html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
+        "format:check": "prettier --check \"{public,scripts,src,tests}/**/*.{cjs,json,html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
         "test": "jest",
         "ci": "npm run format:check && npm run lint:check && npm run test && npm run build",
         "serve:android:anew": "rm -rf android/ && ionic build --prod --release && npx cap add android && npx cap sync android",
@@ -19,7 +19,11 @@
         "deploy:firebase": "node cloud-server.js && node server-validator-before-release.js && npm run build && firebase deploy --only hosting && node local-server.js",
         "replace-generated-android-files": "bash ./replace-generated-android-files.sh",
         "android-pre-bundle": "npm run serve:android:anew:prod && npm run replace-generated-android-files",
-        "android-pre-bundle:local": "npm run serve:android:anew && npm run replace-generated-android-files"
+        "android-pre-bundle:local": "npm run serve:android:anew && npm run replace-generated-android-files",
+        "store:serve": "VUE_APP_STORE_SCREENSHOTS=true vue-cli-service serve --port 8090",
+        "store:capture": "node scripts/play-store/capture.cjs",
+        "store:render": "node scripts/play-store/render.cjs",
+        "store:images": "npm run store:capture && npm run store:render"
     },
     "dependencies": {
         "@capacitor/android": "^8.0.1",
@@ -84,7 +88,9 @@
         "jest": "^29.7.0",
         "jest-environment-jsdom": "^29.7.0",
         "node-polyfill-webpack-plugin": "^2.0.1",
+        "playwright": "^1.64.1",
         "prettier": "^2.3.1",
+        "sharp": "^0.35.5",
         "ts-jest": "^29.4.15",
         "typescript": "~5.9.0",
         "vue-tsc": "^2.1.10"
