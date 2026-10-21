@@ -1,6 +1,6 @@
 {
     "name": "vocabulary-flashcard-frontend",
-    "version": "6.0.2",
+    "version": "6.0.3",
     "private": true,
     "description": "Build your own dictionary, create flashcards, memorize vocabularies",
     "scripts": {
@@ -9,10 +9,11 @@
         "serve": "vue-cli-service serve --port 8090",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint --fix",
-        "lint:check": "vue-cli-service lint",
-        "format": "prettier --write \"{public,src}/**/*.{html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
-        "format:check": "prettier --check \"{public,src}/**/*.{html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
-        "ci": "npm run format:check && npm run lint:check && npm run build",
+        "lint:check": "vue-cli-service lint --no-fix",
+        "format": "prettier --write \"{public,src,tests}/**/*.{html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
+        "format:check": "prettier --check \"{public,src,tests}/**/*.{html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
+        "test": "jest",
+        "ci": "npm run format:check && npm run lint:check && npm run test && npm run build",
         "serve:android:anew": "rm -rf android/ && ionic build --prod --release && npx cap add android && npx cap sync android",
         "serve:android:anew:prod": "node cloud-server.js && node server-validator-before-release.js && npm run serve:android:anew && node local-server.js",
         "deploy:firebase": "node cloud-server.js && node server-validator-before-release.js && npm run build && firebase deploy --only hosting && node local-server.js",
@@ -40,13 +41,12 @@
         "@ionic/vue": "^8.0.0",
         "@ionic/vue-router": "^8.0.0",
         "axios": "1.20.0",
-        "class-transformer": "^0.4.0",
-        "class-validator": "^0.14.0",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.15.1",
         "cordova-plugin-theme-detection": "^1.3.0",
         "core-js": "^3.6.5",
         "date-fns": "^3.6.0",
         "google-auth-library": "^8.7.0",
-        "iterare": "^1.2.1",
         "lodash": "^4.17.23",
         "reflect-metadata": "^0.1.13",
         "swiper": "^12.1.2",
@@ -58,6 +58,7 @@
         "@capacitor/cli": "^8.0.1",
         "@ionic/cli": "^6.16.3",
         "@types/google.accounts": "0.0.2",
+        "@types/jest": "^29.5.14",
         "@types/lodash": "^4.14.170",
         "@types/uuid": "^8.3.0",
         "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -71,15 +72,57 @@
         "@vue/compiler-sfc": "^3.3.4",
         "@vue/eslint-config-airbnb": "^6.0.0",
         "@vue/eslint-config-typescript": "^12.0.0",
+        "@vue/test-utils": "^2.5.1",
+        "@vue/vue3-jest": "^29.2.6",
+        "babel-jest": "^29.7.0",
         "eslint": "^8.35.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.25.3",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-vue": "^9.9.0",
         "eslint-plugin-vuejs-accessibility": "^1.1.0",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
         "node-polyfill-webpack-plugin": "^2.0.1",
         "prettier": "^2.3.1",
+        "ts-jest": "^29.4.15",
         "typescript": "~5.9.0",
         "vue-tsc": "^2.1.10"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "testEnvironmentOptions": {
+            "customExportConditions": [
+                "node"
+            ]
+        },
+        "roots": [
+            "<rootDir>/tests"
+        ],
+        "testMatch": [
+            "<rootDir>/tests/**/*.spec.ts"
+        ],
+        "moduleFileExtensions": [
+            "ts",
+            "js",
+            "json",
+            "vue"
+        ],
+        "transform": {
+            "^.+\\.vue$": "@vue/vue3-jest",
+            "^.+\\.ts$": [
+                "ts-jest",
+                {
+                    "tsconfig": "<rootDir>/tests/tsconfig.json"
+                }
+            ]
+        },
+        "moduleNameMapper": {
+            "^@/(.*)$": "<rootDir>/src/$1"
+        },
+        "setupFiles": [
+            "<rootDir>/tests/jest-init.ts"
+        ],
+        "clearMocks": true
     }
 }

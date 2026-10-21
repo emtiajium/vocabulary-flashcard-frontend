@@ -210,9 +210,7 @@ import AddGenericNotes from '@/views/vocab-upsert/AddGenericNotes.vue';
 import AddGenericExternalLinks from '@/views/vocab-upsert/AddGenericExternalLinks.vue';
 import Definition from '@/domains/Definition';
 import AddDefinition from '@/views/vocab-upsert/AddDefinition.vue';
-import { validateSync } from 'class-validator';
-import { plainToClass } from 'class-transformer';
-import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
+import VocabularyValidator from '@/utils/VocabularyValidator';
 import Spinner from '@/views/shared/Spinner.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlusCircle, faMinusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
@@ -220,11 +218,11 @@ import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import MessageDB from '@/utils/MessageDB';
 import NativeStorage from '@/utils/NativeStorage';
 import Alert from '@/utils/Alert';
-import * as _ from 'lodash';
 import { isArrayOfStringEqual, isArrayOfObjectEqual } from '@/utils/is-equal';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { BackButtonUnsubscribeHandler, ProcessNextHandler } from '@/domains/Handlers';
 import { FirecrackerError } from '@/domains/FirecrackerError';
+import { cloneDeep, isEmpty } from 'lodash';
 
 enum PageType {
     VOCABULARY_CU = 'VOCABULARY_CU',
@@ -326,7 +324,7 @@ export default defineComponent({
                 const vocabulary = (await HttpHandler.get<Vocabulary>(
                     `/v1/vocabularies/${vocabularyId}`,
                 )) as Vocabulary;
-                this.pristineVocabulary = _.cloneDeep(vocabulary) as Vocabulary;
+                this.pristineVocabulary = cloneDeep(vocabulary) as Vocabulary;
                 this.id = vocabulary.id;
                 this.word = vocabulary.word;
                 this.definitions = vocabulary.definitions as Definition[];
@@ -372,7 +370,7 @@ export default defineComponent({
                 const existingVocabulary = await HttpHandler.get<VocabularyExistenceResponse>(
                     `/v1/vocabularies/${vocabularyId}/assert-existence/words/${this.word}`,
                 );
-                if (!_.isEmpty(existingVocabulary)) {
+                if (!isEmpty(existingVocabulary)) {
                     await this.notifyExistence(existingVocabulary);
                     return true;
                 }
@@ -470,10 +468,7 @@ export default defineComponent({
             return vocabulary;
         },
         validatePayload(vocabulary: Vocabulary): void {
-            const errors = validateSync(plainToClass(Vocabulary, vocabulary));
-            if (errors.length > 0) {
-                throw new Error(ValidationErrorTransform.transform(errors)[0]);
-            }
+            VocabularyValidator.validate(vocabulary);
         },
         async persist(): Promise<void> {
             try {
@@ -489,7 +484,7 @@ export default defineComponent({
                     await NativeStorage.setShouldReloadVocabularies(true);
                 } else {
                     await Promise.all([
-                        NativeStorage.setUpdatedVocabulary(_.cloneDeep(persistedVocabulary)),
+                        NativeStorage.setUpdatedVocabulary(cloneDeep(persistedVocabulary)),
                         persistedVocabulary.isInLeitnerBox
                             ? NativeStorage.setLeitnerBoxExistence(persistedVocabulary.id)
                             : Promise.resolve(),
@@ -503,7 +498,7 @@ export default defineComponent({
             }
         },
         unsubscribeBackButtonListener(): void {
-            if (!_.isEmpty(this.backButtonUnsubscribeHandler)) {
+            if (!isEmpty(this.backButtonUnsubscribeHandler)) {
                 this.backButtonUnsubscribeHandler.unregister();
             }
         },

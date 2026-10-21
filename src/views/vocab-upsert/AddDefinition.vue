@@ -66,6 +66,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import {
     IonContent,
     IonPage,
@@ -81,21 +82,19 @@ import {
     IonItem,
     useBackButton,
 } from '@ionic/vue';
-import { defineComponent } from 'vue';
 import AddDefinitionExamples from '@/views/vocab-upsert/AddDefinitionExamples.vue';
 import AddDefinitionNotes from '@/views/vocab-upsert/AddDefinitionNotes.vue';
 import AddDefinitionExternalLinks from '@/views/vocab-upsert/AddDefinitionExternalLinks.vue';
 import Definition from '@/domains/Definition';
 import { v4 as uuidV4 } from 'uuid';
-import { validateSync } from 'class-validator';
 import Toast from '@/utils/Toast';
-import ValidationErrorTransform from '@/utils/ValidationErrorTransform';
+import DefinitionValidator from '@/utils/DefinitionValidator';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import { isArrayOfStringEqual } from '@/utils/is-equal';
 import Alert from '@/utils/Alert';
-import * as _ from 'lodash';
 import BackButtonHandlerPriority from '@/domains/BackButtonHandlerPriority';
 import { BackButtonUnsubscribeHandler, ProcessNextHandler } from '@/domains/Handlers';
+import { cloneDeep, isEmpty } from 'lodash';
 
 export default defineComponent({
     name: 'AddDefinition',
@@ -126,11 +125,11 @@ export default defineComponent({
         };
     },
     mounted() {
-        if (!_.isEmpty(this.$props.definition)) {
+        if (!isEmpty(this.$props.definition)) {
             // https://v3.vuejs.org/guide/reactivity.html
             // https://v3.vuejs.org/api/basic-reactivity.html
             // otherwise isDirty() won't work
-            this.pristineDefinition = _.cloneDeep(this.$props.definition) as Definition;
+            this.pristineDefinition = cloneDeep(this.$props.definition) as Definition;
             this.meaning = this.pristineDefinition.meaning;
         }
         this.subscribeToHardwareBackButtonListener();
@@ -171,16 +170,17 @@ export default defineComponent({
         },
         async persist(): Promise<void> {
             const definition = this.getDefinitionPayload();
-            const errors = validateSync(definition);
-            if (errors.length) {
-                await Toast.present(ValidationErrorTransform.transform(errors)[0]);
-            } else {
-                this.onComingBackToVocab(definition);
-                this.clear();
+            try {
+                DefinitionValidator.validate(definition);
+            } catch (error) {
+                await Toast.present((error as Error).message);
+                return;
             }
+            this.onComingBackToVocab(definition);
+            this.clear();
         },
         unsubscribeBackButtonListener(): void {
-            if (!_.isEmpty(this.backButtonUnsubscribeHandler)) {
+            if (!isEmpty(this.backButtonUnsubscribeHandler)) {
                 this.backButtonUnsubscribeHandler.unregister();
             }
         },
@@ -200,22 +200,22 @@ export default defineComponent({
             });
         },
         isMeaningGetsDirty(): boolean {
-            return !_.isEmpty(this.pristineDefinition)
+            return !isEmpty(this.pristineDefinition)
                 ? this.meaning !== this.pristineDefinition.meaning
                 : this.meaning.length > 0;
         },
         isExamplesGetDirty(): boolean {
-            return !_.isEmpty(this.pristineDefinition)
+            return !isEmpty(this.pristineDefinition)
                 ? isArrayOfStringEqual(this.getExamples(), this.pristineDefinition.examples as string[])
                 : this.getExamples().length > 0;
         },
         isNotesGetDirty(): boolean {
-            return !_.isEmpty(this.pristineDefinition)
+            return !isEmpty(this.pristineDefinition)
                 ? isArrayOfStringEqual(this.getNotes(), this.pristineDefinition.notes as string[])
                 : this.getNotes().length > 0;
         },
         isExternalLinksGetDirty(): boolean {
-            return !_.isEmpty(this.pristineDefinition)
+            return !isEmpty(this.pristineDefinition)
                 ? isArrayOfStringEqual(this.getExternalLinks(), this.pristineDefinition.externalLinks as string[])
                 : this.getExternalLinks().length > 0;
         },

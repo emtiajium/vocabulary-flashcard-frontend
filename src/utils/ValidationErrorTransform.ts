@@ -1,4 +1,4 @@
-import { iterate } from 'iterare';
+import { filter, flatMap } from 'lodash';
 import { ValidationError } from 'class-validator';
 
 export default class ValidationErrorTransform {
@@ -34,12 +34,13 @@ export default class ValidationErrorTransform {
     }
 
     static transform(validationErrors: ValidationError[]): string[] {
-        return iterate(validationErrors)
-            .map((error) => ValidationErrorTransform.mapChildrenToValidationErrors(error))
-            .flatten()
-            .filter((item) => !!item.constraints)
-            .map((item) => Object.values(item.constraints || {}))
-            .flatten()
-            .toArray();
+        const nestedErrors = flatMap(validationErrors, (error) =>
+            ValidationErrorTransform.mapChildrenToValidationErrors(error),
+        );
+
+        return flatMap(
+            filter(nestedErrors, (item) => !!item.constraints),
+            (item) => Object.values(item.constraints || {}),
+        );
     }
 }

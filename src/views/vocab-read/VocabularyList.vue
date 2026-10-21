@@ -182,12 +182,12 @@ import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import NetworkError from '@/views/shared/NetworkError.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import Spinner from '@/views/shared/Spinner.vue';
-import * as _ from 'lodash';
 import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/vocab-read/Settings.vue';
 import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 import { FirecrackerError } from '@/domains/FirecrackerError';
+import { cloneDeep, isEmpty, uniqBy } from 'lodash';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -279,7 +279,7 @@ export default defineComponent({
 
         async setSettingsStuff(): Promise<void> {
             const vocabSettings = await NativeStorage.getVocabSettings();
-            if (!_.isEmpty(vocabSettings)) {
+            if (!isEmpty(vocabSettings)) {
                 const {
                     sort: selectedSort,
                     fetchNotHavingDefinitionOnly,
@@ -308,7 +308,7 @@ export default defineComponent({
         async assertRefreshVocabulary(): Promise<void> {
             NativeStorage.getUpdatedVocabulary()
                 .then((updatedVocabulary) => {
-                    if (!_.isEmpty(updatedVocabulary)) {
+                    if (!isEmpty(updatedVocabulary)) {
                         if (this.fetchNotHavingDefinitionOnly && updatedVocabulary.definitions?.length) {
                             this.disappearVocabularyFromUI(updatedVocabulary.id);
                         } else if (!this.fetchNotHavingDefinitionOnly) {
@@ -340,7 +340,7 @@ export default defineComponent({
             const { results, total } = await this.findVocabularies();
             // reason to use _.uniqueBy(): https://trello.com/c/WIsMIhXr/58
             // definitely a workaround
-            this.vocabularies = _.uniqBy(this.vocabularies.concat(results), 'id');
+            this.vocabularies = uniqBy(this.vocabularies.concat(results), 'id');
             this.handleShowingFetchingFewVocabularies();
             this.pageNumber += 1;
             this.isDisabled = this.vocabularies.length >= total;
@@ -485,9 +485,9 @@ export default defineComponent({
             };
             if (
                 !this.isSettingsPopoverOpened &&
-                !isObjectEqual(_.cloneDeep(vocabSettings), (await NativeStorage.getVocabSettings()) || {})
+                !isObjectEqual(cloneDeep(vocabSettings), (await NativeStorage.getVocabSettings()) || {})
             ) {
-                NativeStorage.setVocabSettings(_.cloneDeep(vocabSettings)).finally();
+                NativeStorage.setVocabSettings(cloneDeep(vocabSettings)).finally();
                 await this.refresh();
             }
         },

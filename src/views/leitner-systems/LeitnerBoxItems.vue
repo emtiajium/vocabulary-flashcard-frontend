@@ -176,13 +176,13 @@ import {
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import Toast from '@/utils/Toast';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
-import * as _ from 'lodash';
 import NativeStorage from '@/utils/NativeStorage';
 import LeitnerBoxItemSearchResult, {
     SingleLeitnerItemEarlierToBoxAppearanceDate,
 } from '@/domains/LeitnerBoxItemSearchResult';
 import { FirecrackerError } from '@/domains/FirecrackerError';
 import { format } from 'date-fns';
+import { filter, findIndex, isEmpty, uniqBy } from 'lodash';
 
 interface Payload {
     pagination: Pagination;
@@ -284,7 +284,7 @@ export default defineComponent({
             // this.refresh() is not being executed
             // and as this.pageNumber is re-calculated
             // there is a chance of getting an item that has been retrieved earlier
-            this.boxItems = _.uniqBy(this.boxItems.concat(results), 'vocabularyId');
+            this.boxItems = uniqBy(this.boxItems.concat(results), 'vocabularyId');
             this.pageNumber += 1;
             this.isDisabled = this.boxItems.length >= total;
             if (event?.target) {
@@ -347,7 +347,7 @@ export default defineComponent({
 
         async onKickingOutItem(vocabularyId: string): Promise<void> {
             this.totalItems -= 1;
-            this.boxItems = _.filter(this.boxItems, (boxItem) => {
+            this.boxItems = filter(this.boxItems, (boxItem) => {
                 return boxItem.vocabularyId !== vocabularyId;
             });
             if (this.pageNumber * this.pageSize > this.boxItems.length) {
@@ -359,7 +359,7 @@ export default defineComponent({
         async assertRefreshWord(): Promise<void> {
             NativeStorage.getUpdatedVocabulary()
                 .then((updatedVocabulary) => {
-                    if (!_.isEmpty(updatedVocabulary)) {
+                    if (!isEmpty(updatedVocabulary)) {
                         this.updateWord(updatedVocabulary.id, updatedVocabulary.word);
                     }
                 })
@@ -367,7 +367,7 @@ export default defineComponent({
         },
 
         updateWord(vocabularyId: string, word: string): void {
-            const itemIndex = _.findIndex(this.boxItems, (boxItem) => {
+            const itemIndex = findIndex(this.boxItems, (boxItem) => {
                 return boxItem.vocabularyId === vocabularyId;
             });
             if (itemIndex !== -1) {
