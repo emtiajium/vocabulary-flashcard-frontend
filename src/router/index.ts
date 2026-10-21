@@ -6,7 +6,6 @@ import SignIn from '@/views/kick-off/SignIn.vue';
 import Cohort from '@/views/cohort/Cohort.vue';
 import VocabularyList from '@/views/vocab-read/VocabularyList.vue';
 import Route, { PublicRoute } from '@/domains/Route';
-import * as _ from 'lodash';
 import NativeStorage from '@/utils/NativeStorage';
 import DictionaryPage from '@/views/vocab-read/DictionaryPage.vue';
 import LeitnerSystems from '@/views/leitner-systems/LeitnerSystems.vue';
@@ -16,6 +15,7 @@ import LinkerWord from '@/views/vocab-read/LinkerWord.vue';
 import VocabularyDetailsPage from '@/views/vocab-read/VocabularyDetailsPage.vue';
 import Deletion from '@/views/kick-the-bucket/Deletion.vue';
 import GuessingGame from '@/views/vocab-read/GuessingGame.vue';
+import { includes, map } from 'lodash';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -106,8 +106,8 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next): Promise<void> => {
-    const isValidRoute = _.includes(_.map(routes, 'name'), to.name);
-    const isPublicRoute = _.includes(Object.values(PublicRoute), to.name);
+    const isValidRoute = includes(map(routes, 'name'), to.name);
+    const isPublicRoute = includes(Object.values(PublicRoute), to.name);
     const isAuthenticated = await NativeStorage.isAuthenticated();
     if (isPublicRoute) {
         next();
@@ -115,7 +115,7 @@ router.beforeEach(async (to, from, next): Promise<void> => {
         next(`/sign-in`);
     } else if (!isAuthenticated && to.name === Route.SignIn) {
         next();
-    } else if (!_.includes([Route.AddVocabulary, Route.EditVocabulary], from.name)) {
+    } else if (!includes([Route.AddVocabulary, Route.EditVocabulary], from.name)) {
         // do not need to wait for the response
         NativeStorage.setShouldReloadVocabularies(false).finally();
         next();

@@ -45,9 +45,9 @@
 import { defineComponent } from 'vue';
 import { IonTextarea, IonItem, IonButton } from '@ionic/vue';
 import { v4 as uuidV4 } from 'uuid';
-import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { fill, isEmpty, times } from 'lodash';
 
 export default defineComponent({
     name: 'AddRemoveMultipleItems',
@@ -59,12 +59,12 @@ export default defineComponent({
     },
     props: ['existingItems', 'itemClass'],
     data() {
-        const isEmpty = _.isEmpty(this.existingItems);
-        const placeholderItems = _.fill(_.times(isEmpty ? 1 : this.existingItems.length), uuidV4());
+        const isEmptyArray = isEmpty(this.existingItems);
+        const placeholderItems = fill(times(isEmptyArray ? 1 : this.existingItems.length), uuidV4());
         return {
             faMinusCircle,
             placeholderItems,
-            items: (!isEmpty ? this.existingItems : []) as string[],
+            items: (!isEmptyArray ? this.existingItems : []) as string[],
         };
     },
     methods: {

@@ -35,6 +35,15 @@ module.exports = {
     },
     overrides: [
         {
+            files: ['tests/**/*.ts'],
+            env: {
+                jest: true,
+            },
+            rules: {
+                'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+            },
+        },
+        {
             files: ['src/utils/GoogleAuthorization.ts'],
             rules: {
                 '@typescript-eslint/camelcase': 'off',

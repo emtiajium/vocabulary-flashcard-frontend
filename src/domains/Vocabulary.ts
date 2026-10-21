@@ -3,7 +3,6 @@ import {
     ArrayNotEmpty,
     IsArray,
     IsBoolean,
-    IsDefined,
     IsNotEmpty,
     IsOptional,
     IsUrl,
@@ -12,7 +11,7 @@ import {
     ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import * as _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 export default class Vocabulary {
     @IsUUID()
@@ -26,7 +25,7 @@ export default class Vocabulary {
     word: string;
 
     @Type(() => Definition)
-    @ValidateIf((vocabulary) => vocabulary.isDraft === false || !_.isEmpty(vocabulary.definitions))
+    @ValidateIf((vocabulary) => vocabulary.isDraft === false || !isEmpty(vocabulary.definitions))
     @ValidateNested({ each: true })
     @ArrayNotEmpty({
         message: `You need at least one definition. If you're not ready yet, save this as a draft instead.`,
