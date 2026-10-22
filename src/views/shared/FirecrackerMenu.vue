@@ -18,7 +18,7 @@
                 </ion-row>
 
                 <ion-row v-if="!isAuthenticated" class="intro">
-                    <img src="/assets/icon/firecracker-icon.png" alt="Logo" width="100" />
+                    <img src="/assets/icon/firecracker-icon.svg" alt="Logo" width="100" />
                     <ion-title class="item-text"> <strong> Firecracker </strong> </ion-title>
                 </ion-row>
 
