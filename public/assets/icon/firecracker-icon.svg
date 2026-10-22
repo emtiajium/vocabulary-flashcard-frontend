@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1254" height="1254" viewBox="0 0 1254 1254" role="img" aria-label="Orange Crossandra firecracker flower app icon">
+<defs>
+<clipPath id="flower-clip"><path d="M 462 201 L 441 219 L 426 240 L 423 250 L 424 274 L 436 305 L 466 352 L 498 411 L 524 450 L 488 434 L 444 420 L 409 414 L 366 413 L 336 417 L 306 425 L 274 439 L 253 453 L 240 466 L 230 487 L 232 513 L 248 546 L 254 567 L 253 579 L 241 612 L 238 631 L 240 649 L 249 668 L 270 690 L 314 722 L 343 738 L 371 748 L 402 753 L 430 753 L 456 750 L 512 738 L 527 738 L 541 743 L 548 750 L 552 758 L 551 770 L 515 811 L 490 848 L 473 884 L 462 929 L 461 953 L 466 985 L 474 1004 L 486 1016 L 516 1032 L 577 1056 L 609 1065 L 641 1068 L 663 1064 L 686 1054 L 713 1034 L 742 1004 L 771 960 L 779 952 L 793 945 L 805 945 L 814 948 L 849 972 L 877 984 L 948 996 L 967 992 L 982 981 L 997 966 L 1011 947 L 1022 923 L 1030 891 L 1032 873 L 1030 832 L 1022 799 L 1006 760 L 987 728 L 969 705 L 942 679 L 912 659 L 885 648 L 860 642 L 842 640 L 792 642 L 786 639 L 803 632 L 847 620 L 874 608 L 904 590 L 929 570 L 946 552 L 962 530 L 975 505 L 984 480 L 990 450 L 990 389 L 978 336 L 965 302 L 954 281 L 937 257 L 915 234 L 896 218 L 881 212 L 864 213 L 839 224 L 812 245 L 773 287 L 761 294 L 749 295 L 729 285 L 713 269 L 695 246 L 671 224 L 633 200 L 597 186 L 558 178 L 530 177 L 493 185 Z"/></clipPath>
+<radialGradient id="petal-base" cx="50%" cy="48%" r="68%"><stop offset="0" stop-color="#ffcb34"/><stop offset="0.16" stop-color="#ff901c"/><stop offset="0.58" stop-color="#ff8e24"/><stop offset="1" stop-color="#ffab37"/></radialGradient>
+<linearGradient id="petal-top" x1="85%" y1="90%" x2="15%" y2="5%"><stop stop-color="#fb5717"/><stop offset="0.42" stop-color="#ff861f"/><stop offset="1" stop-color="#ffb144"/></linearGradient>
+<linearGradient id="petal-right" x1="0%" y1="100%" x2="100%" y2="10%"><stop stop-color="#f95615"/><stop offset="0.44" stop-color="#ff9028"/><stop offset="1" stop-color="#ffb548"/></linearGradient>
+<linearGradient id="petal-left" x1="98%" y1="64%" x2="4%" y2="20%"><stop stop-color="#ffbb35"/><stop offset="0.3" stop-color="#ff791b"/><stop offset="1" stop-color="#ffaa36"/></linearGradient>
+<linearGradient id="petal-bottom" x1="55%" y1="2%" x2="35%" y2="100%"><stop stop-color="#f9571c"/><stop offset="0.43" stop-color="#ff8224"/><stop offset="1" stop-color="#ff9f30"/></linearGradient>
+<radialGradient id="throat" cx="49%" cy="50%" r="58%"><stop stop-color="#9b4b0d"/><stop offset="0.16" stop-color="#e5a10e"/><stop offset="0.32" stop-color="#ffe927"/><stop offset="0.66" stop-color="#ffd324"/><stop offset="1" stop-color="#ffa51a" stop-opacity="0"/></radialGradient>
+<linearGradient id="highlight"><stop stop-color="#ffca52" stop-opacity="0.8"/><stop offset="1" stop-color="#ffc64c" stop-opacity="0"/></linearGradient>
+</defs>
+
+<g clip-path="url(#flower-clip)">
+<rect x="0" y="0" width="1254" height="1254" fill="url(#petal-base)"/>
+<!-- broad natural petals converge at a slightly off-centre golden throat -->
+<path d="M 758 638 C 694 563 613 461 548 363 C 483 265 387 193 425 205 C 531 135 655 222 738 338 C 768 374 784 500 758 638 Z" fill="url(#petal-top)"/>
+<path d="M 761 641 C 770 554 779 399 824 293 C 881 172 945 206 987 298 C 1042 413 991 565 761 641 Z" fill="url(#petal-right)"/>
+<path d="M 759 640 C 663 590 517 470 401 427 C 280 388 184 462 232 551 C 207 623 286 744 403 752 C 521 771 649 689 759 640 Z" fill="url(#petal-left)"/>
+<path d="M 760 639 C 847 618 946 651 998 748 C 1081 901 965 1047 818 978 C 725 1134 564 1073 482 1014 C 428 922 556 721 760 639 Z" fill="url(#petal-bottom)"/>
+<!-- subtle curved veins, kept broad so they remain readable on small launcher icons -->
+<g fill="none" stroke-linecap="round">
+<path d="M 754 628 Q 674 450 520 245" stroke="#ffd25e" stroke-width="27" opacity=".33"/>
+<path d="M 749 628 Q 637 506 410 449" stroke="#f95818" stroke-width="25" opacity=".31"/>
+<path d="M 750 648 Q 565 596 269 565" stroke="#ffcd64" stroke-width="19" opacity=".36"/>
+<path d="M 769 626 Q 850 411 886 258" stroke="#ffcf67" stroke-width="27" opacity=".36"/>
+<path d="M 783 651 Q 903 763 918 939" stroke="#f75c19" stroke-width="25" opacity=".22"/>
+<path d="M 758 657 Q 657 869 588 1015" stroke="#ffc65b" stroke-width="29" opacity=".3"/>
+</g>
+<ellipse cx="758" cy="634" rx="91" ry="79" fill="url(#throat)"/>
+<path d="M 750 641 Q 740 610 722 589 Q 751 602 776 611 Q 774 635 750 641 Z" fill="#fff044" opacity=".68"/>
+<ellipse cx="759" cy="650" rx="14" ry="17" fill="#af6010" opacity=".8"/>
+</g>
+</svg>
