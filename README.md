@@ -122,7 +122,7 @@
 
 ## Play Store screenshots (automated)
 
-The store screenshots are generated from the real app UI — no Canva, no manual
+The store screenshots are generated from the real app UI. No Canva, no manual
 capture. One command captures the app and composes the branded images for every
 supported device type.
 
@@ -138,7 +138,7 @@ Dimensions follow Google Play's
 
 > Note: Google advises large-screen screenshots to avoid text that isn't part of the
 > app experience, because it can be cropped on Play homepages. The pipeline still adds
-> the headline to tablet images (as requested) — drop it from `screens.json` if you'd
+> the headline to tablet images. Drop it from `screens.json` if you'd
 > rather follow that guidance strictly.
 
 The pipeline produces, for each device type:
@@ -148,15 +148,6 @@ The pipeline produces, for each device type:
 | Phone          | 1080 × 1920                  | 390 × 844        | headline + screenshot |
 | 7-inch tablet  | 1440 × 2560                  | 810 × 1440       | headline + screenshot |
 | 10-inch tablet | 2160 × 3840                  | 900 × 1600       | headline + screenshot |
-
-### How it works
-
-1. **Capture** (`scripts/play-store/capture.cjs`) — Playwright opens the app at each
-   device viewport, starts a demo session, stubs the backend with deterministic
-   fixtures (`scripts/play-store/fixtures.cjs`) and screenshots each screen.
-2. **Render** (`scripts/play-store/render.cjs`) — Sharp composes the final marketing
-   images (brand background, headline, app screenshot) driven by
-   `scripts/play-store/screens.json`, and writes 24-bit PNGs without alpha.
 
 ### Run it locally
 
