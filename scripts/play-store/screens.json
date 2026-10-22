@@ -46,7 +46,7 @@
         },
         {
             "id": "03-behind-every-word",
-            "route": "/vocabulary/read/4c5803b9-558b-4c1a-ab82-248363bb2fc2/Carrion/false",
+            "route": "/vocabulary/read/11111111-1111-4111-8111-111111111111/Carrion/false",
             "headline": "Everything Behind Every Word",
             "waitFor": ".examples-list"
         },
