@@ -1,6 +1,7 @@
 import answerCorrect from '@/media/lottie/answer-correct.json';
 import answerIncorrect from '@/media/lottie/answer-incorrect.json';
 import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
+import flashcardCreated from '@/media/lottie/flashcard-created.json';
 import funGame from '@/media/lottie/fun-game.json';
 import gameComplete from '@/media/lottie/game-complete.json';
 import joinUs from '@/media/lottie/join-us.json';
@@ -75,6 +76,7 @@ const assets: Record<string, Asset> = {
     'answer-correct': { document: asDocument(answerCorrect), loop: false },
     'answer-incorrect': { document: asDocument(answerIncorrect), loop: false },
     mastered: { document: asDocument(mastered), loop: false },
+    'flashcard-created': { document: asDocument(flashcardCreated), loop: false },
 };
 
 const asArray = (value: number | number[]): number[] => (Array.isArray(value) ? value : [value]);

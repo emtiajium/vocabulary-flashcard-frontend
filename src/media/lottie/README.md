@@ -7,10 +7,10 @@ bundled by webpack so they work offline (the app ships as a Capacitor/Android ap
 
 They come in two families:
 
-| Family       | Behaviour                                                       | Used by                                                                        |
-| ------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| **Looping**  | Plays forever; seamless at the loop point.                       | `Intro.vue` slides, `game-complete`, `empty-flashcards`, `waiting-for-review`    |
-| **One-shot** | Plays once on a user action, then stays invisible.               | `answer-correct`, `answer-incorrect`, `mastered`                                |
+| Family       | Behaviour                                                       | Used by                                                                                    |
+| ------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Looping**  | Plays forever; seamless at the loop point.                       | `Intro.vue` slides, `game-complete`, `empty-flashcards`, `waiting-for-review`                |
+| **One-shot** | Plays once on a user action, then stays invisible.               | `answer-correct`, `answer-incorrect`, `mastered`, `flashcard-created`                       |
 
 ## Canvas conventions
 
@@ -24,6 +24,10 @@ They come in two families:
 Remember that `ks.p` defaults to `[100, 100]` in the authoring helpers, which is the
 centre of a `200 x 200` canvas. A `120 x 120` one-shot has to centre its layers on
 `[60, 60]` explicitly, or the artwork lands off-canvas.
+
+Inside a shape layer the **first group paints on top**, unlike layers where the first
+entry is also on top — keep that in mind when stacking a mark over a shape (the tick over
+the `mastered` card, the heart over the `flashcard-created` card).
 
 One-shot animations are mounted once and then left in the DOM, so they must be
 **invisible on the first _and_ the last frame**: the surface never shows a frozen
