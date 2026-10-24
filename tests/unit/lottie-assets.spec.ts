@@ -10,6 +10,7 @@ import gameComplete from '@/media/lottie/game-complete.json';
 import joinUs from '@/media/lottie/join-us.json';
 import mastered from '@/media/lottie/mastered.json';
 import noConnection from '@/media/lottie/no-connection.json';
+import reachedTheEnd from '@/media/lottie/reached-the-end.json';
 import retention from '@/media/lottie/retention.json';
 import spacedRepetition from '@/media/lottie/spaced-repetition.json';
 import waitingForReview from '@/media/lottie/waiting-for-review.json';
@@ -81,6 +82,7 @@ const assets: Record<string, Asset> = {
     'empty-vocabularies': { document: asDocument(emptyVocabularies), loop: true },
     'empty-search': { document: asDocument(emptySearch), loop: true },
     'no-connection': { document: asDocument(noConnection), loop: true },
+    'reached-the-end': { document: asDocument(reachedTheEnd), loop: true },
     'answer-correct': { document: asDocument(answerCorrect), loop: false },
     'answer-incorrect': { document: asDocument(answerIncorrect), loop: false },
     mastered: { document: asDocument(mastered), loop: false },

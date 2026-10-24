@@ -104,21 +104,10 @@
                 </ion-col>
             </ion-row>
 
-            <view v-if="isDisabled && vocabularies.length > 0 && !isNetworkError">
-                <ion-card-subtitle class="ion-padding ion-text-center">
-                    {{
-                        vocabularies.length > 10
-                            ? `Congrats! You have viewed the last vocabulary!`
-                            : `Looks like there is no other vocabulary left for you to be displayed.`
-                    }}
-                </ion-card-subtitle>
-                <view
-                    class="display-flex ion-justify-content-center ion-padding-bottom"
-                    :style="cssStyleToClearlyDisplayVocabCountChip"
-                >
-                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
-                </view>
-            </view>
+            <end-of-list
+                v-if="isDisabled && vocabularies.length > 0 && !isNetworkError"
+                :inline-style="cssStyleToClearlyDisplayVocabCountChip"
+            />
 
             <network-error v-if="isNetworkError" :message="criticalErrorMessage" />
 
@@ -190,8 +179,9 @@ import VocabularySearch from '@/domains/VocabularySearch';
 import { Components } from '@ionic/core/components';
 import MinifiedVocabulary from '@/views/vocab-read/MinifiedVocabulary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPlus, faGlassCheers, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
+import EndOfList from '@/views/shared/EndOfList.vue';
 import NetworkError from '@/views/shared/NetworkError.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import Spinner from '@/views/shared/Spinner.vue';
@@ -213,6 +203,7 @@ export default defineComponent({
     components: {
         Settings,
         Spinner,
+        EndOfList,
         NetworkError,
         MinifiedVocabulary,
         FirecrackerHeader,
@@ -237,7 +228,6 @@ export default defineComponent({
         return {
             showSpinner: false,
             faPlus,
-            faGlassCheers,
             faThumbsUp,
             emptyVocabulariesAnimation: emptyVocabularies,
             emptySearchAnimation: emptySearch,

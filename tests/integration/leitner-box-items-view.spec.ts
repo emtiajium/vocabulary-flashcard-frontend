@@ -58,6 +58,12 @@ jest.mock('@/views/shared/Spinner.vue', () => {
     return { __esModule: true, default: define({ template: '<div />' }) };
 });
 
+jest.mock('@/views/shared/EndOfList.vue', () => {
+    const { defineComponent: define } = jest.requireActual('vue');
+
+    return { __esModule: true, default: define({ name: 'EndOfList', template: '<div class="end-of-list-stub" />' }) };
+});
+
 jest.mock('@/views/shared/NetworkError.vue', () => {
     const { defineComponent: define } = jest.requireActual('vue');
 
@@ -93,6 +99,10 @@ interface LeitnerBoxItemsVm {
     totalItems: number;
     boxItems: LeitnerBoxItem[];
     allQuietOnTheWesternFront: boolean;
+    isDisabled: boolean;
+    isNetworkError: boolean;
+    singleLeitnerItemEarlierToBoxAppearanceDate: { vocabulary?: unknown };
+    shouldShowEndOfList: boolean;
     hasMasteredFeedback: boolean;
     isMasteredFeedbackPlaying: boolean;
     masteredFeedbackKey: number;
@@ -153,6 +163,54 @@ describe('Leitner box items view (integration)', () => {
             const wrapper = mountView('1', '4');
 
             expect(emptyStateName(wrapper)).toBe('waiting-for-review');
+        });
+    });
+
+    describe('WHEN a box has been browsed to the end', () => {
+        const boxItems = (): LeitnerBoxItem[] => [
+            { vocabularyId: 'vocabulary-1', word: 'Carrion', updatedAt: new Date() },
+        ];
+
+        it('SHOULD mark the bottom of the list', () => {
+            const wrapper = mountView('2', '1');
+            vm(wrapper).boxItems = boxItems();
+            vm(wrapper).isDisabled = true;
+
+            expect(vm(wrapper).shouldShowEndOfList).toBe(true);
+        });
+
+        it('SHOULD stay quiet while more pages are left to fetch', () => {
+            const wrapper = mountView('2', '40');
+            vm(wrapper).boxItems = boxItems();
+            vm(wrapper).isDisabled = false;
+
+            expect(vm(wrapper).shouldShowEndOfList).toBe(false);
+        });
+
+        it('SHOULD stay quiet WHEN later items are still due', () => {
+            const wrapper = mountView('2', '1');
+            vm(wrapper).boxItems = boxItems();
+            vm(wrapper).isDisabled = true;
+            vm(wrapper).singleLeitnerItemEarlierToBoxAppearanceDate = { vocabulary: { word: 'Carrion' } };
+
+            expect(vm(wrapper).shouldShowEndOfList).toBe(false);
+        });
+
+        it('SHOULD stay quiet WHEN the box holds nothing', () => {
+            const wrapper = mountView('2', '0');
+            vm(wrapper).boxItems = [];
+            vm(wrapper).isDisabled = true;
+
+            expect(vm(wrapper).shouldShowEndOfList).toBe(false);
+        });
+
+        it('SHOULD stay quiet WHEN the request failed', () => {
+            const wrapper = mountView('2', '1');
+            vm(wrapper).boxItems = boxItems();
+            vm(wrapper).isDisabled = true;
+            vm(wrapper).isNetworkError = true;
+
+            expect(vm(wrapper).shouldShowEndOfList).toBe(false);
         });
     });
 

@@ -130,6 +130,8 @@
                 </ion-card-subtitle>
             </ion-col>
 
+            <end-of-list v-if="shouldShowEndOfList" />
+
             <network-error v-if="isNetworkError" />
 
             <ion-infinite-scroll
@@ -171,6 +173,7 @@ import {
     IonPage,
     IonRow,
 } from '@ionic/vue';
+import EndOfList from '@/views/shared/EndOfList.vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
 import type { LottieAnimationData } from '@/media/lottie/types';
@@ -216,6 +219,7 @@ export default defineComponent({
         LottieAnimation,
         Spinner,
         NetworkError,
+        EndOfList,
         IonContent,
         IonPage,
         IonCard,
@@ -278,6 +282,20 @@ export default defineComponent({
          */
         shouldShowEmptyState(): boolean {
             return this.allQuietOnTheWesternFront && !this.isNetworkError && !this.isMasteredFeedbackPlaying;
+        },
+
+        /**
+         * The bottom of a box the user has browsed to the end. A pending
+         * `singleLeitnerItemEarlierToBoxAppearanceDate` means more items are due
+         * later, so the list has not really ended yet.
+         */
+        shouldShowEndOfList(): boolean {
+            return (
+                this.isDisabled &&
+                this.boxItems.length > 0 &&
+                !this.singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary &&
+                !this.isNetworkError
+            );
         },
     },
     async ionViewDidEnter() {
