@@ -649,9 +649,6 @@ ion-content#guessing-game {
 }
 
 .game-hint__link {
-    /* Keeps the inline action flush with the sentence it belongs to. */
-    --padding-start: 0;
-    --padding-end: 0;
     margin: 0;
     font-weight: var(--font-weight-semibold);
 }
@@ -822,9 +819,6 @@ ion-content#guessing-game {
 
 .game-reveal {
     flex: 0 0 auto;
-    /* Flush with the card edge and the sentence above it. */
-    --padding-start: 0;
-    --padding-end: 0;
     margin: 0;
 }
 
