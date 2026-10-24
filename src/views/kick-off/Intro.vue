@@ -1,11 +1,14 @@
 <template>
     <ion-card v-if="currentIndex === 0" class="margin-top-bottom-unset">
         <div class="display-flex ion-justify-content-center">
-            <thinking-icon
-                :fill-color-variable="'--ion-color-primary'"
-                :stroke-color-variable="'--ion-color-primary'"
-                class="icon-container"
-            />
+            <lottie-animation class="icon-container" :animation-data="retentionAnimation">
+                <template #fallback>
+                    <thinking-icon
+                        :fill-color-variable="'--ion-color-primary'"
+                        :stroke-color-variable="'--ion-color-primary'"
+                    />
+                </template>
+            </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
             Ever wonder why you still remember the meaning of the words you learned in your childhood but struggle with
@@ -15,11 +18,14 @@
 
     <ion-card v-if="currentIndex === 1" class="margin-top-bottom-unset">
         <div class="display-flex ion-justify-content-center">
-            <box-icon
-                :fill-color-variable="'--ion-color-primary'"
-                :stroke-color-variable="'--ion-color-primary'"
-                class="icon-container"
-            />
+            <lottie-animation class="icon-container" :animation-data="spacedRepetitionAnimation">
+                <template #fallback>
+                    <box-icon
+                        :fill-color-variable="'--ion-color-primary'"
+                        :stroke-color-variable="'--ion-color-primary'"
+                    />
+                </template>
+            </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
             According to science, <strong>spaced repetition</strong> is one of the techniques to retain anything in the
@@ -30,11 +36,14 @@
 
     <ion-card v-if="currentIndex === 2" class="margin-top-bottom-unset">
         <div class="display-flex ion-justify-content-center">
-            <join-us-icon
-                :fill-color-variable="'--ion-color-primary'"
-                :stroke-color-variable="'--ion-color-primary'"
-                class="icon-container"
-            />
+            <lottie-animation class="icon-container" :animation-data="joinUsAnimation">
+                <template #fallback>
+                    <join-us-icon
+                        :fill-color-variable="'--ion-color-primary'"
+                        :stroke-color-variable="'--ion-color-primary'"
+                    />
+                </template>
+            </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
             Join us to embed newly introduced words in your long-term memory.
@@ -43,11 +52,14 @@
 
     <ion-card v-if="currentIndex === 3" class="margin-top-bottom-unset">
         <div class="display-flex ion-justify-content-center">
-            <fun-icon
-                :fill-color-variable="'--ion-color-primary'"
-                :stroke-color-variable="'--ion-color-primary'"
-                class="icon-container"
-            />
+            <lottie-animation class="icon-container" :animation-data="funGameAnimation">
+                <template #fallback>
+                    <fun-icon
+                        :fill-color-variable="'--ion-color-primary'"
+                        :stroke-color-variable="'--ion-color-primary'"
+                    />
+                </template>
+            </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
             To make your learning experience more enjoyable and effective, try our <strong>word guessing game</strong>.
@@ -65,6 +77,11 @@ import ThinkingIcon from '@/media/ThinkingIcon.vue';
 import JoinUsIcon from '@/media/JoinUsIcon.vue';
 import FunIcon from '@/media/FunIcon.vue';
 import BoxIcon from '@/media/BoxIcon.vue';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import retention from '@/media/lottie/retention.json';
+import spacedRepetition from '@/media/lottie/spaced-repetition.json';
+import joinUs from '@/media/lottie/join-us.json';
+import funGame from '@/media/lottie/fun-game.json';
 
 export default defineComponent({
     name: 'Intro',
@@ -73,10 +90,19 @@ export default defineComponent({
         FunIcon,
         JoinUsIcon,
         ThinkingIcon,
+        LottieAnimation,
         IonCard,
         IonCardTitle,
     },
     props: ['currentIndex'],
+    data() {
+        return {
+            retentionAnimation: retention,
+            spacedRepetitionAnimation: spacedRepetition,
+            joinUsAnimation: joinUs,
+            funGameAnimation: funGame,
+        };
+    },
 });
 </script>
 
