@@ -71,7 +71,7 @@
                                 </span>
                             </ion-row>
 
-                            <ion-row class="ion-justify-content-center">
+                            <ion-row class="item-actions ion-justify-content-center">
                                 <ion-button
                                     v-if="!isFirstBox()"
                                     aria-label="Move to the previous box"
@@ -80,7 +80,6 @@
                                     shape="round"
                                     :strong="true"
                                     color="warning"
-                                    class="ion-margin"
                                     @click="moveBackward(boxItem.vocabularyId)"
                                 >
                                     <font-awesome-icon :icon="faArrowLeft" />
@@ -93,7 +92,6 @@
                                     shape="round"
                                     :strong="true"
                                     color="primary"
-                                    class="ion-margin"
                                     @click="moveForward(boxItem.vocabularyId)"
                                 >
                                     <font-awesome-icon :icon="faArrowRight" />
@@ -105,7 +103,7 @@
                                     shape="round"
                                     :strong="true"
                                     color="fern-green"
-                                    class="ion-margin"
+                                    class="item-actions__details"
                                     @click="seeMore(boxItem.vocabularyId, boxItem.word)"
                                 >
                                     <font-awesome-icon :icon="faUnlockAlt" />
@@ -505,12 +503,24 @@ ion-card-content {
     margin-bottom: calc(var(--ion-margin) / 2);
 }
 
+/* The actions under each word: 44px targets, spaced well apart so a thumb
+   cannot easily land on the neighbouring button. */
+.item-actions {
+    gap: var(--space-md);
+}
+
 .item-container ion-button {
-    margin: var(--space-2xs);
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    margin: 0;
     --padding-start: 0;
     --padding-end: 0;
+}
+
+/* The arrows change which box the word lives in; keep the details action away
+   from them so it is not hit by mistake. */
+.item-container ion-button.item-actions__details {
+    margin-inline-start: var(--space-md);
 }
 
 .leitner-icon {
