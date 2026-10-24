@@ -187,7 +187,7 @@ export default defineComponent({
                 ) {
                     // https://developers.google.com/identity/sign-in/web/reference
                 } else {
-                    await Toast.present(MessageDB.networkError);
+                    await Toast.present(MessageDB.networkError, 'error');
                 }
             }
         },

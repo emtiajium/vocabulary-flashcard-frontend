@@ -45,7 +45,7 @@ export default defineComponent({
                     await this.$router.replace('/sign-in');
                 }
             } catch (error) {
-                await Promise.all([Toast.present(MessageDB.genericError), this.$router.push('/sign-in')]);
+                await Promise.all([Toast.present(MessageDB.genericError, 'error'), this.$router.push('/sign-in')]);
             }
         },
         async assertNotifyingAboutAvailableUpdate(): Promise<void> {

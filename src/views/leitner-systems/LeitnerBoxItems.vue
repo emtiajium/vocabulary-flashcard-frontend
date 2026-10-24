@@ -9,13 +9,17 @@
         <ion-content :fullscreen="true" id="leitner-box-items">
             <spinner v-if="showSpinner && !isNetworkError" />
 
-            <view v-if="allQuietOnTheWesternFront && !isNetworkError">
+            <view v-if="shouldShowEmptyState">
                 <ion-card-subtitle class="ion-padding ion-text-center">
                     Things are pretty quiet right now.
                 </ion-card-subtitle>
 
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
+                    <lottie-animation class="empty-state-animation" :animation-data="emptyStateAnimation">
+                        <template #fallback>
+                            <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
+                        </template>
+                    </lottie-animation>
                 </view>
 
                 <ion-card-subtitle v-if="box === '1' && totalItems === 0" class="ion-padding ion-text-center">
@@ -139,6 +143,18 @@
                 <spinner />
             </ion-infinite-scroll>
         </ion-content>
+
+        <!-- Decorative: the toast already reports the move, this only marks the
+             word as mastered. It is re-mounted through `masteredFeedbackKey`. -->
+        <div v-if="hasMasteredFeedback" class="mastered-feedback">
+            <lottie-animation
+                :key="masteredFeedbackKey"
+                class="mastered-feedback__animation"
+                :animation-data="masteredAnimation"
+                :loop="false"
+                @complete="onMasteredFeedbackComplete"
+            />
+        </div>
     </ion-page>
 </template>
 
@@ -158,6 +174,10 @@ import {
     IonRow,
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
+import waitingForReview from '@/media/lottie/waiting-for-review.json';
+import mastered from '@/media/lottie/mastered.json';
 import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
 import HttpHandler from '@/utils/HttpHandler';
 import Pagination from '@/domains/Pagination';
@@ -194,6 +214,7 @@ export default defineComponent({
     name: 'LeitnerBoxItems',
     components: {
         FirecrackerHeader,
+        LottieAnimation,
         Spinner,
         NetworkError,
         IonContent,
@@ -223,6 +244,12 @@ export default defineComponent({
             isDisabled: false,
             allQuietOnTheWesternFront: false,
             isNetworkError: false,
+            emptyFlashcardsAnimation: emptyFlashcards,
+            waitingForReviewAnimation: waitingForReview,
+            masteredAnimation: mastered as Record<string, unknown>,
+            hasMasteredFeedback: false,
+            isMasteredFeedbackPlaying: false,
+            masteredFeedbackKey: 0,
             faUnlockAlt,
             faGlassCheers,
             faClock,
@@ -232,6 +259,27 @@ export default defineComponent({
             faArrowRight,
             headerTitle: `${MappedLeitnerBoxWithDays[`BOX_${box}`]} Box` || '',
         };
+    },
+    computed: {
+        /**
+         * An empty Box 1 means "you have no flashcards yet", anything else means
+         * "there is nothing due right now" — two different messages that deserve
+         * two different illustrations.
+         */
+        emptyStateAnimation(): Record<string, unknown> {
+            return this.box === '1' && this.totalItems === 0
+                ? this.emptyFlashcardsAnimation
+                : this.waitingForReviewAnimation;
+        },
+
+        /**
+         * Mastering the last vocabulary of a box empties it, so the empty state
+         * would otherwise appear on top of the celebration. It waits for the
+         * celebration to finish instead.
+         */
+        shouldShowEmptyState(): boolean {
+            return this.allQuietOnTheWesternFront && !this.isNetworkError && !this.isMasteredFeedbackPlaying;
+        },
     },
     async ionViewDidEnter() {
         if (!this.boxItems.length || this.isNetworkError || (await NativeStorage.getShouldReloadLeitnerItems())) {
@@ -250,6 +298,9 @@ export default defineComponent({
             this.isDisabled = false;
             this.allQuietOnTheWesternFront = false;
             this.isNetworkError = false;
+            this.hasMasteredFeedback = false;
+            this.isMasteredFeedbackPlaying = false;
+            this.masteredFeedbackKey = 0;
         },
 
         async findBoxItems(): Promise<LeitnerBoxItemSearchResult> {
@@ -321,12 +372,36 @@ export default defineComponent({
                         `The vocabulary has been moved to ${
                             MappedLeitnerBoxWithDays[`BOX_${Number.parseInt(this.box, 10) + 1}`]
                         } box`,
+                        'success',
                     );
+                    if (this.isMovingIntoMastery()) {
+                        // Claimed before the item is kicked out, so the empty state
+                        // that follows never renders in the same pass as the burst.
+                        this.playMasteredFeedback();
+                    }
                     await this.onKickingOutItem(vocabularyId);
                 } catch (error) {
-                    await Toast.present((error as FirecrackerError).message);
+                    await Toast.present((error as FirecrackerError).message, 'error');
                 }
             }
+        },
+
+        /**
+         * Moving a word forward out of the fourth box lands it in the final one,
+         * which the Leitner System treats as mastered.
+         */
+        isMovingIntoMastery(): boolean {
+            return Number.parseInt(this.box, 10) === 4;
+        },
+
+        playMasteredFeedback(): void {
+            this.hasMasteredFeedback = true;
+            this.isMasteredFeedbackPlaying = true;
+            this.masteredFeedbackKey += 1;
+        },
+
+        onMasteredFeedbackComplete(): void {
+            this.isMasteredFeedbackPlaying = false;
         },
 
         async moveBackward(vocabularyId: string): Promise<void> {
@@ -337,10 +412,11 @@ export default defineComponent({
                         `The vocabulary has been moved back to ${
                             MappedLeitnerBoxWithDays[`BOX_${Number.parseInt(this.box, 10) - 1}`]
                         } box`,
+                        'info',
                     );
                     await this.onKickingOutItem(vocabularyId);
                 } catch (error) {
-                    await Toast.present((error as FirecrackerError).message);
+                    await Toast.present((error as FirecrackerError).message, 'error');
                 }
             }
         },
@@ -379,6 +455,34 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.empty-state-animation {
+    width: min(160px, 50%);
+}
+
+/* Keep the reduced-motion fallback at the size the FontAwesome icon used to have. */
+.empty-state-animation :deep(.lottie-animation__fallback) {
+    font-size: clamp(3rem, 9vw, 4.5rem);
+}
+
+.empty-state-animation :deep(.lottie-animation__fallback svg) {
+    width: 1em;
+    height: 1em;
+}
+
+.mastered-feedback {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.mastered-feedback__animation {
+    width: min(180px, 50%);
+}
+
 .updated-at {
     padding-top: unset;
     padding-bottom: unset;

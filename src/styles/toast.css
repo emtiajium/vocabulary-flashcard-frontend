@@ -1,0 +1,38 @@
+/* ------------------------------------------------------------------ *
+ * Toast
+ *
+ * Ionic renders the toast in an overlay outside the app root, so these
+ * have to be global. Only the CSS custom properties and the exposed parts
+ * can be reached, the rest lives in the component's shadow root.
+ * ------------------------------------------------------------------ */
+.firecracker-toast {
+    --border-radius: var(--radius-lg);
+    --box-shadow: var(--shadow-lg);
+    --max-width: 24rem;
+    --start: var(--space-md);
+    --end: var(--space-md);
+    --white-space: normal;
+
+    font-family: var(--font-family-base);
+    font-size: var(--text-sm);
+    letter-spacing: var(--letter-spacing-tight);
+}
+
+/* The icon is the first row child, so its own inset is the toast's left padding.
+   Ionic ships 16px there; keep it on the app's spacing scale. */
+.firecracker-toast::part(icon) {
+    margin-inline-start: var(--space-md);
+    font-size: var(--icon-lg);
+}
+
+.firecracker-toast::part(message) {
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-snug);
+}
+
+/* The neutral surface needs an edge so it does not blend into the page. */
+.firecracker-toast--info {
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: var(--app-border-color);
+}

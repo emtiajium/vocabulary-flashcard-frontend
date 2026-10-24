@@ -333,7 +333,7 @@ export default defineComponent({
                 this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
                 this.isDraft = vocabulary.isDraft;
             } catch {
-                await Promise.all([Toast.present(MessageDB.networkError), this.$router.back()]);
+                await Promise.all([Toast.present(MessageDB.networkError, 'error'), this.$router.back()]);
             }
         },
         setWord(word: string): void {
@@ -382,7 +382,7 @@ export default defineComponent({
         },
         async onAddingDefinition(): Promise<void> {
             if (!this.word) {
-                await Toast.present(`Please add the word before adding the definition.`);
+                await Toast.present(`Please add the word before adding the definition.`, 'warning');
             } else {
                 const isExists = await this.assertExistence();
                 if (!isExists) {
@@ -492,7 +492,7 @@ export default defineComponent({
                 }
                 this.$router.back();
             } catch (error) {
-                await Toast.present((error as FirecrackerError).message);
+                await Toast.present((error as FirecrackerError).message, 'error');
             } finally {
                 this.disableSaveButton = false;
             }
