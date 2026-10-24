@@ -71,7 +71,7 @@
                                 </span>
                             </ion-row>
 
-                            <ion-row class="item-actions ion-justify-content-center">
+                            <ion-row class="item-actions ion-justify-content-center ion-padding-top">
                                 <ion-button
                                     v-if="!isFirstBox()"
                                     aria-label="Move to the previous box"
