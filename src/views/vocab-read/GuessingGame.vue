@@ -105,8 +105,7 @@
                                             <template v-else-if="isRevealed(index)">
                                                 <font-awesome-icon :icon="infoIcon" aria-hidden="true" />
                                                 <span
-                                                    >The word is "<strong>{{ vocabulary.word }}</strong
-                                                    >"</span
+                                                    >The word is <strong>{{ vocabulary.word }}</strong></span
                                                 >
                                             </template>
                                             <template v-else-if="vocabulary.isCorrect === false">
