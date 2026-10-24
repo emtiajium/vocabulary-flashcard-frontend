@@ -728,6 +728,15 @@ ion-content#guessing-game {
     flex: 1 1 auto;
     min-width: 0;
     --highlight-height: 0;
+    /* Ionic reserves 18px above and 8px below for a floating label that this
+       field never renders, which leaves a single line sitting below centre.
+       One value for both keeps the placeholder centred; the control still
+       grows evenly because auto-grow sizes it from its own content. */
+    --padding-top: var(--space-xs);
+    --padding-bottom: var(--space-xs);
+    /* Ionic's 44px minimum would leave the single line sitting at the top of an
+       otherwise empty box; the field is one line tall plus its own padding. */
+    min-height: 0;
 }
 
 .game-answer__check {
