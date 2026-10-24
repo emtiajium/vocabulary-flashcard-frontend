@@ -175,6 +175,7 @@ import {
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
+import type { LottieAnimationData } from '@/media/lottie/types';
 import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
 import waitingForReview from '@/media/lottie/waiting-for-review.json';
 import mastered from '@/media/lottie/mastered.json';
@@ -246,7 +247,7 @@ export default defineComponent({
             isNetworkError: false,
             emptyFlashcardsAnimation: emptyFlashcards,
             waitingForReviewAnimation: waitingForReview,
-            masteredAnimation: mastered as Record<string, unknown>,
+            masteredAnimation: mastered,
             hasMasteredFeedback: false,
             isMasteredFeedbackPlaying: false,
             masteredFeedbackKey: 0,
@@ -266,7 +267,7 @@ export default defineComponent({
          * "there is nothing due right now" — two different messages that deserve
          * two different illustrations.
          */
-        emptyStateAnimation(): Record<string, unknown> {
+        emptyStateAnimation(): LottieAnimationData {
             return this.box === '1' && this.totalItems === 0
                 ? this.emptyFlashcardsAnimation
                 : this.waitingForReviewAnimation;

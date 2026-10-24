@@ -154,7 +154,7 @@ export default defineComponent({
             firstBox: boxNumbers[0],
             lastBox: boxNumbers[boxNumbers.length - 1],
             currentBox: boxNumbers[0],
-            masteredAnimation: mastered as Record<string, unknown>,
+            masteredAnimation: mastered,
             statusType: 'info' as StatusType,
             statusMessage: 'Your word starts in Box 1. Select "Remembered" or "Forgot" to see what happens next.',
             wordChip: { x: 0, y: 0 } as { x: number; y: number },

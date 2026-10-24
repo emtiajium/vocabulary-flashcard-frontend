@@ -251,6 +251,7 @@ import answerCorrect from '@/media/lottie/answer-correct.json';
 import answerIncorrect from '@/media/lottie/answer-incorrect.json';
 import gameComplete from '@/media/lottie/game-complete.json';
 import funGame from '@/media/lottie/fun-game.json';
+import type { LottieAnimationData } from '@/media/lottie/types';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
@@ -290,7 +291,7 @@ export default defineComponent({
             correctAnimation: answerCorrect,
             incorrectAnimation: answerIncorrect,
             gameCompleteAnimation: gameComplete,
-            funGameAnimation: funGame as Record<string, unknown>,
+            funGameAnimation: funGame,
             failedMessage: 'Not quite. Try again.',
             isLoading: true,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
@@ -307,7 +308,7 @@ export default defineComponent({
             answerFeedbackKey: 0,
             isAnswerCorrect: true,
             // Only read while `hasAnswerFeedback` is true, i.e. after the first answer.
-            answerFeedbackAnimation: answerCorrect as Record<string, unknown>,
+            answerFeedbackAnimation: answerCorrect as LottieAnimationData,
         };
     },
     computed: {

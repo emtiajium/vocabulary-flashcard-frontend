@@ -161,7 +161,7 @@ export default defineComponent({
             faHeartSolid,
             faHeartRegular,
             disableBoxInsertionButton: false,
-            flashcardCreatedAnimation: flashcardCreated as Record<string, unknown>,
+            flashcardCreatedAnimation: flashcardCreated,
             flashcardFeedback: null as FlashcardFeedback | null,
             flashcardFeedbackKey: 0,
         };

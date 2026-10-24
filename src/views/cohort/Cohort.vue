@@ -125,7 +125,7 @@ export default defineComponent({
             isReady: false,
             isNetworkError: false,
             cohort: {} as Cohort,
-            cohortWaitingAnimation: cohortWaiting as Record<string, unknown>,
+            cohortWaitingAnimation: cohortWaiting,
         };
     },
     async ionViewDidEnter() {

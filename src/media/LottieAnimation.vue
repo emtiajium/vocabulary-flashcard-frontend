@@ -9,14 +9,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import type { LottieAnimationData } from '@/media/lottie/types';
 import type { AnimationItem, LottiePlayer } from 'lottie-web';
-
-/** Shape of the bodymovin/Lottie JSON handled by this component. */
-interface LottieAnimationData {
-    w: number;
-    h: number;
-    [key: string]: unknown;
-}
 
 type Rgb = [number, number, number];
 type PaletteKey = 'primary' | 'accent' | 'contrast';

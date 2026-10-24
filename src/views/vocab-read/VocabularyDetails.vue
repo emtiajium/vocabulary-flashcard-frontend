@@ -240,7 +240,7 @@ export default defineComponent({
             faHeartRegular,
             isInLeitnerBox: false,
             disableBoxInsertionButton: false,
-            flashcardCreatedAnimation: flashcardCreated as Record<string, unknown>,
+            flashcardCreatedAnimation: flashcardCreated,
             flashcardFeedback: null as FlashcardFeedback | null,
             flashcardFeedbackKey: 0,
         };

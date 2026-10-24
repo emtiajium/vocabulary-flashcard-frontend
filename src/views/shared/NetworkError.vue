@@ -38,7 +38,7 @@ export default defineComponent({
     data() {
         return {
             defaultMessage: MessageDB.networkError,
-            noConnectionAnimation: noConnection as Record<string, unknown>,
+            noConnectionAnimation: noConnection,
         };
     },
 });
