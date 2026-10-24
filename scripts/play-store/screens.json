@@ -1,0 +1,85 @@
+{
+    "brand": {
+        "background": "#F5821F",
+        "backgroundAccent": "#FB9A45",
+        "backgroundAccentDeep": "#E1700C",
+        "headlineColor": "#FFFFFF",
+        "headlineFont": "Liberation Sans, Arial, Helvetica, sans-serif",
+        "footerColor": "rgba(255, 255, 255, 0.82)",
+        "screenshotBorder": "rgba(255, 255, 255, 0.85)"
+    },
+    "footer": "Memorize Vocabulary Effectively",
+    "capture": { "baseUrl": "https://localhost:8090" },
+    "devices": [
+        {
+            "id": "phone",
+            "label": "Phone",
+            "canvas": { "width": 1080, "height": 1920, "screenshotWidth": 636 },
+            "capture": { "viewport": { "width": 390, "height": 844 }, "deviceScaleFactor": 3 }
+        },
+        {
+            "id": "tablet-7-inch",
+            "label": "7-inch tablet",
+            "canvas": { "width": 1440, "height": 2560, "screenshotWidth": 1080 },
+            "capture": { "viewport": { "width": 810, "height": 1440 }, "deviceScaleFactor": 2 }
+        },
+        {
+            "id": "tablet-10-inch",
+            "label": "10-inch tablet",
+            "canvas": { "width": 2160, "height": 3840, "screenshotWidth": 1620 },
+            "capture": { "viewport": { "width": 900, "height": 1600 }, "deviceScaleFactor": 2 }
+        }
+    ],
+    "screens": [
+        {
+            "id": "01-build-your-dictionary",
+            "route": "/vocabularies",
+            "headline": "Build Your Own Dictionary",
+            "waitFor": ".vocab-count"
+        },
+        {
+            "id": "02-add-words",
+            "route": "/vocabulary/create",
+            "headline": "Add Words with Examples & Notes",
+            "waitFor": "#add-vocabulary ion-textarea",
+            "actions": [{ "fill": { "selector": "#add-vocabulary ion-textarea textarea", "text": "Expedite" } }]
+        },
+        {
+            "id": "03-behind-every-word",
+            "route": "/vocabulary/read/11111111-1111-4111-8111-111111111111/Carrion/false",
+            "headline": "Everything Behind Every Word",
+            "waitFor": ".examples-list"
+        },
+        {
+            "id": "04-spaced-repetition",
+            "route": "/leitner-systems",
+            "headline": "Review with Spaced Repetition",
+            "waitForText": "Vocabs"
+        },
+        {
+            "id": "05-daily-game",
+            "route": "/guessing-game",
+            "headline": "Make Practice a Daily Game",
+            "waitFor": ".swiper-slide",
+            "allowAnimations": true,
+            "actions": [
+                { "click": "[aria-label=\"Show the correct word\"]" },
+                { "click": "ion-fab ion-fab-button" },
+                { "waitFor": "ion-modal" }
+            ]
+        },
+        {
+            "id": "06-learn-together",
+            "route": "/cohort/read",
+            "headline": "Learn Together",
+            "waitForText": "Fantastic Four!"
+        },
+        {
+            "id": "07-dark-mode",
+            "route": "/vocabularies",
+            "headline": "Easy on the Eyes, Day or Night",
+            "waitFor": ".vocab-count",
+            "colorScheme": "dark"
+        }
+    ]
+}

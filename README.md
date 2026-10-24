@@ -74,7 +74,9 @@
 
 > Draw the stretchable patches manually using the Draw 9-patch tool. See details from [here](https://developer.android.com/studio/write/draw9patch)
 
-➜ Play store screenshots/banner/Website thumbnail: Visit [here](https://www.canva.com/)
+➜ Play store screenshots: automated — see [Play Store screenshots (automated)](#play-store-screenshots-automated)
+
+➜ Play store banner/Website thumbnail: Visit [here](https://www.canva.com/)
 
 ➜ Favicon: Visit [here](https://realfavicongenerator.net/)
 
@@ -118,8 +120,50 @@
 
 ➜ Publish the app on Google Play Store!
 
+## Play Store screenshots (automated)
+
+The store screenshots are generated from the real app UI. No Canva, no manual
+capture. One command captures the app and composes the branded images for every
+supported device type.
+
+### Device types & dimensions
+
+Dimensions follow Google Play's
+[screenshot requirements](https://support.google.com/googleplay/android-developer/answer/9866151):
+
+-   **General:** JPEG or **24-bit PNG (no alpha)**; smallest side ≥ 320px, largest side
+    ≤ 3840px, and the largest side no more than twice the smallest.
+-   **Large screens (7-inch & 10-inch tablets, Chromebooks):** minimum 4 screenshots
+    (up to 8), **1,080–7,680px**, **9:16 portrait** (16:9 landscape).
+
+> Note: Google advises large-screen screenshots to avoid text that isn't part of the
+> app experience, because it can be cropped on Play homepages. The pipeline still adds
+> the headline to tablet images. Drop it from `screens.json` if you'd
+> rather follow that guidance strictly.
+
+The pipeline produces, for each device type:
+
+| Device type    | Output size (portrait, 9:16) | Capture viewport | Layout                |
+| -------------- | ---------------------------- | ---------------- | --------------------- |
+| Phone          | 1080 × 1920                  | 390 × 844        | headline + screenshot |
+| 7-inch tablet  | 1440 × 2560                  | 810 × 1440       | headline + screenshot |
+| 10-inch tablet | 2160 × 3840                  | 900 × 1600       | headline + screenshot |
+
+### Run it locally
+
+```bash
+# 1. Start the app in screenshot mode (one terminal)
+npm run store:serve
+
+# 2. Capture + render (another terminal)
+npm run store:images
+```
+
+The finished images land in `play-store/rendered/<device-type>/`.
+
 ## Change Log
 
+-   `7.0.0`: Play Store screenshots automation
 -   `6.0.3`: Upgraded `class-validator` and `class-transformer`, removed `iterare` + Integration tests for the upsert flows
 -   `6.0.2`: Fixed vocab edit bug
 -   `6.0.1`: Fixed reset button's UI issue

@@ -1,0 +1,14 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+# Capacitor / Android Studio generated native projects
+android
+android-replacer
+
+# Tooling and IDE caches
+.firebase
+.idea
+.run
