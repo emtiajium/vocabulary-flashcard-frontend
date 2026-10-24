@@ -18,19 +18,56 @@
             }
         }
     },
+    "mcp": {
+        "Lottiefiles": {
+            "type": "remote",
+            "url": "https://mcp.lottiefiles.com/mcp",
+            "oauth": {}
+        }
+    },
     "permission": {
         "*": "ask",
         "read": {
             "*": "allow",
             "*.env": "deny",
             "*.env.*": "deny",
-            "*.env.test": "allow",
             "*.env.sample": "allow",
+            "*.env.test": "allow",
             "**/.bashrc": "deny"
         },
         "edit": "ask",
         "bash": {
             "*": "ask",
+            "cat": "allow",
+            "cat *": "allow",
+            "nano": "allow",
+            "node": "allow",
+            "node *": "allow",
+            "npx": "allow",
+            "npx *": "allow",
+            "npx * *": "allow",
+            "npm run *": "allow",
+            "unlink": "allow",
+            "pwd": "allow",
+            "ls": "allow",
+            "ls *": "allow",
+            "cd": "allow",
+            "cd *": "allow",
+            "grep": "allow",
+            "grep *": "allow",
+            "rg": "allow",
+            "rg *": "allow",
+            "chmode": "allow",
+            "chmode *": "allow",
+            "head": "allow",
+            "head *": "allow",
+            "tail": "allow",
+            "tail *": "allow",
+            "sed": "allow",
+            "sed *": "allow",
+            "sed -n *": "allow",
+            "echo": "allow",
+            "echo *": "allow",
             "git status*": "allow",
             "git diff*": "allow",
             "git log*": "allow",
