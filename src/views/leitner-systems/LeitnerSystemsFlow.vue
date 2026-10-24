@@ -45,6 +45,16 @@
                             <span class="box-day-text">{{ box.dayLabel }}</span>
                             <span class="box-schedule-text">{{ box.dueText }}</span>
                         </ion-card>
+
+                        <!-- Decorative confirmation of the payoff the copy describes.
+                             It overlays the tile so it cannot shift the layout. -->
+                        <div v-if="isMastered && box.number === lastBox" class="mastered-celebration">
+                            <lottie-animation
+                                class="mastered-celebration__animation"
+                                :animation-data="masteredAnimation"
+                                :loop="false"
+                            />
+                        </div>
                     </div>
                 </ion-col>
             </ion-row>
@@ -102,6 +112,8 @@ import { IonBadge, IonButton, IonCard, IonCardContent, IonCardSubtitle, IonCol, 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faArrowLeft, faArrowRight, faRefresh } from '@fortawesome/free-solid-svg-icons';
 import EmptyBoxIcon from '@/media/EmptyBoxIcon.vue';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import mastered from '@/media/lottie/mastered.json';
 import MappedLeitnerBoxWithDays, { MappedLeitnerBoxWithDueText } from '@/domains/MappedLeitnerBoxWithDays';
 
 type StatusType = 'forward' | 'backward' | 'info';
@@ -118,6 +130,7 @@ export default defineComponent({
     name: 'LeitnerSystemsFlow',
     components: {
         EmptyBoxIcon,
+        LottieAnimation,
         IonBadge,
         IonButton,
         IonCard,
@@ -135,11 +148,15 @@ export default defineComponent({
             firstBox: boxNumbers[0],
             lastBox: boxNumbers[boxNumbers.length - 1],
             currentBox: boxNumbers[0],
+            masteredAnimation: mastered as Record<string, unknown>,
             statusType: 'info' as StatusType,
             statusMessage: 'Your word starts in Box 1. Select "Remembered" or "Forgot" to see what happens next.',
         };
     },
     computed: {
+        isMastered(): boolean {
+            return this.currentBox === this.lastBox;
+        },
         currentBoxDayLabel(): string {
             return this.dayLabel(this.currentBox);
         },
@@ -235,6 +252,20 @@ ion-card.flow-container {
 
 .box-item {
     display: flex;
+    position: relative;
+}
+
+.mastered-celebration {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.mastered-celebration__animation {
+    width: min(84px, 100%);
 }
 
 ion-card.box-card {
