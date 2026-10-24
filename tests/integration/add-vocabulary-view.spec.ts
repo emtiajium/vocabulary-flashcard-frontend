@@ -69,7 +69,7 @@ jest.mock('@/utils/Toast', () => ({
 
 jest.mock('@/utils/Alert', () => ({
     __esModule: true,
-    default: { presentAlertConfirm: jest.fn() },
+    default: { presentConfirm: jest.fn() },
 }));
 
 jest.mock('@/utils/NativeStorage', () => ({

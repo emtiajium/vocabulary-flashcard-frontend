@@ -39,7 +39,7 @@
                         shape="round"
                         :strong="true"
                         color="warning"
-                        @click="presentAlertConfirm(vocabulary)"
+                        @click="confirmRemoval(vocabulary)"
                     >
                         <font-awesome-icon :icon="faTrashAlt" />
                     </ion-button>
@@ -184,11 +184,15 @@ export default defineComponent({
                 await this.seeMore(id, word);
             }
         },
-        async presentAlertConfirm(vocabulary: Vocabulary): Promise<void> {
-            await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"?`, async () => {
-                return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`)
-                    .then(() => this.deleteVocabulary(vocabulary.id))
-                    .catch((error) => Toast.present(error.message, 'error'));
+        async confirmRemoval(vocabulary: Vocabulary): Promise<void> {
+            await Alert.presentConfirm({
+                message: `Are you sure you want to remove "${vocabulary.word}"?`,
+                destructive: true,
+                onConfirm: () => {
+                    return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`)
+                        .then(() => this.deleteVocabulary(vocabulary.id))
+                        .catch((error) => Toast.present(error.message, 'error'));
+                },
             });
         },
         async insertIntoLeitnerBox(clickEvent: MouseEvent): Promise<void> {

@@ -129,13 +129,13 @@ export default defineComponent({
             await this.$router.replace('/sign-in');
         },
         async assertDeletion(): Promise<void> {
-            await Alert.presentAlertConfirm(
-                '',
-                `You are about to delete your account. All associated data will have lost permanently. There is no undo. Are you confident to proceed?`,
-                async () => {
+            await Alert.presentConfirm({
+                message: `You are about to delete your account. All associated data will have been lost permanently. There is no undo. Are you sure you want to proceed?`,
+                destructive: true,
+                onConfirm: async () => {
                     return this.deleteSelf();
                 },
-            );
+            });
         },
         async deleteSelf(): Promise<void> {
             try {

@@ -293,14 +293,6 @@ body.dark ion-menu {
     --ion-background-color: var(--ion-background-color-step-100);
 }
 
-.alert-message {
-    color: var(--ion-card-title-color) !important;
-}
-
-body.dark ion-alert {
-    --background: var(--ion-background-color-step-100);
-}
-
 /* ------------------------------------------------------------------ *
  * Text areas
  * ------------------------------------------------------------------ */

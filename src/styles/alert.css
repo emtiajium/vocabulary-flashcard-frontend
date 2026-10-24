@@ -1,0 +1,52 @@
+/* ------------------------------------------------------------------ *
+ * Alert
+ *
+ * Ionic renders the alert as an overlay outside the app root and styles its
+ * internals with scoped classes, so these rules are global and are scoped to
+ * the alert's own class. That ties with Ionic's specificity, and this sheet is
+ * imported after it, so these win.
+ * ------------------------------------------------------------------ */
+.firecracker-alert .alert-wrapper {
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.firecracker-alert .alert-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--ion-card-title-color);
+}
+
+.firecracker-alert .alert-sub-title,
+.firecracker-alert .alert-message {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--ion-text-color);
+}
+
+/* Turned down from Ionic's default so a long question stays scannable. */
+.firecracker-alert .alert-message {
+    padding-top: var(--space-xs);
+    padding-bottom: var(--space-xs);
+}
+
+/* Ionic's md theme shouts its buttons in capitals; the app writes sentence
+   case everywhere, and gives its buttons room to be tapped. */
+.firecracker-alert .alert-button {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0;
+    text-transform: none;
+    padding: var(--space-sm) var(--space-md);
+}
+
+/* Ionic only colours a destructive button in its iOS theme, and the app runs
+   md, so the danger colour has to be applied here. */
+.firecracker-alert .alert-button-role-destructive {
+    color: var(--ion-color-danger);
+}
+
+/* The alert's own surface is lighter than the page, so dark mode needs an edge. */
+body.dark .firecracker-alert {
+    --background: var(--ion-background-color-step-100);
+}

@@ -150,22 +150,19 @@ export default defineComponent({
                 return this.handleSignIn();
             }
 
-            await Alert.presentAlertConfirm(
-                '',
-                `"Firecracker Vocabulary Flashcards" will collect your name, email address, and photo.`,
-                () => {
+            await Alert.presentConfirm({
+                message: `"Firecracker Vocabulary Flashcards" will collect your name, email address, and photo.`,
+                confirmLabel: 'Proceed',
+                cancelLabel: 'Deny',
+                onConfirm: () => {
                     return this.handleSignIn();
                 },
-                async () => {
+                onCancel: async () => {
                     if (!this.isAndroid) {
                         await GoogleAuthentication.signOut();
                     }
                 },
-                {
-                    cancel: 'Deny',
-                    agree: 'Proceed',
-                },
-            );
+            });
         },
 
         async handleSignIn(): Promise<void> {

@@ -46,7 +46,7 @@ jest.mock('@/media/LottieAnimation.vue', () => {
     return { __esModule: true, default: define({ name: 'LottieAnimation', template: '<div class="lottie-stub" />' }) };
 });
 
-jest.mock('@/utils/Alert', () => ({ __esModule: true, default: { presentAlertConfirm: jest.fn() } }));
+jest.mock('@/utils/Alert', () => ({ __esModule: true, default: { presentConfirm: jest.fn() } }));
 
 // The real handler pulls in the Google sign-in client, which needs DOM types the
 // test tsconfig does not load.

@@ -353,16 +353,12 @@ export default defineComponent({
             }
         },
         async notifyExistence(existingVocabulary: VocabularyExistenceResponse): Promise<void> {
-            await Alert.presentAlertConfirm(
-                '',
-                `"${existingVocabulary.word}" already exists. Please consider updating it.`,
-                async () => this.navigateToExisting(existingVocabulary),
-                async () => Promise.resolve(),
-                {
-                    cancel: 'Cancel',
-                    agree: 'Update',
-                },
-            );
+            await Alert.presentConfirm({
+                message: `"${existingVocabulary.word}" already exists. Please consider updating it.`,
+                confirmLabel: 'Update',
+                cancelLabel: 'Cancel',
+                onConfirm: async () => this.navigateToExisting(existingVocabulary),
+            });
         },
         async assertExistence(): Promise<boolean> {
             try {
@@ -598,14 +594,15 @@ export default defineComponent({
                 this.unsubscribeBackButtonListener();
                 await Promise.all([handler(), NativeStorage.setShouldReloadVocabularies(false)]);
             } else {
-                await Alert.presentAlertConfirm(
-                    '',
-                    'You have an unsaved vocabulary that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
-                    async () => {
+                await Alert.presentConfirm({
+                    message:
+                        'You have an unsaved vocabulary that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
+                    destructive: true,
+                    onConfirm: async () => {
                         this.unsubscribeBackButtonListener();
                         await Promise.all([handler(), NativeStorage.setShouldReloadVocabularies(false)]);
                     },
-                );
+                });
             }
         },
     },
