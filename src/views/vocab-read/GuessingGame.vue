@@ -7,181 +7,169 @@
             type="MENU"
         />
         <ion-content :fullscreen="true" id="guessing-game">
-            <ion-row class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="10" sizeMd="8" sizeLg="6" sizeXl="6" class="game-column">
-                    <spinner v-if="isLoading" />
-
-                    <div v-if="isLoading" class="ion-padding-start ion-padding-end">
-                        <ion-card-subtitle class="ion-text-center">
-                            Preparing the guessing game for today ...
-                        </ion-card-subtitle>
+            <div class="game-shell">
+                <!-- The play surface stays mounted (hidden) so the swiper it owns is
+                     always in the DOM by the time `initSwiper` runs. -->
+                <section v-show="showGame" class="game-progress" aria-labelledby="game-progress-label">
+                    <div class="game-progress__head">
+                        <p id="game-progress-label" class="game-progress__label">
+                            Word <strong>{{ activeIndex + 1 }}</strong> of {{ vocabularies.length }}
+                        </p>
+                        <ion-chip
+                            class="game-score"
+                            :aria-label="`${correctAnswerCount} correct out of ${vocabularies.length}`"
+                        >
+                            <font-awesome-icon
+                                :icon="correctIcon"
+                                class="firecracker-primary-color-icon game-score__icon"
+                                aria-hidden="true"
+                            />
+                            <span :key="scorePulseKey" class="game-score__value">{{ correctAnswerCount }}</span>
+                            <span>/ {{ vocabularies.length }}</span>
+                        </ion-chip>
                     </div>
 
-                    <div class="swiper" v-show="!isLoading && vocabularies.length">
-                        <div class="swiper-wrapper">
-                            <div v-for="(vocabulary, index) of vocabularies" :key="index" class="swiper-slide">
-                                <div class="ion-padding ion-margin-bottom">
-                                    <div
-                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
-                                    >
-                                        <div>
-                                            <font-awesome-icon
-                                                v-show="typeof vocabulary.isCorrect === 'boolean'"
-                                                :icon="vocabulary.isCorrect ? correctIcon : incorrectIcon"
-                                                :class="`${
-                                                    vocabulary.isCorrect
-                                                        ? 'firecracker-primary-color-icon'
-                                                        : 'firecracker-warning-color-icon'
-                                                } icon-font`"
+                    <div class="game-progress__track">
+                        <div class="game-progress__fill" :style="{ width: `${progressPercent}%` }"></div>
+                    </div>
+
+                    <div class="game-hint">
+                        <span>Read the meaning, then type the word.</span>
+                        <ion-button
+                            class="game-hint__link"
+                            fill="clear"
+                            size="small"
+                            color="primary"
+                            @click="isInfoModalOpened = true"
+                        >
+                            How it works
+                        </ion-button>
+                    </div>
+                </section>
+
+                <div v-show="showGame" class="game-stage">
+                    <div class="game-viewport">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <div v-for="(vocabulary, index) of vocabularies" :key="index" class="swiper-slide">
+                                    <div class="game-card__body">
+                                        <p class="game-card__eyebrow">Meaning</p>
+                                        <p class="game-card__prompt">{{ vocabulary.meaning }}</p>
+                                    </div>
+
+                                    <div class="game-answer">
+                                        <p v-if="vocabulary.isCorrect" class="game-locked">
+                                            <font-awesome-icon :icon="correctIcon" aria-hidden="true" />
+                                            <span>{{ vocabulary.word }}</span>
+                                        </p>
+                                        <template v-else>
+                                            <ion-textarea
+                                                class="game-answer__field"
+                                                :aria-label="`Your answer for word ${index + 1}`"
+                                                placeholder="Type the word"
+                                                inputmode="text"
+                                                enterkeyhint="done"
+                                                autocapitalize="sentences"
+                                                autocomplete="off"
+                                                autocorrect="off"
+                                                :spellcheck="false"
+                                                :auto-grow="true"
+                                                :rows="1"
+                                                :value="givenAnswers[index]"
+                                                @ionInput="onGivingAnswer($event.detail.value as string, index)"
+                                                @keydown.enter.prevent="submitAnswer(vocabulary, index)"
                                             />
-                                        </div>
-                                        <div>
-                                            <ion-card-subtitle
-                                                class="ion-text-end"
-                                                :aria-label="`${correctAnswerCount} correct words out of ${vocabularies.length}`"
+                                            <ion-button
+                                                class="game-answer__check"
+                                                color="primary"
+                                                :disabled="!hasDraft(index)"
+                                                @click="submitAnswer(vocabulary, index)"
                                             >
-                                                <span class="correct-count"> {{ correctAnswerCount }} </span> /
-                                                {{ vocabularies.length }}
-                                            </ion-card-subtitle>
-                                        </div>
+                                                Check
+                                            </ion-button>
+                                        </template>
                                     </div>
 
-                                    <ion-card-header>
-                                        <ion-card-title class="ion-text-center capitalize ion-padding-bottom">
-                                            {{ vocabulary.meaning }}
-                                        </ion-card-title>
-                                    </ion-card-header>
-
-                                    <div
-                                        class="display-flex ion-justify-content-between ion-align-items-center submit-answer-container ion-margin-bottom"
-                                    >
-                                        <ion-textarea
-                                            class="no-border no-focus"
-                                            aria-label="Guess the word"
-                                            placeholder="Guess the word"
-                                            inputmode="text"
-                                            autocapitalize="sentences"
-                                            :auto-grow="true"
-                                            :value="givenAnswer"
-                                            @ionChange="onGivingAnswer($event.detail.value as string)"
-                                        />
-                                        <ion-button
-                                            aria-label="Show the correct word"
-                                            fill="clear"
-                                            size="large"
-                                            shape="round"
-                                            color="primary"
-                                            :strong="true"
-                                            @click="showCorrectAnswer = true"
+                                    <div class="game-footer">
+                                        <p
+                                            class="game-feedback"
+                                            :class="feedbackClass(vocabulary, index)"
+                                            role="status"
                                         >
-                                            <font-awesome-icon
-                                                :icon="viewIcon"
-                                                class="firecracker-primary-color-icon"
-                                            />
-                                        </ion-button>
+                                            <template v-if="vocabulary.isCorrect === true">
+                                                <font-awesome-icon :icon="correctIcon" aria-hidden="true" />
+                                                <span>Correct!</span>
+                                            </template>
+                                            <template v-else-if="isRevealed(index)">
+                                                <font-awesome-icon :icon="infoIcon" aria-hidden="true" />
+                                                <span
+                                                    >The word is “<strong>{{ vocabulary.word }}</strong
+                                                    >”</span
+                                                >
+                                            </template>
+                                            <template v-else-if="vocabulary.isCorrect === false">
+                                                <font-awesome-icon :icon="incorrectIcon" aria-hidden="true" />
+                                                <span>{{ failedMessage }}</span>
+                                            </template>
+                                        </p>
+
                                         <ion-button
-                                            aria-label="Submit the answer"
+                                            class="game-reveal"
+                                            :class="{ 'game-reveal--hidden': !canReveal(vocabulary, index) }"
                                             fill="clear"
-                                            size="large"
-                                            shape="round"
+                                            size="small"
                                             color="primary"
-                                            class="ion-padding-end"
-                                            :strong="true"
-                                            @click="submitAnswer(vocabulary, index)"
+                                            @click="reveal(index)"
                                         >
-                                            <font-awesome-icon :icon="submitIcon" />
+                                            Show the answer
                                         </ion-button>
-                                    </div>
-
-                                    <div
-                                        v-show="resultMessage && !showCorrectAnswer"
-                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
-                                    >
-                                        <div>
-                                            <font-awesome-icon
-                                                :icon="vocabulary.isCorrect ? correctIcon : incorrectIcon"
-                                                :class="`${
-                                                    vocabulary.isCorrect
-                                                        ? 'firecracker-primary-color-icon'
-                                                        : 'firecracker-warning-color-icon'
-                                                } icon-font`"
-                                            />
-                                        </div>
-                                        <div>
-                                            <ion-card-subtitle>
-                                                {{ resultMessage }}
-                                            </ion-card-subtitle>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        v-show="showCorrectAnswer"
-                                        class="display-flex ion-justify-content-between ion-align-items-center ion-padding-bottom"
-                                    >
-                                        <div>
-                                            <font-awesome-icon
-                                                :icon="infoIcon"
-                                                class="firecracker-primary-color-icon icon-font"
-                                            />
-                                        </div>
-                                        <div>
-                                            <ion-card-subtitle>
-                                                The correct word is "<span class="capitalize">{{
-                                                    vocabulary.word
-                                                }}</span
-                                                >".
-                                            </ion-card-subtitle>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-pagination"></div>
+
+                        <!-- Purely decorative: the outcome is already announced by the icon, the
+                             feedback line and the sound. Re-mounted through `answerFeedbackKey`
+                             so every submission replays it from the first frame. -->
+                        <div v-if="hasAnswerFeedback" class="answer-feedback">
+                            <lottie-animation
+                                :key="answerFeedbackKey"
+                                class="answer-feedback__animation"
+                                :animation-data="answerFeedbackAnimation"
+                                :primary-color-variable="
+                                    isAnswerCorrect ? '--ion-color-primary' : '--ion-color-warning'
+                                "
+                                :accent-color-variable="
+                                    isAnswerCorrect ? '--ion-color-primary-tint' : '--ion-color-warning-tint'
+                                "
+                                :loop="false"
+                            />
+                        </div>
                     </div>
 
-                    <!-- Purely decorative: the outcome is already announced by the icon, the
-                         message and the sound. It is re-mounted through `answerFeedbackKey`
-                         so every submission replays it from the first frame. -->
-                    <div v-if="hasAnswerFeedback" class="answer-feedback">
-                        <lottie-animation
-                            :key="answerFeedbackKey"
-                            class="answer-feedback__animation"
-                            :animation-data="answerFeedbackAnimation"
-                            :primary-color-variable="isAnswerCorrect ? '--ion-color-primary' : '--ion-color-warning'"
-                            :accent-color-variable="
-                                isAnswerCorrect ? '--ion-color-primary-tint' : '--ion-color-warning-tint'
-                            "
-                            :loop="false"
+                    <nav class="game-rail" aria-label="Words in this game">
+                        <button
+                            v-for="(vocabulary, index) of vocabularies"
+                            :key="index"
+                            type="button"
+                            class="game-rail__step"
+                            :class="railClass(vocabulary, index)"
+                            :aria-current="index === activeIndex ? 'step' : undefined"
+                            :aria-label="`Word ${index + 1}: ${railStateLabel(vocabulary, index)}`"
+                            @click="goToSlide(index)"
                         />
-                    </div>
-                </ion-col>
-            </ion-row>
+                    </nav>
+                </div>
 
-            <ion-modal
-                :is-open="isInfoModalOpened"
-                :initial-breakpoint="0.25"
-                :breakpoints="[0, 0.25, 0.5, 0.75]"
-                @willDismiss="isInfoModalOpened = false"
-            >
-                <div class="ion-padding">
-                    <ion-card-subtitle class="ion-text-center">
-                        In this Vocabulary Guessing Game, you'll be presented with a series of meanings to guess the
-                        correct word for each one. Each day, a new game will be generated for you to challenge your
-                        vocabulary skills. For every correct guess, your score will increase. If you successfully guess
-                        all the words correctly, you'll unlock another game to play even on the same day. Challenge
-                        yourself daily and see how many words you can get right!
+                <div v-if="isLoading" class="game-loading">
+                    <spinner inline-style="height: auto" />
+                    <ion-card-subtitle class="ion-text-center" role="status">
+                        Preparing the guessing game for today ...
                     </ion-card-subtitle>
                 </div>
-            </ion-modal>
 
-            <ion-modal
-                :is-open="isCompletionModalOpened"
-                :initial-breakpoint="0.5"
-                :breakpoints="[0, 0.5, 0.75, 1]"
-                @willDismiss="isCompletionModalOpened = false"
-            >
-                <div class="completion-content ion-padding">
-                    <lottie-animation class="completion-animation" :animation-data="gameCompleteAnimation">
+                <div v-else-if="!vocabularies.length" class="game-empty">
+                    <lottie-animation class="game-empty__art" :animation-data="funGameAnimation">
                         <template #fallback>
                             <fun-icon
                                 :fill-color-variable="'--ion-color-primary'"
@@ -189,39 +177,70 @@
                             />
                         </template>
                     </lottie-animation>
-                    <ion-card-title class="ion-text-center">All words guessed!</ion-card-title>
-                    <ion-card-subtitle class="ion-text-center">
-                        Well done, you nailed every word. A fresh game will be ready for you next time.
-                    </ion-card-subtitle>
-                    <ion-button color="primary" @click="isCompletionModalOpened = false">Close</ion-button>
+                    <h2 class="game-empty__title">Nothing to guess yet</h2>
+                    <p class="game-empty__text">
+                        Add a few words to your dictionary and a fresh guessing game will be waiting for you here.
+                    </p>
+                    <ion-button color="primary" @click="goToAddVocabulary">
+                        <font-awesome-icon :icon="plusIcon" class="ion-padding-end" aria-hidden="true" />
+                        Add a word
+                    </ion-button>
                 </div>
-            </ion-modal>
 
-            <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                <ion-fab-button @click="isInfoModalOpened = true">
-                    <font-awesome-icon :icon="ideaIcon" />
-                </ion-fab-button>
-            </ion-fab>
+                <ion-modal
+                    :is-open="isInfoModalOpened"
+                    :initial-breakpoint="0.4"
+                    :breakpoints="[0, 0.4, 0.7, 0.9]"
+                    @willDismiss="isInfoModalOpened = false"
+                >
+                    <div class="info-sheet">
+                        <h2 class="info-sheet__title">How the daily game works</h2>
+                        <ul class="info-sheet__list">
+                            <li>You are given a set of meanings. Type the word that matches each one.</li>
+                            <li>Every correct guess adds to your score for the day.</li>
+                            <li>Guess them all and you unlock another round today.</li>
+                            <li>A brand new set is ready for you the next day.</li>
+                        </ul>
+                        <ion-button color="primary" expand="block" @click="isInfoModalOpened = false"
+                            >Got it</ion-button
+                        >
+                    </div>
+                </ion-modal>
+
+                <ion-modal
+                    :is-open="isCompletionModalOpened"
+                    :initial-breakpoint="0.6"
+                    :breakpoints="[0, 0.6, 0.85, 1]"
+                    @willDismiss="isCompletionModalOpened = false"
+                >
+                    <div class="completion-content">
+                        <lottie-animation class="completion-animation" :animation-data="gameCompleteAnimation">
+                            <template #fallback>
+                                <fun-icon
+                                    :fill-color-variable="'--ion-color-primary'"
+                                    :stroke-color-variable="'--ion-color-primary'"
+                                />
+                            </template>
+                        </lottie-animation>
+                        <h2 class="completion-title">All words guessed!</h2>
+                        <p class="completion-text">Well done — you nailed every word in today's round.</p>
+                        <ion-chip class="completion-stat">
+                            <span class="completion-stat__value">{{ correctAnswerCount }}</span>
+                            <span>of {{ vocabularies.length }} correct</span>
+                        </ion-chip>
+                        <ion-button color="primary" expand="block" @click="isCompletionModalOpened = false">
+                            Close
+                        </ion-button>
+                    </div>
+                </ion-modal>
+            </div>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {
-    IonPage,
-    IonContent,
-    IonRow,
-    IonCol,
-    IonTextarea,
-    IonButton,
-    IonCardSubtitle,
-    IonFab,
-    IonFabButton,
-    IonModal,
-    IonCardTitle,
-    IonCardHeader,
-} from '@ionic/vue';
+import { IonPage, IonContent, IonTextarea, IonButton, IonCardSubtitle, IonChip, IonModal } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import Spinner from '@/views/shared/Spinner.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
@@ -229,64 +248,57 @@ import FunIcon from '@/media/FunIcon.vue';
 import answerCorrect from '@/media/lottie/answer-correct.json';
 import answerIncorrect from '@/media/lottie/answer-incorrect.json';
 import gameComplete from '@/media/lottie/game-complete.json';
+import funGame from '@/media/lottie/fun-game.json';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
 import { RandomlyChosenMeaningResponse } from '@/domains/RandomlyChosenMeaningResponse';
 import { format } from 'date-fns';
 import NativeStorage from '@/utils/NativeStorage';
+import Route from '@/domains/Route';
 import Swiper from 'swiper';
-import { Pagination } from 'swiper/modules';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import {
-    faCircleCheck,
-    faLightbulb,
-    faCircleArrowUp,
-    faEye,
-    faInfoCircle,
-    faTriangleExclamation,
-} from '@fortawesome/free-solid-svg-icons';
-import { cloneDeep, isEmpty } from 'lodash';
+import { faCircleCheck, faPlus, faInfoCircle, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { cloneDeep } from 'lodash';
+
+type SlideVisualState = 'is-correct' | 'is-revealed' | 'is-incorrect' | 'is-neutral';
 
 export default defineComponent({
     name: 'GuessingGame',
     components: {
-        IonFabButton,
-        IonFab,
         FirecrackerHeader,
+        Spinner,
         IonPage,
         IonContent,
-        IonRow,
-        IonCol,
         IonTextarea,
-        Spinner,
+        IonCardSubtitle,
+        IonChip,
         LottieAnimation,
         FunIcon,
         IonButton,
-        IonCardSubtitle,
         FontAwesomeIcon,
         IonModal,
-        IonCardTitle,
-        IonCardHeader,
     },
     data() {
         return {
             correctIcon: faCircleCheck,
             incorrectIcon: faTriangleExclamation,
-            ideaIcon: faLightbulb,
-            submitIcon: faCircleArrowUp,
-            viewIcon: faEye,
             infoIcon: faInfoCircle,
+            plusIcon: faPlus,
             correctAnimation: answerCorrect,
             incorrectAnimation: answerIncorrect,
             gameCompleteAnimation: gameComplete,
+            funGameAnimation: funGame as Record<string, unknown>,
+            failedMessage: 'Not quite — try again.',
             isLoading: true,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
-            givenAnswer: '',
-            resultMessage: '',
-            showCorrectAnswer: false,
+            // Draft per word so a half-typed answer survives swiping away and back.
+            givenAnswers: [] as string[],
+            revealed: [] as number[],
             correctAnswerCount: 0,
-            swiper: undefined as unknown as Swiper,
+            activeIndex: 0,
+            scorePulseKey: 0,
+            swiper: null as Swiper | null,
             isInfoModalOpened: false,
             isCompletionModalOpened: false,
             hasAnswerFeedback: false,
@@ -296,41 +308,41 @@ export default defineComponent({
             answerFeedbackAnimation: answerCorrect as Record<string, unknown>,
         };
     },
+    computed: {
+        showGame(): boolean {
+            return !this.isLoading && this.vocabularies.length > 0;
+        },
+        answeredCount(): number {
+            return this.vocabularies.filter((vocabulary) => typeof vocabulary.isCorrect === 'boolean').length;
+        },
+        progressPercent(): number {
+            return this.vocabularies.length ? Math.round((this.answeredCount / this.vocabularies.length) * 100) : 0;
+        },
+    },
     async ionViewDidEnter() {
         await this.init();
     },
     ionViewWillLeave() {
         this.clean();
-        this.swiper.destroy();
-        this.swiper.disable();
+        this.swiper?.disable();
+        this.swiper?.destroy();
     },
     methods: {
         async init(): Promise<void> {
             this.initSwiper();
             await this.assertLoadingVocabularies();
-            this.swiper.init();
+            this.swiper?.init();
         },
 
         initSwiper(): void {
             this.swiper = new Swiper('.swiper', {
-                modules: [Pagination],
                 init: false,
-                rewind: true,
-                spaceBetween: 10,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                    type: 'bullets',
-                    dynamicBullets: true,
-                    dynamicMainBullets: 5,
-                    renderBullet: (index: number, className: string): string => {
-                        return `<span class="${className}">${index + 1}</span>`;
-                    },
-                },
+                rewind: false,
+                spaceBetween: 12,
             });
 
             this.swiper.on('realIndexChange', (swiper: Swiper) => {
-                this.onChangeVocabulary(swiper.activeIndex);
+                this.activeIndex = swiper.activeIndex;
             });
         },
 
@@ -342,10 +354,8 @@ export default defineComponent({
                 NativeStorage.removeGuessingGameVocabularies().catch();
                 await this.loadVocabularies();
             } else {
-                this.vocabularies = cachedRandomlyChosenMeaningResponse.data;
-                this.calculateCorrectAnswerCount();
+                this.setVocabularies(cachedRandomlyChosenMeaningResponse.data);
             }
-            this.setInitialGivenAnswer();
             this.isLoading = false;
         },
 
@@ -354,31 +364,42 @@ export default defineComponent({
                 const vocabularies = await HttpHandler.get<RandomlyChosenMeaningResponse[]>(
                     `/v1/vocabularies/definitions/random-search`,
                 );
-                this.vocabularies = vocabularies;
+                this.setVocabularies(vocabularies);
                 this.storeInCache(vocabularies);
             } catch {
+                this.setVocabularies([]);
                 await Toast.present(MessageDB.genericError, 'error');
             }
         },
 
-        submitAnswer(correctVocabulary: RandomlyChosenMeaningResponse, index: number): void {
-            this.showCorrectAnswer = false;
-            let isCorrect = false;
-            const previousCorrectAnswerCount = this.correctAnswerCount;
-            if (this.givenAnswer.trim().toLowerCase() === correctVocabulary.word.trim().toLowerCase()) {
-                isCorrect = true;
-                this.resultMessage = 'Correct!';
-                this.playSound('correct');
-                this.vocabularies[index].isCorrect = true;
-            } else {
-                this.resultMessage = `Incorrect!`;
-                this.playSound('wrong');
-                this.vocabularies[index].isCorrect = this.givenAnswer.trim() ? false : undefined;
-            }
+        setVocabularies(vocabularies: RandomlyChosenMeaningResponse[]): void {
+            this.vocabularies = vocabularies ?? [];
+            // Revisiting an already-guessed word keeps its answer locked in.
+            this.givenAnswers = this.vocabularies.map((vocabulary) => (vocabulary.isCorrect ? vocabulary.word : ''));
+            this.revealed = [];
+            this.activeIndex = 0;
             this.calculateCorrectAnswerCount();
-            if (this.correctAnswerCount !== previousCorrectAnswerCount) {
-                this.animateCount(index);
+        },
+
+        submitAnswer(vocabulary: RandomlyChosenMeaningResponse, index: number): void {
+            const given = this.givenAnswers[index]?.trim().toLowerCase();
+
+            // The Check button is disabled without a draft; guard the keyboard path too.
+            if (!given) {
+                return;
             }
+
+            const previousCorrectAnswerCount = this.correctAnswerCount;
+            const isCorrect = given === vocabulary.word.trim().toLowerCase();
+
+            this.vocabularies[index].isCorrect = isCorrect;
+            this.playSound(isCorrect ? 'correct' : 'wrong');
+            this.calculateCorrectAnswerCount();
+
+            if (this.correctAnswerCount !== previousCorrectAnswerCount) {
+                this.scorePulseKey += 1;
+            }
+
             if (this.correctAnswerCount === this.vocabularies.length) {
                 NativeStorage.removeGuessingGameVocabularies().catch();
                 // The last correct guess is celebrated by the completion modal, so
@@ -404,30 +425,70 @@ export default defineComponent({
             }, 0);
         },
 
-        animateCount(index: number): void {
-            const element = document.getElementsByClassName('correct-count')[index];
-            element.classList.add('animate-count');
-            element.addEventListener(
-                'animationend',
-                () => {
-                    element.classList.remove('animate-count');
-                },
-                { once: true },
-            );
+        onGivingAnswer(givenAnswer: string, index: number): void {
+            this.givenAnswers[index] = givenAnswer;
         },
 
-        setInitialGivenAnswer(): void {
-            this.givenAnswer = this.vocabularies[0].isCorrect ? this.vocabularies[0].word : '';
+        hasDraft(index: number): boolean {
+            return Boolean(this.givenAnswers[index]?.trim());
         },
 
-        onChangeVocabulary(index: number): void {
-            this.resultMessage = '';
-            this.givenAnswer = this.vocabularies[index].isCorrect ? this.vocabularies[index].word : '';
-            this.showCorrectAnswer = false;
+        reveal(index: number): void {
+            if (!this.revealed.includes(index)) {
+                this.revealed.push(index);
+            }
         },
 
-        onGivingAnswer(givenAnswer: string): void {
-            this.givenAnswer = givenAnswer;
+        isRevealed(index: number): boolean {
+            return this.revealed.includes(index);
+        },
+
+        canReveal(vocabulary: RandomlyChosenMeaningResponse, index: number): boolean {
+            return vocabulary.isCorrect !== true && !this.isRevealed(index);
+        },
+
+        feedbackClass(vocabulary: RandomlyChosenMeaningResponse, index: number): SlideVisualState {
+            if (vocabulary.isCorrect === true) {
+                return 'is-correct';
+            }
+
+            if (this.isRevealed(index)) {
+                return 'is-revealed';
+            }
+
+            if (vocabulary.isCorrect === false) {
+                return 'is-incorrect';
+            }
+
+            return 'is-neutral';
+        },
+
+        railClass(vocabulary: RandomlyChosenMeaningResponse, index: number): Record<string, boolean> {
+            return {
+                'is-correct': vocabulary.isCorrect === true,
+                'is-incorrect': vocabulary.isCorrect === false,
+                'is-current': index === this.activeIndex,
+            };
+        },
+
+        railStateLabel(vocabulary: RandomlyChosenMeaningResponse, index: number): string {
+            if (vocabulary.isCorrect === true) {
+                return 'answered correctly';
+            }
+
+            if (vocabulary.isCorrect === false) {
+                return this.isRevealed(index) ? 'answered incorrectly, answer shown' : 'answered incorrectly';
+            }
+
+            return index === this.activeIndex ? 'current word, not answered yet' : 'not answered yet';
+        },
+
+        goToSlide(index: number): void {
+            this.swiper?.slideTo(index);
+        },
+
+        goToAddVocabulary(): void {
+            this.$router.push({ name: Route.AddVocabulary });
         },
 
         playSound(type: 'correct' | 'wrong'): void {
@@ -450,7 +511,7 @@ export default defineComponent({
         },
 
         storeInCache(vocabularies: RandomlyChosenMeaningResponse[]): void {
-            if (!isEmpty(vocabularies)) {
+            if (vocabularies.length) {
                 const today = format(new Date(), 'yyyy-MM-dd');
                 NativeStorage.setGuessingGameVocabularies({
                     createdAt: today,
@@ -462,93 +523,470 @@ export default defineComponent({
         clean(): void {
             this.isLoading = true;
             this.vocabularies = [];
-            this.givenAnswer = '';
-            this.resultMessage = '';
+            this.givenAnswers = [];
+            this.revealed = [];
             this.correctAnswerCount = 0;
+            this.activeIndex = 0;
+            this.scorePulseKey = 0;
             this.hasAnswerFeedback = false;
             this.answerFeedbackKey = 0;
             this.isCompletionModalOpened = false;
+            this.isInfoModalOpened = false;
         },
     },
 });
 </script>
 
 <style scoped>
-.swiper {
-    width: calc(100% - var(--ion-margin) / 2);
+ion-content#guessing-game {
+    --padding-top: var(--space-md);
+    --padding-bottom: var(--space-md);
+}
+
+.game-shell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    width: 100%;
+    /* Comfortable reading measure, matching the app's centred content column. */
+    max-width: 640px;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+/* ---------------------------------------------------------------- progress */
+
+.game-progress {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    flex: 0 0 auto;
+}
+
+.game-progress__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+}
+
+.game-progress__label {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--ion-text-color-step-300);
+}
+
+.game-progress__label strong {
+    font-weight: var(--font-weight-bold);
+    color: var(--ion-color-primary);
+}
+
+.game-score {
+    --color: var(--ion-color-primary);
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+.game-score__icon,
+.game-score__value {
+    margin-inline-end: var(--space-2xs);
+}
+
+.game-score__value {
+    display: inline-block;
+    font-weight: var(--font-weight-bold);
+    /* The keyed span replays this so a successful guess registers. */
+    animation: score-pop var(--duration-slow) var(--ease-emphasized);
+}
+
+@keyframes score-pop {
+    0% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.game-progress__track {
+    /* Both bars on this screen (progress and rail) share one height. */
+    height: 8px;
+    border-radius: var(--radius-pill);
+    /* Same pending colour as an unanswered rail segment. */
+    background: var(--ion-color-lightest);
+    overflow: hidden;
+}
+
+.game-progress__fill {
     height: 100%;
+    border-radius: inherit;
+    background: var(--ion-color-primary);
+    transition: width var(--duration-slow) var(--ease-emphasized);
+}
+
+.game-hint {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-size: var(--text-sm);
+    color: var(--ion-text-color-step-300);
+}
+
+.game-hint__link {
+    /* Keeps the inline action flush with the sentence it belongs to. */
+    --padding-start: 0;
+    --padding-end: 0;
+    margin: 0;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ------------------------------------------------------------------- stage */
+
+.game-stage {
+    display: flex;
+    flex-direction: column;
+    /* Centres the card and the rail together, so a tall screen gets balanced
+       margins instead of one giant empty card. */
+    justify-content: center;
+    gap: var(--space-sm);
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.game-viewport {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    /* Keeps the card a focused size on tall screens instead of one giant box. */
+    min-height: 320px;
+    max-height: 560px;
+}
+
+.swiper {
+    flex: 1 1 auto;
     border-radius: var(--radius-lg);
 }
 
-.game-column {
-    position: relative;
+.swiper-slide {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    box-sizing: border-box;
+    padding: var(--space-lg) var(--space-md);
+    background: var(--ion-card-background);
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
 }
 
+.game-card__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-xs);
+    /* The label and the meaning travel together, centred in the card, so a long
+       definition and a one-liner both look deliberate. */
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.game-card__eyebrow {
+    margin: 0;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ion-color-primary);
+}
+
+.game-card__prompt {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-snug);
+}
+
+.game-answer {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-xs);
+    flex: 0 0 auto;
+}
+
+/* Uses the app-wide `ion-textarea` styling (border, background and focus ring
+   from `src/styles/ionic.css`) so the answer field matches the vocabulary
+   screens instead of re-inventing them here.
+   Ionic renders its md "highlight" bar on a bare `ion-textarea` but skips it
+   for fields inside an `ion-item` (which is why the vocabulary fields never
+   show one). The app already draws a focus ring, so the bar is redundant. */
+.game-answer__field {
+    flex: 1 1 auto;
+    min-width: 0;
+    --highlight-height: 0;
+}
+
+.game-answer__check {
+    margin: 0;
+}
+
+/* Locks in a word that was already answered correctly. */
+.game-locked {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    width: 100%;
+    margin: 0;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);
+    background: var(--ion-color-lightest);
+    color: var(--ion-color-lightest-contrast);
+    font-weight: var(--font-weight-semibold);
+    text-transform: capitalize;
+}
+
+.game-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    /* Reserved so feedback never shifts the card. */
+    min-height: 1.5rem;
+    flex: 0 0 auto;
+}
+
+.game-feedback {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.game-feedback.is-correct {
+    color: var(--ion-color-primary);
+}
+
+.game-feedback.is-revealed {
+    color: var(--ion-text-color);
+}
+
+.game-feedback.is-revealed strong {
+    color: var(--ion-color-primary);
+    text-transform: capitalize;
+}
+
+.game-feedback.is-incorrect {
+    color: var(--ion-color-warning);
+}
+
+.game-feedback.is-neutral {
+    color: var(--ion-text-color-step-300);
+}
+
+.game-reveal {
+    flex: 0 0 auto;
+    /* Flush with the card edge and the sentence above it. */
+    --padding-start: 0;
+    --padding-end: 0;
+    margin: 0;
+}
+
+/* Keeps its space once the answer is revealed, so the feedback never shifts. */
+.game-reveal--hidden {
+    visibility: hidden;
+}
+
+/* The burst is decorative and must never block the input underneath. It sits in
+   the free space above the prompt so it never covers the meaning. */
 .answer-feedback {
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    /* Swiper's container is z-index: 1, so the burst has to stack above it. */
+    padding-top: var(--space-md);
     z-index: 2;
     pointer-events: none;
 }
 
-.answer-feedback__animation,
-.completion-animation {
-    width: min(160px, 45%);
+.answer-feedback__animation {
+    width: clamp(6rem, 38%, 10rem);
 }
 
-.completion-content {
+/* -------------------------------------------------------------------- rail */
+
+.game-rail {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    flex: 0 0 auto;
+}
+
+.game-rail__step {
+    position: relative;
+    flex: 1 1 0;
+    /* Same bar height as the progress track above. */
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--ion-color-lightest);
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-standard);
+}
+
+/* A 32px-tall hit area around an 8px bar, which clears the WCAG 2.2 target
+   size minimum (24x24) without changing the visual weight. */
+.game-rail__step::after {
+    content: '';
+    position: absolute;
+    inset: -12px 0;
+}
+
+.game-rail__step.is-current {
+    transform: scaleY(1.5);
+}
+
+.game-rail__step.is-current:not(.is-correct):not(.is-incorrect) {
+    background: var(--ion-color-primary-tint);
+}
+
+.game-rail__step.is-correct {
+    background: var(--ion-color-primary);
+}
+
+.game-rail__step.is-incorrect {
+    background: var(--ion-color-warning);
+}
+
+/* ------------------------------------------------------- loading / empty */
+
+.game-loading {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: var(--space-xs);
+    flex: 1 1 auto;
+}
+
+.game-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: var(--space-xl) var(--space-md);
     text-align: center;
 }
 
-.swiper-slide {
-    background: var(--ion-card-background);
-    border: 1px solid var(--app-border-color);
-    box-shadow: var(--shadow-sm);
-    border-radius: var(--radius-lg);
+.game-empty__art {
+    width: clamp(9rem, 62%, 14rem);
 }
 
-.submit-answer-container {
-    border: 1.5px solid var(--text-area-border-color);
-    border-radius: var(--radius-md);
-    background: var(--app-surface-raised);
-    transition: border-color var(--duration-fast) var(--ease-standard);
+.game-empty__title {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
 }
 
-.submit-answer-container:focus-within {
-    border-color: var(--ion-color-primary);
-    box-shadow: 0 0 0 3px rgba(var(--ion-color-primary-rgb), 0.18);
+.game-empty__text {
+    max-width: 40ch;
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--ion-text-color-step-300);
 }
 
-@keyframes bounce {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-        transform: translateY(0);
+/* ------------------------------------------------------------------ modals */
+
+.info-sheet,
+.completion-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-md) var(--space-xl);
+}
+
+.info-sheet__title,
+.completion-title {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.info-sheet__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.info-sheet__list li {
+    position: relative;
+    padding-left: var(--space-lg);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--ion-text-color-step-300);
+}
+
+.info-sheet__list li::before {
+    content: '';
+    position: absolute;
+    top: 0.45em;
+    left: 0;
+    width: var(--space-xs);
+    height: var(--space-xs);
+    border-radius: var(--radius-pill);
+    background: var(--ion-color-primary);
+}
+
+.completion-content {
+    align-items: center;
+    text-align: center;
+}
+
+.completion-animation {
+    width: clamp(8rem, 55%, 12rem);
+}
+
+.completion-text {
+    max-width: 40ch;
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--ion-text-color-step-300);
+}
+
+.completion-stat {
+    --color: var(--ion-color-primary);
+    margin: 0;
+}
+
+.completion-stat__value {
+    margin-inline-end: var(--space-2xs);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .game-progress__fill,
+    .game-rail__step {
+        transition: none;
     }
-    40% {
-        transform: translateY(-30px);
-    }
-    60% {
-        transform: translateY(-15px);
-    }
-}
 
-.animate-count {
-    display: inline-block;
-    animation: bounce 1s ease-out;
-}
-
-.icon-font {
-    font-size: var(--icon-md);
+    .game-score__value {
+        animation: none;
+    }
 }
 </style>

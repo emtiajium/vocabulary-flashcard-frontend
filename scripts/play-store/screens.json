@@ -60,13 +60,9 @@
             "id": "05-daily-game",
             "route": "/guessing-game",
             "headline": "Make Practice a Daily Game",
-            "waitFor": ".swiper-slide",
+            "waitFor": ".game-rail",
             "allowAnimations": true,
-            "actions": [
-                { "click": "[aria-label=\"Show the correct word\"]" },
-                { "click": "ion-fab ion-fab-button" },
-                { "waitFor": "ion-modal" }
-            ]
+            "actions": [{ "click": ".game-hint__link" }, { "waitFor": ".info-sheet" }]
         },
         {
             "id": "06-learn-together",
