@@ -1,18 +1,29 @@
 # Lottie animations
 
-Vector animations consumed by [`LottieAnimation.vue`](../LottieAnimation.vue) on the
-kick-off/onboarding slides (`src/views/kick-off/Intro.vue`).
+Vector animations consumed by [`LottieAnimation.vue`](../LottieAnimation.vue).
 
 The files are plain [bodymovin/Lottie](https://lottiefiles.com/what-is-lottie) JSON documents,
 bundled by webpack so they work offline (the app ships as a Capacitor/Android app).
 
+They come in two families:
+
+| Family       | Used by                                | Duration           | Behaviour                                  |
+| ------------ | -------------------------------------- | ------------------ | ------------------------------------------ |
+| **Looping**  | `Intro.vue` slides, `game-complete`    | `0 - 120` frames   | Plays forever, seamless at the loop point. |
+| **One-shot** | `answer-correct`, `answer-incorrect`   | `0 - 36` frames    | Plays once, then stays invisible.          |
+
 ## Canvas conventions
 
-| Property     | Value                     | Notes                                              |
-| ------------ | ------------------------- | -------------------------------------------------- |
-| Frame rate   | `30 fps`                  |                                                    |
-| Composition  | `200 x 200`, `0 - 120`    | `4s`; looping assets are seamless at this length.   |
-| Shape layers | `ty: 4`, SVG              | Rendered with `lottie_light` (SVG renderer only).   |
+| Property     | Value                              | Notes                                                     |
+| ------------ | ---------------------------------- | --------------------------------------------------------- |
+| Frame rate   | `30 fps`                           |                                                            |
+| Looping      | `200 x 200`, `0 - 120`             | `4s`.                                                      |
+| One-shot     | `120 x 120`, `0 - 36`              | `1.2s`. Kept small because it is used as an icon-sized burst. |
+| Shape layers | `ty: 4`, SVG                       | Rendered with `lottie_light` (SVG renderer only).          |
+
+One-shot animations are mounted once and then left in the DOM, so they must be
+**invisible on the first _and_ the last frame**: the surface never shows a frozen
+symbol, and reduced motion (which renders the last frame) stays silent.
 
 ## Geometry
 
@@ -36,6 +47,10 @@ asset works in both the light and dark themes:
 Use the _Contrast_ placeholder only for content drawn on top of a _Primary_ shape (for
 example the `+` glyph of `join-us`), because the contrast token is light in the light
 theme and dark in the dark theme.
+
+The consuming component may re-point the variables (the guessing game maps them to
+`--ion-color-warning` for the incorrect-answer burst), so `primary` and `accent` should
+always read as "main" and "secondary" rather than as literal brand tokens.
 
 ## Motion contract
 

@@ -3,6 +3,7 @@
  */
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
 import LottieAnimation from '@/media/LottieAnimation.vue';
+import funGame from '@/media/lottie/fun-game.json';
 import retention from '@/media/lottie/retention.json';
 
 jest.mock('lottie-web/build/player/lottie_light', () => {
@@ -75,11 +76,17 @@ const emitAnimationEvent = (name: string): void => {
     registration?.[1]();
 };
 
-const mountAnimation = (props: Record<string, unknown> = {}, slots: Record<string, string> = {}): VueWrapper =>
-    mount(LottieAnimation, {
+const mountedWrappers: VueWrapper[] = [];
+
+const mountAnimation = (props: Record<string, unknown> = {}, slots: Record<string, string> = {}): VueWrapper => {
+    const wrapper = mount(LottieAnimation, {
         props: { animationData: retention, ...props },
         slots,
     });
+    mountedWrappers.push(wrapper);
+
+    return wrapper;
+};
 
 const collectColors = (node: unknown, colors: number[][] = []): number[][] => {
     if (Array.isArray(node)) {
@@ -117,6 +124,16 @@ describe('LottieAnimation', () => {
     });
 
     afterEach(() => {
+        // Unmounting also detaches the document-level listeners, which would
+        // otherwise keep firing into the next test through the shared lottie mock.
+        while (mountedWrappers.length) {
+            try {
+                mountedWrappers.pop()?.unmount();
+            } catch {
+                // the test already unmounted this wrapper
+            }
+        }
+
         jest.restoreAllMocks();
     });
 
@@ -182,6 +199,48 @@ describe('LottieAnimation', () => {
 
             expect(animationItem().goToAndStop).toHaveBeenCalledWith(119, true);
             expect(animationItem().play).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('WHEN the animation document is swapped', () => {
+        it('SHOULD replace the running instance instead of keeping the previous artwork', async () => {
+            const wrapper = mountAnimation();
+            await flushPromises();
+
+            expect(loadAnimation()).toHaveBeenCalledTimes(1);
+
+            await wrapper.setProps({ animationData: funGame });
+            await flushPromises();
+
+            expect(animationItem().destroy).toHaveBeenCalledTimes(1);
+            expect(loadAnimation()).toHaveBeenCalledTimes(2);
+        });
+    });
+
+    describe('WHEN a one-shot animation has already played', () => {
+        it('SHOULD stay on its last frame instead of replaying', async () => {
+            mountAnimation({ loop: false });
+            await flushPromises();
+
+            expect(animationItem().play).toHaveBeenCalledTimes(1);
+
+            emitAnimationEvent('complete');
+            document.dispatchEvent(new Event('visibilitychange'));
+            await flushPromises();
+
+            expect(animationItem().play).toHaveBeenCalledTimes(1);
+            expect(animationItem().pause).toHaveBeenCalled();
+        });
+
+        it('SHOULD still play a looping animation again', async () => {
+            mountAnimation();
+            await flushPromises();
+
+            emitAnimationEvent('complete');
+            document.dispatchEvent(new Event('visibilitychange'));
+            await flushPromises();
+
+            expect(animationItem().play).toHaveBeenCalledTimes(2);
         });
     });
 

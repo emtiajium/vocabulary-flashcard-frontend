@@ -1,4 +1,7 @@
+import answerCorrect from '@/media/lottie/answer-correct.json';
+import answerIncorrect from '@/media/lottie/answer-incorrect.json';
 import funGame from '@/media/lottie/fun-game.json';
+import gameComplete from '@/media/lottie/game-complete.json';
 import joinUs from '@/media/lottie/join-us.json';
 import retention from '@/media/lottie/retention.json';
 import spacedRepetition from '@/media/lottie/spaced-repetition.json';
@@ -6,8 +9,8 @@ import spacedRepetition from '@/media/lottie/spaced-repetition.json';
 /**
  * The animations are the contract shared with `LottieAnimation.vue`. These tests
  * guard the things that break silently at runtime: the bodymovin structure, the
- * placeholder palette the component swaps for theme colors, the seamless loop,
- * and geometry that would render outside the canvas.
+ * placeholder palette the component swaps for theme colors, the loop/one-shot
+ * conventions, and geometry that would render outside the canvas.
  */
 
 interface Keyframe {
@@ -40,6 +43,11 @@ interface LottieDocument {
     layers: ShapeLayer[];
 }
 
+interface Asset {
+    document: LottieDocument;
+    loop: boolean;
+}
+
 /** Kept in sync with PLACEHOLDER_PALETTE in LottieAnimation.vue. */
 const PLACEHOLDER_PALETTE: Record<string, number[]> = {
     primary: [24, 121, 78],
@@ -53,11 +61,14 @@ const BLEED_MARGIN = 12;
 
 const asDocument = (value: unknown): LottieDocument => value as unknown as LottieDocument;
 
-const documents: Record<string, LottieDocument> = {
-    retention: asDocument(retention),
-    'spaced-repetition': asDocument(spacedRepetition),
-    'join-us': asDocument(joinUs),
-    'fun-game': asDocument(funGame),
+const assets: Record<string, Asset> = {
+    retention: { document: asDocument(retention), loop: true },
+    'spaced-repetition': { document: asDocument(spacedRepetition), loop: true },
+    'join-us': { document: asDocument(joinUs), loop: true },
+    'fun-game': { document: asDocument(funGame), loop: true },
+    'game-complete': { document: asDocument(gameComplete), loop: true },
+    'answer-correct': { document: asDocument(answerCorrect), loop: false },
+    'answer-incorrect': { document: asDocument(answerIncorrect), loop: false },
 };
 
 const asArray = (value: number | number[]): number[] => (Array.isArray(value) ? value : [value]);
@@ -188,14 +199,16 @@ const drawnPoints = (layer: ShapeLayer, document: LottieDocument): number[][] =>
 };
 
 describe('Lottie animation assets', () => {
-    describe.each(Object.entries(documents))('%s', (_name, document) => {
+    describe.each(Object.entries(assets))('%s', (_name, asset) => {
+        const { document, loop } = asset;
+
         it('SHOULD be a valid shape-layer composition', () => {
             expect(document.v).toEqual(expect.any(String));
             expect(document.fr).toBe(30);
             expect(document.ip).toBe(0);
-            expect(document.op).toBe(120);
-            expect(document.w).toBe(200);
-            expect(document.h).toBe(200);
+            expect(document.op).toBe(loop ? 120 : 45);
+            expect(document.w).toBe(loop ? 200 : 120);
+            expect(document.h).toBe(loop ? 200 : 120);
             expect(Array.isArray(document.layers)).toBe(true);
             expect(document.layers.length).toBeGreaterThan(0);
 
@@ -234,25 +247,36 @@ describe('Lottie animation assets', () => {
             });
         });
 
-        it('SHOULD loop seamlessly', () => {
-            document.layers.forEach((layer) => {
-                const startOpacity = valueAt(layer.ks.o, document.ip)[0];
-                const endOpacity = valueAt(layer.ks.o, document.op)[0];
+        if (loop) {
+            it('SHOULD loop seamlessly', () => {
+                document.layers.forEach((layer) => {
+                    const startOpacity = valueAt(layer.ks.o, document.ip)[0];
+                    const endOpacity = valueAt(layer.ks.o, document.op)[0];
 
-                // Invisible at the loop seam: the restart cannot be perceived.
-                if (startOpacity === 0 && endOpacity === 0) {
-                    return;
-                }
+                    // Invisible at the loop seam: the restart cannot be perceived.
+                    if (startOpacity === 0 && endOpacity === 0) {
+                        return;
+                    }
 
-                (['o', 'p', 'a', 's'] as const).forEach((property) => {
-                    expect(valueAt(layer.ks[property], document.ip)).toEqual(valueAt(layer.ks[property], document.op));
+                    (['o', 'p', 'a', 's'] as const).forEach((property) => {
+                        expect(valueAt(layer.ks[property], document.ip)).toEqual(
+                            valueAt(layer.ks[property], document.op),
+                        );
+                    });
+
+                    const startRotation = valueAt(layer.ks.r, document.ip)[0];
+                    const endRotation = valueAt(layer.ks.r, document.op)[0];
+
+                    expect(Math.abs(endRotation - startRotation) % 360).toBe(0);
                 });
-
-                const startRotation = valueAt(layer.ks.r, document.ip)[0];
-                const endRotation = valueAt(layer.ks.r, document.op)[0];
-
-                expect(Math.abs(endRotation - startRotation) % 360).toBe(0);
             });
-        });
+        } else {
+            it('SHOULD be invisible on the first and the last frame', () => {
+                document.layers.forEach((layer) => {
+                    expect(valueAt(layer.ks.o, document.ip)[0]).toBe(0);
+                    expect(valueAt(layer.ks.o, document.op)[0]).toBe(0);
+                });
+            });
+        }
     });
 });

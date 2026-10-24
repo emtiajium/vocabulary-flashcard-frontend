@@ -8,7 +8,7 @@
         />
         <ion-content :fullscreen="true" id="guessing-game">
             <ion-row class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="10" sizeMd="8" sizeLg="6" sizeXl="6">
+                <ion-col sizeXs="12" sizeSm="10" sizeMd="8" sizeLg="6" sizeXl="6" class="game-column">
                     <spinner v-if="isLoading" />
 
                     <div v-if="isLoading" class="ion-padding-start ion-padding-end">
@@ -138,6 +138,22 @@
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
+
+                    <!-- Purely decorative: the outcome is already announced by the icon, the
+                         message and the sound. It is re-mounted through `answerFeedbackKey`
+                         so every submission replays it from the first frame. -->
+                    <div v-if="hasAnswerFeedback" class="answer-feedback">
+                        <lottie-animation
+                            :key="answerFeedbackKey"
+                            class="answer-feedback__animation"
+                            :animation-data="answerFeedbackAnimation"
+                            :primary-color-variable="isAnswerCorrect ? '--ion-color-primary' : '--ion-color-warning'"
+                            :accent-color-variable="
+                                isAnswerCorrect ? '--ion-color-primary-tint' : '--ion-color-warning-tint'
+                            "
+                            :loop="false"
+                        />
+                    </div>
                 </ion-col>
             </ion-row>
 
@@ -155,6 +171,29 @@
                         all the words correctly, you'll unlock another game to play even on the same day. Challenge
                         yourself daily and see how many words you can get right!
                     </ion-card-subtitle>
+                </div>
+            </ion-modal>
+
+            <ion-modal
+                :is-open="isCompletionModalOpened"
+                :initial-breakpoint="0.5"
+                :breakpoints="[0, 0.5, 0.75, 1]"
+                @willDismiss="isCompletionModalOpened = false"
+            >
+                <div class="completion-content ion-padding">
+                    <lottie-animation class="completion-animation" :animation-data="gameCompleteAnimation">
+                        <template #fallback>
+                            <fun-icon
+                                :fill-color-variable="'--ion-color-primary'"
+                                :stroke-color-variable="'--ion-color-primary'"
+                            />
+                        </template>
+                    </lottie-animation>
+                    <ion-card-title class="ion-text-center">All words guessed!</ion-card-title>
+                    <ion-card-subtitle class="ion-text-center">
+                        Well done, you nailed every word. A fresh game will be ready for you next time.
+                    </ion-card-subtitle>
+                    <ion-button color="primary" @click="isCompletionModalOpened = false">Close</ion-button>
                 </div>
             </ion-modal>
 
@@ -185,6 +224,11 @@ import {
 } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import Spinner from '@/views/shared/Spinner.vue';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import FunIcon from '@/media/FunIcon.vue';
+import answerCorrect from '@/media/lottie/answer-correct.json';
+import answerIncorrect from '@/media/lottie/answer-incorrect.json';
+import gameComplete from '@/media/lottie/game-complete.json';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';
@@ -216,6 +260,8 @@ export default defineComponent({
         IonCol,
         IonTextarea,
         Spinner,
+        LottieAnimation,
+        FunIcon,
         IonButton,
         IonCardSubtitle,
         FontAwesomeIcon,
@@ -231,6 +277,9 @@ export default defineComponent({
             submitIcon: faCircleArrowUp,
             viewIcon: faEye,
             infoIcon: faInfoCircle,
+            correctAnimation: answerCorrect,
+            incorrectAnimation: answerIncorrect,
+            gameCompleteAnimation: gameComplete,
             isLoading: true,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             givenAnswer: '',
@@ -239,6 +288,12 @@ export default defineComponent({
             correctAnswerCount: 0,
             swiper: undefined as unknown as Swiper,
             isInfoModalOpened: false,
+            isCompletionModalOpened: false,
+            hasAnswerFeedback: false,
+            answerFeedbackKey: 0,
+            isAnswerCorrect: true,
+            // Only read while `hasAnswerFeedback` is true, i.e. after the first answer.
+            answerFeedbackAnimation: answerCorrect as Record<string, unknown>,
         };
     },
     async ionViewDidEnter() {
@@ -326,9 +381,21 @@ export default defineComponent({
             }
             if (this.correctAnswerCount === this.vocabularies.length) {
                 NativeStorage.removeGuessingGameVocabularies().catch();
+                // The last correct guess is celebrated by the completion modal, so
+                // the per-answer burst is retired instead of being left mounted.
+                this.hasAnswerFeedback = false;
+                this.isCompletionModalOpened = true;
             } else {
                 this.storeInCache(cloneDeep(this.vocabularies));
+                this.playAnswerFeedback(isCorrect);
             }
+        },
+
+        playAnswerFeedback(isCorrect: boolean): void {
+            this.isAnswerCorrect = isCorrect;
+            this.answerFeedbackAnimation = isCorrect ? this.correctAnimation : this.incorrectAnimation;
+            this.hasAnswerFeedback = true;
+            this.answerFeedbackKey += 1;
         },
 
         calculateCorrectAnswerCount(): void {
@@ -398,6 +465,9 @@ export default defineComponent({
             this.givenAnswer = '';
             this.resultMessage = '';
             this.correctAnswerCount = 0;
+            this.hasAnswerFeedback = false;
+            this.answerFeedbackKey = 0;
+            this.isCompletionModalOpened = false;
         },
     },
 });
@@ -408,6 +478,34 @@ export default defineComponent({
     width: calc(100% - var(--ion-margin) / 2);
     height: 100%;
     border-radius: var(--radius-lg);
+}
+
+.game-column {
+    position: relative;
+}
+
+.answer-feedback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Swiper's container is z-index: 1, so the burst has to stack above it. */
+    z-index: 2;
+    pointer-events: none;
+}
+
+.answer-feedback__animation,
+.completion-animation {
+    width: min(160px, 45%);
+}
+
+.completion-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    text-align: center;
 }
 
 .swiper-slide {

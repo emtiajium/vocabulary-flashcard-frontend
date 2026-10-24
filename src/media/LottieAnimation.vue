@@ -194,6 +194,7 @@ export default defineComponent({
     data() {
         return {
             animation: null as AnimationItem | null,
+            hasCompleted: false,
             hasFailed: false,
             isVisible: true,
             isUnmounted: false,
@@ -221,6 +222,20 @@ export default defineComponent({
         },
         accessibilityAttributes(): Record<string, string> {
             return this.decorative ? { 'aria-hidden': 'true' } : { role: 'img', 'aria-label': this.ariaLabel };
+        },
+    },
+    watch: {
+        /**
+         * Swapping the document (for example between a "correct" and an
+         * "incorrect" burst) has to replace the running instance, otherwise the
+         * surface keeps rendering the previous animation.
+         */
+        animationData(): void {
+            this.hasFailed = false;
+            this.destroyAnimation();
+            this.createAnimation().catch(() => {
+                this.hasFailed = true;
+            });
         },
     },
     mounted() {
@@ -281,12 +296,17 @@ export default defineComponent({
                 this.hasFailed = true;
             });
 
+            item.addEventListener('complete', () => {
+                this.hasCompleted = true;
+            });
+
             item.addEventListener('DOMLoaded', () => {
                 if (this.isReducedMotion) {
                     item.goToAndStop(Math.max(item.totalFrames - 1, 0), true);
                 }
             });
 
+            this.hasCompleted = false;
             this.animation = item;
             this.syncPlayback();
         },
@@ -307,8 +327,9 @@ export default defineComponent({
             }
 
             const shouldPlay = this.autoplay && !this.isReducedMotion && this.isVisible && !document.hidden;
+            const isFinished = this.hasCompleted && !this.loop;
 
-            if (shouldPlay) {
+            if (shouldPlay && !isFinished) {
                 this.animation.play();
             } else {
                 this.animation.pause();
