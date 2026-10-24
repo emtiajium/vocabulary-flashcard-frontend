@@ -18,9 +18,18 @@
                     <ion-card class="margin-top-unset">
                         <ion-card-content>
                             <view class="display-flex ion-justify-content-center">
-                                <ion-item lines="none">
-                                    <span class="material-icons firecracker-primary-color-icon-large"> campaign </span>
-                                </ion-item>
+                                <lottie-animation
+                                    class="empty-vocabularies-animation"
+                                    :animation-data="emptyVocabulariesAnimation"
+                                >
+                                    <template #fallback>
+                                        <ion-item lines="none">
+                                            <span class="material-icons firecracker-primary-color-icon-large">
+                                                campaign
+                                            </span>
+                                        </ion-item>
+                                    </template>
+                                </lottie-animation>
                             </view>
                             <ion-card-subtitle class="ion-text-center ion-padding">
                                 Looks like you do not have any vocabulary in your cohort yet! We can generate a few if
@@ -185,6 +194,8 @@ import Spinner from '@/views/shared/Spinner.vue';
 import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/vocab-read/Settings.vue';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import emptyVocabularies from '@/media/lottie/empty-vocabularies.json';
 import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 import { FirecrackerError } from '@/domains/FirecrackerError';
 import { cloneDeep, isEmpty, uniqBy } from 'lodash';
@@ -200,6 +211,7 @@ export default defineComponent({
         NetworkError,
         MinifiedVocabulary,
         FirecrackerHeader,
+        LottieAnimation,
         IonContent,
         IonPage,
         IonFab,
@@ -222,6 +234,7 @@ export default defineComponent({
             faPlus,
             faGlassCheers,
             faThumbsUp,
+            emptyVocabulariesAnimation: emptyVocabularies as Record<string, unknown>,
             vocabularies: [] as Vocabulary[],
             pageNumber: 1,
             pageSize: 10,
@@ -553,4 +566,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.empty-vocabularies-animation {
+    width: min(160px, 50%);
+}
+</style>
