@@ -1,10 +1,13 @@
 import answerCorrect from '@/media/lottie/answer-correct.json';
 import answerIncorrect from '@/media/lottie/answer-incorrect.json';
+import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
 import funGame from '@/media/lottie/fun-game.json';
 import gameComplete from '@/media/lottie/game-complete.json';
 import joinUs from '@/media/lottie/join-us.json';
+import mastered from '@/media/lottie/mastered.json';
 import retention from '@/media/lottie/retention.json';
 import spacedRepetition from '@/media/lottie/spaced-repetition.json';
+import waitingForReview from '@/media/lottie/waiting-for-review.json';
 
 /**
  * The animations are the contract shared with `LottieAnimation.vue`. These tests
@@ -67,8 +70,11 @@ const assets: Record<string, Asset> = {
     'join-us': { document: asDocument(joinUs), loop: true },
     'fun-game': { document: asDocument(funGame), loop: true },
     'game-complete': { document: asDocument(gameComplete), loop: true },
+    'empty-flashcards': { document: asDocument(emptyFlashcards), loop: true },
+    'waiting-for-review': { document: asDocument(waitingForReview), loop: true },
     'answer-correct': { document: asDocument(answerCorrect), loop: false },
     'answer-incorrect': { document: asDocument(answerIncorrect), loop: false },
+    mastered: { document: asDocument(mastered), loop: false },
 };
 
 const asArray = (value: number | number[]): number[] => (Array.isArray(value) ? value : [value]);

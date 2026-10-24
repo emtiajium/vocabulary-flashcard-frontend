@@ -7,19 +7,23 @@ bundled by webpack so they work offline (the app ships as a Capacitor/Android ap
 
 They come in two families:
 
-| Family       | Used by                                | Duration           | Behaviour                                  |
-| ------------ | -------------------------------------- | ------------------ | ------------------------------------------ |
-| **Looping**  | `Intro.vue` slides, `game-complete`    | `0 - 120` frames   | Plays forever, seamless at the loop point. |
-| **One-shot** | `answer-correct`, `answer-incorrect`   | `0 - 36` frames    | Plays once, then stays invisible.          |
+| Family       | Behaviour                                                       | Used by                                                                        |
+| ------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| **Looping**  | Plays forever; seamless at the loop point.                       | `Intro.vue` slides, `game-complete`, `empty-flashcards`, `waiting-for-review`    |
+| **One-shot** | Plays once on a user action, then stays invisible.               | `answer-correct`, `answer-incorrect`, `mastered`                                |
 
 ## Canvas conventions
 
-| Property     | Value                              | Notes                                                     |
-| ------------ | ---------------------------------- | --------------------------------------------------------- |
-| Frame rate   | `30 fps`                           |                                                            |
-| Looping      | `200 x 200`, `0 - 120`             | `4s`.                                                      |
-| One-shot     | `120 x 120`, `0 - 36`              | `1.2s`. Kept small because it is used as an icon-sized burst. |
-| Shape layers | `ty: 4`, SVG                       | Rendered with `lottie_light` (SVG renderer only).          |
+| Property     | Value                     | Notes                                                          |
+| ------------ | ------------------------- | -------------------------------------------------------------- |
+| Frame rate   | `30 fps`                  |                                                                |
+| Looping      | `200 x 200`, `0 - 120`    | `4s`.                                                          |
+| One-shot     | `120 x 120`, `0 - 45`     | `1.5s`. Kept small because it is used as an icon-sized burst.    |
+| Shape layers | `ty: 4`, SVG              | Rendered with `lottie_light` (SVG renderer only).                |
+
+Remember that `ks.p` defaults to `[100, 100]` in the authoring helpers, which is the
+centre of a `200 x 200` canvas. A `120 x 120` one-shot has to centre its layers on
+`[60, 60]` explicitly, or the artwork lands off-canvas.
 
 One-shot animations are mounted once and then left in the DOM, so they must be
 **invisible on the first _and_ the last frame**: the surface never shows a frozen
@@ -51,6 +55,10 @@ theme and dark in the dark theme.
 The consuming component may re-point the variables (the guessing game maps them to
 `--ion-color-warning` for the incorrect-answer burst), so `primary` and `accent` should
 always read as "main" and "secondary" rather than as literal brand tokens.
+
+Use the _Contrast_ placeholder whenever the mark sits on top of another animated shape
+(such as the tick on the `mastered` card): it follows the theme, so it stays legible in
+both.
 
 ## Motion contract
 

@@ -155,6 +155,7 @@ const prefersReducedMotion = (): boolean =>
 
 export default defineComponent({
     name: 'LottieAnimation',
+    emits: ['complete'],
     props: {
         /** A Lottie/bodymovin JSON document, imported from `src/media/lottie`. */
         animationData: {
@@ -294,15 +295,18 @@ export default defineComponent({
 
             item.addEventListener('data_failed', () => {
                 this.hasFailed = true;
+                this.reportCompletion();
             });
 
             item.addEventListener('complete', () => {
                 this.hasCompleted = true;
+                this.reportCompletion();
             });
 
             item.addEventListener('DOMLoaded', () => {
                 if (this.isReducedMotion) {
                     item.goToAndStop(Math.max(item.totalFrames - 1, 0), true);
+                    this.reportCompletion();
                 }
             });
 
@@ -314,6 +318,18 @@ export default defineComponent({
         destroyAnimation(): void {
             this.animation?.destroy();
             this.animation = null;
+        },
+
+        /**
+         * A consumer may gate UI on `complete` (the Leitner box page reveals its
+         * empty state only after the mastery celebration). A one-shot therefore
+         * also reports completion when it will not play at all — reduced motion or
+         * a load failure — instead of leaving that UI waiting forever.
+         */
+        reportCompletion(): void {
+            if (!this.loop) {
+                this.$emit('complete');
+            }
         },
 
         /**

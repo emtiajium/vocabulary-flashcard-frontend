@@ -244,6 +244,45 @@ describe('LottieAnimation', () => {
         });
     });
 
+    describe('WHEN a one-shot animation finishes', () => {
+        it('SHOULD report completion so the caller can sequence the next UI', async () => {
+            const wrapper = mountAnimation({ loop: false });
+            await flushPromises();
+
+            emitAnimationEvent('complete');
+
+            expect(wrapper.emitted('complete')).toHaveLength(1);
+        });
+
+        it('SHOULD not report completion for a looping animation', async () => {
+            const wrapper = mountAnimation();
+            await flushPromises();
+
+            emitAnimationEvent('complete');
+
+            expect(wrapper.emitted('complete')).toBeUndefined();
+        });
+
+        it('SHOULD report completion WHEN reduced motion skips playback', async () => {
+            setReducedMotion(true);
+            const wrapper = mountAnimation({ loop: false });
+            await flushPromises();
+
+            emitAnimationEvent('DOMLoaded');
+
+            expect(wrapper.emitted('complete')).toHaveLength(1);
+        });
+
+        it('SHOULD report completion WHEN the animation cannot be loaded', async () => {
+            const wrapper = mountAnimation({ loop: false });
+            await flushPromises();
+
+            emitAnimationEvent('data_failed');
+
+            expect(wrapper.emitted('complete')).toHaveLength(1);
+        });
+    });
+
     describe('WHEN the component is unmounted', () => {
         it('SHOULD destroy the lottie instance', async () => {
             const wrapper = mountAnimation();
