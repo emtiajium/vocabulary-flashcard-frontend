@@ -372,6 +372,7 @@ export default defineComponent({
                         `The vocabulary has been moved to ${
                             MappedLeitnerBoxWithDays[`BOX_${Number.parseInt(this.box, 10) + 1}`]
                         } box`,
+                        'success',
                     );
                     if (this.isMovingIntoMastery()) {
                         // Claimed before the item is kicked out, so the empty state
@@ -380,7 +381,7 @@ export default defineComponent({
                     }
                     await this.onKickingOutItem(vocabularyId);
                 } catch (error) {
-                    await Toast.present((error as FirecrackerError).message);
+                    await Toast.present((error as FirecrackerError).message, 'error');
                 }
             }
         },
@@ -411,10 +412,11 @@ export default defineComponent({
                         `The vocabulary has been moved back to ${
                             MappedLeitnerBoxWithDays[`BOX_${Number.parseInt(this.box, 10) - 1}`]
                         } box`,
+                        'info',
                     );
                     await this.onKickingOutItem(vocabularyId);
                 } catch (error) {
-                    await Toast.present((error as FirecrackerError).message);
+                    await Toast.present((error as FirecrackerError).message, 'error');
                 }
             }
         },

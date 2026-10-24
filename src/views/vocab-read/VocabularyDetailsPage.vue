@@ -60,7 +60,7 @@ export default defineComponent({
                 this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${this.id}`);
                 this.word = this.vocabulary.word;
             } catch {
-                await Promise.all([Toast.present(MessageDB.networkError), this.$router.back()]);
+                await Promise.all([Toast.present(MessageDB.networkError, 'error'), this.$router.back()]);
             } finally {
                 this.isLoading = false;
             }

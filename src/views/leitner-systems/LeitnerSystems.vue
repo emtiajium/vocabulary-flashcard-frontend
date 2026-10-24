@@ -143,7 +143,7 @@ export default defineComponent({
             ).catch();
 
             if (lastError.message) {
-                await Toast.present(lastError.message);
+                await Toast.present(lastError.message, 'error');
             }
         },
 

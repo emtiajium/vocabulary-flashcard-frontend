@@ -34,7 +34,7 @@ describe('Leitner system service', () => {
 
             expect(isCreated).toBe(true);
             expect(http.post).toHaveBeenCalledWith(`/v1/leitner-systems/start/${vocabularyId}`, undefined);
-            expect(toast.present).toHaveBeenCalledWith(expect.stringContaining('You just made a flashcard'));
+            expect(toast.present).toHaveBeenCalledWith(expect.stringContaining('You just made a flashcard'), 'success');
             expect(nativeStorage.setLeitnerBoxExistence).toHaveBeenCalledWith(vocabularyId);
         });
     });
@@ -46,7 +46,7 @@ describe('Leitner system service', () => {
             const isCreated = await LeitnerSystemService.insertIntoLeitnerBox(vocabularyId);
 
             expect(isCreated).toBe(false);
-            expect(toast.present).toHaveBeenCalledWith('Something went wrong');
+            expect(toast.present).toHaveBeenCalledWith('Something went wrong', 'error');
             expect(nativeStorage.setLeitnerBoxExistence).not.toHaveBeenCalled();
         });
 

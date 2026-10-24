@@ -193,6 +193,7 @@ export default defineComponent({
             this.isAuthenticated = false;
             await Toast.present(
                 `You have been signed out successfully. Thanks for using Firecracker Vocabulary Flashcards. We hope to see you again soon.`,
+                'success',
             );
             await this.$router.replace('/sign-in');
         },

@@ -357,7 +357,7 @@ export default defineComponent({
                 this.vocabularies = vocabularies;
                 this.storeInCache(vocabularies);
             } catch {
-                await Toast.present(MessageDB.genericError);
+                await Toast.present(MessageDB.genericError, 'error');
             }
         },
 

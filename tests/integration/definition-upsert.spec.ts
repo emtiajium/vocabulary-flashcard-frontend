@@ -244,7 +244,7 @@ describe('Definition upsert view (integration)', () => {
             await vm(wrapper).persist();
 
             expect(onComingBackToVocab).not.toHaveBeenCalled();
-            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Please add a meaning/));
+            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Please add a meaning/), 'error');
         });
 
         it('SHOULD show the message and SHOULD NOT hand anything back WHEN there is no example', async () => {
@@ -255,7 +255,7 @@ describe('Definition upsert view (integration)', () => {
             await vm(wrapper).persist();
 
             expect(onComingBackToVocab).not.toHaveBeenCalled();
-            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Add at least one example/));
+            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Add at least one example/), 'error');
         });
 
         it('SHOULD show the message WHEN an external link provided by a child view is invalid', async () => {
@@ -268,7 +268,7 @@ describe('Definition upsert view (integration)', () => {
             await vm(wrapper).persist();
 
             expect(onComingBackToVocab).not.toHaveBeenCalled();
-            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/doesn't look like a valid URL/));
+            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/doesn't look like a valid URL/), 'error');
         });
     });
 });

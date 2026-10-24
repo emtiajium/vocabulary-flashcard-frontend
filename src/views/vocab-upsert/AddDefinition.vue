@@ -173,7 +173,7 @@ export default defineComponent({
             try {
                 DefinitionValidator.validate(definition);
             } catch (error) {
-                await Toast.present((error as Error).message);
+                await Toast.present((error as Error).message, 'error');
                 return;
             }
             this.onComingBackToVocab(definition);

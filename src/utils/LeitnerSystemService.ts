@@ -14,12 +14,13 @@ export default class LeitnerSystemService {
             await HttpHandler.post<undefined, void>(`/v1/leitner-systems/start/${vocabularyId}`, undefined);
             await Toast.present(
                 `You just made a flashcard with this vocabulary. This word can be found in the ${MappedLeitnerBoxWithDays.BOX_1} box.`,
+                'success',
             );
             NativeStorage.setLeitnerBoxExistence(vocabularyId).finally();
 
             return true;
         } catch (error) {
-            await Toast.present((error as FirecrackerError).message);
+            await Toast.present((error as FirecrackerError).message, 'error');
 
             return false;
         }

@@ -188,7 +188,7 @@ export default defineComponent({
             await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"?`, async () => {
                 return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`)
                     .then(() => this.deleteVocabulary(vocabulary.id))
-                    .catch((error) => Toast.present(error.message));
+                    .catch((error) => Toast.present(error.message, 'error'));
             });
         },
         async insertIntoLeitnerBox(clickEvent: MouseEvent): Promise<void> {
