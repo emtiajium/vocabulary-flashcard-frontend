@@ -59,7 +59,11 @@
                     }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
+                    <lottie-animation class="empty-search-animation" :animation-data="emptySearchAnimation">
+                        <template #fallback>
+                            <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
+                        </template>
+                    </lottie-animation>
                 </view>
             </view>
 
@@ -195,6 +199,7 @@ import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/vocab-read/Settings.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
+import emptySearch from '@/media/lottie/empty-search.json';
 import emptyVocabularies from '@/media/lottie/empty-vocabularies.json';
 import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 import { FirecrackerError } from '@/domains/FirecrackerError';
@@ -235,6 +240,7 @@ export default defineComponent({
             faGlassCheers,
             faThumbsUp,
             emptyVocabulariesAnimation: emptyVocabularies as Record<string, unknown>,
+            emptySearchAnimation: emptySearch as Record<string, unknown>,
             vocabularies: [] as Vocabulary[],
             pageNumber: 1,
             pageSize: 10,
@@ -567,7 +573,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.empty-vocabularies-animation {
+.empty-vocabularies-animation,
+.empty-search-animation {
     width: min(160px, 50%);
 }
 </style>

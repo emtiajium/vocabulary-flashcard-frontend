@@ -9,7 +9,7 @@ They come in two families:
 
 | Family       | Behaviour                                                       | Used by                                                                                              |
 | ------------ | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **Looping**  | Plays forever; seamless at the loop point.                       | `Intro.vue` slides, `game-complete`, `empty-flashcards`, `waiting-for-review`, `cohort-waiting`, `empty-vocabularies` |
+| **Looping**  | Plays forever; seamless at the loop point.                       | `Intro.vue` slides, `game-complete`, `empty-flashcards`, `waiting-for-review`, `cohort-waiting`, `empty-vocabularies`, `empty-search` |
 | **One-shot** | Plays once on a user action, then stays invisible.               | `answer-correct`, `answer-incorrect`, `mastered`, `flashcard-created`                                 |
 
 ## Canvas conventions

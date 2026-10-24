@@ -90,8 +90,12 @@ interface VocabularyListVm {
     isNetworkError: boolean;
     fetchFlashcard: boolean;
     vocabularies: unknown[];
+    searchKeyword: string;
+    isDisabled: boolean;
     emptyVocabulariesAnimation: Record<string, unknown>;
+    emptySearchAnimation: Record<string, unknown>;
     shouldDisplayFetchButton(): boolean;
+    shouldDisplayNoSearchResultMessage(): boolean;
 }
 
 const vm = (wrapper: VueWrapper): VocabularyListVm => wrapper.vm as unknown as VocabularyListVm;
@@ -131,6 +135,50 @@ describe('Vocabulary list view (integration)', () => {
 
             expect(fallback.exists()).toBe(true);
             expect(fallback.text()).toContain('campaign');
+        });
+    });
+
+    describe('WHEN the search matched nothing', () => {
+        it('SHOULD animate the search instead of showing the icon alone', async () => {
+            const wrapper = mountView();
+            vm(wrapper).isDisabled = true;
+            vm(wrapper).searchKeyword = 'qwerty';
+            await wrapper.vm.$nextTick();
+
+            expect(vm(wrapper).shouldDisplayNoSearchResultMessage()).toBe(true);
+            expect(wrapper.find('.lottie-stub').exists()).toBe(true);
+            expect((vm(wrapper).emptySearchAnimation as { nm: string }).nm).toBe('empty-search');
+        });
+
+        it('SHOULD keep the search icon as the static fallback', async () => {
+            const wrapper = mountView();
+            vm(wrapper).isDisabled = true;
+            vm(wrapper).searchKeyword = 'qwerty';
+            await wrapper.vm.$nextTick();
+
+            const fallback = wrapper.find('.lottie-stub .material-icons');
+
+            expect(fallback.exists()).toBe(true);
+            expect(fallback.text()).toContain('manage_search');
+        });
+
+        it('SHOULD offer the keyword that found nothing', async () => {
+            const wrapper = mountView();
+            vm(wrapper).isDisabled = true;
+            vm(wrapper).searchKeyword = 'qwerty';
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.text()).toContain('No vocabulary was found for "qwerty"');
+        });
+
+        it('SHOULD not animate a search that is still too short to run', async () => {
+            const wrapper = mountView();
+            vm(wrapper).isDisabled = true;
+            vm(wrapper).searchKeyword = 'qw';
+            await wrapper.vm.$nextTick();
+
+            expect(vm(wrapper).shouldDisplayNoSearchResultMessage()).toBe(false);
+            expect(wrapper.find('.lottie-stub').exists()).toBe(false);
         });
     });
 

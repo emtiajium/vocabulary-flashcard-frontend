@@ -2,6 +2,7 @@ import answerCorrect from '@/media/lottie/answer-correct.json';
 import answerIncorrect from '@/media/lottie/answer-incorrect.json';
 import cohortWaiting from '@/media/lottie/cohort-waiting.json';
 import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
+import emptySearch from '@/media/lottie/empty-search.json';
 import emptyVocabularies from '@/media/lottie/empty-vocabularies.json';
 import flashcardCreated from '@/media/lottie/flashcard-created.json';
 import funGame from '@/media/lottie/fun-game.json';
@@ -77,6 +78,7 @@ const assets: Record<string, Asset> = {
     'waiting-for-review': { document: asDocument(waitingForReview), loop: true },
     'cohort-waiting': { document: asDocument(cohortWaiting), loop: true },
     'empty-vocabularies': { document: asDocument(emptyVocabularies), loop: true },
+    'empty-search': { document: asDocument(emptySearch), loop: true },
     'answer-correct': { document: asDocument(answerCorrect), loop: false },
     'answer-incorrect': { document: asDocument(answerIncorrect), loop: false },
     mastered: { document: asDocument(mastered), loop: false },
@@ -125,6 +127,26 @@ const collectColors = (node: unknown, colors: number[][] = []): number[][] => {
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
     typeof value === 'object' && value !== null && !Array.isArray(value);
+
+/** Every animated property (`a: 1`) in the document, regardless of where it sits. */
+const collectTracks = (node: unknown, tracks: unknown[][] = []): unknown[][] => {
+    if (Array.isArray(node)) {
+        node.forEach((child) => collectTracks(child, tracks));
+        return tracks;
+    }
+
+    if (!isRecord(node)) {
+        return tracks;
+    }
+
+    if (node.a === 1 && Array.isArray(node.k)) {
+        tracks.push(node.k);
+    }
+
+    Object.values(node).forEach((child) => collectTracks(child, tracks));
+
+    return tracks;
+};
 
 const staticValue = (track: unknown, fallback: number[]): number[] => {
     if (!isRecord(track) || track.k === undefined) {
@@ -230,6 +252,27 @@ describe('Lottie animation assets', () => {
                 expect(layer.ip).toBe(0);
                 expect(layer.op).toBe(document.op);
                 expect(Object.keys(layer.ks)).toEqual(expect.arrayContaining(['o', 'r', 'p', 'a', 's']));
+            });
+        });
+
+        it('SHOULD express every keyframe as an object, the only shape the runtime parses', () => {
+            const tracks = collectTracks(document);
+
+            expect(tracks.length).toBeGreaterThan(0);
+
+            tracks.forEach((keyframes) => {
+                keyframes.forEach((keyframe) => {
+                    // A bare `[time, value]` array makes lottie bail out silently.
+                    expect(Array.isArray(keyframe)).toBe(false);
+                    expect(isRecord(keyframe)).toBe(true);
+
+                    if (!isRecord(keyframe)) {
+                        return;
+                    }
+
+                    expect(typeof keyframe.t).toBe('number');
+                    expect(Array.isArray(keyframe.s)).toBe(true);
+                });
             });
         });
 
