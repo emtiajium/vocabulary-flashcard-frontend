@@ -297,7 +297,8 @@ export default defineComponent({
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             // Draft per word so a half-typed answer survives swiping away and back.
             givenAnswers: [] as string[],
-            revealed: [] as number[],
+            // The word whose answer is on screen, if any.
+            revealedIndex: null as number | null,
             correctAnswerCount: 0,
             activeIndex: 0,
             scorePulseKey: 0,
@@ -345,8 +346,17 @@ export default defineComponent({
             });
 
             this.swiper.on('realIndexChange', (swiper: Swiper) => {
-                this.activeIndex = swiper.activeIndex;
+                this.onSlideChange(swiper.activeIndex);
             });
+        },
+
+        /**
+         * Moving to another word drops any answer the previous one was showing,
+         * so coming back offers "Show the answer" again.
+         */
+        onSlideChange(index: number): void {
+            this.activeIndex = index;
+            this.revealedIndex = null;
         },
 
         async assertLoadingVocabularies(): Promise<void> {
@@ -379,7 +389,7 @@ export default defineComponent({
             this.vocabularies = vocabularies ?? [];
             // Revisiting an already-guessed word keeps its answer locked in.
             this.givenAnswers = this.vocabularies.map((vocabulary) => (vocabulary.isCorrect ? vocabulary.word : ''));
-            this.revealed = [];
+            this.revealedIndex = null;
             this.activeIndex = 0;
             this.calculateCorrectAnswerCount();
         },
@@ -437,13 +447,11 @@ export default defineComponent({
         },
 
         reveal(index: number): void {
-            if (!this.revealed.includes(index)) {
-                this.revealed.push(index);
-            }
+            this.revealedIndex = index;
         },
 
         isRevealed(index: number): boolean {
-            return this.revealed.includes(index);
+            return this.revealedIndex === index;
         },
 
         canReveal(vocabulary: RandomlyChosenMeaningResponse, index: number): boolean {
@@ -527,7 +535,7 @@ export default defineComponent({
             this.isLoading = true;
             this.vocabularies = [];
             this.givenAnswers = [];
-            this.revealed = [];
+            this.revealedIndex = null;
             this.correctAnswerCount = 0;
             this.activeIndex = 0;
             this.scorePulseKey = 0;

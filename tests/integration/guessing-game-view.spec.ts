@@ -83,7 +83,7 @@ jest.mock('@/utils/NativeStorage', () => ({
 interface GuessingGameVm {
     vocabularies: RandomlyChosenMeaningResponse[];
     givenAnswers: string[];
-    revealed: number[];
+    revealedIndex: number | null;
     swiper: unknown;
     activeIndex: number;
     correctAnswerCount: number;
@@ -109,6 +109,7 @@ interface GuessingGameVm {
     railClass(vocabulary: RandomlyChosenMeaningResponse, index: number): Record<string, boolean>;
     railStateLabel(vocabulary: RandomlyChosenMeaningResponse, index: number): string;
     initSwiper(): void;
+    onSlideChange(index: number): void;
     goToSlide(index: number): void;
     clean(): void;
 }
@@ -282,6 +283,22 @@ describe('Guessing game view (integration)', () => {
             expect(vm(wrapper).railStateLabel(vm(wrapper).vocabularies[0], 0)).toBe(
                 'answered incorrectly, answer shown',
             );
+        });
+
+        it('SHOULD offer to show the answer again after leaving the word and coming back', async () => {
+            const wrapper = await mountView(vocabularies());
+            vm(wrapper).reveal(0);
+
+            expect(vm(wrapper).isRevealed(0)).toBe(true);
+
+            // move to the next word and back again
+            vm(wrapper).onSlideChange(1);
+            vm(wrapper).onSlideChange(0);
+
+            expect(vm(wrapper).activeIndex).toBe(0);
+            expect(vm(wrapper).isRevealed(0)).toBe(false);
+            expect(vm(wrapper).canReveal(vm(wrapper).vocabularies[0], 0)).toBe(true);
+            expect(vm(wrapper).feedbackClass(vm(wrapper).vocabularies[0], 0)).toBe('is-neutral');
         });
 
         it('SHOULD never reveal a word that is already correct', async () => {
