@@ -18,7 +18,11 @@
                             </ion-card-subtitle>
                         </ion-card-header>
                         <ion-card-content class="display-flex ion-justify-content-center">
-                            <img src="/assets/icon/diversity.svg" alt="Cohort" class="empty-cohort-icon" />
+                            <lottie-animation class="empty-cohort-icon" :animation-data="cohortWaitingAnimation">
+                                <template #fallback>
+                                    <img src="/assets/icon/diversity.svg" alt="Cohort" />
+                                </template>
+                            </lottie-animation>
                         </ion-card-content>
                     </view>
 
@@ -96,6 +100,8 @@ import {
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import NetworkError from '@/views/shared/NetworkError.vue';
 import HttpHandler from '@/utils/HttpHandler';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import cohortWaiting from '@/media/lottie/cohort-waiting.json';
 
 export default defineComponent({
     name: 'Cohort',
@@ -103,6 +109,7 @@ export default defineComponent({
         NetworkError,
         FirecrackerHeader,
         Spinner,
+        LottieAnimation,
         IonPage,
         IonContent,
         IonCard,
@@ -118,6 +125,7 @@ export default defineComponent({
             isReady: false,
             isNetworkError: false,
             cohort: {} as Cohort,
+            cohortWaitingAnimation: cohortWaiting as Record<string, unknown>,
         };
     },
     async ionViewDidEnter() {
@@ -172,6 +180,6 @@ export default defineComponent({
     align-items: flex-start;
 }
 .empty-cohort-icon {
-    max-width: 15%;
+    width: min(160px, 50%);
 }
 </style>

@@ -468,8 +468,10 @@ export default defineComponent({
     justify-content: center;
 }
 
+/* Fits either an inline SVG or an image used as the static fallback. */
 .lottie-animation__surface :deep(svg),
-.lottie-animation__fallback :deep(svg) {
+.lottie-animation__fallback :deep(svg),
+.lottie-animation__fallback :deep(img) {
     width: 100%;
     height: 100%;
 }
