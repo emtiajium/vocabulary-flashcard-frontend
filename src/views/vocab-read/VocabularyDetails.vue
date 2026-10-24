@@ -23,7 +23,7 @@
                             </li>
                         </ul>
 
-                        <view v-if="definition.notes.length">
+                        <view v-if="definition.notes?.length">
                             <ion-card-title> Notes </ion-card-title>
                             <ul class="notes-list">
                                 <li v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
@@ -32,7 +32,7 @@
                             </ul>
                         </view>
 
-                        <view v-if="definition.externalLinks.length">
+                        <view v-if="definition.externalLinks?.length">
                             <ion-card-title> External Links </ion-card-title>
                             <ul class="links-list">
                                 <li
@@ -52,7 +52,7 @@
                 </ion-card>
             </view>
 
-            <ion-card v-if="vocabulary.linkerWords.length">
+            <ion-card v-if="vocabulary.linkerWords?.length">
                 <ion-card-header>
                     <ion-card-title> Relatable Words </ion-card-title>
                 </ion-card-header>
@@ -68,7 +68,7 @@
                 </ion-card-content>
             </ion-card>
 
-            <ion-card v-if="vocabulary.genericNotes.length">
+            <ion-card v-if="vocabulary.genericNotes?.length">
                 <ion-card-header>
                     <ion-card-title> Generic Notes </ion-card-title>
                 </ion-card-header>
@@ -84,7 +84,7 @@
                 </ion-card-content>
             </ion-card>
 
-            <ion-card v-if="vocabulary.genericExternalLinks.length">
+            <ion-card v-if="vocabulary.genericExternalLinks?.length">
                 <ion-card-header>
                     <ion-card-title> Generic External Links </ion-card-title>
                 </ion-card-header>
