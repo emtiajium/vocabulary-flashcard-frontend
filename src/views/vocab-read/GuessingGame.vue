@@ -97,14 +97,16 @@
                                             role="status"
                                         >
                                             <template v-if="vocabulary.isCorrect === true">
-                                                <font-awesome-icon :icon="correctIcon" aria-hidden="true" />
-                                                <span>Correct!</span>
+                                                <!-- The locked answer above already shows a tick and the
+                                                     word, so this would be saying it twice. Kept for
+                                                     assistive tech, which cannot see the tick (WCAG 4.1.3). -->
+                                                <span class="visually-hidden">Correct!</span>
                                             </template>
                                             <template v-else-if="isRevealed(index)">
                                                 <font-awesome-icon :icon="infoIcon" aria-hidden="true" />
                                                 <span
-                                                    >The word is “<strong>{{ vocabulary.word }}</strong
-                                                    >”</span
+                                                    >The word is "<strong>{{ vocabulary.word }}</strong
+                                                    >"</span
                                                 >
                                             </template>
                                             <template v-else-if="vocabulary.isCorrect === false">
@@ -223,7 +225,7 @@
                             </template>
                         </lottie-animation>
                         <h2 class="completion-title">All words guessed!</h2>
-                        <p class="completion-text">Well done — you nailed every word in today's round.</p>
+                        <p class="completion-text">Well done, you nailed every word in today's round.</p>
                         <ion-chip class="completion-stat">
                             <span class="completion-stat__value">{{ correctAnswerCount }}</span>
                             <span>of {{ vocabularies.length }} correct</span>
@@ -289,7 +291,7 @@ export default defineComponent({
             incorrectAnimation: answerIncorrect,
             gameCompleteAnimation: gameComplete,
             funGameAnimation: funGame as Record<string, unknown>,
-            failedMessage: 'Not quite — try again.',
+            failedMessage: 'Not quite. Try again.',
             isLoading: true,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             // Draft per word so a half-typed answer survives swiping away and back.
@@ -697,10 +699,8 @@ ion-content#guessing-game {
 
 .game-card__eyebrow {
     margin: 0;
-    font-size: var(--text-2xs);
+    font-size: var(--text-xs);
     font-weight: var(--font-weight-semibold);
-    letter-spacing: var(--letter-spacing-wide);
-    text-transform: uppercase;
     color: var(--ion-color-primary);
 }
 
@@ -713,7 +713,9 @@ ion-content#guessing-game {
 
 .game-answer {
     display: flex;
-    align-items: stretch;
+    /* Centred, not stretched: an `ion-button` uses the app's standard 36px
+       height, so it should not be blown up to the height of the field. */
+    align-items: center;
     gap: var(--space-xs);
     flex: 0 0 auto;
 }
@@ -755,7 +757,6 @@ ion-content#guessing-game {
     background: var(--ion-color-lightest);
     color: var(--ion-color-lightest-contrast);
     font-weight: var(--font-weight-semibold);
-    text-transform: capitalize;
 }
 
 .game-footer {
@@ -787,7 +788,6 @@ ion-content#guessing-game {
 
 .game-feedback.is-revealed strong {
     color: var(--ion-color-primary);
-    text-transform: capitalize;
 }
 
 .game-feedback.is-incorrect {
@@ -796,6 +796,19 @@ ion-content#guessing-game {
 
 .game-feedback.is-neutral {
     color: var(--ion-text-color-step-300);
+}
+
+/* Announce-only: visible to assistive tech, not to the eye. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .game-reveal {
