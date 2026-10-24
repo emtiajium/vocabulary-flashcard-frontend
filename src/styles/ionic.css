@@ -345,7 +345,3 @@ ion-fab-button {
 ion-fab-button:active {
     transform: scale(0.94);
 }
-
-ion-spinner {
-    --color: var(--ion-color-primary);
-}
