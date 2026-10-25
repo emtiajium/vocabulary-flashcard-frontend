@@ -4,8 +4,9 @@
  * Lottie preview gallery.
  *
  * Renders every animation in `src/media/lottie` on one page so they can be
- * reviewed side by side, with a light/dark switch that applies the same
- * placeholder-palette swap `LottieAnimation.vue` does at runtime.
+ * reviewed side by side. It follows the system colour scheme and applies the same
+ * placeholder-palette swap `LottieAnimation.vue` does at runtime, so what you see
+ * here is what the app draws in that theme.
  *
  * The page is self-contained: the assets are inlined and the player is loaded
  * from `node_modules`, so it works straight off the file system with no server.
@@ -133,16 +134,23 @@ const buildHtml = (assets) => {
                 --muted: #52605e;
                 --primary: #18794e;
                 --pill: #eaf2ee;
+                --warn: #b3261e;
             }
 
-            body.dark {
-                --page: #0d1f1e;
-                --card: #1d2822;
-                --border: #26332c;
-                --text: #eef2f0;
-                --muted: #9fb0ab;
-                --primary: #69a78c;
-                --pill: #1c2a22;
+            /* No switch to click: the gallery follows the system colour scheme, the
+               same way the app picks its palette. Values mirror body.dark in
+               src/styles/color-variables.css. */
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --page: #0d1f1e;
+                    --card: #1d2822;
+                    --border: #26332c;
+                    --text: #eef2f0;
+                    --muted: #9fb0ab;
+                    --primary: #69a78c;
+                    --pill: #1c2a22;
+                    --warn: #ffb4ab;
+                }
             }
 
             * {
@@ -177,26 +185,6 @@ const buildHtml = (assets) => {
                 color: var(--primary);
                 font-size: 13px;
                 font-weight: 600;
-            }
-
-            .spacer {
-                flex: 1;
-            }
-
-            button {
-                padding: 8px 14px;
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                background: var(--card);
-                color: var(--primary);
-                font: inherit;
-                font-size: 13px;
-                font-weight: 600;
-                cursor: pointer;
-            }
-
-            button:hover {
-                border-color: var(--primary);
             }
 
             .lede {
@@ -269,7 +257,7 @@ const buildHtml = (assets) => {
             }
 
             .warn {
-                color: #b3261e;
+                color: var(--warn);
                 font-weight: 600;
             }
 
@@ -279,16 +267,14 @@ const buildHtml = (assets) => {
         <header>
             <h1>Lottie gallery</h1>
             <span class="count" id="count"></span>
-            <span class="spacer"></span>
-            <button type="button" id="theme">Switch to dark</button>
         </header>
 
         <p class="lede">
             Every animation in <code>src/media/lottie</code>, rendered with the same player and the same
-            placeholder-palette swap the app uses, so switching theme here is what the app does at runtime. The
-            loading spinner is not here: it is plain CSS in <code>src/views/shared/Spinner.vue</code> so it can paint
-            before any JavaScript loads. One-shots are tagged as such but looped on this page, because they are
-            invisible on their first and last frame and would otherwise play once and disappear.
+            placeholder-palette swap the app uses, in whichever theme your system is set to. The loading spinner is
+            not here: it is plain CSS in <code>src/views/shared/Spinner.vue</code> so it can paint before any
+            JavaScript loads. One-shots are tagged as such but looped on this page, because they are invisible on
+            their first and last frame and would otherwise play once and disappear.
         </p>
 
         <div class="grid" id="grid"></div>
@@ -337,7 +323,9 @@ const buildHtml = (assets) => {
             };
 
             const players = new Map();
-            let currentTheme = 'light';
+
+            const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            let currentTheme = darkScheme.matches ? 'dark' : 'light';
 
             const render = (asset, container) => {
                 const existing = players.get(container);
@@ -414,10 +402,10 @@ const buildHtml = (assets) => {
 
             containers.forEach(({ asset, surface }) => render(asset, surface));
 
-            document.getElementById('theme').addEventListener('click', (event) => {
-                currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-                document.body.classList.toggle('dark', currentTheme === 'dark');
-                event.currentTarget.textContent = currentTheme === 'light' ? 'Switch to dark' : 'Switch to light';
+            // The page has no switch, so follow the system while it is open too: the
+            // CSS variables flip on their own, and the artwork has to be redrawn.
+            darkScheme.addEventListener('change', (event) => {
+                currentTheme = event.matches ? 'dark' : 'light';
                 containers.forEach(({ asset, surface }) => render(asset, surface));
             });
         </script>
