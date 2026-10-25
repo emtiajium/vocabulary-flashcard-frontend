@@ -173,7 +173,7 @@ export default defineComponent({
             try {
                 DefinitionValidator.validate(definition);
             } catch (error) {
-                await Toast.present((error as Error).message);
+                await Toast.present((error as Error).message, 'error');
                 return;
             }
             this.onComingBackToVocab(definition);
@@ -232,14 +232,15 @@ export default defineComponent({
                 this.unsubscribeBackButtonListener();
                 await handler();
             } else {
-                await Alert.presentAlertConfirm(
-                    '',
-                    'You have an unsaved definition that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
-                    async () => {
+                await Alert.presentConfirm({
+                    message:
+                        'You have an unsaved definition that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
+                    destructive: true,
+                    onConfirm: async () => {
                         this.unsubscribeBackButtonListener();
                         return Promise.resolve(handler());
                     },
-                );
+                });
             }
         },
     },

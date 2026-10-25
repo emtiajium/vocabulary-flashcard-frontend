@@ -165,7 +165,16 @@ const cohort = {
     ],
 };
 
-const guessingGame = [{ meaning: 'The ability to understand and decide things quickly and well.', word: 'Acumen' }];
+const guessingGame = [
+    { meaning: 'The ability to understand and decide things quickly and well.', word: 'Acumen' },
+    {
+        meaning: 'A moment when you suddenly feel that you understand something very important to you.',
+        word: 'Epiphany',
+    },
+    { meaning: 'Broken or torn pieces left from the destruction of something larger.', word: 'Debris' },
+    { meaning: 'Able to use the right and the left hand equally well.', word: 'Ambidextrous' },
+    { meaning: 'The art and science of teaching.', word: 'Pedagogy' },
+];
 
 const leitnerCounts = { 1: 24, 2: 12, 3: 8, 4: 5, 5: 3 };
 

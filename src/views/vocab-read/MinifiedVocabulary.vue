@@ -1,5 +1,5 @@
 <template>
-    <ion-card :button="true" class="margin-top-bottom-unset">
+    <ion-card class="margin-top-bottom-unset">
         <ion-row>
             <div
                 class="contents"
@@ -39,7 +39,7 @@
                         shape="round"
                         :strong="true"
                         color="warning"
-                        @click="presentAlertConfirm(vocabulary)"
+                        @click="confirmRemoval(vocabulary)"
                     >
                         <font-awesome-icon :icon="faTrashAlt" />
                     </ion-button>
@@ -85,6 +85,21 @@
                 </ion-row>
             </div>
         </ion-row>
+
+        <!-- Teleported to the body because `ion-content` carries a transform, which
+             would otherwise become the containing block and displace the burst.
+             The position is therefore in document coordinates. -->
+        <teleport to="body">
+            <div v-if="flashcardFeedback" class="flashcard-feedback" :style="flashcardFeedbackStyle">
+                <lottie-animation
+                    :key="flashcardFeedbackKey"
+                    class="flashcard-feedback__animation"
+                    :animation-data="flashcardCreatedAnimation"
+                    :loop="false"
+                    @complete="onFlashcardFeedbackComplete"
+                />
+            </div>
+        </teleport>
     </ion-card>
 </template>
 
@@ -114,6 +129,13 @@ import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
 import Toast from '@/utils/Toast';
 import LeitnerSystemService from '@/utils/LeitnerSystemService';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import flashcardCreated from '@/media/lottie/flashcard-created.json';
+
+interface FlashcardFeedback {
+    top: number;
+    left: number;
+}
 
 export default defineComponent({
     name: 'MinifiedVocabulary',
@@ -127,6 +149,7 @@ export default defineComponent({
         FontAwesomeIcon,
         IonLabel,
         IonRow,
+        LottieAnimation,
     },
     props: ['vocabulary', 'deleteVocabulary', 'updateLeitnerBoxExistence'],
     data() {
@@ -138,29 +161,88 @@ export default defineComponent({
             faHeartSolid,
             faHeartRegular,
             disableBoxInsertionButton: false,
+            flashcardCreatedAnimation: flashcardCreated,
+            flashcardFeedback: null as FlashcardFeedback | null,
+            flashcardFeedbackKey: 0,
         };
+    },
+    computed: {
+        flashcardFeedbackStyle(): Record<string, string> {
+            if (!this.flashcardFeedback) {
+                return {};
+            }
+
+            return { top: `${this.flashcardFeedback.top}px`, left: `${this.flashcardFeedback.left}px` };
+        },
     },
     methods: {
         async seeMore(id: string, word: string): Promise<void> {
             await this.$router.push(`/vocabulary/read/${id}/${word}/${false}`);
         },
+        /**
+         * A `role="button"` answers to Space as well as Enter. Space would otherwise
+         * scroll the list, so its default is prevented.
+         */
         async onKeyDown(keyboardEvent: KeyboardEvent, id: string, word: string): Promise<void> {
-            if (keyboardEvent.code === 'Enter' || keyboardEvent.key === 'Enter') {
-                await this.seeMore(id, word);
+            const isActivationKey = ['Enter', 'Space', 'Spacebar', ' '].includes(keyboardEvent.key);
+
+            if (!isActivationKey) {
+                return;
             }
+
+            keyboardEvent.preventDefault();
+            await this.seeMore(id, word);
         },
-        async presentAlertConfirm(vocabulary: Vocabulary): Promise<void> {
-            await Alert.presentAlertConfirm('', `Are you sure you want to remove "${vocabulary.word}"?`, async () => {
-                return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`)
-                    .then(() => this.deleteVocabulary(vocabulary.id))
-                    .catch((error) => Toast.present(error.message));
+        async confirmRemoval(vocabulary: Vocabulary): Promise<void> {
+            await Alert.presentConfirm({
+                message: `Are you sure you want to remove "${vocabulary.word}"?`,
+                destructive: true,
+                onConfirm: () => {
+                    return HttpHandler.delete(`/v1/vocabularies/${vocabulary.id}`)
+                        .then(() => this.deleteVocabulary(vocabulary.id))
+                        .catch((error) => Toast.present(error.message, 'error'));
+                },
             });
         },
-        async insertIntoLeitnerBox(): Promise<void> {
+        async insertIntoLeitnerBox(clickEvent: MouseEvent): Promise<void> {
+            const target = clickEvent.currentTarget as HTMLElement | null;
+            const origin = target ? this.centerOf(target) : null;
+
             this.disableBoxInsertionButton = true;
-            await LeitnerSystemService.insertIntoLeitnerBox(this.vocabulary.id);
+            const isCreated = await LeitnerSystemService.insertIntoLeitnerBox(this.vocabulary.id);
             this.disableBoxInsertionButton = false;
+
+            if (!isCreated) {
+                return;
+            }
+
             this.updateLeitnerBoxExistence(this.vocabulary.id);
+
+            if (origin) {
+                this.playFlashcardFeedback(origin);
+            }
+        },
+
+        centerOf(element: HTMLElement): FlashcardFeedback {
+            const { top, left, width, height } = element.getBoundingClientRect();
+
+            return {
+                top: top + height / 2 + window.scrollY,
+                left: left + width / 2 + window.scrollX,
+            };
+        },
+
+        playFlashcardFeedback(origin: FlashcardFeedback): void {
+            this.flashcardFeedback = origin;
+            this.flashcardFeedbackKey += 1;
+        },
+
+        /**
+         * Dropped on completion so a list where many words are turned into
+         * flashcards does not accumulate invisible fixed overlays.
+         */
+        onFlashcardFeedbackComplete(): void {
+            this.flashcardFeedback = null;
         },
     },
 });
@@ -191,5 +273,16 @@ export default defineComponent({
 }
 .leitner-icon {
     font-size: var(--icon-md);
+}
+
+.flashcard-feedback {
+    position: absolute;
+    z-index: 20;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.flashcard-feedback__animation {
+    width: 88px;
 }
 </style>

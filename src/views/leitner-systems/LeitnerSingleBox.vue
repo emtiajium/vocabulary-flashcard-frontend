@@ -45,7 +45,7 @@ export default defineComponent({
                 '3': '--leitner-box-3',
                 '4': '--leitner-box-4',
                 '5': '--leitner-box-5',
-            },
+            } as Record<string, string>,
         };
     },
     methods: {

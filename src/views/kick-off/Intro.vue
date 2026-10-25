@@ -1,59 +1,68 @@
 <template>
     <ion-card v-if="currentIndex === 0" class="margin-top-bottom-unset">
         <div class="display-flex ion-justify-content-center">
-            <thinking-icon
-                :fill-color-variable="'--ion-color-primary'"
-                :stroke-color-variable="'--ion-color-primary'"
-                class="icon-container"
-            />
+            <lottie-animation class="icon-container" :animation-data="retentionAnimation">
+                <template #fallback>
+                    <thinking-icon
+                        :fill-color-variable="'--ion-color-primary'"
+                        :stroke-color-variable="'--ion-color-primary'"
+                    />
+                </template>
+            </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            Ever wonder why you still remember the meaning of the words you learned in your childhood but struggle with
-            a vocab learned a few days or weeks back?
+            Ever wonder why you can remember words you learned as a child but forget new ones after just a few days?
         </ion-card-title>
     </ion-card>
 
     <ion-card v-if="currentIndex === 1" class="margin-top-bottom-unset">
         <div class="display-flex ion-justify-content-center">
-            <box-icon
-                :fill-color-variable="'--ion-color-primary'"
-                :stroke-color-variable="'--ion-color-primary'"
-                class="icon-container"
-            />
+            <lottie-animation class="icon-container" :animation-data="spacedRepetitionAnimation">
+                <template #fallback>
+                    <box-icon
+                        :fill-color-variable="'--ion-color-primary'"
+                        :stroke-color-variable="'--ion-color-primary'"
+                    />
+                </template>
+            </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            According to science, <strong>spaced repetition</strong> is one of the techniques to retain anything in the
-            long term. The Leitner system works based on this principle. It suggests creating a
-            <strong>flashcard</strong> for each item and reviewing those at an interval.
+            That's where <strong>spaced repetition</strong> comes in! The <strong>Leitner system</strong> helps you
+            remember words by reviewing <strong>flashcards</strong> at intervals based on how well you remember them.
         </ion-card-title>
     </ion-card>
 
     <ion-card v-if="currentIndex === 2" class="margin-top-bottom-unset">
         <div class="display-flex ion-justify-content-center">
-            <join-us-icon
-                :fill-color-variable="'--ion-color-primary'"
-                :stroke-color-variable="'--ion-color-primary'"
-                class="icon-container"
-            />
+            <lottie-animation class="icon-container" :animation-data="joinUsAnimation">
+                <template #fallback>
+                    <join-us-icon
+                        :fill-color-variable="'--ion-color-primary'"
+                        :stroke-color-variable="'--ion-color-primary'"
+                    />
+                </template>
+            </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            Join us to embed newly introduced words in your long-term memory.
+            Learning is better together! Join a cohort, discover new words, and strengthen your vocabulary through
+            regular practice.
         </ion-card-title>
     </ion-card>
 
     <ion-card v-if="currentIndex === 3" class="margin-top-bottom-unset">
         <div class="display-flex ion-justify-content-center">
-            <fun-icon
-                :fill-color-variable="'--ion-color-primary'"
-                :stroke-color-variable="'--ion-color-primary'"
-                class="icon-container"
-            />
+            <lottie-animation class="icon-container" :animation-data="funGameAnimation">
+                <template #fallback>
+                    <fun-icon
+                        :fill-color-variable="'--ion-color-primary'"
+                        :stroke-color-variable="'--ion-color-primary'"
+                    />
+                </template>
+            </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            To make your learning experience more enjoyable and effective, try our <strong>word guessing game</strong>.
-            This fun and engaging activity challenges you to think critically and make connections between words and
-            their meanings, enhancing your cognitive abilities while reinforcing what you've learned through spaced
-            repetition.
+            Make learning more fun with our <strong>word guessing game</strong>! Use clues to find the right word and
+            reinforce what you've learned.
         </ion-card-title>
     </ion-card>
 </template>
@@ -65,6 +74,11 @@ import ThinkingIcon from '@/media/ThinkingIcon.vue';
 import JoinUsIcon from '@/media/JoinUsIcon.vue';
 import FunIcon from '@/media/FunIcon.vue';
 import BoxIcon from '@/media/BoxIcon.vue';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import retention from '@/media/lottie/retention.json';
+import spacedRepetition from '@/media/lottie/spaced-repetition.json';
+import joinUs from '@/media/lottie/join-us.json';
+import funGame from '@/media/lottie/fun-game.json';
 
 export default defineComponent({
     name: 'Intro',
@@ -73,10 +87,19 @@ export default defineComponent({
         FunIcon,
         JoinUsIcon,
         ThinkingIcon,
+        LottieAnimation,
         IonCard,
         IonCardTitle,
     },
     props: ['currentIndex'],
+    data() {
+        return {
+            retentionAnimation: retention,
+            spacedRepetitionAnimation: spacedRepetition,
+            joinUsAnimation: joinUs,
+            funGameAnimation: funGame,
+        };
+    },
 });
 </script>
 

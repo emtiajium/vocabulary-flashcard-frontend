@@ -18,9 +18,19 @@
                     <ion-card class="margin-top-unset">
                         <ion-card-content>
                             <view class="display-flex ion-justify-content-center">
-                                <ion-item lines="none">
-                                    <span class="material-icons firecracker-primary-color-icon-large"> campaign </span>
-                                </ion-item>
+                                <lottie-animation
+                                    class="announcement-animation"
+                                    :animation-data="emptyVocabulariesAnimation"
+                                    :loop="true"
+                                >
+                                    <template #fallback>
+                                        <ion-item lines="none">
+                                            <span class="material-icons firecracker-primary-color-icon-large">
+                                                campaign
+                                            </span>
+                                        </ion-item>
+                                    </template>
+                                </lottie-animation>
                             </view>
                             <ion-card-subtitle class="ion-text-center ion-padding">
                                 Looks like you do not have any vocabulary in your cohort yet! We can generate a few if
@@ -50,7 +60,15 @@
                     }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
+                    <lottie-animation
+                        class="empty-search-animation"
+                        :animation-data="emptySearchAnimation"
+                        :loop="true"
+                    >
+                        <template #fallback>
+                            <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
+                        </template>
+                    </lottie-animation>
                 </view>
             </view>
 
@@ -91,23 +109,12 @@
                 </ion-col>
             </ion-row>
 
-            <view v-if="isDisabled && vocabularies.length > 0 && !isNetworkError">
-                <ion-card-subtitle class="ion-padding ion-text-center">
-                    {{
-                        vocabularies.length > 10
-                            ? `Congrats! You have viewed the last vocabulary!`
-                            : `Looks like there is no other vocabulary left for you to be displayed.`
-                    }}
-                </ion-card-subtitle>
-                <view
-                    class="display-flex ion-justify-content-center ion-padding-bottom"
-                    :style="cssStyleToClearlyDisplayVocabCountChip"
-                >
-                    <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
-                </view>
-            </view>
+            <end-of-list
+                v-if="isDisabled && vocabularies.length > 0 && !isNetworkError"
+                :inline-style="cssStyleToClearlyDisplayVocabCountChip"
+            />
 
-            <network-error v-if="isNetworkError" :message="criticalErrorMessage" />
+            <network-error v-if="isNetworkError" :message="errorMessage" />
 
             <ion-infinite-scroll
                 @ionInfinite="renderVocabularies($event)"
@@ -177,16 +184,21 @@ import VocabularySearch from '@/domains/VocabularySearch';
 import { Components } from '@ionic/core/components';
 import MinifiedVocabulary from '@/views/vocab-read/MinifiedVocabulary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPlus, faGlassCheers, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
+import EndOfList from '@/views/shared/EndOfList.vue';
 import NetworkError from '@/views/shared/NetworkError.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import Spinner from '@/views/shared/Spinner.vue';
 import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/vocab-read/Settings.vue';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import emptySearch from '@/media/lottie/empty-search.json';
+import announcement from '@/media/lottie/announcement.json';
 import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 import { FirecrackerError } from '@/domains/FirecrackerError';
+import MessageDB from '@/utils/MessageDB';
 import { cloneDeep, isEmpty, uniqBy } from 'lodash';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
@@ -197,9 +209,11 @@ export default defineComponent({
     components: {
         Settings,
         Spinner,
+        EndOfList,
         NetworkError,
         MinifiedVocabulary,
         FirecrackerHeader,
+        LottieAnimation,
         IonContent,
         IonPage,
         IonFab,
@@ -220,8 +234,9 @@ export default defineComponent({
         return {
             showSpinner: false,
             faPlus,
-            faGlassCheers,
             faThumbsUp,
+            emptyVocabulariesAnimation: announcement,
+            emptySearchAnimation: emptySearch,
             vocabularies: [] as Vocabulary[],
             pageNumber: 1,
             pageSize: 10,
@@ -247,7 +262,7 @@ export default defineComponent({
                 notes: false,
             },
             cssStyleToClearlyDisplayVocabCountChip: `margin-bottom: calc(var(--ion-margin) * 3);`,
-            criticalErrorMessage: '',
+            errorMessage: '',
         };
     },
     async mounted() {
@@ -264,7 +279,7 @@ export default defineComponent({
     },
     methods: {
         clean(): void {
-            this.criticalErrorMessage = '';
+            this.errorMessage = '';
             this.showSpinner = false;
             this.totalVocabularies = 0;
             this.vocabularies = [] as Vocabulary[];
@@ -356,10 +371,29 @@ export default defineComponent({
             await ((event as CustomEvent).target as unknown as IonRefresherType).complete();
         },
 
+        /**
+         * Whether the cohort has any vocabulary at all is only knowable from an
+         * unfiltered first page, so that is the only load allowed to answer it.
+         * Assigning rather than only setting true keeps the answer from going stale:
+         * an unfiltered page that returns rows means the cohort is not empty.
+         */
         handleShowingFetchingFewVocabularies(): void {
-            if (this.pageNumber === 1 && !this.searchKeyword.length && !this.vocabularies.length) {
-                this.allQuietOnTheWesternFront = true;
+            if (this.pageNumber !== 1 || this.searchKeyword.length) {
+                return;
             }
+
+            this.allQuietOnTheWesternFront = !this.vocabularies.length;
+        },
+
+        /**
+         * A failed request is not necessarily a broken connection: a 500, a rejected
+         * token or an unreadable response all land here. Report what actually went
+         * wrong instead of always blaming the network, which sends the user looking
+         * in the wrong place.
+         */
+        reportRequestFailure(error: unknown): void {
+            this.errorMessage = (error as FirecrackerError).message || MessageDB.genericError;
+            this.isNetworkError = true;
         },
 
         async findVocabularies(): Promise<SearchResult<Vocabulary>> {
@@ -381,12 +415,10 @@ export default defineComponent({
                     vocabularySearch,
                 );
                 this.isNetworkError = false;
+                this.errorMessage = '';
                 this.totalVocabularies = searchResult.total;
             } catch (error) {
-                if ((error as FirecrackerError).name === 'CriticalError') {
-                    this.criticalErrorMessage = (error as FirecrackerError).message;
-                }
-                this.isNetworkError = true;
+                this.reportRequestFailure(error);
                 searchResult = { results: [], total: 0 };
             }
             return searchResult as SearchResult<Vocabulary>;
@@ -451,7 +483,11 @@ export default defineComponent({
                 this.isDisabled = true;
                 this.totalVocabularies = total;
             } catch (error) {
-                this.isNetworkError = (error as FirecrackerError).name !== 'ExistingVocabConflict';
+                if ((error as FirecrackerError).name === 'ExistingVocabConflict') {
+                    this.isNetworkError = false;
+                } else {
+                    this.reportRequestFailure(error);
+                }
             } finally {
                 this.showSpinner = false;
             }
@@ -516,6 +552,11 @@ export default defineComponent({
         shouldDisplayFetchButton(): boolean {
             return (
                 this.allQuietOnTheWesternFront &&
+                // The card offers to generate a cohort's first words, which is a
+                // statement about the cohort and not about the current search: an
+                // empty result list is the filter's doing, and it used to leave this
+                // card sitting above the results or beside "no vocabulary was found".
+                !this.searchKeyword.length &&
                 !this.fetchNotHavingDefinitionOnly &&
                 this.fetchFlashcard &&
                 !this.isNetworkError
@@ -553,4 +594,9 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.announcement-animation,
+.empty-search-animation {
+    width: min(160px, 50%);
+}
+</style>

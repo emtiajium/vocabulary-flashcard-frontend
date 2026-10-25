@@ -57,6 +57,7 @@
                                 >
                                     <div class="added-definition-action-buttons">
                                         <ion-button
+                                            aria-label="Remove definition"
                                             color="warning"
                                             size="small"
                                             shape="round"
@@ -67,6 +68,7 @@
                                             <font-awesome-icon :icon="faMinusCircle" />
                                         </ion-button>
                                         <ion-button
+                                            aria-label="Edit definition"
                                             color="success"
                                             size="small"
                                             shape="round"
@@ -87,6 +89,7 @@
                             <ion-card-content class="add-definition-button-container">
                                 <ion-button
                                     v-if="!isLoading"
+                                    aria-label="Add definition"
                                     color="success"
                                     size="large"
                                     shape="round"
@@ -120,7 +123,7 @@
                             <ion-card-content>
                                 <ion-toggle
                                     class="draft-toggle"
-                                    area-label="Save the vocabulary as draft"
+                                    aria-label="Save the vocabulary as draft"
                                     :checked="isDraft"
                                     @ionChange="setIsDraft($event.target.checked)"
                                 />
@@ -333,7 +336,7 @@ export default defineComponent({
                 this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
                 this.isDraft = vocabulary.isDraft;
             } catch {
-                await Promise.all([Toast.present(MessageDB.networkError), this.$router.back()]);
+                await Promise.all([Toast.present(MessageDB.networkError, 'error'), this.$router.back()]);
             }
         },
         setWord(word: string): void {
@@ -353,16 +356,12 @@ export default defineComponent({
             }
         },
         async notifyExistence(existingVocabulary: VocabularyExistenceResponse): Promise<void> {
-            await Alert.presentAlertConfirm(
-                '',
-                `"${existingVocabulary.word}" already exists. Please consider updating it.`,
-                async () => this.navigateToExisting(existingVocabulary),
-                async () => Promise.resolve(),
-                {
-                    cancel: 'Cancel',
-                    agree: 'Update',
-                },
-            );
+            await Alert.presentConfirm({
+                message: `"${existingVocabulary.word}" already exists. Please consider updating it.`,
+                confirmLabel: 'Update',
+                cancelLabel: 'Cancel',
+                onConfirm: async () => this.navigateToExisting(existingVocabulary),
+            });
         },
         async assertExistence(): Promise<boolean> {
             try {
@@ -382,7 +381,7 @@ export default defineComponent({
         },
         async onAddingDefinition(): Promise<void> {
             if (!this.word) {
-                await Toast.present(`Please add the word before adding the definition.`);
+                await Toast.present(`Please add the word before adding the definition.`, 'warning');
             } else {
                 const isExists = await this.assertExistence();
                 if (!isExists) {
@@ -492,7 +491,7 @@ export default defineComponent({
                 }
                 this.$router.back();
             } catch (error) {
-                await Toast.present((error as FirecrackerError).message);
+                await Toast.present((error as FirecrackerError).message, 'error');
             } finally {
                 this.disableSaveButton = false;
             }
@@ -598,14 +597,15 @@ export default defineComponent({
                 this.unsubscribeBackButtonListener();
                 await Promise.all([handler(), NativeStorage.setShouldReloadVocabularies(false)]);
             } else {
-                await Alert.presentAlertConfirm(
-                    '',
-                    'You have an unsaved vocabulary that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
-                    async () => {
+                await Alert.presentConfirm({
+                    message:
+                        'You have an unsaved vocabulary that will be lost if you decide to leave. Are you sure you want to navigate away from this page?',
+                    destructive: true,
+                    onConfirm: async () => {
                         this.unsubscribeBackButtonListener();
                         await Promise.all([handler(), NativeStorage.setShouldReloadVocabularies(false)]);
                     },
-                );
+                });
             }
         },
     },

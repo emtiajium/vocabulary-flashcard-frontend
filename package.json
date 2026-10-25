@@ -1,6 +1,6 @@
 {
     "name": "vocabulary-flashcard-frontend",
-    "version": "7.0.1",
+    "version": "8.0.0",
     "private": true,
     "description": "Build your own dictionary, create flashcards, memorize vocabularies",
     "scripts": {
@@ -10,10 +10,11 @@
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint --fix",
         "lint:check": "vue-cli-service lint --no-fix",
-        "format": "prettier --write \"{public,scripts,src,tests}/**/*.{cjs,json,html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
-        "format:check": "prettier --check \"{public,scripts,src,tests}/**/*.{cjs,json,html,css,ts,vue}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
+        "format": "prettier --write \"{public,scripts,src,tests}/**/*.{cjs,json,html,css,ts,vue,md}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
+        "format:check": "prettier --check \"{public,scripts,src,tests}/**/*.{cjs,json,html,css,ts,vue,md}\" \"*.{md,js,json,jsonc}\" \"**/**/*.yml\"",
         "test": "jest",
-        "ci": "npm run format:check && npm run lint:check && npm run test && npm run build",
+        "typecheck": "vue-tsc --noEmit",
+        "ci": "npm run format:check && npm run lint:check && npm run typecheck && npm run test && npm run build",
         "serve:android:anew": "rm -rf android/ && ionic build --prod --release && npx cap add android && npx cap sync android",
         "serve:android:anew:prod": "node cloud-server.js && node server-validator-before-release.js && npm run serve:android:anew && node local-server.js",
         "deploy:firebase": "node cloud-server.js && node server-validator-before-release.js && npm run build && firebase deploy --only hosting && node local-server.js",
@@ -23,7 +24,8 @@
         "store:serve": "VUE_APP_STORE_SCREENSHOTS=true vue-cli-service serve --port 8090",
         "store:capture": "node scripts/play-store/capture.cjs",
         "store:render": "node scripts/play-store/render.cjs",
-        "store:images": "npm run store:capture && npm run store:render"
+        "store:images": "npm run store:capture && npm run store:render",
+        "lottie:preview": "node scripts/lottie-preview.cjs"
     },
     "dependencies": {
         "@capacitor/android": "^8.0.1",
@@ -52,6 +54,7 @@
         "date-fns": "^3.6.0",
         "google-auth-library": "^8.7.0",
         "lodash": "^4.17.23",
+        "lottie-web": "^5.13.0",
         "reflect-metadata": "^0.1.13",
         "swiper": "^12.1.2",
         "uuid": "^8.3.2",

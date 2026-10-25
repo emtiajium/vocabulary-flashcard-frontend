@@ -23,7 +23,7 @@
                             </li>
                         </ul>
 
-                        <view v-if="definition.notes.length">
+                        <view v-if="definition.notes?.length">
                             <ion-card-title> Notes </ion-card-title>
                             <ul class="notes-list">
                                 <li v-for="(note, noteIndex) in definition.notes" :key="noteIndex">
@@ -32,7 +32,7 @@
                             </ul>
                         </view>
 
-                        <view v-if="definition.externalLinks.length">
+                        <view v-if="definition.externalLinks?.length">
                             <ion-card-title> External Links </ion-card-title>
                             <ul class="links-list">
                                 <li
@@ -52,7 +52,7 @@
                 </ion-card>
             </view>
 
-            <ion-card v-if="vocabulary.linkerWords.length">
+            <ion-card v-if="vocabulary.linkerWords?.length">
                 <ion-card-header>
                     <ion-card-title> Relatable Words </ion-card-title>
                 </ion-card-header>
@@ -68,7 +68,7 @@
                 </ion-card-content>
             </ion-card>
 
-            <ion-card v-if="vocabulary.genericNotes.length">
+            <ion-card v-if="vocabulary.genericNotes?.length">
                 <ion-card-header>
                     <ion-card-title> Generic Notes </ion-card-title>
                 </ion-card-header>
@@ -84,7 +84,7 @@
                 </ion-card-content>
             </ion-card>
 
-            <ion-card v-if="vocabulary.genericExternalLinks.length">
+            <ion-card v-if="vocabulary.genericExternalLinks?.length">
                 <ion-card-header>
                     <ion-card-title> Generic External Links </ion-card-title>
                 </ion-card-header>
@@ -140,6 +140,21 @@
             <font-awesome-icon :icon="faPencilAlt" />
         </ion-fab-button>
     </ion-fab>
+
+    <!-- Teleported to the body because `ion-content` carries a transform, which
+         would otherwise become the containing block and displace the burst.
+         The position is therefore in document coordinates. -->
+    <teleport to="body">
+        <div v-if="flashcardFeedback" class="flashcard-feedback" :style="flashcardFeedbackStyle">
+            <lottie-animation
+                :key="flashcardFeedbackKey"
+                class="flashcard-feedback__animation"
+                :animation-data="flashcardCreatedAnimation"
+                :loop="false"
+                @complete="onFlashcardFeedbackComplete"
+            />
+        </div>
+    </teleport>
 </template>
 
 <script lang="ts">
@@ -163,6 +178,13 @@ import { faExternalLinkAlt, faPencilAlt, faHeart as faHeartSolid } from '@fortaw
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import LeitnerSystemService from '@/utils/LeitnerSystemService';
 import Vocabulary from '@/domains/Vocabulary';
+import LottieAnimation from '@/media/LottieAnimation.vue';
+import flashcardCreated from '@/media/lottie/flashcard-created.json';
+
+interface FlashcardFeedback {
+    top: number;
+    left: number;
+}
 
 export default defineComponent({
     name: 'VocabularyDetails',
@@ -170,6 +192,7 @@ export default defineComponent({
         Dictionary,
         Spinner,
         EmptyContainer,
+        LottieAnimation,
         IonCard,
         IonCardContent,
         FontAwesomeIcon,
@@ -217,7 +240,19 @@ export default defineComponent({
             faHeartRegular,
             isInLeitnerBox: false,
             disableBoxInsertionButton: false,
+            flashcardCreatedAnimation: flashcardCreated,
+            flashcardFeedback: null as FlashcardFeedback | null,
+            flashcardFeedbackKey: 0,
         };
+    },
+    computed: {
+        flashcardFeedbackStyle(): Record<string, string> {
+            if (!this.flashcardFeedback) {
+                return {};
+            }
+
+            return { top: `${this.flashcardFeedback.top}px`, left: `${this.flashcardFeedback.left}px` };
+        },
     },
     methods: {
         onReceivingVocab(): void {
@@ -229,16 +264,47 @@ export default defineComponent({
                 !this.vocabulary.genericExternalLinks?.length;
         },
 
-        async insertIntoLeitnerBox(): Promise<void> {
+        async insertIntoLeitnerBox(clickEvent: MouseEvent): Promise<void> {
+            const target = clickEvent.currentTarget as HTMLElement | null;
+            const origin = target ? this.centerOf(target) : null;
+
             this.disableBoxInsertionButton = true;
-            await LeitnerSystemService.insertIntoLeitnerBox(`${this.vocabulary.id}`);
+            const isCreated = await LeitnerSystemService.insertIntoLeitnerBox(`${this.vocabulary.id}`);
             this.disableBoxInsertionButton = false;
+
+            if (!isCreated) {
+                return;
+            }
+
             this.isInLeitnerBox = true;
+
+            if (origin) {
+                this.playFlashcardFeedback(origin);
+            }
+        },
+
+        centerOf(element: HTMLElement): FlashcardFeedback {
+            const { top, left, width, height } = element.getBoundingClientRect();
+
+            return {
+                top: top + height / 2 + window.scrollY,
+                left: left + width / 2 + window.scrollX,
+            };
+        },
+
+        playFlashcardFeedback(origin: FlashcardFeedback): void {
+            this.flashcardFeedback = origin;
+            this.flashcardFeedbackKey += 1;
+        },
+
+        onFlashcardFeedbackComplete(): void {
+            this.flashcardFeedback = null;
         },
 
         clean(): void {
             this.isInLeitnerBox = false;
             this.showDefaultMessage = false;
+            this.flashcardFeedback = null;
         },
     },
 });
@@ -324,5 +390,16 @@ ul {
 }
 .leitner-icon {
     font-size: var(--icon-md);
+}
+
+.flashcard-feedback {
+    position: absolute;
+    z-index: 20;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.flashcard-feedback__animation {
+    width: 88px;
 }
 </style>

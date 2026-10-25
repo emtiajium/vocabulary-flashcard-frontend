@@ -161,8 +161,14 @@ npm run store:images
 
 The finished images land in `play-store/rendered/<device-type>/`.
 
+> Turn the running app off before you run `npm run store:serve`. Both use port 8090, and
+> if it is already taken the dev server quietly moves to the next free port while the
+> capture keeps asking for 8090 — so every screen fails on a selector, as if the capture
+> script were broken. Stop the app you have running first.
+
 ## Change Log
 
+-   `8.0.0`: Introduced Lottie animations across the app, including onboarding, flashcards, spaced repetition, learning progress, empty states, and game feedback. Refreshed the onboarding experience, improved visual consistency across light and dark themes, and added automated tests for Lottie assets.
 -   `7.0.1`: Upgraded Node to 22.23.4 (security release)
 -   `7.0.0`: Play Store screenshots automation
 -   `6.0.3`: Upgraded `class-validator` and `class-transformer`, removed `iterare` + Integration tests for the upsert flows
@@ -292,6 +298,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Android Release Log
 
+-   `113`: `8.0.0`
 -   `112`: `6.0.2`
 -   `111`: `6.0.1`
 -   `110`: `6.0.0`

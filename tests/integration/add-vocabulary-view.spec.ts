@@ -69,7 +69,7 @@ jest.mock('@/utils/Toast', () => ({
 
 jest.mock('@/utils/Alert', () => ({
     __esModule: true,
-    default: { presentAlertConfirm: jest.fn() },
+    default: { presentConfirm: jest.fn() },
 }));
 
 jest.mock('@/utils/NativeStorage', () => ({
@@ -216,7 +216,7 @@ describe('Vocabulary upsert view (integration)', () => {
             await vm(wrapper).persist();
 
             expect(http.post).not.toHaveBeenCalled();
-            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Please add a meaning/));
+            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Please add a meaning/), 'error');
         });
 
         it('SHOULD not call the API and SHOULD show the message WHEN an edited definition has no example', async () => {
@@ -229,7 +229,7 @@ describe('Vocabulary upsert view (integration)', () => {
             await vm(wrapper).persist();
 
             expect(http.post).not.toHaveBeenCalled();
-            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Add at least one example/));
+            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Add at least one example/), 'error');
         });
     });
 
@@ -283,7 +283,7 @@ describe('Vocabulary upsert view (integration)', () => {
             await vm(wrapper).persist();
 
             expect(http.post).not.toHaveBeenCalled();
-            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/at least one definition/));
+            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/at least one definition/), 'error');
         });
 
         it('SHOULD not call the API WHEN the word is blank', async () => {
@@ -295,7 +295,7 @@ describe('Vocabulary upsert view (integration)', () => {
             await vm(wrapper).persist();
 
             expect(http.post).not.toHaveBeenCalled();
-            expect(toast.present).toHaveBeenCalledWith("Please enter a word. This field can't be left blank.");
+            expect(toast.present).toHaveBeenCalledWith("Please enter a word. This field can't be left blank.", 'error');
         });
 
         it('SHOULD not call the API WHEN a child view provides an empty linker word', async () => {
@@ -308,7 +308,7 @@ describe('Vocabulary upsert view (integration)', () => {
             await vm(wrapper).persist();
 
             expect(http.post).not.toHaveBeenCalled();
-            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Linker words can't be empty/));
+            expect(toast.present).toHaveBeenCalledWith(expect.stringMatching(/Linker words can't be empty/), 'error');
         });
     });
 
@@ -322,7 +322,7 @@ describe('Vocabulary upsert view (integration)', () => {
             vm(wrapper).onComingBackToVocab(buildDefinitionInstance());
             await vm(wrapper).persist();
 
-            expect(toast.present).toHaveBeenCalledWith('Something went wrong on the server.');
+            expect(toast.present).toHaveBeenCalledWith('Something went wrong on the server.', 'error');
             expect(vm(wrapper).disableSaveButton).toBe(false);
         });
     });

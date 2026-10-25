@@ -1,15 +1,10 @@
 <template>
     <ion-page>
-        <firecracker-header
-            :header-title="$route.params.word"
-            content-id="dictionary"
-            menu-id="dictionary-menu"
-            type="BACK"
-        />
+        <firecracker-header :header-title="word" content-id="dictionary" menu-id="dictionary-menu" type="BACK" />
         <ion-content :fullscreen="true" id="dictionary">
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
-                    <dictionary :word="$route.params.word" :label-alignment="'center'" />
+                    <dictionary :word="word" :label-alignment="'center'" />
                 </ion-col>
             </ion-row>
         </ion-content>
@@ -31,6 +26,12 @@ export default defineComponent({
         IonContent,
         IonRow,
         IonCol,
+    },
+    computed: {
+        /** The router types params as `string | string[]`; this route carries one word. */
+        word(): string {
+            return this.$route.params.word as string;
+        },
     },
 });
 </script>

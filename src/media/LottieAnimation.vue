@@ -1,0 +1,512 @@
+<template>
+    <div ref="root" class="lottie-animation" :style="aspectRatioStyle" v-bind="accessibilityAttributes">
+        <div v-show="!shouldRenderFallback" ref="surface" class="lottie-animation__surface"></div>
+        <div v-if="shouldRenderFallback" class="lottie-animation__fallback">
+            <slot name="fallback" />
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
+import type { LottieAnimationData } from '@/domains/LottieAnimationData';
+import type { AnimationItem, LottiePlayer } from 'lottie-web';
+
+type Rgb = [number, number, number];
+type PaletteKey = 'primary' | 'accent' | 'contrast';
+type Palette = Record<PaletteKey, Rgb>;
+
+/**
+ * The animation assets are authored with these exact colors as placeholders.
+ * At runtime they are swapped for the values of the CSS variables below, which
+ * keeps a single asset working across the light and dark themes (and any future
+ * brand palette) instead of shipping one JSON file per theme.
+ *
+ * See `src/media/lottie/README.md` for the authoring contract.
+ */
+const PLACEHOLDER_PALETTE: Palette = {
+    primary: [24, 121, 78],
+    accent: [60, 142, 106],
+    contrast: [250, 250, 250],
+};
+
+const COLOR_TOLERANCE = 2;
+const COLOR_SHAPE_TYPES = ['fl', 'st'];
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+const HEX_COLOR_PATTERN = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+const RGB_COLOR_PATTERN = /^rgba?\(\s*(\d+(?:\.\d+)?)[\s,]+(\d+(?:\.\d+)?)[\s,]+(\d+(?:\.\d+)?)/i;
+
+/**
+ * `lottie-web` is ~168 kB minified, and it is only needed on the screens that
+ * actually animate. It is loaded on demand so it never lands in the initial
+ * bundle, and the promise is cached so the four intro slides share one download.
+ */
+let lottieLoader: Promise<{ default: LottiePlayer }> | null = null;
+
+const loadLottie = (): Promise<{ default: LottiePlayer }> => {
+    if (!lottieLoader) {
+        lottieLoader = import(/* webpackChunkName: "lottie-player" */ 'lottie-web/build/player/lottie_light');
+    }
+
+    return lottieLoader;
+};
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+    typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const isColorArray = (value: unknown): value is number[] =>
+    Array.isArray(value) && value.length >= 3 && value.every((channel) => typeof channel === 'number');
+
+const toBytes = (channels: number[]): Rgb => [
+    Math.round(channels[0] * 255),
+    Math.round(channels[1] * 255),
+    Math.round(channels[2] * 255),
+];
+
+const matchPlaceholder = (bytes: Rgb): PaletteKey | null => {
+    const keys: PaletteKey[] = ['primary', 'accent', 'contrast'];
+
+    return (
+        keys.find((key) =>
+            PLACEHOLDER_PALETTE[key].every((channel, index) => Math.abs(channel - bytes[index]) <= COLOR_TOLERANCE),
+        ) ?? null
+    );
+};
+
+const themeShapeColor = (shape: Record<string, unknown>, palette: Palette): void => {
+    const color = shape.c;
+
+    if (!isRecord(color) || color.a !== 0 || !isColorArray(color.k)) {
+        return;
+    }
+
+    const key = matchPlaceholder(toBytes(color.k));
+
+    if (!key) {
+        return;
+    }
+
+    const [red, green, blue] = palette[key];
+    const alpha = color.k[3] ?? 1;
+    color.k = [red / 255, green / 255, blue / 255, alpha];
+};
+
+/** Recursively swaps the placeholder colors of every fill/stroke in the tree. */
+const applyPalette = (node: unknown, palette: Palette): void => {
+    if (Array.isArray(node)) {
+        node.forEach((child) => applyPalette(child, palette));
+        return;
+    }
+
+    if (!isRecord(node)) {
+        return;
+    }
+
+    if (typeof node.ty === 'string' && COLOR_SHAPE_TYPES.includes(node.ty)) {
+        themeShapeColor(node, palette);
+    }
+
+    Object.values(node).forEach((child) => applyPalette(child, palette));
+};
+
+const parseColor = (value: string): Rgb | null => {
+    const normalized = value.trim();
+
+    if (!normalized) {
+        return null;
+    }
+
+    const hex = normalized.match(HEX_COLOR_PATTERN);
+
+    if (hex) {
+        const digits =
+            hex[1].length === 3
+                ? hex[1]
+                      .split('')
+                      .map((digit) => digit + digit)
+                      .join('')
+                : hex[1];
+        const red = parseInt(digits.slice(0, 2), 16);
+        const green = parseInt(digits.slice(2, 4), 16);
+        const blue = parseInt(digits.slice(4, 6), 16);
+
+        return [red, green, blue];
+    }
+
+    const rgb = normalized.match(RGB_COLOR_PATTERN);
+
+    if (rgb) {
+        return [Math.round(Number(rgb[1])), Math.round(Number(rgb[2])), Math.round(Number(rgb[3]))];
+    }
+
+    return null;
+};
+
+const prefersReducedMotion = (): boolean =>
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia(REDUCED_MOTION_QUERY).matches;
+
+export default defineComponent({
+    name: 'LottieAnimation',
+    emits: ['complete'],
+    props: {
+        /** A Lottie/bodymovin JSON document, imported from `src/media/lottie`. */
+        animationData: {
+            type: Object as PropType<LottieAnimationData>,
+            required: true,
+        },
+        primaryColorVariable: {
+            type: String,
+            default: '--ion-color-primary',
+        },
+        accentColorVariable: {
+            type: String,
+            default: '--ion-color-primary-tint',
+        },
+        contrastColorVariable: {
+            type: String,
+            default: '--ion-color-primary-contrast',
+        },
+        loop: {
+            type: Boolean,
+            default: true,
+        },
+        autoplay: {
+            type: Boolean,
+            default: true,
+        },
+        /** Decorative animations are hidden from assistive technologies. */
+        decorative: {
+            type: Boolean,
+            default: true,
+        },
+        ariaLabel: {
+            type: String,
+            default: '',
+        },
+    },
+    data() {
+        return {
+            animation: null as AnimationItem | null,
+            hasCompleted: false,
+            hasReportedCompletion: false,
+            hasFailed: false,
+            isVisible: true,
+            isUnmounted: false,
+            isReducedMotion: prefersReducedMotion(),
+            paletteSignature: '',
+            observer: null as IntersectionObserver | null,
+            themeObserver: null as MutationObserver | null,
+            motionQuery: null as MediaQueryList | null,
+        };
+    },
+    computed: {
+        /**
+         * The static illustration (the `fallback` slot) stands in whenever the
+         * animation is not the thing on screen:
+         *
+         * - it failed, so there is nothing else to show;
+         * - it is a one-shot that has finished, so the surface settles into an
+         *   illustration rather than an empty frame (a one-shot is invisible on
+         *   its last frame by contract);
+         * - motion is reduced, where a frozen frame of a looping animation is
+         *   rarely a complete composition.
+         */
+        shouldRenderFallback(): boolean {
+            const hasFallback = Boolean(this.$slots.fallback);
+
+            if (this.hasFailed || !hasFallback) {
+                return this.hasFailed;
+            }
+
+            return (!this.loop && this.hasCompleted) || this.isReducedMotion;
+        },
+        aspectRatioStyle(): Record<string, string> {
+            const width = Number(this.animationData.w) || 1;
+            const height = Number(this.animationData.h) || 1;
+
+            return { aspectRatio: `${width} / ${height}` };
+        },
+        accessibilityAttributes(): Record<string, string> {
+            return this.decorative ? { 'aria-hidden': 'true' } : { role: 'img', 'aria-label': this.ariaLabel };
+        },
+    },
+    watch: {
+        /**
+         * Swapping the document (for example between a "correct" and an
+         * "incorrect" burst) has to replace the running instance, otherwise the
+         * surface keeps rendering the previous animation.
+         */
+        animationData(): void {
+            this.hasFailed = false;
+            this.destroyAnimation();
+            this.createAnimation();
+        },
+    },
+    mounted() {
+        document.addEventListener('visibilitychange', this.handleVisibilityChange);
+        this.watchMotionPreference();
+        this.watchTheme();
+        this.observeVisibility();
+        this.createAnimation();
+    },
+    beforeUnmount() {
+        this.isUnmounted = true;
+        document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+        this.observer?.disconnect();
+        this.observer = null;
+        this.themeObserver?.disconnect();
+        this.themeObserver = null;
+
+        if (this.motionQuery && typeof this.motionQuery.removeEventListener === 'function') {
+            this.motionQuery.removeEventListener('change', this.handleMotionPreferenceChange);
+        }
+
+        this.destroyAnimation();
+    },
+    methods: {
+        async createAnimation(): Promise<void> {
+            // A fresh attempt is a fresh lifecycle, so it may report completion
+            // again: the document may have been swapped or the theme changed.
+            this.hasReportedCompletion = false;
+
+            const surface = this.$refs.surface as HTMLElement | undefined;
+
+            if (!surface || this.animation || this.isUnmounted) {
+                return;
+            }
+
+            // The static fallback stands in for the animation, so nothing will
+            // play. A one-shot still has to report, or whatever is waiting on it
+            // (the Leitner empty state, for example) waits forever.
+            if (this.shouldRenderFallback) {
+                this.reportCompletion();
+                return;
+            }
+
+            try {
+                const { default: lottie } = await loadLottie();
+
+                if (this.isUnmounted || this.animation || this.shouldRenderFallback) {
+                    return;
+                }
+
+                const data = JSON.parse(JSON.stringify(this.animationData)) as LottieAnimationData;
+                const palette = this.resolvePalette();
+                applyPalette(data, palette);
+                this.paletteSignature = JSON.stringify(palette);
+
+                const item = lottie.loadAnimation({
+                    container: surface,
+                    renderer: 'svg',
+                    loop: !this.isReducedMotion && this.loop,
+                    autoplay: false,
+                    animationData: data,
+                    rendererSettings: {
+                        progressiveLoad: true,
+                        preserveAspectRatio: 'xMidYMid meet',
+                    },
+                });
+
+                item.addEventListener('data_failed', () => {
+                    this.handleFailure();
+                });
+
+                item.addEventListener('complete', () => {
+                    this.hasCompleted = true;
+                    this.reportCompletion();
+                });
+
+                item.addEventListener('DOMLoaded', () => {
+                    if (this.isReducedMotion) {
+                        item.goToAndStop(Math.max(item.totalFrames - 1, 0), true);
+                        this.reportCompletion();
+                    }
+                });
+
+                this.hasCompleted = false;
+                this.animation = item;
+                this.syncPlayback();
+            } catch {
+                // The chunk can fail to download, and loadAnimation can reject a
+                // document. Either way the fallback has to appear and a one-shot
+                // has to report, so failures are handled in one place rather
+                // than by every caller.
+                this.handleFailure();
+            }
+        },
+
+        destroyAnimation(): void {
+            this.animation?.destroy();
+            this.animation = null;
+        },
+
+        /**
+         * The single failure path: show the static fallback, and let a one-shot
+         * report completion. Every way an animation can fail to appear runs
+         * through here, so no caller has to remember to release its UI.
+         */
+        handleFailure(): void {
+            this.hasFailed = true;
+            this.reportCompletion();
+        },
+
+        /**
+         * A consumer may gate UI on `complete` (the Leitner box page reveals its
+         * empty state only after the mastery celebration). A one-shot therefore
+         * also reports completion when it will not play at all — reduced motion or
+         * a load failure — instead of leaving that UI waiting forever.
+         *
+         * Several paths can finish or fail one attempt (`complete`, `data_failed`,
+         * a rejected import), so this reports at most once per attempt.
+         */
+        reportCompletion(): void {
+            if (this.loop || this.hasReportedCompletion) {
+                return;
+            }
+
+            this.hasReportedCompletion = true;
+            this.$emit('complete');
+        },
+
+        /**
+         * Only the visible, foreground slide animates. Off-screen slides (Swiper
+         * keeps them in the DOM) and a backgrounded tab are paused, which keeps
+         * the onboarding screen cheap on low-end Android devices.
+         */
+        syncPlayback(): void {
+            if (!this.animation) {
+                return;
+            }
+
+            const shouldPlay = this.autoplay && !this.isReducedMotion && this.isVisible && !document.hidden;
+            const isFinished = this.hasCompleted && !this.loop;
+
+            if (shouldPlay && !isFinished) {
+                this.animation.play();
+            } else {
+                this.animation.pause();
+            }
+        },
+
+        observeVisibility(): void {
+            if (typeof IntersectionObserver === 'undefined') {
+                return;
+            }
+
+            const root = this.$refs.root as HTMLElement | undefined;
+
+            if (!root) {
+                return;
+            }
+
+            this.observer = new IntersectionObserver(
+                (entries) => {
+                    const [entry] = entries;
+                    this.isVisible = Boolean(entry?.isIntersecting);
+                    this.syncPlayback();
+                },
+                { threshold: 0 },
+            );
+            this.observer.observe(root);
+        },
+
+        watchMotionPreference(): void {
+            if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+                return;
+            }
+
+            this.motionQuery = window.matchMedia(REDUCED_MOTION_QUERY);
+            this.isReducedMotion = this.motionQuery.matches;
+
+            if (typeof this.motionQuery.addEventListener === 'function') {
+                this.motionQuery.addEventListener('change', this.handleMotionPreferenceChange);
+            }
+        },
+
+        watchTheme(): void {
+            if (typeof MutationObserver === 'undefined' || typeof document === 'undefined') {
+                return;
+            }
+
+            this.themeObserver = new MutationObserver(() => {
+                this.handleThemeChange();
+            });
+
+            const attributes = { attributes: true, attributeFilter: ['class'] };
+            this.themeObserver.observe(document.documentElement, attributes);
+            this.themeObserver.observe(document.body, attributes);
+        },
+
+        resolvePalette(): Palette {
+            return {
+                primary: this.readColorVariable(this.primaryColorVariable, PLACEHOLDER_PALETTE.primary),
+                accent: this.readColorVariable(this.accentColorVariable, PLACEHOLDER_PALETTE.accent),
+                contrast: this.readColorVariable(this.contrastColorVariable, PLACEHOLDER_PALETTE.contrast),
+            };
+        },
+
+        readColorVariable(variable: string, fallback: Rgb): Rgb {
+            if (typeof document === 'undefined') {
+                return fallback;
+            }
+
+            return parseColor(getComputedStyle(document.body).getPropertyValue(variable)) ?? fallback;
+        },
+
+        handleVisibilityChange(): void {
+            this.syncPlayback();
+        },
+
+        handleMotionPreferenceChange(event: MediaQueryListEvent): void {
+            this.isReducedMotion = event.matches;
+
+            if (this.shouldRenderFallback) {
+                this.destroyAnimation();
+            } else {
+                this.createAnimation();
+            }
+        },
+
+        handleThemeChange(): void {
+            if (!this.animation) {
+                return;
+            }
+
+            const signature = JSON.stringify(this.resolvePalette());
+
+            if (signature === this.paletteSignature) {
+                return;
+            }
+
+            this.destroyAnimation();
+            this.createAnimation();
+        },
+    },
+});
+</script>
+
+<style scoped>
+.lottie-animation {
+    position: relative;
+    display: block;
+}
+
+.lottie-animation__surface,
+.lottie-animation__fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fits either an inline SVG or an image used as the static fallback. */
+.lottie-animation__surface :deep(svg),
+.lottie-animation__fallback :deep(svg),
+.lottie-animation__fallback :deep(img) {
+    width: 100%;
+    height: 100%;
+}
+</style>

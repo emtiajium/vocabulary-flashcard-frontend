@@ -45,7 +45,7 @@ export default defineComponent({
                     await this.$router.replace('/sign-in');
                 }
             } catch (error) {
-                await Promise.all([Toast.present(MessageDB.genericError), this.$router.push('/sign-in')]);
+                await Promise.all([Toast.present(MessageDB.genericError, 'error'), this.$router.push('/sign-in')]);
             }
         },
         async assertNotifyingAboutAvailableUpdate(): Promise<void> {
@@ -62,23 +62,17 @@ export default defineComponent({
             }
         },
         notifyAboutAvailableUpdate(): void {
-            Alert.presentAlertConfirm(
-                '',
-                'There is a newer version available for download. Would you like to update it now?',
-                async () => {
+            Alert.presentConfirm({
+                message: 'There is a newer version available for download. Would you like to update it now?',
+                confirmLabel: 'Update',
+                cancelLabel: 'No thanks!',
+                onConfirm: async () => {
                     window.open(
                         'https://play.google.com/store/apps/details?id=com.emtiajium.firecracker.collaborative.vocab.practice',
                         '_blank',
                     );
                 },
-                async () => {
-                    return Promise.resolve();
-                },
-                {
-                    cancel: 'No thanks!',
-                    agree: 'Update',
-                },
-            ).finally();
+            }).finally();
         },
     },
 });

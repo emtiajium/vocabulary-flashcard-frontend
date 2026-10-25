@@ -2,12 +2,9 @@
     <!-- All credit goes to Google -->
     <div class="qJTHM" data-new-gr-c-s-check-loaded="14.1086.0" data-gr-ext-installed="">
         <div id="container" class="haAclf" style="padding: 2px 10px">
-            <div
-                tabindex="0"
-                role="button"
-                aria-labelledby="button-label"
-                class="nsm7Bb-HzV7m-LgbsSe hJDwNd-SxQuSe MFS4be-JaPV2b-Ia7Qfc MFS4be-Ia7Qfc uaxL4e-RbRzK"
-            >
+            <!-- Presentational: the focusable control is the wrapper in SignIn.vue, which
+                 owns the click and the keyboard handling. -->
+            <div class="nsm7Bb-HzV7m-LgbsSe hJDwNd-SxQuSe MFS4be-JaPV2b-Ia7Qfc MFS4be-Ia7Qfc uaxL4e-RbRzK">
                 <div class="nsm7Bb-HzV7m-LgbsSe-MJoBVe"></div>
                 <div class="nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb">
                     <div class="nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf">

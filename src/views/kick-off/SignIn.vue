@@ -27,13 +27,18 @@
                             <div class="swiper-slide">
                                 <div class="display-flex ion-justify-content-center">
                                     <div>
-                                        <!-- disabling the rule as this <div /> is supposed to have appeared only on the Android native app -->
-                                        <!-- not sure how to navigate on Android native app using the keyboard -->
-                                        <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
+                                        <!-- The replica is decorative: the control is this wrapper, which
+                                             already owned the click. Space and Enter activate it too, and
+                                             Space's default is prevented so it cannot scroll the slides. -->
                                         <div
                                             v-if="isAndroid"
                                             class="display-flex ion-justify-content-center"
+                                            role="button"
+                                            tabindex="0"
+                                            aria-label="Continue with Google"
                                             @click="handleClick"
+                                            @keydown.enter.prevent="handleClick"
+                                            @keydown.space.prevent="handleClick"
                                         >
                                             <continue-with-google />
                                         </div>
@@ -150,22 +155,19 @@ export default defineComponent({
                 return this.handleSignIn();
             }
 
-            await Alert.presentAlertConfirm(
-                '',
-                `"Firecracker Vocabulary Flashcards" will collect your name, email address, and photo.`,
-                () => {
+            await Alert.presentConfirm({
+                message: `"Firecracker Vocabulary Flashcards" will collect your name, email address, and photo.`,
+                confirmLabel: 'Proceed',
+                cancelLabel: 'Deny',
+                onConfirm: () => {
                     return this.handleSignIn();
                 },
-                async () => {
+                onCancel: async () => {
                     if (!this.isAndroid) {
                         await GoogleAuthentication.signOut();
                     }
                 },
-                {
-                    cancel: 'Deny',
-                    agree: 'Proceed',
-                },
-            );
+            });
         },
 
         async handleSignIn(): Promise<void> {
@@ -187,7 +189,7 @@ export default defineComponent({
                 ) {
                     // https://developers.google.com/identity/sign-in/web/reference
                 } else {
-                    await Toast.present(MessageDB.networkError);
+                    await Toast.present(MessageDB.networkError, 'error');
                 }
             }
         },
