@@ -123,7 +123,7 @@ describe('Vocabulary list view (integration)', () => {
 
             expect(vm(wrapper).shouldDisplayFetchButton()).toBe(true);
             expect(wrapper.find('.lottie-stub').exists()).toBe(true);
-            expect((vm(wrapper).emptyVocabulariesAnimation as { nm: string }).nm).toBe('empty-vocabularies');
+            expect((vm(wrapper).emptyVocabulariesAnimation as { nm: string }).nm).toBe('announcement');
         });
 
         it('SHOULD keep the campaign icon as the static fallback', async () => {
