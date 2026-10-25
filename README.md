@@ -161,6 +161,11 @@ npm run store:images
 
 The finished images land in `play-store/rendered/<device-type>/`.
 
+> Turn the running app off before you run `npm run store:serve`. Both use port 8090, and
+> if it is already taken the dev server quietly moves to the next free port while the
+> capture keeps asking for 8090 — so every screen fails on a selector, as if the capture
+> script were broken. Stop the app you have running first.
+
 ## Change Log
 
 -   `8.0.0`: Lottie animations for the empty, loading and feedback states, a redesigned guessing game, and a themed toast, alert and spinner
