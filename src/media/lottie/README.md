@@ -18,12 +18,11 @@ The family describes the artwork, not how it is played: the consumer decides tha
 `loop` prop, and one asset can be used both ways (`fun-game` loops on an intro slide and
 plays once as the guessing game's empty state).
 
--   **One-shot** (`:loop="false"`) for anything that only marks a state or an event: an
-    empty list, a failed request, the end of a list, a finished game. It plays once and
-    then holds its static `fallback` illustration, so a screen left open is not
-    repainting forever.
--   **Looping** only where the movement is the message. Today that is the intro slides,
-    where the animation is the explanation of the feature.
+-   **One-shot** (`:loop="false"`) for anything that only marks a state or an event: a
+    failed request, the end of a list, a finished game. It plays once and then holds its
+    static `fallback` illustration, so a screen left open is not repainting forever.
+-   **Looping** where the movement is the message. Today that is the intro slides, where
+    the animation is the explanation of the feature, and the Leitner box empty state.
 
 Because a finished one-shot hands over to the `fallback` slot, that slot is what the
 screen settles on: it should be a complete static illustration of the same idea, not a
