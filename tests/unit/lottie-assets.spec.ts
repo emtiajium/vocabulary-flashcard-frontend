@@ -56,6 +56,7 @@ interface LottieDocument {
 interface Asset {
     document: LottieDocument;
     loop: boolean;
+    expectedFrames?: number;
 }
 
 /** Kept in sync with PLACEHOLDER_PALETTE in LottieAnimation.vue. */
@@ -73,7 +74,7 @@ const asDocument = (value: unknown): LottieDocument => value as unknown as Lotti
 
 const assets: Record<string, Asset> = {
     retention: { document: asDocument(retention), loop: true },
-    'spaced-repetition': { document: asDocument(spacedRepetition), loop: true },
+    'spaced-repetition': { document: asDocument(spacedRepetition), loop: true, expectedFrames: 180 },
     'join-us': { document: asDocument(joinUs), loop: true },
     'fun-game': { document: asDocument(funGame), loop: true },
     'game-complete': { document: asDocument(gameComplete), loop: true },
@@ -246,7 +247,7 @@ describe('Lottie animation assets', () => {
             expect(document.v).toEqual(expect.any(String));
             expect(document.fr).toBe(30);
             expect(document.ip).toBe(0);
-            expect(document.op).toBe(loop ? 120 : 45);
+            expect(document.op).toBe(asset.expectedFrames ?? (loop ? 120 : 45));
             expect(document.w).toBe(loop ? 200 : 120);
             expect(document.h).toBe(loop ? 200 : 120);
             expect(Array.isArray(document.layers)).toBe(true);
