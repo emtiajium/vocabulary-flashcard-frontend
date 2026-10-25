@@ -46,7 +46,8 @@
             </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            Join us to embed newly introduced words in your long-term memory.
+            Learning is better together! Join a cohort, discover new words, and strengthen your vocabulary through
+            regular practice.
         </ion-card-title>
     </ion-card>
 
