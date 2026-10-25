@@ -203,12 +203,24 @@ export default defineComponent({
     },
     computed: {
         /**
-         * When motion is reduced we prefer the static illustration (the `fallback`
-         * slot) over a frozen animation frame: a paused frame of a looping
-         * animation is rarely a complete composition.
+         * The static illustration (the `fallback` slot) stands in whenever the
+         * animation is not the thing on screen:
+         *
+         * - it failed, so there is nothing else to show;
+         * - it is a one-shot that has finished, so the surface settles into an
+         *   illustration rather than an empty frame (a one-shot is invisible on
+         *   its last frame by contract);
+         * - motion is reduced, where a frozen frame of a looping animation is
+         *   rarely a complete composition.
          */
         shouldRenderFallback(): boolean {
-            return this.hasFailed || (this.isReducedMotion && Boolean(this.$slots.fallback));
+            const hasFallback = Boolean(this.$slots.fallback);
+
+            if (this.hasFailed || !hasFallback) {
+                return this.hasFailed;
+            }
+
+            return (!this.loop && this.hasCompleted) || this.isReducedMotion;
         },
         aspectRatioStyle(): Record<string, string> {
             const width = Number(this.animationData.w) || 1;

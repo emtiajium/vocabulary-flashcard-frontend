@@ -317,6 +317,49 @@ describe('LottieAnimation', () => {
         });
     });
 
+    describe('WHEN a one-shot animation has finished', () => {
+        it('SHOULD hold the static illustration instead of an empty last frame', async () => {
+            const wrapper = mountAnimation(
+                { loop: false },
+                { fallback: '<span class="fallback-marker">Static illustration</span>' },
+            );
+            await flushPromises();
+
+            expect(wrapper.find('.fallback-marker').exists()).toBe(false);
+
+            emitAnimationEvent('complete');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.find('.fallback-marker').exists()).toBe(true);
+            expect(wrapper.find('.lottie-animation__surface').attributes('style')).toContain('display: none');
+        });
+
+        it('SHOULD keep the animation WHEN it loops, because the movement carries meaning', async () => {
+            const wrapper = mountAnimation(
+                {},
+                { fallback: '<span class="fallback-marker">Static illustration</span>' },
+            );
+            await flushPromises();
+
+            emitAnimationEvent('complete');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.find('.fallback-marker').exists()).toBe(false);
+            expect(wrapper.find('.lottie-animation__surface').isVisible()).toBe(true);
+        });
+
+        it('SHOULD stay on the last frame WHEN no static illustration is provided', async () => {
+            const wrapper = mountAnimation({ loop: false });
+            await flushPromises();
+
+            emitAnimationEvent('complete');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.find('.lottie-animation__fallback').exists()).toBe(false);
+            expect(wrapper.find('.lottie-animation__surface').isVisible()).toBe(true);
+        });
+    });
+
     describe('WHEN the component is unmounted', () => {
         it('SHOULD destroy the lottie instance', async () => {
             const wrapper = mountAnimation();

@@ -3,7 +3,7 @@
         {{ message || defaultMessage }}
     </ion-card-subtitle>
     <view class="display-flex ion-justify-content-center ion-padding-bottom">
-        <lottie-animation class="network-error-animation" :animation-data="noConnectionAnimation">
+        <lottie-animation class="network-error-animation" :animation-data="noConnectionAnimation" :loop="false">
             <template #fallback>
                 <wifi-off-icon
                     :fill-color-variable="'--ion-color-primary'"

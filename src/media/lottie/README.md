@@ -7,31 +7,48 @@ bundled by webpack so they work offline (the app ships as a Capacitor/Android ap
 
 They come in two families:
 
-| Family       | Behaviour                                          | Used by                                                                                                                               |
-| ------------ | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **Looping**  | Plays forever; seamless at the loop point.         | `Intro.vue` slides, `game-complete`, `empty-flashcards`, `waiting-for-review`, `cohort-waiting`, `empty-vocabularies`, `empty-search` |
-| **One-shot** | Plays once on a user action, then stays invisible. | `answer-correct`, `answer-incorrect`, `mastered`, `flashcard-created`                                                                 |
+| Family    | Canvas, frames         | Notes                                                         |
+| --------- | ---------------------- | ------------------------------------------------------------- |
+| **Scene** | `200 x 200`, `0 - 120` | `4s`. Authored so it can loop seamlessly.                     |
+| **Burst** | `120 x 120`, `0 - 45`  | `1.5s`. Kept small because it is used as an icon-sized burst. |
+
+## Playback
+
+The family describes the artwork, not how it is played: the consumer decides that with the
+`loop` prop, and one asset can be used both ways (`fun-game` loops on an intro slide and
+plays once as the guessing game's empty state).
+
+-   **One-shot** (`:loop="false"`) for anything that only marks a state or an event: an
+    empty list, a failed request, the end of a list, a finished game. It plays once and
+    then holds its static `fallback` illustration, so a screen left open is not
+    repainting forever.
+-   **Looping** only where the movement is the message. Today that is the intro slides,
+    where the animation is the explanation of the feature.
+
+Because a finished one-shot hands over to the `fallback` slot, that slot is what the
+screen settles on: it should be a complete static illustration of the same idea, not a
+bare icon of last resort.
 
 ## Canvas conventions
 
-| Property     | Value                  | Notes                                                         |
-| ------------ | ---------------------- | ------------------------------------------------------------- |
-| Frame rate   | `30 fps`               |                                                               |
-| Looping      | `200 x 200`, `0 - 120` | `4s`.                                                         |
-| One-shot     | `120 x 120`, `0 - 45`  | `1.5s`. Kept small because it is used as an icon-sized burst. |
-| Shape layers | `ty: 4`, SVG           | Rendered with `lottie_light` (SVG renderer only).             |
+| Property     | Value        | Notes                                             |
+| ------------ | ------------ | ------------------------------------------------- |
+| Frame rate   | `30 fps`     |                                                   |
+| Scene        | `200 x 200`  |                                                   |
+| Burst        | `120 x 120`  | Centre its layers on `[60, 60]`.                  |
+| Shape layers | `ty: 4`, SVG | Rendered with `lottie_light` (SVG renderer only). |
 
 Remember that `ks.p` defaults to `[100, 100]` in the authoring helpers, which is the
-centre of a `200 x 200` canvas. A `120 x 120` one-shot has to centre its layers on
+centre of a `200 x 200` canvas. A `120 x 120` burst has to centre its layers on
 `[60, 60]` explicitly, or the artwork lands off-canvas.
 
 Inside a shape layer the **first group paints on top**, unlike layers where the first
 entry is also on top — keep that in mind when stacking a mark over a shape (the tick over
 the `mastered` card, the heart over the `flashcard-created` card).
 
-One-shot animations are mounted once and then left in the DOM, so they must be
-**invisible on the first _and_ the last frame**: the surface never shows a frozen
-symbol, and reduced motion (which renders the last frame) stays silent.
+A one-shot is mounted once and then left in the DOM, so it must be **invisible on the
+first _and_ the last frame**: the surface never shows a frozen symbol, and reduced motion
+(which renders the last frame when there is no `fallback` slot) stays silent.
 
 ## Geometry
 
@@ -77,4 +94,6 @@ animate a property that is continuous across the loop (for example a full `360°
 ## Accessibility
 
 `LottieAnimation.vue` never autoplays when `prefers-reduced-motion: reduce` is set; the
-static `fallback` slot of the consuming component is rendered instead.
+static `fallback` slot of the consuming component is rendered instead. The same slot is
+also what a finished one-shot settles into, and what a failed load falls back to, so it is
+worth treating as part of the composition rather than as an edge case.

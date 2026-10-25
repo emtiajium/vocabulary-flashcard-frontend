@@ -15,7 +15,7 @@
                 </ion-card-subtitle>
 
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <lottie-animation class="empty-state-animation" :animation-data="emptyStateAnimation">
+                    <lottie-animation class="empty-state-animation" :animation-data="emptyStateAnimation" :loop="false">
                         <template #fallback>
                             <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
                         </template>

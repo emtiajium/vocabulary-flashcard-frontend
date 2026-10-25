@@ -170,7 +170,7 @@
                 </div>
 
                 <div v-else-if="!vocabularies.length" class="game-empty">
-                    <lottie-animation class="game-empty__art" :animation-data="funGameAnimation">
+                    <lottie-animation class="game-empty__art" :animation-data="funGameAnimation" :loop="false">
                         <template #fallback>
                             <fun-icon
                                 :fill-color-variable="'--ion-color-primary'"
@@ -215,7 +215,11 @@
                     @willDismiss="isCompletionModalOpened = false"
                 >
                     <div class="completion-content">
-                        <lottie-animation class="completion-animation" :animation-data="gameCompleteAnimation">
+                        <lottie-animation
+                            class="completion-animation"
+                            :animation-data="gameCompleteAnimation"
+                            :loop="false"
+                        >
                             <template #fallback>
                                 <fun-icon
                                     :fill-color-variable="'--ion-color-primary'"

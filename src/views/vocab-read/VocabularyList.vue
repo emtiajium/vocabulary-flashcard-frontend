@@ -21,6 +21,7 @@
                                 <lottie-animation
                                     class="empty-vocabularies-animation"
                                     :animation-data="emptyVocabulariesAnimation"
+                                    :loop="false"
                                 >
                                     <template #fallback>
                                         <ion-item lines="none">
@@ -59,7 +60,11 @@
                     }}
                 </ion-card-subtitle>
                 <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <lottie-animation class="empty-search-animation" :animation-data="emptySearchAnimation">
+                    <lottie-animation
+                        class="empty-search-animation"
+                        :animation-data="emptySearchAnimation"
+                        :loop="false"
+                    >
                         <template #fallback>
                             <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
                         </template>

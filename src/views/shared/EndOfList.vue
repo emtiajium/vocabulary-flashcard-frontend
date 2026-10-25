@@ -2,7 +2,7 @@
     <view class="end-of-list">
         <ion-card-subtitle class="ion-padding ion-text-center">{{ message || defaultMessage }}</ion-card-subtitle>
         <view class="display-flex ion-justify-content-center ion-padding-bottom" :style="inlineStyle">
-            <lottie-animation class="end-of-list-animation" :animation-data="reachedTheEndAnimation">
+            <lottie-animation class="end-of-list-animation" :animation-data="reachedTheEndAnimation" :loop="false">
                 <template #fallback>
                     <font-awesome-icon :icon="faListCheck" class="firecracker-primary-color-icon-large" />
                 </template>

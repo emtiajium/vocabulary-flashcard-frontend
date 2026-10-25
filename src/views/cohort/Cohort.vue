@@ -18,7 +18,11 @@
                             </ion-card-subtitle>
                         </ion-card-header>
                         <ion-card-content class="display-flex ion-justify-content-center">
-                            <lottie-animation class="empty-cohort-icon" :animation-data="cohortWaitingAnimation">
+                            <lottie-animation
+                                class="empty-cohort-icon"
+                                :animation-data="cohortWaitingAnimation"
+                                :loop="false"
+                            >
                                 <template #fallback>
                                     <img src="/assets/icon/diversity.svg" alt="Cohort" />
                                 </template>
