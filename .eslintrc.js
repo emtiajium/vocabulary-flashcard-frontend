@@ -9,6 +9,7 @@ module.exports = {
     },
     extends: [
         'plugin:vue/vue3-essential',
+        'plugin:vuejs-accessibility/recommended',
         'eslint:recommended',
         '@vue/typescript/recommended',
         '@vue/eslint-config-airbnb',
@@ -30,7 +31,9 @@ module.exports = {
         'no-shadow': 'off',
         'no-use-before-define': 'error',
         'vue/multi-word-component-names': 'off',
-        'vuejs-accessibility/click-events-have-key-events': 'error',
+        // The recommended set leaves both of these off; every rule the plugin ships is on.
+        'vuejs-accessibility/accessible-emoji': 'error',
+        'vuejs-accessibility/no-onchange': 'error',
         'vue/no-unused-components': 'error',
     },
     overrides: [

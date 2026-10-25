@@ -57,6 +57,7 @@
                                 >
                                     <div class="added-definition-action-buttons">
                                         <ion-button
+                                            aria-label="Remove definition"
                                             color="warning"
                                             size="small"
                                             shape="round"
@@ -67,6 +68,7 @@
                                             <font-awesome-icon :icon="faMinusCircle" />
                                         </ion-button>
                                         <ion-button
+                                            aria-label="Edit definition"
                                             color="success"
                                             size="small"
                                             shape="round"
@@ -87,6 +89,7 @@
                             <ion-card-content class="add-definition-button-container">
                                 <ion-button
                                     v-if="!isLoading"
+                                    aria-label="Add definition"
                                     color="success"
                                     size="large"
                                     shape="round"
@@ -120,7 +123,7 @@
                             <ion-card-content>
                                 <ion-toggle
                                     class="draft-toggle"
-                                    area-label="Save the vocabulary as draft"
+                                    aria-label="Save the vocabulary as draft"
                                     :checked="isDraft"
                                     @ionChange="setIsDraft($event.target.checked)"
                                 />

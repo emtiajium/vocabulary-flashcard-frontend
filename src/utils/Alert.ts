@@ -43,6 +43,11 @@ export default class Alert {
             cssClass: 'firecracker-alert',
             header,
             message,
+            // Ionic names the dialog from the header, and these alerts put the question
+            // in the message instead, so without this the dialog is announced unnamed.
+            // The message stays the description. A header, when given, wins: Ionic then
+            // points `aria-labelledby` at it.
+            htmlAttributes: { 'aria-label': header ?? 'Please confirm' },
             buttons: [
                 {
                     text: cancelLabel,

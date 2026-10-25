@@ -63,31 +63,33 @@
                                             <span>{{ vocabulary.word }}</span>
                                         </p>
                                         <template v-else>
-                                            <ion-textarea
-                                                class="game-answer__field"
-                                                :aria-label="`Your answer for word ${index + 1}`"
-                                                placeholder="Type the word"
-                                                inputmode="text"
-                                                enterkeyhint="done"
-                                                autocapitalize="sentences"
-                                                autocomplete="off"
-                                                autocorrect="off"
-                                                :spellcheck="false"
-                                                :auto-grow="true"
-                                                :rows="1"
-                                                :value="givenAnswers[index]"
-                                                @ionInput="onGivingAnswer($event.detail.value as string, index)"
-                                                @keydown.enter.prevent="submitAnswer(vocabulary, index)"
-                                            >
+                                            <div class="game-answer__input-row">
+                                                <ion-textarea
+                                                    class="game-answer__field"
+                                                    :aria-label="`Your answer for word ${index + 1}`"
+                                                    placeholder="Type the word"
+                                                    inputmode="text"
+                                                    enterkeyhint="done"
+                                                    autocapitalize="sentences"
+                                                    autocomplete="off"
+                                                    autocorrect="off"
+                                                    :spellcheck="false"
+                                                    :auto-grow="true"
+                                                    :rows="1"
+                                                    :value="givenAnswers[index]"
+                                                    @ionInput="onGivingAnswer($event.detail.value as string, index)"
+                                                    @keydown.enter.prevent="submitAnswer(vocabulary, index)"
+                                                />
                                                 <!-- Mirrors the clear button Ionic puts inside its
-                                                     searchbar: a muted icon in the field's trailing edge,
-                                                     only while there is something to clear. It stays mounted
-                                                     and is hidden with `visibility` rather than unmounted, so
-                                                     its box keeps its place and the field does not reflow
-                                                     when the icon comes and goes. -->
+                                                     searchbar: a muted icon over the field's trailing edge,
+                                                     only while there is something to clear. It sits over the
+                                                     field rather than in its `end` slot, because a slotted
+                                                     icon brings the slot's own vertical padding with it and
+                                                     that stretched the field, pushing the single line off
+                                                     centre. `visibility` rather than unmounting, so its box
+                                                     keeps its place. -->
                                                 <button
                                                     type="button"
-                                                    slot="end"
                                                     class="game-answer__clear"
                                                     :class="{ 'game-answer__clear--hidden': !hasDraft(index) }"
                                                     :aria-label="`Clear your answer for word ${index + 1}`"
@@ -96,7 +98,7 @@
                                                 >
                                                     <font-awesome-icon :icon="clearIcon" aria-hidden="true" />
                                                 </button>
-                                            </ion-textarea>
+                                            </div>
                                             <ion-button
                                                 class="game-answer__check"
                                                 color="primary"
@@ -207,6 +209,7 @@
                 </div>
 
                 <ion-modal
+                    aria-label="How the daily game works"
                     :is-open="isInfoModalOpened"
                     :initial-breakpoint="0.4"
                     :breakpoints="[0, 0.4, 0.7, 0.9]"
@@ -227,6 +230,7 @@
                 </ion-modal>
 
                 <ion-modal
+                    aria-label="All words guessed"
                     :is-open="isCompletionModalOpened"
                     :initial-breakpoint="0.6"
                     :breakpoints="[0, 0.6, 0.85, 1]"
@@ -447,6 +451,7 @@ export default defineComponent({
 
             if (this.correctAnswerCount === this.vocabularies.length) {
                 NativeStorage.removeGuessingGameVocabularies().catch();
+                this.completeTodaysRound();
                 // The last correct guess is celebrated by the completion modal, so
                 // the per-answer burst is retired instead of being left mounted.
                 this.hasAnswerFeedback = false;
@@ -455,6 +460,17 @@ export default defineComponent({
                 this.storeInCache(cloneDeep(this.vocabularies));
                 this.playAnswerFeedback(isCorrect);
             }
+        },
+
+        /**
+         * Tells the backend the round is over, so the next visit is dealt a new game
+         * instead of the same words: today's set is only the round in progress while
+         * it is unfinished. Fire and forget, like the cache clear above — the
+         * celebration should not wait on a request, and the worst case is that the
+         * next round repeats.
+         */
+        completeTodaysRound(): void {
+            HttpHandler.post<undefined, void>(`/v1/vocabularies/definitions/random-search/complete`, undefined).catch();
         },
 
         playAnswerFeedback(isCorrect: boolean): void {
@@ -784,9 +800,18 @@ ion-content#guessing-game {
    Ionic renders its md "highlight" bar on a bare `ion-textarea` but skips it
    for fields inside an `ion-item` (which is why the vocabulary fields never
    show one). The app already draws a focus ring, so the bar is redundant. */
+.game-answer__input-row {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
 .game-answer__field {
     flex: 1 1 auto;
     min-width: 0;
+    /* Leaves the trailing edge to the clear icon. */
+    padding-inline-end: calc(var(--space-sm) + 32px);
     --highlight-height: 0;
     /* Ionic reserves 18px above and 8px below for a floating label that this
        field never renders, which leaves a single line sitting below centre.
@@ -799,10 +824,16 @@ ion-content#guessing-game {
     min-height: 0;
 }
 
-/* The clear button Ionic puts inside its searchbar, reproduced for this field.
-   It lives in the textarea's `end` slot, so it sits inside the field's border
-   rather than beside it. */
+/* The clear button Ionic puts inside its searchbar, reproduced for this field: it
+   sits inside the field's border, over its trailing edge, and is centred on the
+   field rather than on a line of text.
+   `z-index` above Ionic's own 2 on the textarea, or the field paints over the icon. */
 .game-answer__clear {
+    position: absolute;
+    top: 50%;
+    right: var(--space-2xs);
+    z-index: 3;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -825,9 +856,9 @@ ion-content#guessing-game {
     color: var(--ion-color-primary);
 }
 
-/* Hidden rather than unmounted, so the 32px stays reserved and the field does not
-   reflow when the icon appears. `visibility` also keeps it out of the tab order and
-   out of the accessibility tree while it is hidden. */
+/* `visibility` rather than unmounting: it keeps the icon out of the tab order and out
+   of the accessibility tree while there is nothing to clear, without touching the
+   field's layout. */
 .game-answer__clear--hidden {
     visibility: hidden;
     pointer-events: none;

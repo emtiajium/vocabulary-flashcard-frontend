@@ -1,9 +1,24 @@
 <template>
-    <ion-popover :is-open="isPopoverOpened" @didDismiss="closeSettingsPopover" class="settings-popover">
+    <!-- `role="dialog"`: Ionic marks the popover modal, and `aria-modal` is only
+         valid on a dialog, so the role it behaves as is declared here. -->
+    <ion-popover
+        role="dialog"
+        aria-label="Settings"
+        :is-open="isPopoverOpened"
+        @didDismiss="closeSettingsPopover"
+        class="settings-popover"
+    >
         <ion-content class="settings-container">
             <ion-list-header class="header-container">
                 <ion-card-title class="title"> Settings </ion-card-title>
-                <ion-button shape="round" size="small" color="primary" class="close" @click="closeSettingsPopover">
+                <ion-button
+                    aria-label="Close settings"
+                    shape="round"
+                    size="small"
+                    color="primary"
+                    class="close"
+                    @click="closeSettingsPopover"
+                >
                     <font-awesome-icon :icon="faTimesCircle" class="close-icon" />
                 </ion-button>
             </ion-list-header>

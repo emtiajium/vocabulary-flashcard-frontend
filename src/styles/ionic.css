@@ -88,8 +88,11 @@ ion-toolbar ion-searchbar {
     padding-inline: var(--space-2xs);
 }
 
+/* The field is inset into the coloured toolbar, so it is darkened rather than
+   lightened: a white wash behind near-white text only reached 3.7:1, below the 4.5:1
+   that normal-size text needs. A dark wash keeps the same look at 6.5:1. */
 body.light ion-toolbar ion-searchbar {
-    --background: rgba(250, 250, 250, 0.18);
+    --background: rgba(0, 0, 0, 0.16);
     --color: #fafafa;
     --icon-color: #fafafa;
     --placeholder-color: rgba(250, 250, 250, 0.85);

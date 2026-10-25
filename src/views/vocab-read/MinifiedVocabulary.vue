@@ -1,5 +1,5 @@
 <template>
-    <ion-card :button="true" class="margin-top-bottom-unset">
+    <ion-card class="margin-top-bottom-unset">
         <ion-row>
             <div
                 class="contents"
@@ -179,10 +179,19 @@ export default defineComponent({
         async seeMore(id: string, word: string): Promise<void> {
             await this.$router.push(`/vocabulary/read/${id}/${word}/${false}`);
         },
+        /**
+         * A `role="button"` answers to Space as well as Enter. Space would otherwise
+         * scroll the list, so its default is prevented.
+         */
         async onKeyDown(keyboardEvent: KeyboardEvent, id: string, word: string): Promise<void> {
-            if (keyboardEvent.code === 'Enter' || keyboardEvent.key === 'Enter') {
-                await this.seeMore(id, word);
+            const isActivationKey = ['Enter', 'Space', 'Spacebar', ' '].includes(keyboardEvent.key);
+
+            if (!isActivationKey) {
+                return;
             }
+
+            keyboardEvent.preventDefault();
+            await this.seeMore(id, word);
         },
         async confirmRemoval(vocabulary: Vocabulary): Promise<void> {
             await Alert.presentConfirm({

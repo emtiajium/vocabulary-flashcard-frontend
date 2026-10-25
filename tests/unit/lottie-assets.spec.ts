@@ -1,6 +1,7 @@
 import answerCorrect from '@/media/lottie/answer-correct.json';
 import answerIncorrect from '@/media/lottie/answer-incorrect.json';
 import cohortWaiting from '@/media/lottie/cohort-waiting.json';
+import emptyDefinition from '@/media/lottie/empty-definition.json';
 import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
 import emptySearch from '@/media/lottie/empty-search.json';
 import emptyVocabularies from '@/media/lottie/empty-vocabularies.json';
@@ -76,6 +77,7 @@ const assets: Record<string, Asset> = {
     'join-us': { document: asDocument(joinUs), loop: true },
     'fun-game': { document: asDocument(funGame), loop: true },
     'game-complete': { document: asDocument(gameComplete), loop: true },
+    'empty-definition': { document: asDocument(emptyDefinition), loop: true },
     'empty-flashcards': { document: asDocument(emptyFlashcards), loop: true },
     'waiting-for-review': { document: asDocument(waitingForReview), loop: true },
     'cohort-waiting': { document: asDocument(cohortWaiting), loop: true },

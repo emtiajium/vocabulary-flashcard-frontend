@@ -27,13 +27,18 @@
                             <div class="swiper-slide">
                                 <div class="display-flex ion-justify-content-center">
                                     <div>
-                                        <!-- disabling the rule as this <div /> is supposed to have appeared only on the Android native app -->
-                                        <!-- not sure how to navigate on Android native app using the keyboard -->
-                                        <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
+                                        <!-- The replica is decorative: the control is this wrapper, which
+                                             already owned the click. Space and Enter activate it too, and
+                                             Space's default is prevented so it cannot scroll the slides. -->
                                         <div
                                             v-if="isAndroid"
                                             class="display-flex ion-justify-content-center"
+                                            role="button"
+                                            tabindex="0"
+                                            aria-label="Continue with Google"
                                             @click="handleClick"
+                                            @keydown.enter.prevent="handleClick"
+                                            @keydown.space.prevent="handleClick"
                                         >
                                             <continue-with-google />
                                         </div>

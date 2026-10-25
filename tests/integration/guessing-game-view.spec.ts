@@ -4,6 +4,7 @@
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import GuessingGame from '@/views/vocab-read/GuessingGame.vue';
 import NativeStorage from '@/utils/NativeStorage';
+import HttpHandler from '@/utils/HttpHandler';
 import { RandomlyChosenMeaningResponse } from '@/domains/RandomlyChosenMeaningResponse';
 
 jest.mock('@ionic/vue', () => {
@@ -119,6 +120,8 @@ const nativeStorage = NativeStorage as unknown as {
     removeGuessingGameVocabularies: jest.Mock;
 };
 
+const httpPost = (HttpHandler as unknown as { post: jest.Mock }).post;
+
 const vocabularies = (): RandomlyChosenMeaningResponse[] => [
     { meaning: 'The ability to understand and decide things quickly and well.', word: 'Acumen' },
     { meaning: 'Grasp (something) tightly', word: 'Clutch' },
@@ -161,6 +164,7 @@ describe('Guessing game view (integration)', () => {
     beforeEach(() => {
         nativeStorage.setGuessingGameVocabularies.mockResolvedValue(undefined);
         nativeStorage.removeGuessingGameVocabularies.mockResolvedValue(undefined);
+        httpPost.mockResolvedValue(undefined);
     });
 
     afterEach(() => {
@@ -350,6 +354,23 @@ describe('Guessing game view (integration)', () => {
             expect(vm(wrapper).hasAnswerFeedback).toBe(false);
             expect(vm(wrapper).answerFeedbackKey).toBe(1);
             expect(nativeStorage.removeGuessingGameVocabularies).toHaveBeenCalled();
+        });
+
+        it('SHOULD tell the backend the round is over, so the next visit is a new game', async () => {
+            const wrapper = await mountView(vocabularies());
+
+            await answer(wrapper, 0, 'Acumen');
+            await answer(wrapper, 1, 'Clutch');
+
+            expect(httpPost).toHaveBeenCalledWith('/v1/vocabularies/definitions/random-search/complete', undefined);
+        });
+
+        it('SHOULD not report the round over while some words are still unanswered', async () => {
+            const wrapper = await mountView(vocabularies());
+
+            await answer(wrapper, 0, 'Acumen');
+
+            expect(httpPost).not.toHaveBeenCalledWith('/v1/vocabularies/definitions/random-search/complete', undefined);
         });
 
         it('SHOULD not celebrate while some words are still unanswered', async () => {
