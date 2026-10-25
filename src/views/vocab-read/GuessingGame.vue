@@ -163,7 +163,7 @@
                                 :accent-color-variable="
                                     isAnswerCorrect ? '--ion-color-primary-tint' : '--ion-color-warning-tint'
                                 "
-                                :loop="true"
+                                :loop="false"
                             />
                         </div>
                     </div>
