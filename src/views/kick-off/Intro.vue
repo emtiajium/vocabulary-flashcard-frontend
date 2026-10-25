@@ -11,8 +11,7 @@
             </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            Ever wonder why you still remember the meaning of the words you learned in your childhood but struggle with
-            a vocab learned a few days or weeks back?
+            Ever wonder why you can remember words you learned as a child but forget new ones after just a few days?
         </ion-card-title>
     </ion-card>
 
@@ -28,9 +27,8 @@
             </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            According to science, <strong>spaced repetition</strong> is one of the techniques to retain anything in the
-            long term. The Leitner system works based on this principle. It suggests creating a
-            <strong>flashcard</strong> for each item and reviewing those at an interval.
+            That's where <strong>spaced repetition</strong> comes in! The <strong>Leitner system</strong> helps you
+            remember words by reviewing <strong>flashcards</strong> at intervals based on how well you remember them.
         </ion-card-title>
     </ion-card>
 
@@ -63,10 +61,8 @@
             </lottie-animation>
         </div>
         <ion-card-title class="ion-padding-top ion-text-center">
-            To make your learning experience more enjoyable and effective, try our <strong>word guessing game</strong>.
-            This fun and engaging activity challenges you to think critically and make connections between words and
-            their meanings, enhancing your cognitive abilities while reinforcing what you've learned through spaced
-            repetition.
+            Make learning more fun with our <strong>word guessing game</strong>! Use clues to find the right word and
+            reinforce what you've learned.
         </ion-card-title>
     </ion-card>
 </template>
