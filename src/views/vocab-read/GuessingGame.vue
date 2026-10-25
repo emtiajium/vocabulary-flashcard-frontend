@@ -276,7 +276,7 @@ import answerCorrect from '@/media/lottie/answer-correct.json';
 import answerIncorrect from '@/media/lottie/answer-incorrect.json';
 import gameComplete from '@/media/lottie/game-complete.json';
 import funGame from '@/media/lottie/fun-game.json';
-import type { LottieAnimationData } from '@/media/lottie/types';
+import type { LottieAnimationData } from '@/domains/LottieAnimationData';
 import HttpHandler from '@/utils/HttpHandler';
 import Toast from '@/utils/Toast';
 import MessageDB from '@/utils/MessageDB';

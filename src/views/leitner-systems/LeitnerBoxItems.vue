@@ -176,7 +176,7 @@ import {
 import EndOfList from '@/views/shared/EndOfList.vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
-import type { LottieAnimationData } from '@/media/lottie/types';
+import type { LottieAnimationData } from '@/domains/LottieAnimationData';
 import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
 import waitingForReview from '@/media/lottie/waiting-for-review.json';
 import mastered from '@/media/lottie/mastered.json';

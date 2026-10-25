@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import type { LottieAnimationData } from '@/media/lottie/types';
+import type { LottieAnimationData } from '@/domains/LottieAnimationData';
 import type { AnimationItem, LottiePlayer } from 'lottie-web';
 
 type Rgb = [number, number, number];

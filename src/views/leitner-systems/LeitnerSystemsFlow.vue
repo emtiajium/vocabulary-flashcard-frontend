@@ -119,7 +119,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faArrowLeft, faArrowRight, faRefresh } from '@fortawesome/free-solid-svg-icons';
 import EmptyBoxIcon from '@/media/EmptyBoxIcon.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
-import mastered from '@/media/lottie/mastered.json';
+import star from '@/media/lottie/star.json';
 import MappedLeitnerBoxWithDays, { MappedLeitnerBoxWithDueText } from '@/domains/MappedLeitnerBoxWithDays';
 
 type StatusType = 'forward' | 'backward' | 'info';
@@ -154,7 +154,7 @@ export default defineComponent({
             firstBox: boxNumbers[0],
             lastBox: boxNumbers[boxNumbers.length - 1],
             currentBox: boxNumbers[0],
-            masteredAnimation: mastered,
+            masteredAnimation: star,
             statusType: 'info' as StatusType,
             statusMessage: 'Your word starts in Box 1. Select "Remembered" or "Forgot" to see what happens next.',
             wordChip: { x: 0, y: 0 } as { x: number; y: number },
