@@ -163,6 +163,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Change Log
 
+-   `8.0.0`: Lottie animations for the empty, loading and feedback states, a redesigned guessing game, and a themed toast, alert and spinner
 -   `7.0.1`: Upgraded Node to 22.23.4 (security release)
 -   `7.0.0`: Play Store screenshots automation
 -   `6.0.3`: Upgraded `class-validator` and `class-transformer`, removed `iterare` + Integration tests for the upsert flows
