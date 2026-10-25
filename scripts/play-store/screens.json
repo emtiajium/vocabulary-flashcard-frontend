@@ -60,9 +60,7 @@
             "id": "05-daily-game",
             "route": "/guessing-game",
             "headline": "Make Practice a Daily Game",
-            "waitFor": ".game-rail",
-            "allowAnimations": true,
-            "actions": [{ "click": ".game-hint__link" }, { "waitFor": ".info-sheet" }]
+            "waitFor": ".game-rail"
         },
         {
             "id": "06-learn-together",
