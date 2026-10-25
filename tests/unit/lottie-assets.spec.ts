@@ -1,10 +1,10 @@
+import announcement from '@/media/lottie/announcement.json';
 import answerCorrect from '@/media/lottie/answer-correct.json';
 import answerIncorrect from '@/media/lottie/answer-incorrect.json';
 import cohortWaiting from '@/media/lottie/cohort-waiting.json';
 import emptyDefinition from '@/media/lottie/empty-definition.json';
 import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
 import emptySearch from '@/media/lottie/empty-search.json';
-import emptyVocabularies from '@/media/lottie/announcement.json';
 import flashcardCreated from '@/media/lottie/flashcard-created.json';
 import funGame from '@/media/lottie/fun-game.json';
 import gameComplete from '@/media/lottie/game-complete.json';
@@ -14,6 +14,8 @@ import noConnection from '@/media/lottie/no-connection.json';
 import reachedTheEnd from '@/media/lottie/reached-the-end.json';
 import retention from '@/media/lottie/retention.json';
 import spacedRepetition from '@/media/lottie/spaced-repetition.json';
+import star from '@/media/lottie/star.json';
+import trophyMastered from '@/media/lottie/trophy-mastered.json';
 import waitingForReview from '@/media/lottie/waiting-for-review.json';
 
 /**
@@ -82,7 +84,7 @@ const assets: Record<string, Asset> = {
     'empty-flashcards': { document: asDocument(emptyFlashcards), loop: true },
     'waiting-for-review': { document: asDocument(waitingForReview), loop: true },
     'cohort-waiting': { document: asDocument(cohortWaiting), loop: true },
-    'empty-vocabularies': { document: asDocument(emptyVocabularies), loop: true },
+    'empty-vocabularies': { document: asDocument(announcement), loop: true },
     'empty-search': { document: asDocument(emptySearch), loop: true },
     'no-connection': { document: asDocument(noConnection), loop: true },
     'reached-the-end': { document: asDocument(reachedTheEnd), loop: true },
@@ -90,6 +92,8 @@ const assets: Record<string, Asset> = {
     'answer-incorrect': { document: asDocument(answerIncorrect), loop: false },
     mastered: { document: asDocument(mastered), loop: false },
     'flashcard-created': { document: asDocument(flashcardCreated), loop: false },
+    'trophy-mastered': { document: asDocument(trophyMastered), loop: true },
+    star: { document: asDocument(star), loop: true },
 };
 
 const asArray = (value: number | number[]): number[] => (Array.isArray(value) ? value : [value]);
