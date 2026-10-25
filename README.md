@@ -168,7 +168,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Change Log
 
--   `8.0.0`: Lottie animations for the empty, loading and feedback states, a redesigned guessing game, and a themed toast, alert and spinner
+-   `8.0.0`: Introduced Lottie animations across the app, including onboarding, flashcards, spaced repetition, learning progress, empty states, and game feedback. Refreshed the onboarding experience, improved visual consistency across light and dark themes, and added automated tests for Lottie assets.
 -   `7.0.1`: Upgraded Node to 22.23.4 (security release)
 -   `7.0.0`: Play Store screenshots automation
 -   `6.0.3`: Upgraded `class-validator` and `class-transformer`, removed `iterare` + Integration tests for the upsert flows
@@ -298,6 +298,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Android Release Log
 
+-   `113`: `8.0.0`
 -   `112`: `6.0.2`
 -   `111`: `6.0.1`
 -   `110`: `6.0.0`
