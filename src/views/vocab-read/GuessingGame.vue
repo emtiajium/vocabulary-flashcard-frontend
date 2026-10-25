@@ -78,7 +78,25 @@
                                                 :value="givenAnswers[index]"
                                                 @ionInput="onGivingAnswer($event.detail.value as string, index)"
                                                 @keydown.enter.prevent="submitAnswer(vocabulary, index)"
-                                            />
+                                            >
+                                                <!-- Mirrors the clear button Ionic puts inside its
+                                                     searchbar: a muted icon in the field's trailing edge,
+                                                     only while there is something to clear. It stays mounted
+                                                     and is hidden with `visibility` rather than unmounted, so
+                                                     its box keeps its place and the field does not reflow
+                                                     when the icon comes and goes. -->
+                                                <button
+                                                    type="button"
+                                                    slot="end"
+                                                    class="game-answer__clear"
+                                                    :class="{ 'game-answer__clear--hidden': !hasDraft(index) }"
+                                                    :aria-label="`Clear your answer for word ${index + 1}`"
+                                                    @pointerdown.prevent
+                                                    @click="clearAnswer(index)"
+                                                >
+                                                    <font-awesome-icon :icon="clearIcon" aria-hidden="true" />
+                                                </button>
+                                            </ion-textarea>
                                             <ion-button
                                                 class="game-answer__check"
                                                 color="primary"
@@ -143,7 +161,7 @@
                                 :accent-color-variable="
                                     isAnswerCorrect ? '--ion-color-primary-tint' : '--ion-color-warning-tint'
                                 "
-                                :loop="false"
+                                :loop="true"
                             />
                         </div>
                     </div>
@@ -170,7 +188,7 @@
                 </div>
 
                 <div v-else-if="!vocabularies.length" class="game-empty">
-                    <lottie-animation class="game-empty__art" :animation-data="funGameAnimation" :loop="false">
+                    <lottie-animation class="game-empty__art" :animation-data="funGameAnimation" :loop="true">
                         <template #fallback>
                             <fun-icon
                                 :fill-color-variable="'--ion-color-primary'"
@@ -218,7 +236,7 @@
                         <lottie-animation
                             class="completion-animation"
                             :animation-data="gameCompleteAnimation"
-                            :loop="false"
+                            :loop="true"
                         >
                             <template #fallback>
                                 <fun-icon
@@ -264,7 +282,13 @@ import NativeStorage from '@/utils/NativeStorage';
 import Route from '@/domains/Route';
 import Swiper from 'swiper';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCircleCheck, faPlus, faInfoCircle, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleCheck,
+    faPlus,
+    faInfoCircle,
+    faTimesCircle,
+    faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 import { cloneDeep } from 'lodash';
 
 type SlideVisualState = 'is-correct' | 'is-revealed' | 'is-incorrect' | 'is-neutral';
@@ -290,6 +314,7 @@ export default defineComponent({
             correctIcon: faCircleCheck,
             incorrectIcon: faTriangleExclamation,
             infoIcon: faInfoCircle,
+            clearIcon: faTimesCircle,
             plusIcon: faPlus,
             correctAnimation: answerCorrect,
             incorrectAnimation: answerIncorrect,
@@ -344,7 +369,11 @@ export default defineComponent({
         initSwiper(): void {
             this.swiper = new Swiper('.swiper', {
                 init: false,
-                rewind: false,
+                // Swiping past the last word wraps to the first (and back), so the
+                // rail and the gesture agree: both can reach every word from
+                // anywhere. `rewind` keeps the slides 1:1 with the words, unlike
+                // `loop`, which clones them and would break `realIndexChange`.
+                rewind: true,
                 spaceBetween: 12,
             });
 
@@ -447,6 +476,26 @@ export default defineComponent({
 
         hasDraft(index: number): boolean {
             return Boolean(this.givenAnswers[index]?.trim());
+        },
+
+        /**
+         * Clears the word in one go. The field is bound to `givenAnswers`, and
+         * `ion-textarea` writes a changed value straight to its native textarea, so
+         * emptying the draft is enough to empty the field.
+         *
+         * The browser blurs the field as soon as another element is pressed, for a
+         * touch as much as a mouse, and preventing `pointerdown` only stops the
+         * button taking focus — it does not stop that blur. So the caret is put back
+         * explicitly: the reason to clear is to type the word again.
+         */
+        clearAnswer(index: number): void {
+            this.givenAnswers[index] = '';
+            this.$nextTick(() => {
+                const fields = (this.$el as HTMLElement).querySelectorAll<HTMLElement & { setFocus?: () => void }>(
+                    '.game-answer__field',
+                );
+                fields[index]?.setFocus?.();
+            });
         },
 
         reveal(index: number): void {
@@ -748,6 +797,40 @@ ion-content#guessing-game {
     /* Ionic's 44px minimum would leave the single line sitting at the top of an
        otherwise empty box; the field is one line tall plus its own padding. */
     min-height: 0;
+}
+
+/* The clear button Ionic puts inside its searchbar, reproduced for this field.
+   It lives in the textarea's `end` slot, so it sits inside the field's border
+   rather than beside it. */
+.game-answer__clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 32px on its own clears the WCAG 2.2 target size minimum (24x24). */
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--ion-text-color-step-400);
+    font-size: var(--icon-md);
+    line-height: 1;
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.game-answer__clear:hover,
+.game-answer__clear:focus-visible {
+    color: var(--ion-color-primary);
+}
+
+/* Hidden rather than unmounted, so the 32px stays reserved and the field does not
+   reflow when the icon appears. `visibility` also keeps it out of the tab order and
+   out of the accessibility tree while it is hidden. */
+.game-answer__clear--hidden {
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .game-answer__check {

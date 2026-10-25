@@ -16,17 +16,19 @@ They come in two families:
 
 The family describes the artwork, not how it is played: the consumer decides that with the
 `loop` prop, and one asset can be used both ways (`fun-game` loops on an intro slide and
-plays once as the guessing game's empty state).
+on the guessing game's empty state).
 
--   **One-shot** (`:loop="false"`) for anything that only marks a state or an event: a
-    failed request, the end of a list, a finished game. It plays once and then holds its
-    static `fallback` illustration, so a screen left open is not repainting forever.
--   **Looping** where the movement is the message. Today that is the intro slides, where
-    the animation is the explanation of the feature, and the Leitner box empty state.
+-   **Looping** is the default, and what every animation on screen does. A state that is
+    being looked at keeps moving instead of settling into a still frame.
+-   **One-shot** (`:loop="false"`) is only for the bursts that a `complete` handler
+    unmounts once they have played: the flashcard-created burst and the Leitner mastery
+    celebration. A looping animation never fires `complete` — lottie fires `loopComplete`
+    instead — so looping those would leave them mounted: the celebration would never end,
+    and the bursts would pile up as overlays.
 
-Because a finished one-shot hands over to the `fallback` slot, that slot is what the
-screen settles on: it should be a complete static illustration of the same idea, not a
-bare icon of last resort.
+The `fallback` slot stands in when an animation cannot play at all: a failed load, or
+motion reduced. It is also what a finished one-shot settles into, so it should be a
+complete static illustration of the same idea rather than a bare icon of last resort.
 
 ## Canvas conventions
 

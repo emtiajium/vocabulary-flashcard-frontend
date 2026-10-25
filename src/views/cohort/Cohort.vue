@@ -21,7 +21,7 @@
                             <lottie-animation
                                 class="empty-cohort-icon"
                                 :animation-data="cohortWaitingAnimation"
-                                :loop="false"
+                                :loop="true"
                             >
                                 <template #fallback>
                                     <img src="/assets/icon/diversity.svg" alt="Cohort" />

@@ -53,7 +53,7 @@
                                 <lottie-animation
                                     class="mastered-celebration__animation"
                                     :animation-data="masteredAnimation"
-                                    :loop="false"
+                                    :loop="true"
                                 />
                             </div>
                         </div>

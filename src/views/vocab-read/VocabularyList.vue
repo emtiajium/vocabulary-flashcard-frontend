@@ -21,7 +21,7 @@
                                 <lottie-animation
                                     class="empty-vocabularies-animation"
                                     :animation-data="emptyVocabulariesAnimation"
-                                    :loop="false"
+                                    :loop="true"
                                 >
                                     <template #fallback>
                                         <ion-item lines="none">
@@ -63,7 +63,7 @@
                     <lottie-animation
                         class="empty-search-animation"
                         :animation-data="emptySearchAnimation"
-                        :loop="false"
+                        :loop="true"
                     >
                         <template #fallback>
                             <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
@@ -114,7 +114,7 @@
                 :inline-style="cssStyleToClearlyDisplayVocabCountChip"
             />
 
-            <network-error v-if="isNetworkError" :message="criticalErrorMessage" />
+            <network-error v-if="isNetworkError" :message="errorMessage" />
 
             <ion-infinite-scroll
                 @ionInfinite="renderVocabularies($event)"
@@ -198,6 +198,7 @@ import emptySearch from '@/media/lottie/empty-search.json';
 import emptyVocabularies from '@/media/lottie/empty-vocabularies.json';
 import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 import { FirecrackerError } from '@/domains/FirecrackerError';
+import MessageDB from '@/utils/MessageDB';
 import { cloneDeep, isEmpty, uniqBy } from 'lodash';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
@@ -261,7 +262,7 @@ export default defineComponent({
                 notes: false,
             },
             cssStyleToClearlyDisplayVocabCountChip: `margin-bottom: calc(var(--ion-margin) * 3);`,
-            criticalErrorMessage: '',
+            errorMessage: '',
         };
     },
     async mounted() {
@@ -278,7 +279,7 @@ export default defineComponent({
     },
     methods: {
         clean(): void {
-            this.criticalErrorMessage = '';
+            this.errorMessage = '';
             this.showSpinner = false;
             this.totalVocabularies = 0;
             this.vocabularies = [] as Vocabulary[];
@@ -370,10 +371,29 @@ export default defineComponent({
             await ((event as CustomEvent).target as unknown as IonRefresherType).complete();
         },
 
+        /**
+         * Whether the cohort has any vocabulary at all is only knowable from an
+         * unfiltered first page, so that is the only load allowed to answer it.
+         * Assigning rather than only setting true keeps the answer from going stale:
+         * an unfiltered page that returns rows means the cohort is not empty.
+         */
         handleShowingFetchingFewVocabularies(): void {
-            if (this.pageNumber === 1 && !this.searchKeyword.length && !this.vocabularies.length) {
-                this.allQuietOnTheWesternFront = true;
+            if (this.pageNumber !== 1 || this.searchKeyword.length) {
+                return;
             }
+
+            this.allQuietOnTheWesternFront = !this.vocabularies.length;
+        },
+
+        /**
+         * A failed request is not necessarily a broken connection: a 500, a rejected
+         * token or an unreadable response all land here. Report what actually went
+         * wrong instead of always blaming the network, which sends the user looking
+         * in the wrong place.
+         */
+        reportRequestFailure(error: unknown): void {
+            this.errorMessage = (error as FirecrackerError).message || MessageDB.genericError;
+            this.isNetworkError = true;
         },
 
         async findVocabularies(): Promise<SearchResult<Vocabulary>> {
@@ -395,12 +415,10 @@ export default defineComponent({
                     vocabularySearch,
                 );
                 this.isNetworkError = false;
+                this.errorMessage = '';
                 this.totalVocabularies = searchResult.total;
             } catch (error) {
-                if ((error as FirecrackerError).name === 'CriticalError') {
-                    this.criticalErrorMessage = (error as FirecrackerError).message;
-                }
-                this.isNetworkError = true;
+                this.reportRequestFailure(error);
                 searchResult = { results: [], total: 0 };
             }
             return searchResult as SearchResult<Vocabulary>;
@@ -465,7 +483,11 @@ export default defineComponent({
                 this.isDisabled = true;
                 this.totalVocabularies = total;
             } catch (error) {
-                this.isNetworkError = (error as FirecrackerError).name !== 'ExistingVocabConflict';
+                if ((error as FirecrackerError).name === 'ExistingVocabConflict') {
+                    this.isNetworkError = false;
+                } else {
+                    this.reportRequestFailure(error);
+                }
             } finally {
                 this.showSpinner = false;
             }
@@ -530,6 +552,11 @@ export default defineComponent({
         shouldDisplayFetchButton(): boolean {
             return (
                 this.allQuietOnTheWesternFront &&
+                // The card offers to generate a cohort's first words, which is a
+                // statement about the cohort and not about the current search: an
+                // empty result list is the filter's doing, and it used to leave this
+                // card sitting above the results or beside "no vocabulary was found".
+                !this.searchKeyword.length &&
                 !this.fetchNotHavingDefinitionOnly &&
                 this.fetchFlashcard &&
                 !this.isNetworkError
