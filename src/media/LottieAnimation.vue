@@ -190,6 +190,7 @@ export default defineComponent({
         return {
             animation: null as AnimationItem | null,
             hasCompleted: false,
+            hasReportedCompletion: false,
             hasFailed: false,
             isVisible: true,
             isUnmounted: false,
@@ -228,9 +229,7 @@ export default defineComponent({
         animationData(): void {
             this.hasFailed = false;
             this.destroyAnimation();
-            this.createAnimation().catch(() => {
-                this.hasFailed = true;
-            });
+            this.createAnimation();
         },
     },
     mounted() {
@@ -238,9 +237,7 @@ export default defineComponent({
         this.watchMotionPreference();
         this.watchTheme();
         this.observeVisibility();
-        this.createAnimation().catch(() => {
-            this.hasFailed = true;
-        });
+        this.createAnimation();
     },
     beforeUnmount() {
         this.isUnmounted = true;
@@ -258,55 +255,74 @@ export default defineComponent({
     },
     methods: {
         async createAnimation(): Promise<void> {
+            // A fresh attempt is a fresh lifecycle, so it may report completion
+            // again: the document may have been swapped or the theme changed.
+            this.hasReportedCompletion = false;
+
             const surface = this.$refs.surface as HTMLElement | undefined;
 
-            if (!surface || this.animation || this.isUnmounted || this.shouldRenderFallback) {
+            if (!surface || this.animation || this.isUnmounted) {
                 return;
             }
 
-            const { default: lottie } = await loadLottie();
-
-            if (this.isUnmounted || this.animation || this.shouldRenderFallback) {
+            // The static fallback stands in for the animation, so nothing will
+            // play. A one-shot still has to report, or whatever is waiting on it
+            // (the Leitner empty state, for example) waits forever.
+            if (this.shouldRenderFallback) {
+                this.reportCompletion();
                 return;
             }
 
-            const data = JSON.parse(JSON.stringify(this.animationData)) as LottieAnimationData;
-            const palette = this.resolvePalette();
-            applyPalette(data, palette);
-            this.paletteSignature = JSON.stringify(palette);
+            try {
+                const { default: lottie } = await loadLottie();
 
-            const item = lottie.loadAnimation({
-                container: surface,
-                renderer: 'svg',
-                loop: !this.isReducedMotion && this.loop,
-                autoplay: false,
-                animationData: data,
-                rendererSettings: {
-                    progressiveLoad: true,
-                    preserveAspectRatio: 'xMidYMid meet',
-                },
-            });
-
-            item.addEventListener('data_failed', () => {
-                this.hasFailed = true;
-                this.reportCompletion();
-            });
-
-            item.addEventListener('complete', () => {
-                this.hasCompleted = true;
-                this.reportCompletion();
-            });
-
-            item.addEventListener('DOMLoaded', () => {
-                if (this.isReducedMotion) {
-                    item.goToAndStop(Math.max(item.totalFrames - 1, 0), true);
-                    this.reportCompletion();
+                if (this.isUnmounted || this.animation || this.shouldRenderFallback) {
+                    return;
                 }
-            });
 
-            this.hasCompleted = false;
-            this.animation = item;
-            this.syncPlayback();
+                const data = JSON.parse(JSON.stringify(this.animationData)) as LottieAnimationData;
+                const palette = this.resolvePalette();
+                applyPalette(data, palette);
+                this.paletteSignature = JSON.stringify(palette);
+
+                const item = lottie.loadAnimation({
+                    container: surface,
+                    renderer: 'svg',
+                    loop: !this.isReducedMotion && this.loop,
+                    autoplay: false,
+                    animationData: data,
+                    rendererSettings: {
+                        progressiveLoad: true,
+                        preserveAspectRatio: 'xMidYMid meet',
+                    },
+                });
+
+                item.addEventListener('data_failed', () => {
+                    this.handleFailure();
+                });
+
+                item.addEventListener('complete', () => {
+                    this.hasCompleted = true;
+                    this.reportCompletion();
+                });
+
+                item.addEventListener('DOMLoaded', () => {
+                    if (this.isReducedMotion) {
+                        item.goToAndStop(Math.max(item.totalFrames - 1, 0), true);
+                        this.reportCompletion();
+                    }
+                });
+
+                this.hasCompleted = false;
+                this.animation = item;
+                this.syncPlayback();
+            } catch {
+                // The chunk can fail to download, and loadAnimation can reject a
+                // document. Either way the fallback has to appear and a one-shot
+                // has to report, so failures are handled in one place rather
+                // than by every caller.
+                this.handleFailure();
+            }
         },
 
         destroyAnimation(): void {
@@ -315,15 +331,31 @@ export default defineComponent({
         },
 
         /**
+         * The single failure path: show the static fallback, and let a one-shot
+         * report completion. Every way an animation can fail to appear runs
+         * through here, so no caller has to remember to release its UI.
+         */
+        handleFailure(): void {
+            this.hasFailed = true;
+            this.reportCompletion();
+        },
+
+        /**
          * A consumer may gate UI on `complete` (the Leitner box page reveals its
          * empty state only after the mastery celebration). A one-shot therefore
          * also reports completion when it will not play at all — reduced motion or
          * a load failure — instead of leaving that UI waiting forever.
+         *
+         * Several paths can finish or fail one attempt (`complete`, `data_failed`,
+         * a rejected import), so this reports at most once per attempt.
          */
         reportCompletion(): void {
-            if (!this.loop) {
-                this.$emit('complete');
+            if (this.loop || this.hasReportedCompletion) {
+                return;
             }
+
+            this.hasReportedCompletion = true;
+            this.$emit('complete');
         },
 
         /**
@@ -421,9 +453,7 @@ export default defineComponent({
             if (this.shouldRenderFallback) {
                 this.destroyAnimation();
             } else {
-                this.createAnimation().catch(() => {
-                    this.hasFailed = true;
-                });
+                this.createAnimation();
             }
         },
 
@@ -439,9 +469,7 @@ export default defineComponent({
             }
 
             this.destroyAnimation();
-            this.createAnimation().catch(() => {
-                this.hasFailed = true;
-            });
+            this.createAnimation();
         },
     },
 });

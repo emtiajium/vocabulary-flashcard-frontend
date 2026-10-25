@@ -281,6 +281,40 @@ describe('LottieAnimation', () => {
 
             expect(wrapper.emitted('complete')).toHaveLength(1);
         });
+
+        it('SHOULD report completion WHEN the player rejects the document', async () => {
+            loadAnimation().mockImplementationOnce(() => {
+                throw new Error('document rejected');
+            });
+
+            const wrapper = mountAnimation({ loop: false });
+            await flushPromises();
+
+            expect(wrapper.find('.lottie-animation__fallback').exists()).toBe(true);
+            expect(wrapper.emitted('complete')).toHaveLength(1);
+        });
+
+        it('SHOULD report completion WHEN reduced motion replaces it with the fallback', async () => {
+            setReducedMotion(true);
+            const wrapper = mountAnimation(
+                { loop: false },
+                { fallback: '<span class="fallback-marker">Static</span>' },
+            );
+            await flushPromises();
+
+            expect(wrapper.find('.fallback-marker').exists()).toBe(true);
+            expect(wrapper.emitted('complete')).toHaveLength(1);
+        });
+
+        it('SHOULD report completion once, not for every path that finishes it', async () => {
+            const wrapper = mountAnimation({ loop: false });
+            await flushPromises();
+
+            emitAnimationEvent('complete');
+            emitAnimationEvent('data_failed');
+
+            expect(wrapper.emitted('complete')).toHaveLength(1);
+        });
     });
 
     describe('WHEN the component is unmounted', () => {
