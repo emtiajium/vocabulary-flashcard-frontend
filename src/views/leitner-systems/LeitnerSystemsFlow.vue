@@ -52,6 +52,7 @@
                             <div v-if="isMastered && box.number === lastBox" class="mastered-celebration">
                                 <lottie-animation
                                     class="mastered-celebration__animation"
+                                    aria-hidden="true"
                                     :animation-data="masteredAnimation"
                                     :loop="true"
                                 />
