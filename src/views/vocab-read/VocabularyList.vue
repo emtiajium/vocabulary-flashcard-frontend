@@ -19,7 +19,7 @@
                         <ion-card-content>
                             <view class="display-flex ion-justify-content-center">
                                 <lottie-animation
-                                    class="empty-vocabularies-animation"
+                                    class="announcement-animation"
                                     :animation-data="emptyVocabulariesAnimation"
                                     :loop="true"
                                 >
@@ -195,7 +195,7 @@ import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/vocab-read/Settings.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
 import emptySearch from '@/media/lottie/empty-search.json';
-import emptyVocabularies from '@/media/lottie/empty-vocabularies.json';
+import announcement from '@/media/lottie/announcement.json';
 import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 import { FirecrackerError } from '@/domains/FirecrackerError';
 import MessageDB from '@/utils/MessageDB';
@@ -235,7 +235,7 @@ export default defineComponent({
             showSpinner: false,
             faPlus,
             faThumbsUp,
-            emptyVocabulariesAnimation: emptyVocabularies,
+            emptyVocabulariesAnimation: announcement,
             emptySearchAnimation: emptySearch,
             vocabularies: [] as Vocabulary[],
             pageNumber: 1,
@@ -595,7 +595,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.empty-vocabularies-animation,
+.announcement-animation,
 .empty-search-animation {
     width: min(160px, 50%);
 }

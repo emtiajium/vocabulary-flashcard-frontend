@@ -4,7 +4,7 @@ import cohortWaiting from '@/media/lottie/cohort-waiting.json';
 import emptyDefinition from '@/media/lottie/empty-definition.json';
 import emptyFlashcards from '@/media/lottie/empty-flashcards.json';
 import emptySearch from '@/media/lottie/empty-search.json';
-import emptyVocabularies from '@/media/lottie/empty-vocabularies.json';
+import emptyVocabularies from '@/media/lottie/announcement.json';
 import flashcardCreated from '@/media/lottie/flashcard-created.json';
 import funGame from '@/media/lottie/fun-game.json';
 import gameComplete from '@/media/lottie/game-complete.json';
