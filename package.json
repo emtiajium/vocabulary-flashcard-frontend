@@ -64,7 +64,7 @@
     "devDependencies": {
         "@capacitor/cli": "^8.0.1",
         "@ionic/cli": "^6.16.3",
-        "@types/google.accounts": "0.0.2",
+        "@types/google.accounts": "^0.0.18",
         "@types/jest": "^29.5.14",
         "@types/lodash": "^4.14.170",
         "@types/uuid": "^8.3.0",

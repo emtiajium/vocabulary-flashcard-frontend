@@ -5,6 +5,7 @@ import { SocialLogin, GoogleLoginResponseOnline } from '@capgo/capacitor-social-
 import Platform from '@/utils/Platform';
 import User from '@/domains/User';
 import NativeStorage from '@/utils/NativeStorage';
+import { isModeDark } from '@/utils/dark-mode';
 import Config from '../../config.json';
 
 type CredentialResponse = google.accounts.id.CredentialResponse;
@@ -87,7 +88,7 @@ export default class GoogleAuthentication {
                 type: 'standard',
                 size: 'large',
                 shape: 'rectangular',
-                theme: 'outline',
+                theme: isModeDark() ? 'filled_black' : 'outline',
                 text: 'continue_with',
                 logo_alignment: 'left',
             });
