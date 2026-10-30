@@ -105,6 +105,18 @@
 
         <!-- https://developers.google.com/identity/gsi/web/guides/client-library -->
         <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <style type="text/css">
+            /*
+                * Google Identity Services iframe displays an unwanted
+                * white background when inheriting the app's dark color scheme.
+                * Force the iframe to use the light color scheme.
+                * The actual button theme is configured separately (at src/utils/GoogleAuthentication.ts).
+            */
+            #google-sign-in,
+            #google-sign-in iframe {
+                color-scheme: light !important;
+            }
+        </style>
     </head>
 
     <body class="light">

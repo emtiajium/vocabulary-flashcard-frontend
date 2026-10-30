@@ -168,6 +168,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Change Log
 
+-   `8.0.1`: Fixed: Google Sign-In button now supports dark mode without displaying an unwanted white background.
 -   `8.0.0`: Introduced Lottie animations across the app, including onboarding, flashcards, spaced repetition, learning progress, empty states, and game feedback. Refreshed the onboarding experience, improved visual consistency across light and dark themes, and added automated tests for Lottie assets.
 -   `7.0.1`: Upgraded Node to 22.23.4 (security release)
 -   `7.0.0`: Play Store screenshots automation
