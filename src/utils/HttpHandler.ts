@@ -52,10 +52,6 @@ export default class HttpHandler {
     }
 
     installWebRefreshInterceptor(): void {
-        if (Capacitor.isNativePlatform()) {
-            return;
-        }
-
         this.client.interceptors.response.use(
             (response) => response,
             async (error: AxiosError) => {
@@ -79,7 +75,7 @@ export default class HttpHandler {
                     // Only one refresh request at a time.
                     if (!this.refreshPromise) {
                         this.refreshPromise = this.client
-                            .post('/v1/auth/refresh')
+                            .post('/v1/auth/refresh', undefined, await this.getRequestConfig(false, 'REFRESH'))
                             .then(() => {
                                 /** */
                             })
@@ -138,7 +134,10 @@ export default class HttpHandler {
         }
     }
 
-    private async getRequestConfig(isPublic = false): Promise<AxiosRequestConfig> {
+    private async getRequestConfig(
+        isPublic = false,
+        tokenType: 'ACCESS' | 'REFRESH' = 'ACCESS',
+    ): Promise<AxiosRequestConfig> {
         const { isAndroid, version, versionCode } = await Platform.getVersion();
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
@@ -147,7 +146,9 @@ export default class HttpHandler {
             'X-Version-Code': String(versionCode),
         };
         if (isAndroid && !isPublic) {
-            headers.Authorization = `Bearer ${await NativeStorage.getAccessToken()}`;
+            headers.Authorization = `Bearer ${
+                tokenType === 'ACCESS' ? await NativeStorage.getAccessToken() : await NativeStorage.getRefreshToken()
+            }`;
         }
         if (!isAndroid) {
             delete headers.Authorization;
