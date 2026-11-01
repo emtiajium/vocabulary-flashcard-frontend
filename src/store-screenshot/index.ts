@@ -43,6 +43,5 @@ export function isStoreScreenshotMode(): boolean {
 
 export async function startStoreScreenshotSession(): Promise<void> {
     await NativeStorage.setAuthorizedUser(DEMO_USER);
-    await NativeStorage.setGoogleIdToken(STORE_SCREENSHOT_TOKEN);
     await NativeStorage.setVocabSettings(DEMO_VOCAB_SETTINGS);
 }

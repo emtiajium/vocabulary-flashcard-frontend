@@ -44,18 +44,6 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
     }
 
-    static getGoogleIdToken(): Promise<string> {
-        return NativeStorage.getByKey<string>(NativeStorageKey.GOGGLE_ID_TOKEN);
-    }
-
-    static async setGoogleIdToken(jwToken: string): Promise<void> {
-        await (await NativeStorage.getStorage()).set(NativeStorageKey.GOGGLE_ID_TOKEN, jwToken);
-    }
-
-    static async removeGoogleIdToken(): Promise<void> {
-        await (await NativeStorage.getStorage()).remove(NativeStorageKey.GOGGLE_ID_TOKEN);
-    }
-
     static getAccessToken(): Promise<string> {
         return NativeStorage.getByKey<string>(NativeStorageKey.ACCESS_TOKEN);
     }

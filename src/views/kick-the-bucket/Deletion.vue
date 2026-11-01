@@ -142,7 +142,6 @@ export default defineComponent({
                 await HttpHandler.delete(`/v1/users/self`);
                 await NativeStorage.removeGoodBye();
                 await NativeStorage.removeAuthorizedUser();
-                await NativeStorage.removeGoogleIdToken();
                 await this.$router.replace('/sign-in');
             } catch (error) {
                 if ((error as FirecrackerError).message === MessageDB.forbiddenError) {

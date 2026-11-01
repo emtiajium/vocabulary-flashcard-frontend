@@ -4,7 +4,6 @@ import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { SocialLogin, GoogleLoginResponseOnline } from '@capgo/capacitor-social-login';
 import Platform from '@/utils/Platform';
 import User from '@/domains/User';
-import NativeStorage from '@/utils/NativeStorage';
 import { isModeDark } from '@/utils/dark-mode';
 import Config from '../../config.json';
 
@@ -68,7 +67,6 @@ export default class GoogleAuthentication {
 
     static async signOut(): Promise<void> {
         try {
-            await NativeStorage.removeGoogleIdToken();
             if (!GoogleAuthentication.isAndroid) {
                 window.google.accounts.id.disableAutoSelect();
             } else {
@@ -114,9 +112,6 @@ export default class GoogleAuthentication {
 
     private static setToken(token: string): void {
         GoogleAuthentication.currentIdToken = token;
-        NativeStorage.setGoogleIdToken(token).catch(() => {
-            // do nothing
-        });
     }
 }
 
