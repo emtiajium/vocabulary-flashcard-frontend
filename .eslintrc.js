@@ -21,6 +21,8 @@ module.exports = {
         parser: '@typescript-eslint/parser',
     },
     rules: {
+        'class-methods-use-this': 'off',
+        'consistent-return': 'off',
         'no-console': 'off',
         'no-debugger': 'off',
         'no-unused-vars': 'off',
@@ -35,6 +37,7 @@ module.exports = {
         'vuejs-accessibility/accessible-emoji': 'error',
         'vuejs-accessibility/no-onchange': 'error',
         'vue/no-unused-components': 'error',
+        curly: ['error', 'all'],
     },
     overrides: [
         {

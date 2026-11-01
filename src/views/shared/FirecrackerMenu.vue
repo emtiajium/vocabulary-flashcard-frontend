@@ -119,6 +119,7 @@ import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import PolicyIcon from '@/media/PolicyIcon.vue';
 import LightModeIcon from '@/media/LightModeIcon.vue';
 import Toast from '@/utils/Toast';
+import HttpHandler from '@/utils/HttpHandler';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -186,9 +187,15 @@ export default defineComponent({
             this.closeMenu().finally();
         },
         async signOut(): Promise<void> {
-            await NativeStorage.removeGoodBye();
-            await NativeStorage.removeAuthorizedUser();
-            await GoogleAuthentication.signOut();
+            try {
+                await HttpHandler.logout('/v1/auth/logout');
+            } finally {
+                await Promise.allSettled([
+                    NativeStorage.removeGoodBye(),
+                    NativeStorage.removeAuthorizedUser(),
+                    GoogleAuthentication.signOut(),
+                ]);
+            }
             await this.closeMenu();
             this.isAuthenticated = false;
             await Toast.present(

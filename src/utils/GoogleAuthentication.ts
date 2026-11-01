@@ -4,7 +4,6 @@ import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { SocialLogin, GoogleLoginResponseOnline } from '@capgo/capacitor-social-login';
 import Platform from '@/utils/Platform';
 import User from '@/domains/User';
-import NativeStorage from '@/utils/NativeStorage';
 import { isModeDark } from '@/utils/dark-mode';
 import Config from '../../config.json';
 
@@ -14,9 +13,13 @@ type OnConsentCallback = () => Promise<void>;
 export default class GoogleAuthentication {
     private static isAndroid: boolean;
 
-    private static currentIdToken: string;
-
     private static oAuth2Client: OAuth2Client;
+
+    private static accessToken: string;
+
+    private static refreshToken: string;
+
+    static currentIdToken: string;
 
     static user: User;
 
@@ -47,7 +50,7 @@ export default class GoogleAuthentication {
         });
         const user = loginResponse.result as GoogleLoginResponseOnline;
 
-        GoogleAuthentication.setToken(user.idToken as string);
+        GoogleAuthentication.setIdToken(user.idToken as string);
         GoogleAuthentication.generateAuthenticatedUserPayload({
             email: user.profile.email as string,
             given_name: user.profile.givenName as string,
@@ -57,7 +60,7 @@ export default class GoogleAuthentication {
     }
 
     static async onConsent(credential: string): Promise<void> {
-        GoogleAuthentication.setToken(credential);
+        GoogleAuthentication.setIdToken(credential);
         const loginTicket = await GoogleAuthentication.getOAuth2Client().verifyIdToken({
             idToken: credential,
             audience: Config.google.webClientId,
@@ -68,10 +71,11 @@ export default class GoogleAuthentication {
 
     static async signOut(): Promise<void> {
         try {
-            await NativeStorage.removeJwToken();
             if (!GoogleAuthentication.isAndroid) {
                 window.google.accounts.id.disableAutoSelect();
             } else {
+                GoogleAuthentication.accessToken = '';
+                GoogleAuthentication.refreshToken = '';
                 await SocialLogin.logout({
                     provider: 'google',
                 });
@@ -112,28 +116,20 @@ export default class GoogleAuthentication {
         };
     }
 
-    private static setToken(token: string): void {
+    private static setIdToken(token: string): void {
         GoogleAuthentication.currentIdToken = token;
-        NativeStorage.setJwToken(token).finally();
     }
 
-    static async getToken(): Promise<string> {
-        if (GoogleAuthentication.currentIdToken) {
-            return GoogleAuthentication.currentIdToken;
-        }
-        let token = await NativeStorage.getJwToken();
-        if (!token) {
-            // backward compatibility
-            const user = (await NativeStorage.getAuthorizedUser()) as Record<string, string>;
-            if (user?.jwToken) {
-                token = user.jwToken;
-                await NativeStorage.setJwToken(token);
-                delete user.jwToken;
-                await NativeStorage.setAuthorizedUser(user);
-            }
-        }
-        GoogleAuthentication.currentIdToken = token;
-        return token;
+    static setToken(accessToken: string, refreshToken: string): void {
+        GoogleAuthentication.accessToken = accessToken;
+        GoogleAuthentication.refreshToken = refreshToken;
+    }
+
+    static getToken(): { accessToken: string; refreshToken: string } {
+        return {
+            accessToken: GoogleAuthentication.accessToken,
+            refreshToken: GoogleAuthentication.refreshToken,
+        };
     }
 }
 
