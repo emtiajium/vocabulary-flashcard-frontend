@@ -1,5 +1,6 @@
 import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import MessageDB from '@/utils/MessageDB';
+import { Capacitor } from '@capacitor/core';
 
 export default class AxiosAdapter {
     private static readonly sharedInstance = new AxiosAdapter();
@@ -7,7 +8,10 @@ export default class AxiosAdapter {
     private readonly client: AxiosInstance;
 
     private constructor() {
-        this.client = Axios.create();
+        this.client = Axios.create({
+            // TODO use method from src/utils/Platform.ts
+            withCredentials: !Capacitor.isNativePlatform(),
+        });
     }
 
     static getInstance(): AxiosAdapter {

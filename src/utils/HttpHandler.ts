@@ -15,11 +15,10 @@ export default class HttpHandler {
             'X-Version': String(version),
             'X-Version-Code': String(versionCode),
         };
-        if (!isPublic) {
+        if (isAndroid && !isPublic) {
             headers.Authorization = `Bearer ${await GoogleAuthentication.getToken()}`;
         }
         if (!isAndroid) {
-            // headers['X-CSRF-Token'] = `Bearer ${await GoogleAuthentication.getToken()}`;
             delete headers.Authorization;
         }
         return { headers };
