@@ -76,8 +76,13 @@ export default class HttpHandler {
                     if (!this.refreshPromise) {
                         this.refreshPromise = this.client
                             .post('/v1/auth/refresh', undefined, await this.getRequestConfig(false, 'REFRESH'))
-                            .then(() => {
-                                /** */
+                            .then(async (response) => {
+                                if (await Platform.isAndroid()) {
+                                    await NativeStorage.removeAccessToken();
+                                    await NativeStorage.setAccessToken(response.data.accessToken);
+                                    await NativeStorage.getRefreshToken();
+                                    await NativeStorage.setRefreshToken(response.data.refreshToken);
+                                }
                             })
                             .finally(() => {
                                 this.refreshPromise = null;

@@ -187,14 +187,17 @@ export default defineComponent({
             this.closeMenu().finally();
         },
         async signOut(): Promise<void> {
-            await Promise.allSettled([
-                NativeStorage.removeGoodBye(),
-                NativeStorage.removeAuthorizedUser(),
-                NativeStorage.removeAccessToken(),
-                NativeStorage.removeRefreshToken(),
-                GoogleAuthentication.signOut(),
-                HttpHandler.post<void, void>(`/v1/auth/logout`, undefined),
-            ]);
+            try {
+                await HttpHandler.post('/v1/auth/logout', undefined);
+            } finally {
+                await Promise.allSettled([
+                    NativeStorage.removeGoodBye(),
+                    NativeStorage.removeAuthorizedUser(),
+                    NativeStorage.removeAccessToken(),
+                    NativeStorage.removeRefreshToken(),
+                    GoogleAuthentication.signOut(),
+                ]);
+            }
             await this.closeMenu();
             this.isAuthenticated = false;
             await Toast.present(
