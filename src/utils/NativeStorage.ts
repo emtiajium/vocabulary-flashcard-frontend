@@ -56,6 +56,18 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.GOGGLE_ID_TOKEN);
     }
 
+    static getRefreshToken(): Promise<string> {
+        return NativeStorage.getByKey<string>(NativeStorageKey.REFRESH_TOKEN);
+    }
+
+    static async setRefreshToken(refreshToken: string): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.REFRESH_TOKEN, refreshToken);
+    }
+
+    static async removeRefreshToken(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.REFRESH_TOKEN);
+    }
+
     static async setShouldReloadVocabularies(shouldReloadVocabularies: boolean): Promise<void> {
         await (
             await NativeStorage.getStorage()

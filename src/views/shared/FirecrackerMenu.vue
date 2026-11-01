@@ -189,6 +189,7 @@ export default defineComponent({
         async signOut(): Promise<void> {
             await NativeStorage.removeGoodBye();
             await NativeStorage.removeAuthorizedUser();
+            await NativeStorage.removeRefreshToken();
             await GoogleAuthentication.signOut();
             await HttpHandler.post<void, void>(`/v1/auth/logout`, undefined).catch(() => {
                 // do nothing

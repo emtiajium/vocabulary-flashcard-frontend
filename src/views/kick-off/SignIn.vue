@@ -195,8 +195,16 @@ export default defineComponent({
         },
 
         async persistUser(idToken: string): Promise<void> {
-            const persistedUser = await HttpHandler.post<{ idToken: string }, User>(`/v1/users`, { idToken });
+            const persistedUser = await HttpHandler.post<
+                { idToken: string },
+                User & { accessToken: string; refreshToken: string }
+            >(`/v1/users`, {
+                idToken,
+            });
             await NativeStorage.setAuthorizedUser(persistedUser);
+            if (this.isAndroid) {
+                await NativeStorage.setRefreshToken(persistedUser.refreshToken);
+            }
         },
 
         async loadGetItOnGooglePlay(): Promise<void> {
