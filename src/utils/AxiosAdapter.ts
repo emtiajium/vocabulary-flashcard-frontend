@@ -1,14 +1,24 @@
-import Axios, { AxiosError, AxiosResponse } from 'axios';
+import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import MessageDB from '@/utils/MessageDB';
 
-type RequestConfig = Record<string, unknown>;
-
 export default class AxiosAdapter {
-    static throwProcessedError(error: AxiosError): void {
+    private static readonly sharedInstance = new AxiosAdapter();
+
+    private readonly client: AxiosInstance;
+
+    private constructor() {
+        this.client = Axios.create();
+    }
+
+    static getInstance(): AxiosAdapter {
+        return AxiosAdapter.sharedInstance;
+    }
+
+    static throwProcessedError(error: AxiosError): never {
         if (error.message === 'Network Error') {
             throw new Error(MessageDB.networkError);
         }
-        const errorResponse = error.response as AxiosResponse;
+        const errorResponse = error.response as AxiosResponse | undefined;
         if (errorResponse?.status === 403) {
             throw new Error(MessageDB.forbiddenError);
         }
@@ -16,53 +26,49 @@ export default class AxiosAdapter {
             throw new Error(MessageDB.genericError);
         }
         if (Array.isArray(errorResponse?.data?.message)) {
-            throw new Error(errorResponse?.data.message[0]);
+            throw new Error(errorResponse.data.message[0]);
         }
         if (errorResponse?.data?.name) {
-            const modifiedError = new Error(errorResponse?.data.message);
-            modifiedError.name = errorResponse?.data.name;
+            const modifiedError = new Error(errorResponse.data.message);
+            modifiedError.name = errorResponse.data.name;
             throw modifiedError;
         }
-        throw new Error(errorResponse?.data.message);
+        throw new Error(errorResponse?.data?.message ?? error.message);
     }
 
-    static async post<TPayload, UResponse>(
+    async post<TPayload, UResponse>(
         url: string,
         payload: TPayload,
-        requestConfig: RequestConfig,
+        requestConfig: AxiosRequestConfig,
     ): Promise<UResponse> {
-        let response;
         try {
-            const axiosResponse = await Axios.post(url, payload, requestConfig);
-            response = axiosResponse.data;
-        } catch (error) {
-            AxiosAdapter.throwProcessedError(error as AxiosError);
-        }
-        return response;
-    }
-
-    static async get<TResponse>(url: string, requestConfig: RequestConfig): Promise<TResponse> {
-        let response;
-        try {
-            const axiosResponse = await Axios.get(url, requestConfig);
-            response = axiosResponse.data;
-        } catch (error) {
-            AxiosAdapter.throwProcessedError(error as AxiosError);
-        }
-        return response;
-    }
-
-    static async delete(url: string, requestConfig: RequestConfig): Promise<void> {
-        try {
-            await Axios.delete(url, requestConfig);
+            const response = await this.client.post<UResponse>(url, payload, requestConfig);
+            return response.data;
         } catch (error) {
             AxiosAdapter.throwProcessedError(error as AxiosError);
         }
     }
 
-    static async put(url: string, requestConfig: RequestConfig): Promise<void> {
+    async get<TResponse>(url: string, requestConfig: AxiosRequestConfig): Promise<TResponse> {
         try {
-            await Axios.put(url, undefined, requestConfig);
+            const response = await this.client.get<TResponse>(url, requestConfig);
+            return response.data;
+        } catch (error) {
+            AxiosAdapter.throwProcessedError(error as AxiosError);
+        }
+    }
+
+    async delete(url: string, requestConfig: AxiosRequestConfig): Promise<void> {
+        try {
+            await this.client.delete(url, requestConfig);
+        } catch (error) {
+            AxiosAdapter.throwProcessedError(error as AxiosError);
+        }
+    }
+
+    async put(url: string, requestConfig: AxiosRequestConfig): Promise<void> {
+        try {
+            await this.client.put(url, undefined, requestConfig);
         } catch (error) {
             AxiosAdapter.throwProcessedError(error as AxiosError);
         }

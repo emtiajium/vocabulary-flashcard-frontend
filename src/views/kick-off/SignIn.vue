@@ -178,8 +178,8 @@ export default defineComponent({
                 if (await this.isGoodbye()) {
                     await this.$router.replace('/goodbye');
                 } else {
-                    const { user } = GoogleAuthentication;
-                    await this.persistUser(user);
+                    const { currentIdToken } = GoogleAuthentication;
+                    await this.persistUser(currentIdToken);
                     await this.$router.replace('/authenticated-home');
                 }
             } catch (error) {
@@ -194,10 +194,8 @@ export default defineComponent({
             }
         },
 
-        async persistUser(user: User): Promise<void> {
-            // TODO stop sending payload
-            // as it is valueless due to the fact that the payload will be generated from the token
-            const persistedUser = await HttpHandler.post<User, User>(`/v1/users`, user);
+        async persistUser(idToken: string): Promise<void> {
+            const persistedUser = await HttpHandler.post<{ idToken: string }, User>(`/v1/users`, { idToken });
             await NativeStorage.setAuthorizedUser(persistedUser);
         },
 

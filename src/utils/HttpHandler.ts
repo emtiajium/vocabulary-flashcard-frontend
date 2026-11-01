@@ -1,23 +1,28 @@
+import { AxiosRequestConfig } from 'axios';
 import AxiosAdapter from '@/utils/AxiosAdapter';
 import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import Platform from '@/utils/Platform';
 import Config from '../../config.json';
 
-type RequestConfig = Record<string, unknown>;
-
 export default class HttpHandler {
-    static async getRequestConfig(isPublic = false): Promise<RequestConfig> {
+    private static readonly axiosAdapter = AxiosAdapter.getInstance();
+
+    static async getRequestConfig(isPublic = false): Promise<AxiosRequestConfig> {
         const { isAndroid, version, versionCode } = await Platform.getVersion();
-        const requestConfig: RequestConfig = {
-            'content-type': 'application/json',
-            'X-Client-Id': `${isAndroid ? 'AndroidNativeApp' : 'WebApp'}`,
-            'X-Version': version,
-            'X-Version-Code': versionCode,
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+            'X-Client-Id': isAndroid ? 'AndroidNativeApp' : 'WebApp',
+            'X-Version': String(version),
+            'X-Version-Code': String(versionCode),
         };
         if (!isPublic) {
-            requestConfig.Authorization = `Bearer ${await GoogleAuthentication.getToken()}`;
+            headers.Authorization = `Bearer ${await GoogleAuthentication.getToken()}`;
         }
-        return { headers: requestConfig };
+        if (!isAndroid) {
+            // headers['X-CSRF-Token'] = `Bearer ${await GoogleAuthentication.getToken()}`;
+            delete headers.Authorization;
+        }
+        return { headers };
     }
 
     static getCompleteUrl(url: string): string {
@@ -25,7 +30,7 @@ export default class HttpHandler {
     }
 
     static async post<TPayload, UResponse>(url: string, payload: TPayload, isPublic = false): Promise<UResponse> {
-        return AxiosAdapter.post(
+        return HttpHandler.axiosAdapter.post<TPayload, UResponse>(
             HttpHandler.getCompleteUrl(url),
             payload,
             await HttpHandler.getRequestConfig(isPublic),
@@ -33,14 +38,17 @@ export default class HttpHandler {
     }
 
     static async get<TResponse>(url: string): Promise<TResponse> {
-        return AxiosAdapter.get(HttpHandler.getCompleteUrl(url), await HttpHandler.getRequestConfig());
+        return HttpHandler.axiosAdapter.get<TResponse>(
+            HttpHandler.getCompleteUrl(url),
+            await HttpHandler.getRequestConfig(),
+        );
     }
 
     static async delete(url: string): Promise<void> {
-        await AxiosAdapter.delete(HttpHandler.getCompleteUrl(url), await HttpHandler.getRequestConfig());
+        await HttpHandler.axiosAdapter.delete(HttpHandler.getCompleteUrl(url), await HttpHandler.getRequestConfig());
     }
 
     static async put(url: string): Promise<void> {
-        await AxiosAdapter.put(HttpHandler.getCompleteUrl(url), await HttpHandler.getRequestConfig());
+        await HttpHandler.axiosAdapter.put(HttpHandler.getCompleteUrl(url), await HttpHandler.getRequestConfig());
     }
 }

@@ -44,16 +44,16 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
     }
 
-    static getJwToken(): Promise<string> {
-        return NativeStorage.getByKey<string>(NativeStorageKey.JWT);
+    static getGoogleIdToken(): Promise<string> {
+        return NativeStorage.getByKey<string>(NativeStorageKey.GOGGLE_ID_TOKEN);
     }
 
-    static async setJwToken(jwToken: string): Promise<void> {
-        await (await NativeStorage.getStorage()).set(NativeStorageKey.JWT, jwToken);
+    static async setGoogleIdToken(jwToken: string): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.GOGGLE_ID_TOKEN, jwToken);
     }
 
-    static async removeJwToken(): Promise<void> {
-        await (await NativeStorage.getStorage()).remove(NativeStorageKey.JWT);
+    static async removeGoogleIdToken(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove(NativeStorageKey.GOGGLE_ID_TOKEN);
     }
 
     static async setShouldReloadVocabularies(shouldReloadVocabularies: boolean): Promise<void> {
