@@ -188,7 +188,7 @@ export default defineComponent({
         },
         async signOut(): Promise<void> {
             try {
-                await HttpHandler.post('/v1/auth/logout', undefined);
+                await HttpHandler.logout('/v1/auth/logout');
             } finally {
                 await Promise.allSettled([
                     NativeStorage.removeGoodBye(),

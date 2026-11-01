@@ -74,6 +74,8 @@ export default class GoogleAuthentication {
             if (!GoogleAuthentication.isAndroid) {
                 window.google.accounts.id.disableAutoSelect();
             } else {
+                GoogleAuthentication.accessToken = '';
+                GoogleAuthentication.refreshToken = '';
                 await SocialLogin.logout({
                     provider: 'google',
                 });

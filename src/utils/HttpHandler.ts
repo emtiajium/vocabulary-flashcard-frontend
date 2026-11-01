@@ -73,7 +73,11 @@ export default class HttpHandler {
 
                 try {
                     // Only one refresh request at a time.
-                    await this.refreshToken();
+                    await this.performRefresh();
+
+                    if (await Platform.isAndroid()) {
+                        config.headers.set('Authorization', `Bearer ${GoogleAuthentication.getToken().accessToken}`);
+                    }
 
                     // Browser automatically includes new cookies.
                     return this.client.request(config);
@@ -85,30 +89,21 @@ export default class HttpHandler {
         );
     }
 
-    private async refreshToken(): Promise<void> {
+    private async performRefresh(): Promise<void> {
         if (!this.refreshPromise) {
             const isAndroid = await Platform.isAndroid();
-            if (isAndroid) {
-                this.refreshPromise = this.client
-                    .post('/v1/auth/refresh', undefined, await this.getRequestConfig(false, 'REFRESH'))
-                    .then((response) => {
+            this.refreshPromise = this.client
+                .post('/v1/auth/refresh', undefined, await this.getRequestConfig(false, 'REFRESH'))
+                .then((response) => {
+                    if (isAndroid) {
                         GoogleAuthentication.setToken(response.data.accessToken, response.data.refreshToken);
-                    })
-                    .finally(() => {
-                        this.refreshPromise = null;
-                    });
-            } else {
-                this.refreshPromise = this.client
-                    .post('/v1/auth/refresh')
-                    .then(() => {
-                        /** */
-                    })
-                    .finally(() => {
-                        this.refreshPromise = null;
-                    });
-            }
-            await this.refreshPromise;
+                    }
+                })
+                .finally(() => {
+                    this.refreshPromise = null;
+                });
         }
+        await this.refreshPromise;
     }
 
     async axiosPost<TPayload, UResponse>(
@@ -191,5 +186,13 @@ export default class HttpHandler {
 
     static async put(url: string): Promise<void> {
         await HttpHandler.getInstance().axiosPut(url, await HttpHandler.getInstance().getRequestConfig());
+    }
+
+    static async logout<UResponse>(url: string, isPublic = false): Promise<UResponse> {
+        return HttpHandler.getInstance().axiosPost<void, UResponse>(
+            url,
+            undefined,
+            await HttpHandler.getInstance().getRequestConfig(isPublic, 'REFRESH'),
+        );
     }
 }
