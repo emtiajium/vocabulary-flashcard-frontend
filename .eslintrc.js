@@ -37,6 +37,7 @@ module.exports = {
         'vuejs-accessibility/accessible-emoji': 'error',
         'vuejs-accessibility/no-onchange': 'error',
         'vue/no-unused-components': 'error',
+        curly: ['error', 'all'],
     },
     overrides: [
         {

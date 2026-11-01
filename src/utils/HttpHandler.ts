@@ -5,10 +5,16 @@ import Platform from '@/utils/Platform';
 import NativeStorage from '@/utils/NativeStorage';
 import Config from '../../config.json';
 
+type RetryConfig = {
+    retry?: boolean;
+};
+
 export default class HttpHandler {
     private static readonly sharedInstance = new HttpHandler();
 
     private readonly client: AxiosInstance;
+
+    private refreshPromise: Promise<void> | null = null;
 
     private constructor() {
         this.client = Axios.create({
@@ -16,6 +22,7 @@ export default class HttpHandler {
             // TODO use method from src/utils/Platform.ts
             withCredentials: !Capacitor.isNativePlatform(),
         });
+        this.installWebRefreshInterceptor();
     }
 
     static getInstance(): HttpHandler {
@@ -42,6 +49,55 @@ export default class HttpHandler {
             throw modifiedError;
         }
         throw new Error(errorResponse?.data?.message ?? error.message);
+    }
+
+    installWebRefreshInterceptor(): void {
+        if (Capacitor.isNativePlatform()) {
+            return;
+        }
+
+        this.client.interceptors.response.use(
+            (response) => response,
+            async (error: AxiosError) => {
+                const config = error.config as typeof error.config & RetryConfig;
+
+                // Only handle authentication failures.
+                if (
+                    !config ||
+                    error.response?.status !== 401 ||
+                    config.retry ||
+                    config.url?.includes('/v1/auth/refresh') ||
+                    config.url?.includes('/v1/users')
+                ) {
+                    return Promise.reject(error);
+                }
+
+                // Prevent retry loops.
+                config.retry = true;
+
+                try {
+                    // Only one refresh request at a time.
+                    if (!this.refreshPromise) {
+                        this.refreshPromise = this.client
+                            .post('/v1/auth/refresh')
+                            .then(() => {
+                                /** */
+                            })
+                            .finally(() => {
+                                this.refreshPromise = null;
+                            });
+                    }
+
+                    await this.refreshPromise;
+
+                    // Browser automatically includes new cookies.
+                    return this.client.request(config);
+                } catch {
+                    // Refresh failed: user needs to sign in again.
+                    return Promise.reject(error);
+                }
+            },
+        );
     }
 
     async axiosPost<TPayload, UResponse>(
