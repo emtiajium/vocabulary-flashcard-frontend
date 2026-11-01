@@ -118,15 +118,6 @@ export default class GoogleAuthentication {
             // do nothing
         });
     }
-
-    static async getToken(): Promise<string> {
-        if (GoogleAuthentication.currentIdToken) {
-            return GoogleAuthentication.currentIdToken;
-        }
-        const token = await NativeStorage.getGoogleIdToken();
-        GoogleAuthentication.currentIdToken = token;
-        return token;
-    }
 }
 
 window.onload = function onLoadGoogleAuthLib(): void {

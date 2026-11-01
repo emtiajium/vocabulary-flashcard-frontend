@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import AxiosAdapter from '@/utils/AxiosAdapter';
-import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import Platform from '@/utils/Platform';
+import NativeStorage from '@/utils/NativeStorage';
 import Config from '../../config.json';
 
 export default class HttpHandler {
@@ -16,7 +16,7 @@ export default class HttpHandler {
             'X-Version-Code': String(versionCode),
         };
         if (isAndroid && !isPublic) {
-            headers.Authorization = `Bearer ${await GoogleAuthentication.getToken()}`;
+            headers.Authorization = `Bearer ${await NativeStorage.getAccessToken()}`;
         }
         if (!isAndroid) {
             delete headers.Authorization;
