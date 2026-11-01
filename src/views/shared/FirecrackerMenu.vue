@@ -193,8 +193,6 @@ export default defineComponent({
                 await Promise.allSettled([
                     NativeStorage.removeGoodBye(),
                     NativeStorage.removeAuthorizedUser(),
-                    NativeStorage.removeAccessToken(),
-                    NativeStorage.removeRefreshToken(),
                     GoogleAuthentication.signOut(),
                 ]);
             }

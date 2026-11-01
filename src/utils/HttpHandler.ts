@@ -2,7 +2,7 @@ import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import MessageDB from '@/utils/MessageDB';
 import { Capacitor } from '@capacitor/core';
 import Platform from '@/utils/Platform';
-import NativeStorage from '@/utils/NativeStorage';
+import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import Config from '../../config.json';
 
 type RetryConfig = {
@@ -60,7 +60,7 @@ export default class HttpHandler {
                 // Only handle authentication failures.
                 if (
                     !config ||
-                    error.response?.status !== 401 ||
+                    ![401, 403].includes(error.response?.status as number) ||
                     config.retry ||
                     config.url?.includes('/v1/auth/refresh') ||
                     config.url?.includes('/v1/users')
@@ -73,23 +73,7 @@ export default class HttpHandler {
 
                 try {
                     // Only one refresh request at a time.
-                    if (!this.refreshPromise) {
-                        this.refreshPromise = this.client
-                            .post('/v1/auth/refresh', undefined, await this.getRequestConfig(false, 'REFRESH'))
-                            .then(async (response) => {
-                                if (await Platform.isAndroid()) {
-                                    await NativeStorage.removeAccessToken();
-                                    await NativeStorage.setAccessToken(response.data.accessToken);
-                                    await NativeStorage.getRefreshToken();
-                                    await NativeStorage.setRefreshToken(response.data.refreshToken);
-                                }
-                            })
-                            .finally(() => {
-                                this.refreshPromise = null;
-                            });
-                    }
-
-                    await this.refreshPromise;
+                    await this.refreshToken();
 
                     // Browser automatically includes new cookies.
                     return this.client.request(config);
@@ -99,6 +83,32 @@ export default class HttpHandler {
                 }
             },
         );
+    }
+
+    private async refreshToken(): Promise<void> {
+        if (!this.refreshPromise) {
+            const isAndroid = await Platform.isAndroid();
+            if (isAndroid) {
+                this.refreshPromise = this.client
+                    .post('/v1/auth/refresh', undefined, await this.getRequestConfig(false, 'REFRESH'))
+                    .then((response) => {
+                        GoogleAuthentication.setToken(response.data.accessToken, response.data.refreshToken);
+                    })
+                    .finally(() => {
+                        this.refreshPromise = null;
+                    });
+            } else {
+                this.refreshPromise = this.client
+                    .post('/v1/auth/refresh')
+                    .then(() => {
+                        /** */
+                    })
+                    .finally(() => {
+                        this.refreshPromise = null;
+                    });
+            }
+            await this.refreshPromise;
+        }
     }
 
     async axiosPost<TPayload, UResponse>(
@@ -152,7 +162,9 @@ export default class HttpHandler {
         };
         if (isAndroid && !isPublic) {
             headers.Authorization = `Bearer ${
-                tokenType === 'ACCESS' ? await NativeStorage.getAccessToken() : await NativeStorage.getRefreshToken()
+                tokenType === 'ACCESS'
+                    ? GoogleAuthentication.getToken().accessToken
+                    : GoogleAuthentication.getToken().refreshToken
             }`;
         }
         if (!isAndroid) {

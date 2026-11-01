@@ -15,6 +15,10 @@ export default class GoogleAuthentication {
 
     private static oAuth2Client: OAuth2Client;
 
+    private static accessToken: string;
+
+    private static refreshToken: string;
+
     static currentIdToken: string;
 
     static user: User;
@@ -46,7 +50,7 @@ export default class GoogleAuthentication {
         });
         const user = loginResponse.result as GoogleLoginResponseOnline;
 
-        GoogleAuthentication.setToken(user.idToken as string);
+        GoogleAuthentication.setIdToken(user.idToken as string);
         GoogleAuthentication.generateAuthenticatedUserPayload({
             email: user.profile.email as string,
             given_name: user.profile.givenName as string,
@@ -56,7 +60,7 @@ export default class GoogleAuthentication {
     }
 
     static async onConsent(credential: string): Promise<void> {
-        GoogleAuthentication.setToken(credential);
+        GoogleAuthentication.setIdToken(credential);
         const loginTicket = await GoogleAuthentication.getOAuth2Client().verifyIdToken({
             idToken: credential,
             audience: Config.google.webClientId,
@@ -110,8 +114,20 @@ export default class GoogleAuthentication {
         };
     }
 
-    private static setToken(token: string): void {
+    private static setIdToken(token: string): void {
         GoogleAuthentication.currentIdToken = token;
+    }
+
+    static setToken(accessToken: string, refreshToken: string): void {
+        GoogleAuthentication.accessToken = accessToken;
+        GoogleAuthentication.refreshToken = refreshToken;
+    }
+
+    static getToken(): { accessToken: string; refreshToken: string } {
+        return {
+            accessToken: GoogleAuthentication.accessToken,
+            refreshToken: GoogleAuthentication.refreshToken,
+        };
     }
 }
 

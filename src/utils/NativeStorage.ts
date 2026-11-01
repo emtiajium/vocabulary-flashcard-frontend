@@ -44,30 +44,6 @@ export default class NativeStorage {
         await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
     }
 
-    static getAccessToken(): Promise<string> {
-        return NativeStorage.getByKey<string>(NativeStorageKey.ACCESS_TOKEN);
-    }
-
-    static async setAccessToken(accessToken: string): Promise<void> {
-        await (await NativeStorage.getStorage()).set(NativeStorageKey.ACCESS_TOKEN, accessToken);
-    }
-
-    static async removeAccessToken(): Promise<void> {
-        await (await NativeStorage.getStorage()).remove(NativeStorageKey.ACCESS_TOKEN);
-    }
-
-    static getRefreshToken(): Promise<string> {
-        return NativeStorage.getByKey<string>(NativeStorageKey.REFRESH_TOKEN);
-    }
-
-    static async setRefreshToken(refreshToken: string): Promise<void> {
-        await (await NativeStorage.getStorage()).set(NativeStorageKey.REFRESH_TOKEN, refreshToken);
-    }
-
-    static async removeRefreshToken(): Promise<void> {
-        await (await NativeStorage.getStorage()).remove(NativeStorageKey.REFRESH_TOKEN);
-    }
-
     static async setShouldReloadVocabularies(shouldReloadVocabularies: boolean): Promise<void> {
         await (
             await NativeStorage.getStorage()

@@ -203,8 +203,7 @@ export default defineComponent({
             });
             await NativeStorage.setAuthorizedUser(persistedUser);
             if (this.isAndroid) {
-                await NativeStorage.setAccessToken(persistedUser.accessToken);
-                await NativeStorage.setRefreshToken(persistedUser.refreshToken);
+                GoogleAuthentication.setToken(persistedUser.accessToken, persistedUser.refreshToken);
             }
         },
 
