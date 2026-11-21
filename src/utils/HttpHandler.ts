@@ -20,7 +20,11 @@ export default class HttpHandler {
             baseURL: Config.server.apiPrefix,
             withCredentials: true,
         });
-        this.installWebRefreshInterceptor();
+        Platform.isAndroid().then((isAndroid) => {
+            if (!isAndroid) {
+                this.installWebRefreshInterceptor();
+            }
+        });
     }
 
     static getInstance(): HttpHandler {
