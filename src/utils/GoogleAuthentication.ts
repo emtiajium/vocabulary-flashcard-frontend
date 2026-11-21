@@ -114,7 +114,9 @@ export default class GoogleAuthentication {
 
     private static setToken(token: string): void {
         GoogleAuthentication.currentIdToken = token;
-        NativeStorage.setJwToken(token).finally();
+        if (this.isAndroid) {
+            NativeStorage.setJwToken(token).finally();
+        }
     }
 
     static async getToken(): Promise<string> {
