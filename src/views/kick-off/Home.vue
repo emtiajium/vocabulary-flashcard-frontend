@@ -24,6 +24,10 @@ export default defineComponent({
         Spinner,
     },
     async mounted() {
+        // we need to remove this block after a while
+        await NativeStorage.removeAuthorizedUser().catch(() => {
+            // empty block
+        });
         this.subscribeToHardwareBackButtonListener();
         await this.init();
         this.assertNotifyingAboutAvailableUpdate().finally();

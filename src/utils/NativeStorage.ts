@@ -59,6 +59,10 @@ export default class NativeStorage {
         return NativeStorage.getByKey<Vocabulary>(NativeStorageKey.UPDATED_VOCABULARY);
     }
 
+    static async removeAuthorizedUser(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove('AUTHORIZED_USER');
+    }
+
     static async setIsAuthenticated(isAuthenticated: boolean): Promise<void> {
         await (await NativeStorage.getStorage()).set(NativeStorageKey.IS_AUTHENTICATED, `${isAuthenticated}`);
     }
