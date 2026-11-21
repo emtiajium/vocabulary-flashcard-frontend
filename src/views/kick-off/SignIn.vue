@@ -196,10 +196,7 @@ export default defineComponent({
         },
 
         async persistUser(idToken: string): Promise<void> {
-            await HttpHandler.post<{ idToken: string }, User & { accessToken: string; refreshToken: string }>(
-                `/v1/users`,
-                { idToken },
-            );
+            await HttpHandler.post<{ idToken: string }, User>(`/v1/users`, { idToken });
         },
 
         async loadGetItOnGooglePlay(): Promise<void> {
