@@ -168,6 +168,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Change Log
 
+-   `9.0.0`: Refresh token
 -   `8.0.3`: Upgraded Node to 26.13.1
 -   `8.0.2`: Upgraded Node to 22.23.5 (security release)
 -   `8.0.1`: Fixed: Google Sign-In button now supports dark mode without displaying an unwanted white background.
