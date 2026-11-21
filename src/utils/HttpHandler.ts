@@ -20,11 +20,7 @@ export default class HttpHandler {
             baseURL: Config.server.apiPrefix,
             withCredentials: true,
         });
-        Platform.isAndroid().then((isAndroid) => {
-            if (!isAndroid) {
-                this.installWebRefreshInterceptor();
-            }
-        });
+        this.installWebRefreshInterceptor();
     }
 
     static getInstance(): HttpHandler {
@@ -57,6 +53,10 @@ export default class HttpHandler {
         this.client.interceptors.response.use(
             (response) => response,
             async (error: AxiosError) => {
+                if (await Platform.isAndroid()) {
+                    return Promise.reject(error);
+                }
+
                 const config = error.config as typeof error.config & RetryConfig;
 
                 // Only handle authentication failures.
