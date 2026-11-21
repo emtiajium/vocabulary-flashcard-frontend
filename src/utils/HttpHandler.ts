@@ -59,7 +59,7 @@ export default class HttpHandler {
 
                 const config = error.config as typeof error.config & RetryConfig;
 
-                const isLoginRequest = config.url === '/v1/users' && config.method?.toLowerCase() === 'post';
+                const isLoginRequest = config?.url === '/v1/users' && config?.method?.toLowerCase() === 'post';
 
                 if (
                     !config ||
