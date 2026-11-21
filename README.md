@@ -152,10 +152,13 @@ The pipeline produces, for each device type:
 ### Run it locally
 
 ```bash
-# 1. Start the app in screenshot mode (one terminal)
+# 1. Install dependency
+npm i -g playwright
+
+# 2. Start the app in screenshot mode (one terminal)
 npm run store:serve
 
-# 2. Capture + render (another terminal)
+# 3. Capture + render (another terminal)
 npm run store:images
 ```
 
