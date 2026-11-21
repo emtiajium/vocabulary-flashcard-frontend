@@ -120,6 +120,7 @@ import PolicyIcon from '@/media/PolicyIcon.vue';
 import LightModeIcon from '@/media/LightModeIcon.vue';
 import Toast from '@/utils/Toast';
 import HttpHandler from '@/utils/HttpHandler';
+import User from '@/domains/User';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -161,7 +162,7 @@ export default defineComponent({
     },
     methods: {
         async initUser(): Promise<void> {
-            const user = await NativeStorage.getAuthorizedUser();
+            const user = await HttpHandler.get<User>('/v1/users/self');
             if (user) {
                 this.profilePictureUrl =
                     user.profilePictureUrl ||
@@ -189,12 +190,10 @@ export default defineComponent({
         async signOut(): Promise<void> {
             try {
                 await HttpHandler.logout('/v1/auth/logout');
+            } catch (error) {
+                void error;
             } finally {
-                await Promise.allSettled([
-                    NativeStorage.removeGoodBye(),
-                    NativeStorage.removeAuthorizedUser(),
-                    GoogleAuthentication.signOut(),
-                ]);
+                await Promise.allSettled([NativeStorage.removeGoodBye(), GoogleAuthentication.signOut()]);
             }
             await this.closeMenu();
             this.isAuthenticated = false;

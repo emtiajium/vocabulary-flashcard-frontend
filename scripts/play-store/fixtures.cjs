@@ -135,6 +135,14 @@ const carrionVocabulary = {
     genericExternalLinks: [],
 };
 
+const user = {
+    username: 'demo@firecrackervocabulary.com',
+    firstname: 'Demo',
+    lastname: 'Learner',
+    name: 'Demo Learner',
+    profilePictureUrl: '/assets/icon/firecracker-icon.png',
+};
+
 const cohort = {
     name: 'Fantastic Four!',
     users: [
@@ -182,6 +190,7 @@ module.exports = {
     VOCABULARY_ID,
     buildSearchResponse,
     carrionVocabulary,
+    user,
     cohort,
     guessingGame,
     leitnerCounts,

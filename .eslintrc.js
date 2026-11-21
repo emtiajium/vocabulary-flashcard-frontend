@@ -31,6 +31,7 @@ module.exports = {
         '@typescript-eslint/no-explicit-any': 'error',
         '@typescript-eslint/explicit-function-return-type': 'error',
         '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
         'no-shadow': 'off',
         'no-use-before-define': 'error',
         'vue/multi-word-component-names': 'off',

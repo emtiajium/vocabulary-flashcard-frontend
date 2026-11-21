@@ -16,6 +16,7 @@ import HttpHandler from '@/utils/HttpHandler';
 import Android from '@/domains/Android';
 import Alert from '@/utils/Alert';
 import Platform from '@/utils/Platform';
+import User from '@/domains/User';
 
 export default defineComponent({
     name: 'Home',
@@ -38,10 +39,12 @@ export default defineComponent({
         },
         async init(): Promise<void> {
             try {
-                const localUser = await NativeStorage.getAuthorizedUser();
+                const localUser = await HttpHandler.get<User>('/v1/users/self');
                 if (localUser) {
+                    await NativeStorage.setIsAuthenticated(true);
                     await this.$router.replace('/authenticated-home');
                 } else {
+                    await NativeStorage.setIsAuthenticated(false);
                     await this.$router.replace('/sign-in');
                 }
             } catch (error) {

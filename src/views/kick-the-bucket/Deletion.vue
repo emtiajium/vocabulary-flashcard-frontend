@@ -141,7 +141,6 @@ export default defineComponent({
             try {
                 await HttpHandler.delete(`/v1/users/self`);
                 await NativeStorage.removeGoodBye();
-                await NativeStorage.removeAuthorizedUser();
                 await NativeStorage.removeJwToken();
                 await this.$router.replace('/sign-in');
             } catch (error) {
