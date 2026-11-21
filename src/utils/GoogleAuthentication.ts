@@ -14,9 +14,9 @@ type OnConsentCallback = () => Promise<void>;
 export default class GoogleAuthentication {
     private static isAndroid: boolean;
 
-    private static currentIdToken: string;
-
     private static oAuth2Client: OAuth2Client;
+
+    static currentIdToken: string;
 
     static user: User;
 
@@ -121,17 +121,7 @@ export default class GoogleAuthentication {
         if (GoogleAuthentication.currentIdToken) {
             return GoogleAuthentication.currentIdToken;
         }
-        let token = await NativeStorage.getJwToken();
-        if (!token) {
-            // backward compatibility
-            const user = (await NativeStorage.getAuthorizedUser()) as Record<string, string>;
-            if (user?.jwToken) {
-                token = user.jwToken;
-                await NativeStorage.setJwToken(token);
-                delete user.jwToken;
-                await NativeStorage.setAuthorizedUser(user);
-            }
-        }
+        const token = await NativeStorage.getJwToken();
         GoogleAuthentication.currentIdToken = token;
         return token;
     }
