@@ -59,13 +59,14 @@ export default class HttpHandler {
 
                 const config = error.config as typeof error.config & RetryConfig;
 
-                // Only handle authentication failures.
+                const isLoginRequest = config.url === '/v1/users' && config.method?.toLowerCase() === 'post';
+
                 if (
                     !config ||
-                    ![401].includes(error.response?.status as number) ||
+                    error.response?.status !== 401 ||
                     config.retry ||
                     config.url?.includes('/v1/auth/refresh') ||
-                    config.url?.includes('/v1/users')
+                    isLoginRequest
                 ) {
                     return Promise.reject(error);
                 }

@@ -196,7 +196,7 @@ export default defineComponent({
                 await Promise.allSettled([
                     NativeStorage.removeGoodBye(),
                     GoogleAuthentication.signOut(),
-                    NativeStorage.setIsAuthenticated(true),
+                    NativeStorage.setIsAuthenticated(false),
                 ]);
             }
             await this.closeMenu();
