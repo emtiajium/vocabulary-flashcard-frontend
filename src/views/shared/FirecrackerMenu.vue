@@ -189,7 +189,7 @@ export default defineComponent({
         },
         async signOut(): Promise<void> {
             try {
-                await HttpHandler.logout('/v1/auth/logout');
+                await HttpHandler.post<void, void>('/v1/auth/logout', undefined);
             } catch (error) {
                 void error;
             } finally {

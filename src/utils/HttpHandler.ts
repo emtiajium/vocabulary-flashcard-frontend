@@ -178,12 +178,4 @@ export default class HttpHandler {
     static async put(url: string): Promise<void> {
         await HttpHandler.getInstance().axiosPut(url, await HttpHandler.getInstance().getRequestConfig());
     }
-
-    static async logout<UResponse>(url: string): Promise<UResponse> {
-        return HttpHandler.getInstance().axiosPost<void, UResponse>(
-            url,
-            undefined,
-            await HttpHandler.getInstance().getRequestConfig(),
-        );
-    }
 }
