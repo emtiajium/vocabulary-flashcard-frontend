@@ -58,8 +58,7 @@ export default class HttpHandler {
                 // Only handle authentication failures.
                 if (
                     !config ||
-                    // When a NestJS guard returns false, Nest normally responds with 403 Forbidden, not 401 Unauthorized
-                    ![403].includes(error.response?.status as number) ||
+                    ![401].includes(error.response?.status as number) ||
                     config.retry ||
                     config.url?.includes('/v1/auth/refresh') ||
                     config.url?.includes('/v1/users')
