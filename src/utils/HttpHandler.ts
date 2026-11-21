@@ -32,6 +32,11 @@ export default class HttpHandler {
             throw new Error(MessageDB.networkError);
         }
         const errorResponse = error.response as AxiosResponse | undefined;
+        if (errorResponse?.status === 401) {
+            throw Object.assign(new Error('Unauthorized'), {
+                status: 401,
+            });
+        }
         if (errorResponse?.status === 403) {
             throw new Error(MessageDB.forbiddenError);
         }

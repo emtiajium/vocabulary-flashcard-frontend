@@ -48,7 +48,16 @@ export default defineComponent({
                     await this.$router.replace('/sign-in');
                 }
             } catch (error) {
-                await Promise.all([Toast.present(MessageDB.genericError, 'error'), this.$router.push('/sign-in')]);
+                const { status } = error as Error & { status?: number };
+
+                if (status === 401) {
+                    await NativeStorage.setIsAuthenticated(false);
+                    await this.$router.replace('/sign-in');
+                    return;
+                }
+
+                await Toast.present(MessageDB.genericError, 'error');
+                await this.$router.replace('/sign-in');
             }
         },
         async assertNotifyingAboutAvailableUpdate(): Promise<void> {
