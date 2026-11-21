@@ -67,17 +67,20 @@ export default class GoogleAuthentication {
     }
 
     static async signOut(): Promise<void> {
-        try {
-            GoogleAuthentication.resetToken();
-            if (!GoogleAuthentication.isAndroid) {
-                window.google.accounts.id.disableAutoSelect();
-            } else {
-                await SocialLogin.logout({
-                    provider: 'google',
-                });
+        const isAndroid = await Platform.isAndroid();
+
+        GoogleAuthentication.currentIdToken = undefined as unknown as string;
+
+        if (isAndroid) {
+            await NativeStorage.removeJwToken();
+
+            try {
+                await SocialLogin.logout({ provider: 'google' });
+            } catch {
+                // Native Google session may already be closed.
             }
-        } catch {
-            // just smile, and wave!
+        } else {
+            window.google.accounts.id.disableAutoSelect();
         }
     }
 
@@ -116,14 +119,6 @@ export default class GoogleAuthentication {
         GoogleAuthentication.currentIdToken = token;
         if (this.isAndroid) {
             NativeStorage.setJwToken(token).finally();
-        }
-    }
-
-    private static resetToken(): void {
-        // @ts-expect-error
-        GoogleAuthentication.currentIdToken = null;
-        if (this.isAndroid) {
-            NativeStorage.removeJwToken().finally();
         }
     }
 
