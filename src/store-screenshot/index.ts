@@ -35,5 +35,6 @@ export function isStoreScreenshotMode(): boolean {
 
 export async function startStoreScreenshotSession(): Promise<void> {
     await NativeStorage.setJwToken(STORE_SCREENSHOT_TOKEN);
+    await NativeStorage.setIsAuthenticated(true);
     await NativeStorage.setVocabSettings(DEMO_VOCAB_SETTINGS);
 }
