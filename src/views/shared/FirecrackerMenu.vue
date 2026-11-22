@@ -162,14 +162,19 @@ export default defineComponent({
     },
     methods: {
         async initUser(): Promise<void> {
-            const user = await HttpHandler.get<User>('/v1/users/self');
-            if (user) {
-                this.profilePictureUrl =
-                    user.profilePictureUrl ||
-                    `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`;
-                this.username = user.username as string;
-                this.name = user.name as string;
-                this.isAuthenticated = true;
+            try {
+                const user = await HttpHandler.get<User>('/v1/users/self');
+
+                if (user) {
+                    this.profilePictureUrl =
+                        user.profilePictureUrl ||
+                        `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`;
+                    this.username = user.username as string;
+                    this.name = user.name as string;
+                    this.isAuthenticated = true;
+                }
+            } catch {
+                this.isAuthenticated = false;
             }
         },
         async loadGetItOnGooglePlay(): Promise<void> {
