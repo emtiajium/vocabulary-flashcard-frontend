@@ -14,9 +14,9 @@ type OnConsentCallback = () => Promise<void>;
 export default class GoogleAuthentication {
     private static isAndroid: boolean;
 
-    private static currentIdToken: string;
-
     private static oAuth2Client: OAuth2Client;
+
+    static currentIdToken: string;
 
     static user: User;
 
@@ -67,17 +67,20 @@ export default class GoogleAuthentication {
     }
 
     static async signOut(): Promise<void> {
-        try {
+        const isAndroid = await Platform.isAndroid();
+
+        GoogleAuthentication.currentIdToken = undefined as unknown as string;
+
+        if (isAndroid) {
             await NativeStorage.removeJwToken();
-            if (!GoogleAuthentication.isAndroid) {
-                window.google.accounts.id.disableAutoSelect();
-            } else {
-                await SocialLogin.logout({
-                    provider: 'google',
-                });
+
+            try {
+                await SocialLogin.logout({ provider: 'google' });
+            } catch {
+                // Native Google session may already be closed.
             }
-        } catch {
-            // just smile, and wave!
+        } else {
+            window.google.accounts.id.disableAutoSelect();
         }
     }
 
@@ -114,24 +117,16 @@ export default class GoogleAuthentication {
 
     private static setToken(token: string): void {
         GoogleAuthentication.currentIdToken = token;
-        NativeStorage.setJwToken(token).finally();
+        if (this.isAndroid) {
+            NativeStorage.setJwToken(token).finally();
+        }
     }
 
     static async getToken(): Promise<string> {
         if (GoogleAuthentication.currentIdToken) {
             return GoogleAuthentication.currentIdToken;
         }
-        let token = await NativeStorage.getJwToken();
-        if (!token) {
-            // backward compatibility
-            const user = (await NativeStorage.getAuthorizedUser()) as Record<string, string>;
-            if (user?.jwToken) {
-                token = user.jwToken;
-                await NativeStorage.setJwToken(token);
-                delete user.jwToken;
-                await NativeStorage.setAuthorizedUser(user);
-            }
-        }
+        const token = await NativeStorage.getJwToken();
         GoogleAuthentication.currentIdToken = token;
         return token;
     }

@@ -15,14 +15,6 @@ import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
  */
 export const STORE_SCREENSHOT_TOKEN = 'store-screenshot-session-token';
 
-const DEMO_USER: User = {
-    username: 'demo@firecrackervocabulary.com',
-    firstname: 'Demo',
-    lastname: 'Learner',
-    name: 'Demo Learner',
-    profilePictureUrl: '/assets/icon/firecracker-icon.png',
-};
-
 const DEMO_VOCAB_SETTINGS: VocabSettings = {
     sort: new Sort(SupportedSortFields.updatedAt, SortDirection.DESC),
     fetchNotHavingDefinitionOnly: false,
@@ -42,7 +34,7 @@ export function isStoreScreenshotMode(): boolean {
 }
 
 export async function startStoreScreenshotSession(): Promise<void> {
-    await NativeStorage.setAuthorizedUser(DEMO_USER);
     await NativeStorage.setJwToken(STORE_SCREENSHOT_TOKEN);
+    await NativeStorage.setIsAuthenticated(true);
     await NativeStorage.setVocabSettings(DEMO_VOCAB_SETTINGS);
 }

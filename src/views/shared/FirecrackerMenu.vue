@@ -119,6 +119,8 @@ import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import PolicyIcon from '@/media/PolicyIcon.vue';
 import LightModeIcon from '@/media/LightModeIcon.vue';
 import Toast from '@/utils/Toast';
+import HttpHandler from '@/utils/HttpHandler';
+import User from '@/domains/User';
 
 export default defineComponent({
     name: 'FirecrackerMenu',
@@ -160,14 +162,31 @@ export default defineComponent({
     },
     methods: {
         async initUser(): Promise<void> {
-            const user = await NativeStorage.getAuthorizedUser();
-            if (user) {
+            try {
+                const user = await HttpHandler.get<User>('/v1/users/self');
+
+                if (!user) {
+                    this.isAuthenticated = false;
+                    await NativeStorage.setIsAuthenticated(false);
+                    return;
+                }
+
                 this.profilePictureUrl =
                     user.profilePictureUrl ||
-                    `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`;
+                    'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+
                 this.username = user.username as string;
                 this.name = user.name as string;
                 this.isAuthenticated = true;
+
+                await NativeStorage.setIsAuthenticated(true);
+            } catch (error) {
+                const { status } = error as Error & { status?: number };
+
+                if (status === 401) {
+                    this.isAuthenticated = false;
+                    await NativeStorage.setIsAuthenticated(false);
+                }
             }
         },
         async loadGetItOnGooglePlay(): Promise<void> {
@@ -186,9 +205,17 @@ export default defineComponent({
             this.closeMenu().finally();
         },
         async signOut(): Promise<void> {
-            await NativeStorage.removeGoodBye();
-            await NativeStorage.removeAuthorizedUser();
-            await GoogleAuthentication.signOut();
+            try {
+                await HttpHandler.post<void, void>('/v1/auth/logout', undefined);
+            } catch (error) {
+                void error;
+            } finally {
+                await Promise.allSettled([
+                    NativeStorage.removeGoodBye(),
+                    GoogleAuthentication.signOut(),
+                    NativeStorage.setIsAuthenticated(false),
+                ]);
+            }
             await this.closeMenu();
             this.isAuthenticated = false;
             await Toast.present(

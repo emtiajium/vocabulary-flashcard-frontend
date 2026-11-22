@@ -152,10 +152,13 @@ The pipeline produces, for each device type:
 ### Run it locally
 
 ```bash
-# 1. Start the app in screenshot mode (one terminal)
+# 1. Install dependency
+npm i -g playwright
+
+# 2. Start the app in screenshot mode (one terminal)
 npm run store:serve
 
-# 2. Capture + render (another terminal)
+# 3. Capture + render (another terminal)
 npm run store:images
 ```
 
@@ -168,6 +171,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Change Log
 
+-   `9.0.0`: Refresh token
 -   `8.0.3`: Upgraded Node to 26.13.1
 -   `8.0.2`: Upgraded Node to 22.23.5 (security release)
 -   `8.0.1`: Fixed: Google Sign-In button now supports dark mode without displaying an unwanted white background.

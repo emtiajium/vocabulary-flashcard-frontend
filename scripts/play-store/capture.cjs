@@ -46,6 +46,10 @@ function handleApiRequest(route) {
         return sendJson(route, fixtures.leitnerCounts[box] ?? 0);
     }
 
+    if (pathname === '/v1/users/self') {
+        return sendJson(route, fixtures.user);
+    }
+
     if (pathname === '/v1/cohorts/self') {
         return sendJson(route, fixtures.cohort);
     }

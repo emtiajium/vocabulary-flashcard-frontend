@@ -1,6 +1,5 @@
 import { Drivers, Storage } from '@ionic/storage';
 import NativeStorageKey from '@/domains/NativeStorageKey';
-import User from '@/domains/User';
 import Vocabulary from '@/domains/Vocabulary';
 import VocabSettings from '@/domains/VocabSettings';
 import { CachedRandomlyChosenMeaningResponse } from '@/domains/RandomlyChosenMeaningResponse';
@@ -24,24 +23,6 @@ export default class NativeStorage {
 
     static async getByKey<T>(key: NativeStorageKey): Promise<T> {
         return (await NativeStorage.getStorage()).get(key);
-    }
-
-    static async getAuthorizedUser(): Promise<User> {
-        return NativeStorage.getByKey<User>(NativeStorageKey.AUTHORIZED_USER);
-    }
-
-    static async setAuthorizedUser(user: User): Promise<void> {
-        await (
-            await NativeStorage.getStorage()
-        ).set(NativeStorageKey.AUTHORIZED_USER, {
-            username: user?.username,
-            name: user?.name,
-            profilePictureUrl: user?.profilePictureUrl,
-        });
-    }
-
-    static async removeAuthorizedUser(): Promise<void> {
-        await (await NativeStorage.getStorage()).remove(NativeStorageKey.AUTHORIZED_USER);
     }
 
     static getJwToken(): Promise<string> {
@@ -78,9 +59,16 @@ export default class NativeStorage {
         return NativeStorage.getByKey<Vocabulary>(NativeStorageKey.UPDATED_VOCABULARY);
     }
 
+    static async removeAuthorizedUser(): Promise<void> {
+        await (await NativeStorage.getStorage()).remove('AUTHORIZED_USER');
+    }
+
+    static async setIsAuthenticated(isAuthenticated: boolean): Promise<void> {
+        await (await NativeStorage.getStorage()).set(NativeStorageKey.IS_AUTHENTICATED, `${isAuthenticated}`);
+    }
+
     static async isAuthenticated(): Promise<boolean> {
-        const user = await NativeStorage.getAuthorizedUser();
-        return user && Object.keys(user).length > 0;
+        return (await NativeStorage.getByKey<string>(NativeStorageKey.IS_AUTHENTICATED)) === 'true';
     }
 
     static async setLeitnerBoxExistence(vocabularyId: string): Promise<void> {
