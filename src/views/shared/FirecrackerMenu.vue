@@ -165,18 +165,28 @@ export default defineComponent({
             try {
                 const user = await HttpHandler.get<User>('/v1/users/self');
 
-                if (user) {
-                    this.profilePictureUrl =
-                        user.profilePictureUrl ||
-                        `https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y`;
-                    this.username = user.username as string;
-                    this.name = user.name as string;
-                    this.isAuthenticated = true;
-                    await NativeStorage.setIsAuthenticated(true);
+                if (!user) {
+                    this.isAuthenticated = false;
+                    await NativeStorage.setIsAuthenticated(false);
+                    return;
                 }
-            } catch {
-                this.isAuthenticated = false;
-                await NativeStorage.setIsAuthenticated(false);
+
+                this.profilePictureUrl =
+                    user.profilePictureUrl ||
+                    'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+
+                this.username = user.username as string;
+                this.name = user.name as string;
+                this.isAuthenticated = true;
+
+                await NativeStorage.setIsAuthenticated(true);
+            } catch (error) {
+                const { status } = error as Error & { status?: number };
+
+                if (status === 401) {
+                    this.isAuthenticated = false;
+                    await NativeStorage.setIsAuthenticated(false);
+                }
             }
         },
         async loadGetItOnGooglePlay(): Promise<void> {
