@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useRoute } from 'vue-router';
 import Spinner from '@/views/shared/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import { useBackButton, useIonRouter } from '@ionic/vue';
@@ -23,24 +24,26 @@ export default defineComponent({
     components: {
         Spinner,
     },
+    setup() {
+        const ionRouter = useIonRouter();
+        const route = useRoute();
+
+        useBackButton(BackButtonHandlerPriority.HOME, () => {
+            if (!ionRouter.canGoBack() || isHome(route.name as string)) {
+                App.exitApp();
+            }
+        });
+    },
     async mounted() {
         // we need to remove this block after a while
         await NativeStorage.removeAuthorizedUser().catch(() => {
             // empty block
         });
-        this.subscribeToHardwareBackButtonListener();
+
         await this.init();
         this.assertNotifyingAboutAvailableUpdate().finally();
     },
     methods: {
-        subscribeToHardwareBackButtonListener(): void {
-            const ionRouter = useIonRouter();
-            useBackButton(BackButtonHandlerPriority.HOME, () => {
-                if (!ionRouter.canGoBack() || isHome(this.$route.name as string)) {
-                    App.exitApp();
-                }
-            });
-        },
         async init(): Promise<void> {
             try {
                 const localUser = await HttpHandler.get<User>('/v1/users/self');
@@ -68,7 +71,7 @@ export default defineComponent({
             try {
                 const { versionCode, isAndroid } = await Platform.getVersion();
                 if (isAndroid) {
-                    const { versionCode: latestVersionCode } = await HttpHandler.get<Android>(`/v1/androids`);
+                    const { versionCode: latestVersionCode } = await HttpHandler.get<Android>('/v1/androids');
                     if (Number.parseInt(versionCode, 10) < latestVersionCode) {
                         this.notifyAboutAvailableUpdate();
                     }
