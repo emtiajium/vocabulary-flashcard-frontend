@@ -172,9 +172,11 @@ export default defineComponent({
                     this.username = user.username as string;
                     this.name = user.name as string;
                     this.isAuthenticated = true;
+                    await NativeStorage.setIsAuthenticated(true);
                 }
             } catch {
                 this.isAuthenticated = false;
+                await NativeStorage.setIsAuthenticated(false);
             }
         },
         async loadGetItOnGooglePlay(): Promise<void> {
