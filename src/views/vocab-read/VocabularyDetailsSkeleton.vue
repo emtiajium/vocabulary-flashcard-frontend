@@ -41,6 +41,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+ion-card:first-of-type {
+    margin-top: unset;
+}
+
 .definition-content,
 .examples {
     display: flex;
