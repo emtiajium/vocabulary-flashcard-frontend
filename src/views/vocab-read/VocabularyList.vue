@@ -129,11 +129,14 @@
                 id="infinite-scroll"
                 :disabled="isDisabled"
             >
-                <spinner :inline-style="cssStyleToClearlyDisplayVocabCountChip" />
+                <ion-infinite-scroll-content
+                    loading-spinner="crescent"
+                    :style="cssStyleToClearlyDisplayVocabCountChip"
+                />
             </ion-infinite-scroll>
 
             <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
-                <spinner />
+                <ion-refresher-content />
             </ion-refresher>
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -182,6 +185,8 @@ import {
     IonRow,
     IonCol,
     IonChip,
+    IonRefresherContent,
+    IonInfiniteScrollContent,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
@@ -216,7 +221,6 @@ export default defineComponent({
     name: 'VocabularyList',
     components: {
         Settings,
-        Spinner,
         EndOfList,
         NetworkError,
         MinifiedVocabulary,
@@ -235,6 +239,8 @@ export default defineComponent({
         IonButton,
         IonItem,
         IonRefresher,
+        IonRefresherContent,
+        IonInfiniteScrollContent,
         IonRow,
         IonCol,
         IonChip,
