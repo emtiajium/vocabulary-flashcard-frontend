@@ -182,12 +182,44 @@
                     </nav>
                 </div>
 
-                <div v-if="isLoading" class="game-loading">
-                    <spinner inline-style="height: auto" />
-                    <ion-card-subtitle class="ion-text-center" role="status">
-                        Preparing the guessing game for today ...
-                    </ion-card-subtitle>
-                </div>
+                <template v-if="isLoading">
+                    <span class="visually-hidden" role="status">Preparing the guessing game for today...</span>
+                    <section class="game-progress" aria-hidden="true">
+                        <div class="game-progress__head">
+                            <skeleton-text width="7rem" height="var(--text-sm)" />
+                            <skeleton-text width="4.5rem" height="32px" border-radius="var(--radius-pill)" />
+                        </div>
+                        <skeleton-text height="8px" border-radius="var(--radius-pill)" />
+                        <div class="game-hint game-skeleton-hint">
+                            <skeleton-text width="62%" height="var(--text-sm)" />
+                            <skeleton-text width="25%" height="var(--text-xs)" />
+                        </div>
+                    </section>
+                    <div class="game-stage" aria-hidden="true">
+                        <div class="game-viewport">
+                            <div class="game-skeleton-card">
+                                <div class="game-card__body">
+                                    <p class="game-card__eyebrow">Meaning</p>
+                                    <skeleton-text width="94%" height="var(--text-lg)" />
+                                    <skeleton-text width="87%" height="var(--text-lg)" />
+                                    <skeleton-text width="60%" height="var(--text-lg)" />
+                                </div>
+                                <div class="game-answer">
+                                    <div class="game-answer__input-row">
+                                        <skeleton-text height="40px" border-radius="var(--radius-md)" />
+                                    </div>
+                                    <skeleton-text width="76px" height="36px" border-radius="var(--radius-md)" />
+                                </div>
+                                <div class="game-footer"></div>
+                            </div>
+                        </div>
+                        <div class="game-rail">
+                            <div v-for="index in 10" :key="index" class="game-skeleton-rail-step">
+                                <skeleton-text height="8px" border-radius="var(--radius-pill)" />
+                            </div>
+                        </div>
+                    </div>
+                </template>
 
                 <div v-else-if="!vocabularies.length" class="game-empty">
                     <lottie-animation class="game-empty__art" :animation-data="funGameAnimation" :loop="true">
@@ -267,9 +299,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, IonTextarea, IonButton, IonCardSubtitle, IonChip, IonModal } from '@ionic/vue';
+import { IonPage, IonContent, IonTextarea, IonButton, IonChip, IonModal } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
-import Spinner from '@/views/shared/Spinner.vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
 import FunIcon from '@/media/FunIcon.vue';
 import answerCorrect from '@/media/lottie/answer-correct.json';
@@ -301,11 +333,10 @@ export default defineComponent({
     name: 'GuessingGame',
     components: {
         FirecrackerHeader,
-        Spinner,
+        SkeletonText,
         IonPage,
         IonContent,
         IonTextarea,
-        IonCardSubtitle,
         IonChip,
         LottieAnimation,
         FunIcon,
@@ -748,7 +779,8 @@ ion-content#guessing-game {
     border-radius: var(--radius-lg);
 }
 
-.swiper-slide {
+.swiper-slide,
+.game-skeleton-card {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
@@ -1010,13 +1042,19 @@ ion-content#guessing-game {
 
 /* ------------------------------------------------------- loading / empty */
 
-.game-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-xs);
+.game-skeleton-card {
     flex: 1 1 auto;
+    min-width: 0;
+}
+
+.game-skeleton-hint {
+    min-height: 32px;
+    justify-content: space-between;
+}
+
+.game-skeleton-rail-step {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .game-empty {
