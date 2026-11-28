@@ -7,7 +7,57 @@
             type="BACK"
         />
         <ion-content :fullscreen="true" id="leitner-box-items">
-            <spinner v-if="showSpinner && !isNetworkError" />
+            <view
+                v-if="showSpinner && !isNetworkError && !boxItems.length"
+                role="status"
+                aria-label="Loading flashcards"
+            >
+                <ion-row
+                    v-for="index in 5"
+                    :key="index"
+                    class="display-flex ion-justify-content-center item-container"
+                    aria-hidden="true"
+                >
+                    <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
+                        <ion-card class="margin-top-bottom-unset">
+                            <ion-card-header>
+                                <ion-card-title class="display-flex ion-justify-content-center">
+                                    <skeleton-text width="48%" height="var(--text-xl)" />
+                                </ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>
+                                <ion-row
+                                    class="display-flex ion-justify-content-center ion-align-items-center ion-margin-top skeleton-date-row"
+                                >
+                                    <skeleton-text width="var(--icon-md)" height="var(--icon-md)" />
+                                    <span class="updated-at ion-padding-start ion-padding-end">
+                                        <skeleton-text width="min(112px, 24vw)" height="1em" />
+                                    </span>
+                                    <skeleton-text width="var(--icon-md)" height="var(--icon-md)" />
+                                    <span class="updated-at ion-padding-start">
+                                        <skeleton-text width="min(65px, 15vw)" height="1em" />
+                                    </span>
+                                </ion-row>
+                                <ion-row class="item-actions ion-justify-content-center ion-padding-top">
+                                    <skeleton-text
+                                        v-if="!isFirstBox()"
+                                        width="44px"
+                                        height="44px"
+                                        border-radius="50%"
+                                    />
+                                    <skeleton-text v-if="!isLastBox()" width="44px" height="44px" border-radius="50%" />
+                                    <skeleton-text
+                                        class="item-actions__details"
+                                        width="44px"
+                                        height="44px"
+                                        border-radius="50%"
+                                    />
+                                </ion-row>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </view>
 
             <view v-if="shouldShowEmptyState">
                 <ion-card-subtitle class="ion-padding ion-text-center">
@@ -115,7 +165,11 @@
             </ion-row>
 
             <ion-col
-                v-if="!allQuietOnTheWesternFront && singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary"
+                v-if="
+                    !showSpinner &&
+                    !allQuietOnTheWesternFront &&
+                    singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary
+                "
                 sizeXs="12"
                 sizeSm="12"
                 sizeMd="8"
@@ -135,12 +189,13 @@
             <network-error v-if="isNetworkError" />
 
             <ion-infinite-scroll
+                v-if="boxItems.length > 0 && !showSpinner && !isNetworkError"
                 @ionInfinite="renderBoxItems($event)"
                 threshold="100px"
                 id="infinite-scroll"
                 :disabled="isDisabled"
             >
-                <spinner />
+                <ion-infinite-scroll-content loading-spinner="crescent" />
             </ion-infinite-scroll>
         </ion-content>
 
@@ -170,6 +225,7 @@ import {
     IonCol,
     IonContent,
     IonInfiniteScroll,
+    IonInfiniteScrollContent,
     IonPage,
     IonRow,
 } from '@ionic/vue';
@@ -184,7 +240,7 @@ import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
 import HttpHandler from '@/utils/HttpHandler';
 import Pagination from '@/domains/Pagination';
 import { Components } from '@ionic/core/components';
-import Spinner from '@/views/shared/Spinner.vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 import NetworkError from '@/views/shared/NetworkError.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -217,7 +273,7 @@ export default defineComponent({
     components: {
         FirecrackerHeader,
         LottieAnimation,
-        Spinner,
+        SkeletonText,
         NetworkError,
         EndOfList,
         IonContent,
@@ -227,6 +283,7 @@ export default defineComponent({
         IonCardTitle,
         IonCardSubtitle,
         IonInfiniteScroll,
+        IonInfiniteScrollContent,
         IonCardContent,
         IonRow,
         IonCol,
@@ -241,7 +298,7 @@ export default defineComponent({
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
             boxItems: [] as LeitnerBoxItem[],
             singleLeitnerItemEarlierToBoxAppearanceDate: {} as SingleLeitnerItemEarlierToBoxAppearanceDate,
-            showSpinner: false,
+            showSpinner: true,
             pageNumber: 1,
             pageSize: 10,
             isDisabled: false,
@@ -281,7 +338,12 @@ export default defineComponent({
          * celebration to finish instead.
          */
         shouldShowEmptyState(): boolean {
-            return this.allQuietOnTheWesternFront && !this.isNetworkError && !this.isMasteredFeedbackPlaying;
+            return (
+                !this.showSpinner &&
+                this.allQuietOnTheWesternFront &&
+                !this.isNetworkError &&
+                !this.isMasteredFeedbackPlaying
+            );
         },
 
         /**
@@ -291,6 +353,7 @@ export default defineComponent({
          */
         shouldShowEndOfList(): boolean {
             return (
+                !this.showSpinner &&
                 this.isDisabled &&
                 this.boxItems.length > 0 &&
                 !this.singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary &&
@@ -365,8 +428,11 @@ export default defineComponent({
         async refresh(): Promise<void> {
             this.clean();
             this.showSpinner = true;
-            await this.renderBoxItems();
-            this.showSpinner = false;
+            try {
+                await this.renderBoxItems();
+            } finally {
+                this.showSpinner = false;
+            }
         },
 
         async seeMore(id: string, word: string): Promise<void> {
@@ -537,8 +603,16 @@ ion-card-content {
 
 /* The arrows change which box the word lives in; keep the details action away
    from them so it is not hit by mistake. */
-.item-container ion-button.item-actions__details {
+.item-container .item-actions__details {
     margin-inline-start: var(--space-md);
+}
+
+.skeleton-date-row {
+    flex-wrap: nowrap;
+}
+
+.skeleton-date-row .updated-at {
+    min-width: 0;
 }
 
 .leitner-icon {
