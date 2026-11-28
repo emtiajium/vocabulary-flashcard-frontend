@@ -116,10 +116,6 @@ export default class GoogleAuthentication {
     private static setToken(token: string): void {
         GoogleAuthentication.currentIdToken = token;
     }
-
-    static async getToken(): Promise<string> {
-        return GoogleAuthentication.currentIdToken;
-    }
 }
 
 window.onload = function onLoadGoogleAuthLib(): void {
