@@ -49,6 +49,7 @@ export default class NativeStorage {
 
     static async removeAuthorizedUser(): Promise<void> {
         await (await NativeStorage.getStorage()).remove('AUTHORIZED_USER');
+        await (await NativeStorage.getStorage()).remove('JWT');
     }
 
     static async setIsAuthenticated(isAuthenticated: boolean): Promise<void> {
