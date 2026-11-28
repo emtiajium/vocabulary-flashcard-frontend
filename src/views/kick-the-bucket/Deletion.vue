@@ -66,6 +66,26 @@
                             </ion-row>
                         </ion-card-subtitle>
                     </view>
+                    <div v-else role="status" aria-label="Loading account deletion information">
+                        <ion-row
+                            v-for="(lines, index) in [1, 2, 3]"
+                            :key="index"
+                            class="ion-justify-content-center ion-padding deletion-skeleton-row"
+                        >
+                            <skeleton-text
+                                v-for="line in lines"
+                                :key="line"
+                                :width="line === lines ? '75%' : '100%'"
+                                height="var(--text-sm)"
+                            />
+                        </ion-row>
+                        <ion-row class="ion-justify-content-center ion-padding">
+                            <skeleton-text width="125px" height="36px" border-radius="var(--radius-md)" />
+                        </ion-row>
+                        <ion-row class="ion-justify-content-center ion-padding deletion-skeleton-row">
+                            <skeleton-text v-for="line in 3" :key="line" :width="line === 3 ? '60%' : '95%'" />
+                        </ion-row>
+                    </div>
                 </ion-col>
             </ion-row>
         </ion-content>
@@ -75,6 +95,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonCardSubtitle, IonCol, IonContent, IonPage, IonRow, IonText, IonButton } from '@ionic/vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import Cohort from '@/domains/Cohort';
 import HttpHandler from '@/utils/HttpHandler';
@@ -86,6 +107,7 @@ import { FirecrackerError } from '@/domains/FirecrackerError';
 export default defineComponent({
     name: 'Deletion',
     components: {
+        SkeletonText,
         IonText,
         IonCardSubtitle,
         IonCol,
@@ -159,4 +181,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.deletion-skeleton-row {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+}
+</style>
