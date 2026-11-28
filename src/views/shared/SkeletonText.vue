@@ -44,6 +44,10 @@ export default defineComponent({
         };
     },
     mounted() {
+        if (typeof window.matchMedia !== 'function') {
+            return;
+        }
+
         this.motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 
         this.prefersReducedMotion = this.motionPreference.matches;

@@ -201,7 +201,6 @@ import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import EndOfList from '@/views/shared/EndOfList.vue';
 import NetworkError from '@/views/shared/NetworkError.vue';
 import NativeStorage from '@/utils/NativeStorage';
-import Spinner from '@/views/shared/Spinner.vue';
 import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/vocab-read/Settings.vue';

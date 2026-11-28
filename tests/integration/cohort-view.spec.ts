@@ -12,6 +12,7 @@ jest.mock('@ionic/vue', () => {
     const IonStub = define({ template: '<div><slot /></div>' });
 
     return {
+        IonSkeletonText: IonStub,
         IonCard: IonStub,
         IonCardContent: IonStub,
         IonCardHeader: IonStub,

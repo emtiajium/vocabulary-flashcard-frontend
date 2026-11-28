@@ -10,9 +10,12 @@ jest.mock('@ionic/vue', () => {
     const IonStub = define({ template: '<div><slot /></div>' });
 
     return {
+        IonSkeletonText: IonStub,
         IonButton: IonStub,
         IonCard: IonStub,
         IonCardContent: IonStub,
+        IonCardHeader: IonStub,
+        IonCardTitle: IonStub,
         IonCardSubtitle: IonStub,
         IonChip: IonStub,
         IonCol: IonStub,
@@ -20,9 +23,11 @@ jest.mock('@ionic/vue', () => {
         IonFab: IonStub,
         IonFabButton: IonStub,
         IonInfiniteScroll: IonStub,
+        IonInfiniteScrollContent: IonStub,
         IonItem: IonStub,
         IonPage: IonStub,
         IonRefresher: IonStub,
+        IonRefresherContent: IonStub,
         IonRow: IonStub,
     };
 });
