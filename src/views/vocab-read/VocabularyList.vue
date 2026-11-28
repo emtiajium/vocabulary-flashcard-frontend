@@ -47,7 +47,13 @@
                 </ion-col>
             </ion-row>
 
-            <spinner v-if="showSpinner" />
+            <view v-if="showSpinner && !vocabularies.length" role="status" aria-label="Loading vocabularies">
+                <ion-row v-for="index in 5" :key="index" class="display-flex ion-justify-content-center">
+                    <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
+                        <minified-vocabulary-skeleton />
+                    </ion-col>
+                </ion-row>
+            </view>
 
             <view v-if="shouldDisplayNoSearchResultMessage()">
                 <ion-card-subtitle class="ion-padding ion-text-center">
@@ -200,6 +206,7 @@ import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 import { FirecrackerError } from '@/domains/FirecrackerError';
 import MessageDB from '@/utils/MessageDB';
 import { cloneDeep, isEmpty, uniqBy } from 'lodash';
+import MinifiedVocabularySkeleton from '@/views/vocab-read/MinifiedVocabularySkeleton.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -214,6 +221,7 @@ export default defineComponent({
         MinifiedVocabulary,
         FirecrackerHeader,
         LottieAnimation,
+        MinifiedVocabularySkeleton,
         IonContent,
         IonPage,
         IonFab,
@@ -496,10 +504,17 @@ export default defineComponent({
         async setSearchKeyword(searchKeyword: string): Promise<void> {
             this.searchKeyword = searchKeyword;
             const searchKeywordLength = searchKeyword.length;
+
             if (searchKeywordLength === 0 || searchKeywordLength > 2) {
                 this.pageNumber = 1;
                 this.vocabularies = [] as Vocabulary[];
-                await this.renderVocabularies();
+                this.showSpinner = true;
+
+                try {
+                    await this.renderVocabularies();
+                } finally {
+                    this.showSpinner = false;
+                }
             }
         },
 
