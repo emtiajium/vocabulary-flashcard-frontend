@@ -123,6 +123,7 @@
             <network-error v-if="isNetworkError" :message="errorMessage" />
 
             <ion-infinite-scroll
+                v-if="vocabularies.length > 0 && !showSpinner"
                 @ionInfinite="renderVocabularies($event)"
                 threshold="100px"
                 id="infinite-scroll"
@@ -240,7 +241,7 @@ export default defineComponent({
     },
     data() {
         return {
-            showSpinner: false,
+            showSpinner: true,
             faPlus,
             faThumbsUp,
             emptyVocabulariesAnimation: announcement,
