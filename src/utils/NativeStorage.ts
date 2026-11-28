@@ -25,18 +25,6 @@ export default class NativeStorage {
         return (await NativeStorage.getStorage()).get(key);
     }
 
-    static getJwToken(): Promise<string> {
-        return NativeStorage.getByKey<string>(NativeStorageKey.JWT);
-    }
-
-    static async setJwToken(jwToken: string): Promise<void> {
-        await (await NativeStorage.getStorage()).set(NativeStorageKey.JWT, jwToken);
-    }
-
-    static async removeJwToken(): Promise<void> {
-        await (await NativeStorage.getStorage()).remove(NativeStorageKey.JWT);
-    }
-
     static async setShouldReloadVocabularies(shouldReloadVocabularies: boolean): Promise<void> {
         await (
             await NativeStorage.getStorage()
@@ -61,6 +49,7 @@ export default class NativeStorage {
 
     static async removeAuthorizedUser(): Promise<void> {
         await (await NativeStorage.getStorage()).remove('AUTHORIZED_USER');
+        await (await NativeStorage.getStorage()).remove('JWT');
     }
 
     static async setIsAuthenticated(isAuthenticated: boolean): Promise<void> {

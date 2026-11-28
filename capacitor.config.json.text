@@ -12,5 +12,9 @@
                 "twitter": false
             }
         }
+    },
+    "server": {
+        "hostname": "firecrackervocabulary.com",
+        "androidScheme": "https"
     }
 }

@@ -71,18 +71,18 @@ export default defineComponent({
             try {
                 const { versionCode, isAndroid } = await Platform.getVersion();
                 if (isAndroid) {
-                    const { versionCode: latestVersionCode } = await HttpHandler.get<Android>('/v1/androids');
+                    const { versionCode: latestVersionCode, message } = await HttpHandler.get<Android>('/v1/androids');
                     if (Number.parseInt(versionCode, 10) < latestVersionCode) {
-                        this.notifyAboutAvailableUpdate();
+                        this.notifyAboutAvailableUpdate(message);
                     }
                 }
             } catch {
                 // do nothing
             }
         },
-        notifyAboutAvailableUpdate(): void {
+        notifyAboutAvailableUpdate(message?: string): void {
             Alert.presentConfirm({
-                message: 'There is a newer version available for download. Would you like to update it now?',
+                message: message || 'There is a newer version available for download. Would you like to update it now?',
                 confirmLabel: 'Update',
                 cancelLabel: 'No thanks!',
                 onConfirm: async () => {

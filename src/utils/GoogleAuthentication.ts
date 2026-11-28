@@ -72,8 +72,6 @@ export default class GoogleAuthentication {
         GoogleAuthentication.currentIdToken = undefined as unknown as string;
 
         if (isAndroid) {
-            await NativeStorage.removeJwToken();
-
             try {
                 await SocialLogin.logout({ provider: 'google' });
             } catch {
@@ -117,18 +115,6 @@ export default class GoogleAuthentication {
 
     private static setToken(token: string): void {
         GoogleAuthentication.currentIdToken = token;
-        if (this.isAndroid) {
-            NativeStorage.setJwToken(token).finally();
-        }
-    }
-
-    static async getToken(): Promise<string> {
-        if (GoogleAuthentication.currentIdToken) {
-            return GoogleAuthentication.currentIdToken;
-        }
-        const token = await NativeStorage.getJwToken();
-        GoogleAuthentication.currentIdToken = token;
-        return token;
     }
 }
 
