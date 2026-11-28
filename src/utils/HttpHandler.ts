@@ -1,7 +1,6 @@
 import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import MessageDB from '@/utils/MessageDB';
 import Platform from '@/utils/Platform';
-import GoogleAuthentication from '@/utils/GoogleAuthentication';
 import Config from '../../config.json';
 
 type RetryConfig = {
@@ -58,10 +57,6 @@ export default class HttpHandler {
         this.client.interceptors.response.use(
             (response) => response,
             async (error: AxiosError) => {
-                if (await Platform.isAndroid()) {
-                    return Promise.reject(error);
-                }
-
                 const config = error.config as typeof error.config & RetryConfig;
 
                 const isLoginRequest = config?.url === '/v1/users' && config?.method?.toLowerCase() === 'post';
@@ -153,9 +148,6 @@ export default class HttpHandler {
             'X-Version': String(version),
             'X-Version-Code': String(versionCode),
         };
-        if (isAndroid) {
-            headers.Authorization = `Bearer ${await GoogleAuthentication.getToken()}`;
-        }
         return { headers };
     }
 
