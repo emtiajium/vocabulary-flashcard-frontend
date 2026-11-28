@@ -10,9 +10,12 @@ jest.mock('@ionic/vue', () => {
     const IonStub = define({ template: '<div><slot /></div>' });
 
     return {
+        IonSkeletonText: IonStub,
         IonButton: IonStub,
         IonCard: IonStub,
         IonCardContent: IonStub,
+        IonCardHeader: IonStub,
+        IonCardTitle: IonStub,
         IonCardSubtitle: IonStub,
         IonChip: IonStub,
         IonCol: IonStub,
@@ -20,9 +23,11 @@ jest.mock('@ionic/vue', () => {
         IonFab: IonStub,
         IonFabButton: IonStub,
         IonInfiniteScroll: IonStub,
+        IonInfiniteScrollContent: IonStub,
         IonItem: IonStub,
         IonPage: IonStub,
         IonRefresher: IonStub,
+        IonRefresherContent: IonStub,
         IonRow: IonStub,
     };
 });
@@ -87,6 +92,7 @@ jest.mock('@/utils/NativeStorage', () => ({
 
 interface VocabularyListVm {
     allQuietOnTheWesternFront: boolean;
+    showSpinner: boolean;
     isNetworkError: boolean;
     fetchFlashcard: boolean;
     vocabularies: unknown[];
@@ -115,9 +121,22 @@ const mountView = (): VueWrapper =>
     });
 
 describe('Vocabulary list view (integration)', () => {
+    it('SHOULD hide empty results while loading', async () => {
+        const wrapper = mountView();
+        vm(wrapper).showSpinner = true;
+        vm(wrapper).allQuietOnTheWesternFront = true;
+        expect(vm(wrapper).shouldDisplayFetchButton()).toBe(false);
+        vm(wrapper).isDisabled = true;
+        vm(wrapper).searchKeyword = 'qwerty';
+        expect(vm(wrapper).shouldDisplayNoSearchResultMessage()).toBe(false);
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find('[role="status"]').text()).toBe('Loading vocabularies');
+    });
+
     describe('WHEN the cohort has no vocabulary yet', () => {
         it('SHOULD animate the announcement instead of showing the icon alone', async () => {
             const wrapper = mountView();
+            vm(wrapper).showSpinner = false;
             vm(wrapper).allQuietOnTheWesternFront = true;
             await wrapper.vm.$nextTick();
 
@@ -128,6 +147,7 @@ describe('Vocabulary list view (integration)', () => {
 
         it('SHOULD keep the campaign icon as the static fallback', async () => {
             const wrapper = mountView();
+            vm(wrapper).showSpinner = false;
             vm(wrapper).allQuietOnTheWesternFront = true;
             await wrapper.vm.$nextTick();
 
@@ -141,6 +161,7 @@ describe('Vocabulary list view (integration)', () => {
     describe('WHEN the search matched nothing', () => {
         it('SHOULD animate the search instead of showing the icon alone', async () => {
             const wrapper = mountView();
+            vm(wrapper).showSpinner = false;
             vm(wrapper).isDisabled = true;
             vm(wrapper).searchKeyword = 'qwerty';
             await wrapper.vm.$nextTick();
@@ -152,6 +173,7 @@ describe('Vocabulary list view (integration)', () => {
 
         it('SHOULD keep the search icon as the static fallback', async () => {
             const wrapper = mountView();
+            vm(wrapper).showSpinner = false;
             vm(wrapper).isDisabled = true;
             vm(wrapper).searchKeyword = 'qwerty';
             await wrapper.vm.$nextTick();
@@ -164,6 +186,7 @@ describe('Vocabulary list view (integration)', () => {
 
         it('SHOULD offer the keyword that found nothing', async () => {
             const wrapper = mountView();
+            vm(wrapper).showSpinner = false;
             vm(wrapper).isDisabled = true;
             vm(wrapper).searchKeyword = 'qwerty';
             await wrapper.vm.$nextTick();
@@ -173,6 +196,7 @@ describe('Vocabulary list view (integration)', () => {
 
         it('SHOULD not animate a search that is still too short to run', async () => {
             const wrapper = mountView();
+            vm(wrapper).showSpinner = false;
             vm(wrapper).isDisabled = true;
             vm(wrapper).searchKeyword = 'qw';
             await wrapper.vm.$nextTick();
@@ -185,6 +209,7 @@ describe('Vocabulary list view (integration)', () => {
     describe('WHEN the cohort already has vocabulary', () => {
         it('SHOULD not show the announcement at all', async () => {
             const wrapper = mountView();
+            vm(wrapper).showSpinner = false;
             vm(wrapper).vocabularies = [{ id: 'vocabulary-1', word: 'Debris' }];
             await wrapper.vm.$nextTick();
 

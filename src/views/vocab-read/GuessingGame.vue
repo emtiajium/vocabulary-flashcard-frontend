@@ -7,7 +7,8 @@
             type="MENU"
         />
         <ion-content :fullscreen="true" id="guessing-game">
-            <div class="game-shell">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
+            <div class="game-shell" :aria-busy="isLoading">
                 <!-- The play surface stays mounted (hidden) so the swiper it owns is
                      always in the DOM by the time `initSwiper` runs. -->
                 <section v-show="showGame" class="game-progress" aria-labelledby="game-progress-label">
@@ -182,11 +183,47 @@
                     </nav>
                 </div>
 
-                <div v-if="isLoading" class="game-loading">
-                    <spinner inline-style="height: auto" />
-                    <ion-card-subtitle class="ion-text-center" role="status">
-                        Preparing the guessing game for today ...
-                    </ion-card-subtitle>
+                <template v-if="isLoading">
+                    <section class="game-progress" aria-hidden="true">
+                        <div class="game-progress__head">
+                            <skeleton-text width="7rem" height="var(--text-sm)" />
+                            <skeleton-text width="4.5rem" height="32px" border-radius="var(--radius-pill)" />
+                        </div>
+                        <skeleton-text height="8px" border-radius="var(--radius-pill)" />
+                        <div class="game-hint game-skeleton-hint">
+                            <skeleton-text width="62%" height="var(--text-sm)" />
+                            <skeleton-text width="25%" height="var(--text-xs)" />
+                        </div>
+                    </section>
+                    <div class="game-stage" aria-hidden="true">
+                        <div class="game-viewport">
+                            <div class="game-skeleton-card">
+                                <div class="game-card__body">
+                                    <p class="game-card__eyebrow">Meaning</p>
+                                    <skeleton-text width="94%" height="var(--text-lg)" />
+                                    <skeleton-text width="87%" height="var(--text-lg)" />
+                                    <skeleton-text width="60%" height="var(--text-lg)" />
+                                </div>
+                                <div class="game-answer">
+                                    <div class="game-answer__input-row">
+                                        <skeleton-text height="40px" border-radius="var(--radius-md)" />
+                                    </div>
+                                    <skeleton-text width="76px" height="36px" border-radius="var(--radius-md)" />
+                                </div>
+                                <div class="game-footer"></div>
+                            </div>
+                        </div>
+                        <div class="game-rail" aria-hidden="true">
+                            <div v-for="index in 10" :key="index" class="game-skeleton-rail-step">
+                                <skeleton-text height="8px" border-radius="var(--radius-pill)" />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <div v-else-if="loadFailed" class="game-empty">
+                    <h2 class="game-empty__title">Unable to load the guessing game</h2>
+                    <p class="game-empty__text">Please try again later.</p>
                 </div>
 
                 <div v-else-if="!vocabularies.length" class="game-empty">
@@ -267,9 +304,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, IonTextarea, IonButton, IonCardSubtitle, IonChip, IonModal } from '@ionic/vue';
+import { IonPage, IonContent, IonTextarea, IonButton, IonChip, IonModal } from '@ionic/vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
-import Spinner from '@/views/shared/Spinner.vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 import LottieAnimation from '@/media/LottieAnimation.vue';
 import FunIcon from '@/media/FunIcon.vue';
 import answerCorrect from '@/media/lottie/answer-correct.json';
@@ -301,11 +338,10 @@ export default defineComponent({
     name: 'GuessingGame',
     components: {
         FirecrackerHeader,
-        Spinner,
+        SkeletonText,
         IonPage,
         IonContent,
         IonTextarea,
-        IonCardSubtitle,
         IonChip,
         LottieAnimation,
         FunIcon,
@@ -326,6 +362,7 @@ export default defineComponent({
             funGameAnimation: funGame,
             failedMessage: 'Not quite. Try again.',
             isLoading: true,
+            loadFailed: false,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             // Draft per word so a half-typed answer survives swiping away and back.
             givenAnswers: [] as string[],
@@ -345,6 +382,18 @@ export default defineComponent({
         };
     },
     computed: {
+        loadingStatus(): string {
+            if (this.isLoading) {
+                return 'Preparing the guessing game for today';
+            }
+            if (this.loadFailed) {
+                return 'Unable to load the guessing game';
+            }
+            if (!this.vocabularies.length) {
+                return 'No words available';
+            }
+            return 'Guessing game ready';
+        },
         showGame(): boolean {
             return !this.isLoading && this.vocabularies.length > 0;
         },
@@ -397,15 +446,22 @@ export default defineComponent({
 
         async assertLoadingVocabularies(): Promise<void> {
             this.isLoading = true;
-            const cachedRandomlyChosenMeaningResponse = await NativeStorage.getGuessingGameVocabularies();
-            const today = format(new Date(), 'yyyy-MM-dd');
-            if (cachedRandomlyChosenMeaningResponse?.createdAt !== today) {
-                NativeStorage.removeGuessingGameVocabularies().catch();
-                await this.loadVocabularies();
-            } else {
-                this.setVocabularies(cachedRandomlyChosenMeaningResponse.data);
+            this.loadFailed = false;
+            try {
+                const cachedRandomlyChosenMeaningResponse = await NativeStorage.getGuessingGameVocabularies();
+                const today = format(new Date(), 'yyyy-MM-dd');
+                if (cachedRandomlyChosenMeaningResponse?.createdAt !== today) {
+                    NativeStorage.removeGuessingGameVocabularies().catch();
+                    await this.loadVocabularies();
+                } else {
+                    this.setVocabularies(cachedRandomlyChosenMeaningResponse.data);
+                }
+            } catch {
+                this.loadFailed = true;
+                this.setVocabularies([]);
+            } finally {
+                this.isLoading = false;
             }
-            this.isLoading = false;
         },
 
         async loadVocabularies(): Promise<void> {
@@ -416,6 +472,7 @@ export default defineComponent({
                 this.setVocabularies(vocabularies);
                 this.storeInCache(vocabularies);
             } catch {
+                this.loadFailed = true;
                 this.setVocabularies([]);
                 await Toast.present(MessageDB.genericError, 'error');
             }
@@ -601,6 +658,7 @@ export default defineComponent({
 
         clean(): void {
             this.isLoading = true;
+            this.loadFailed = false;
             this.vocabularies = [];
             this.givenAnswers = [];
             this.revealedIndex = null;
@@ -748,7 +806,8 @@ ion-content#guessing-game {
     border-radius: var(--radius-lg);
 }
 
-.swiper-slide {
+.swiper-slide,
+.game-skeleton-card {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
@@ -921,19 +980,6 @@ ion-content#guessing-game {
     color: var(--ion-text-color-step-300);
 }
 
-/* Announce-only: visible to assistive tech, not to the eye. */
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-    border: 0;
-}
-
 .game-reveal {
     flex: 0 0 auto;
     margin: 0;
@@ -1010,13 +1056,19 @@ ion-content#guessing-game {
 
 /* ------------------------------------------------------- loading / empty */
 
-.game-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-xs);
+.game-skeleton-card {
     flex: 1 1 auto;
+    min-width: 0;
+}
+
+.game-skeleton-hint {
+    min-height: 32px;
+    justify-content: space-between;
+}
+
+.game-skeleton-rail-step {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .game-empty {

@@ -2,9 +2,16 @@
     <ion-page>
         <firecracker-header header-title="Goodbye" content-id="deletion" menu-id="deletion-menu" />
         <ion-content :fullscreen="true" id="deletion">
-            <ion-row class="display-flex ion-justify-content-center">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
+            <ion-row class="display-flex ion-justify-content-center" :aria-busy="!isReady">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
-                    <view v-if="isReady">
+                    <div v-if="isReady && isNetworkError">
+                        <network-error />
+                        <ion-row class="ion-justify-content-center">
+                            <ion-button @click="init">Retry</ion-button>
+                        </ion-row>
+                    </div>
+                    <view v-else-if="isReady">
                         <ion-card-subtitle>
                             <ion-row class="ion-justify-content-center ion-padding">
                                 <ion-text class="ion-text-center"> We are sorry to say goodbye, honestly. </ion-text>
@@ -66,6 +73,26 @@
                             </ion-row>
                         </ion-card-subtitle>
                     </view>
+                    <div v-else aria-hidden="true">
+                        <ion-row
+                            v-for="(lines, index) in [1, 2, 3]"
+                            :key="index"
+                            class="ion-justify-content-center ion-padding deletion-skeleton-row"
+                        >
+                            <skeleton-text
+                                v-for="line in lines"
+                                :key="line"
+                                :width="line === lines ? '75%' : '100%'"
+                                height="var(--text-sm)"
+                            />
+                        </ion-row>
+                        <ion-row class="ion-justify-content-center ion-padding">
+                            <skeleton-text width="125px" height="36px" border-radius="var(--radius-md)" />
+                        </ion-row>
+                        <ion-row class="ion-justify-content-center ion-padding deletion-skeleton-row">
+                            <skeleton-text v-for="line in 3" :key="line" :width="line === 3 ? '60%' : '95%'" />
+                        </ion-row>
+                    </div>
                 </ion-col>
             </ion-row>
         </ion-content>
@@ -75,6 +102,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonCardSubtitle, IonCol, IonContent, IonPage, IonRow, IonText, IonButton } from '@ionic/vue';
+import NetworkError from '@/views/shared/NetworkError.vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import Cohort from '@/domains/Cohort';
 import HttpHandler from '@/utils/HttpHandler';
@@ -86,6 +115,8 @@ import { FirecrackerError } from '@/domains/FirecrackerError';
 export default defineComponent({
     name: 'Deletion',
     components: {
+        SkeletonText,
+        NetworkError,
         IonText,
         IonCardSubtitle,
         IonCol,
@@ -98,7 +129,8 @@ export default defineComponent({
     data() {
         return {
             isReady: false,
-            isAuthenticated: true,
+            isAuthenticated: false,
+            isNetworkError: false,
             cohort: {} as Cohort,
         };
     },
@@ -108,14 +140,33 @@ export default defineComponent({
     ionViewWillLeave() {
         this.clean();
     },
+    computed: {
+        loadingStatus(): string {
+            if (!this.isReady) {
+                return 'Loading account deletion information';
+            }
+            if (this.isNetworkError) {
+                return 'Unable to load account deletion information';
+            }
+            return 'Account deletion information ready';
+        },
+    },
     methods: {
         async init(): Promise<void> {
+            this.isReady = false;
+            this.isNetworkError = false;
+            this.isAuthenticated = false;
             try {
                 this.cohort = (await HttpHandler.get<Cohort>(`/v1/cohorts/self`)) as Cohort;
                 this.isAuthenticated = true;
             } catch (error) {
-                if ((error as FirecrackerError).message === MessageDB.forbiddenError) {
+                if (
+                    (error as FirecrackerError).message === MessageDB.forbiddenError ||
+                    (error as Error & { status?: number }).status === 401
+                ) {
                     this.isAuthenticated = false;
+                } else {
+                    this.isNetworkError = true;
                 }
             } finally {
                 this.isReady = true;
@@ -152,11 +203,18 @@ export default defineComponent({
         },
         clean(): void {
             this.isReady = false;
-            this.isAuthenticated = true;
+            this.isAuthenticated = false;
+            this.isNetworkError = false;
             this.cohort = {} as Cohort;
         },
     },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.deletion-skeleton-row {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+}
+</style>

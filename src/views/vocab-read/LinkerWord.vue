@@ -2,7 +2,7 @@
     <ion-page>
         <firecracker-header :header-title="word" content-id="linker-word" menu-id="linker-word-menu" type="BACK" />
         <ion-content :fullscreen="true" id="linker-word">
-            <spinner v-if="isLoading" />
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
             <ion-row v-if="displayDictionary" class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <dictionary :word="word" :label-alignment="'center'" />
@@ -26,14 +26,12 @@ import Dictionary from '@/views/vocab-read/Dictionary.vue';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import HttpHandler from '@/utils/HttpHandler';
 import Vocabulary from '@/domains/Vocabulary';
-import Spinner from '@/views/shared/Spinner.vue';
 import VocabularyDetails from '@/views/vocab-read/VocabularyDetails.vue';
 
 export default defineComponent({
     name: 'LinkerWord',
     components: {
         VocabularyDetails,
-        Spinner,
         Dictionary,
         FirecrackerHeader,
         IonPage,
@@ -59,6 +57,17 @@ export default defineComponent({
     },
     ionViewWillLeave() {
         this.clean();
+    },
+    computed: {
+        loadingStatus(): string {
+            if (this.isLoading) {
+                return 'Loading vocabulary details';
+            }
+            if (this.displayDictionary) {
+                return 'Dictionary links available';
+            }
+            return 'Vocabulary details loaded';
+        },
     },
     methods: {
         async init(): Promise<void> {

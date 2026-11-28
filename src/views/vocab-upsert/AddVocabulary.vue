@@ -10,11 +10,75 @@
         />
 
         <ion-content :fullscreen="true" id="add-vocabulary">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
             <ion-row class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
-                    <spinner v-if="isLoading" />
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8" :aria-busy="isLoading">
+                    <view v-if="isLoading" aria-hidden="true">
+                        <div aria-hidden="true">
+                            <ion-card
+                                v-for="(section, index) in skeletonSections"
+                                :key="section.title"
+                                :class="{ 'margin-top-unset': index === 0 }"
+                            >
+                                <ion-card-header>
+                                    <ion-card-title>{{ section.title }}</ion-card-title>
+                                    <ion-card-subtitle class="tips">
+                                        <skeleton-text width="var(--icon-sm)" height="var(--icon-sm)" />
+                                        <div class="skeleton-tip-lines">
+                                            <skeleton-text
+                                                v-for="(width, line) in section.tipWidths"
+                                                :key="line"
+                                                :width="width"
+                                                height="var(--text-sm)"
+                                            />
+                                        </div>
+                                    </ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content>
+                                    <template v-if="section.title === 'Definitions'">
+                                        <div class="added-definition-container">
+                                            <div class="added-definition-action-buttons skeleton-definition-actions">
+                                                <skeleton-text width="24px" height="24px" border-radius="50%" />
+                                                <skeleton-text width="24px" height="24px" border-radius="50%" />
+                                            </div>
+                                            <div class="added-definition-contents">
+                                                <skeleton-text width="85%" height="var(--text-base)" />
+                                            </div>
+                                        </div>
+                                        <div class="skeleton-add-definition">
+                                            <skeleton-text width="40px" height="40px" border-radius="50%" />
+                                        </div>
+                                    </template>
+                                    <skeleton-text
+                                        v-else-if="section.title === 'Draft'"
+                                        width="48px"
+                                        height="28px"
+                                        border-radius="999px"
+                                    />
+                                    <skeleton-text v-else height="48px" border-radius="var(--radius-md)" />
+                                </ion-card-content>
+                            </ion-card>
+                            <ion-row class="buttons-container">
+                                <ion-col
+                                    v-for="index in 2"
+                                    :key="index"
+                                    sizeXs="6"
+                                    sizeSm="4"
+                                    sizeMd="2"
+                                    sizeLg="2"
+                                    sizeXl="2"
+                                    :class="index === 1 ? 'cancel-button-container' : 'save-button-container'"
+                                >
+                                    <skeleton-text height="36px" border-radius="var(--radius-md)" />
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </view>
 
-                    <view v-if="!isLoading">
+                    <ion-card-subtitle v-else-if="loadFailed" class="ion-padding ion-text-center">
+                        Unable to load vocabulary form. Please go back and try again.
+                    </ion-card-subtitle>
+                    <view v-else>
                         <ion-card class="margin-top-unset">
                             <ion-card-header>
                                 <ion-card-title> Word </ion-card-title>
@@ -214,7 +278,7 @@ import AddGenericExternalLinks from '@/views/vocab-upsert/AddGenericExternalLink
 import Definition from '@/domains/Definition';
 import AddDefinition from '@/views/vocab-upsert/AddDefinition.vue';
 import VocabularyValidator from '@/utils/VocabularyValidator';
-import Spinner from '@/views/shared/Spinner.vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlusCircle, faMinusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
@@ -241,7 +305,7 @@ export default defineComponent({
     name: 'AddVocabulary',
     components: {
         FirecrackerHeader,
-        Spinner,
+        SkeletonText,
         AddDefinition,
         AddLinkerWords,
         AddGenericNotes,
@@ -264,6 +328,15 @@ export default defineComponent({
     data() {
         return {
             isLoading: true,
+            loadFailed: false,
+            skeletonSections: [
+                { title: 'Word', tipWidths: ['100%', '75%'] },
+                { title: 'Definitions', tipWidths: ['80%'] },
+                { title: 'Relatable Words', tipWidths: ['100%', '100%', '100%', '70%'] },
+                { title: 'Generic Notes', tipWidths: ['100%', '65%'] },
+                { title: 'Generic External Links', tipWidths: ['80%'] },
+                { title: 'Draft', tipWidths: ['100%', '65%'] },
+            ],
             currentPage: PageType.VOCABULARY_CU,
             mode: '',
             headerTitle: '',
@@ -289,6 +362,17 @@ export default defineComponent({
     ionViewWillLeave() {
         this.clear();
     },
+    computed: {
+        loadingStatus(): string {
+            if (this.isLoading) {
+                return 'Loading vocabulary form';
+            }
+            if (this.loadFailed) {
+                return 'Unable to load vocabulary form';
+            }
+            return 'Vocabulary form ready';
+        },
+    },
     methods: {
         subscribeToHardwareBackButtonListener(): void {
             this.unsubscribeBackButtonListener();
@@ -304,6 +388,7 @@ export default defineComponent({
         async init(): Promise<void> {
             this.subscribeToHardwareBackButtonListener();
             this.isLoading = true;
+            this.loadFailed = false;
             const routeParameters = this.$route.params;
             if (routeParameters?.id) {
                 await this.loadEditView();
@@ -336,6 +421,7 @@ export default defineComponent({
                 this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
                 this.isDraft = vocabulary.isDraft;
             } catch {
+                this.loadFailed = true;
                 await Promise.all([Toast.present(MessageDB.networkError, 'error'), this.$router.back()]);
             }
         },
@@ -613,6 +699,23 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.skeleton-tip-lines {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--space-2xs);
+}
+.skeleton-definition-actions {
+    gap: var(--space-sm);
+    min-height: 36px;
+}
+.skeleton-add-definition {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-sm);
+}
+
 .added-definition-container {
     display: flex;
     align-items: center;

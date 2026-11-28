@@ -7,140 +7,203 @@
             type="BACK"
         />
         <ion-content :fullscreen="true" id="leitner-box-items">
-            <spinner v-if="showSpinner && !isNetworkError" />
-
-            <view v-if="shouldShowEmptyState">
-                <ion-card-subtitle class="ion-padding ion-text-center">
-                    Things are pretty quiet right now.
-                </ion-card-subtitle>
-
-                <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <lottie-animation class="empty-state-animation" :animation-data="emptyStateAnimation" :loop="true">
-                        <template #fallback>
-                            <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
-                        </template>
-                    </lottie-animation>
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
+            <div :aria-busy="showSpinner">
+                <view v-if="showSpinner && !isNetworkError && !boxItems.length" aria-hidden="true">
+                    <ion-row
+                        v-for="index in 5"
+                        :key="index"
+                        class="display-flex ion-justify-content-center item-container"
+                        aria-hidden="true"
+                    >
+                        <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
+                            <ion-card class="margin-top-bottom-unset">
+                                <ion-card-header>
+                                    <ion-card-title class="display-flex ion-justify-content-center">
+                                        <skeleton-text width="48%" height="var(--text-xl)" />
+                                    </ion-card-title>
+                                </ion-card-header>
+                                <ion-card-content>
+                                    <ion-row
+                                        class="display-flex ion-justify-content-center ion-align-items-center ion-margin-top skeleton-date-row"
+                                    >
+                                        <skeleton-text width="var(--icon-md)" height="var(--icon-md)" />
+                                        <span class="updated-at ion-padding-start ion-padding-end">
+                                            <skeleton-text width="min(112px, 24vw)" height="1em" />
+                                        </span>
+                                        <skeleton-text width="var(--icon-md)" height="var(--icon-md)" />
+                                        <span class="updated-at ion-padding-start">
+                                            <skeleton-text width="min(65px, 15vw)" height="1em" />
+                                        </span>
+                                    </ion-row>
+                                    <ion-row class="item-actions ion-justify-content-center ion-padding-top">
+                                        <skeleton-text
+                                            v-if="!isFirstBox()"
+                                            width="44px"
+                                            height="44px"
+                                            border-radius="50%"
+                                        />
+                                        <skeleton-text
+                                            v-if="!isLastBox()"
+                                            width="44px"
+                                            height="44px"
+                                            border-radius="50%"
+                                        />
+                                        <skeleton-text
+                                            class="item-actions__details"
+                                            width="44px"
+                                            height="44px"
+                                            border-radius="50%"
+                                        />
+                                    </ion-row>
+                                </ion-card-content>
+                            </ion-card>
+                        </ion-col>
+                    </ion-row>
                 </view>
 
-                <ion-card-subtitle v-if="box === '1' && totalItems === 0" class="ion-padding ion-text-center">
-                    <span class="link-container">
-                        But beginning the journey with Leitner System is super easy. All you need to do is create a
-                        flashcard by pressing the
-                        <font-awesome-icon :icon="faHeartRegular" class="leitner-icon" /> icon on the
-                        <router-link to="/vocabularies"> vocabulary card </router-link>. After that, the vocabulary will
-                        immediately place into the "{{ headerTitle }}".
-                    </span>
-                </ion-card-subtitle>
+                <view v-if="shouldShowEmptyState">
+                    <ion-card-subtitle class="ion-padding ion-text-center">
+                        Things are pretty quiet right now.
+                    </ion-card-subtitle>
 
-                <ion-card-subtitle v-if="box !== '1' && totalItems > 0" class="ion-padding ion-text-center">
-                    <span v-if="!singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary">
-                        Items will only appear when it is the right time.
-                    </span>
-                    <span v-if="singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary">
-                        Items will only appear when it is the right time. For example, the vocabulary "{{
+                    <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                        <lottie-animation
+                            class="empty-state-animation"
+                            :animation-data="emptyStateAnimation"
+                            :loop="true"
+                        >
+                            <template #fallback>
+                                <font-awesome-icon :icon="faGlassCheers" class="firecracker-primary-color-icon-large" />
+                            </template>
+                        </lottie-animation>
+                    </view>
+
+                    <ion-card-subtitle v-if="box === '1' && totalItems === 0" class="ion-padding ion-text-center">
+                        <span class="link-container">
+                            But beginning the journey with Leitner System is super easy. All you need to do is create a
+                            flashcard by pressing the
+                            <font-awesome-icon :icon="faHeartRegular" class="leitner-icon" /> icon on the
+                            <router-link to="/vocabularies"> vocabulary card </router-link>. After that, the vocabulary
+                            will immediately place into the "{{ headerTitle }}".
+                        </span>
+                    </ion-card-subtitle>
+
+                    <ion-card-subtitle v-if="box !== '1' && totalItems > 0" class="ion-padding ion-text-center">
+                        <span v-if="!singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary">
+                            Items will only appear when it is the right time.
+                        </span>
+                        <span v-if="singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary">
+                            Items will only appear when it is the right time. For example, the vocabulary "{{
+                                singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
+                            }}" will appear on
+                            {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}.
+                        </span>
+                    </ion-card-subtitle>
+                </view>
+
+                <ion-row
+                    v-for="boxItem in boxItems"
+                    :key="boxItem.vocabularyId"
+                    class="display-flex ion-justify-content-center item-container"
+                >
+                    <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
+                        <ion-card class="margin-top-bottom-unset">
+                            <ion-card-header>
+                                <ion-card-title class="display-flex ion-justify-content-center capitalize">
+                                    {{ boxItem.word }}
+                                </ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>
+                                <ion-row
+                                    class="display-flex ion-justify-content-center ion-align-items-center capitalize ion-margin-top"
+                                >
+                                    <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
+                                    <span class="updated-at ion-padding-start ion-padding-end">
+                                        {{ format(boxItem.updatedAt, 'MMMM dd, yyyy') }}
+                                    </span>
+                                    <font-awesome-icon :icon="faClock" class="firecracker-primary-color-icon" />
+                                    <span class="updated-at ion-padding-start">
+                                        {{ format(boxItem.updatedAt, 'hh:mm aa') }}
+                                    </span>
+                                </ion-row>
+
+                                <ion-row class="item-actions ion-justify-content-center ion-padding-top">
+                                    <ion-button
+                                        v-if="!isFirstBox()"
+                                        aria-label="Move to the previous box"
+                                        fill="outline"
+                                        size="small"
+                                        shape="round"
+                                        :strong="true"
+                                        color="warning"
+                                        @click="moveBackward(boxItem.vocabularyId)"
+                                    >
+                                        <font-awesome-icon :icon="faArrowLeft" />
+                                    </ion-button>
+                                    <ion-button
+                                        v-if="!isLastBox()"
+                                        aria-label="Move to the next box"
+                                        fill="outline"
+                                        size="small"
+                                        shape="round"
+                                        :strong="true"
+                                        color="primary"
+                                        @click="moveForward(boxItem.vocabularyId)"
+                                    >
+                                        <font-awesome-icon :icon="faArrowRight" />
+                                    </ion-button>
+                                    <ion-button
+                                        aria-label="View vocabulary details"
+                                        fill="outline"
+                                        size="small"
+                                        shape="round"
+                                        :strong="true"
+                                        color="fern-green"
+                                        class="item-actions__details"
+                                        @click="seeMore(boxItem.vocabularyId, boxItem.word)"
+                                    >
+                                        <font-awesome-icon :icon="faUnlockAlt" />
+                                    </ion-button>
+                                </ion-row>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+
+                <ion-col
+                    v-if="
+                        !showSpinner &&
+                        !allQuietOnTheWesternFront &&
+                        singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary
+                    "
+                    sizeXs="12"
+                    sizeSm="12"
+                    sizeMd="8"
+                    sizeLg="6"
+                    sizeXl="6"
+                >
+                    <ion-card-subtitle class="ion-padding-start ion-padding-end ion-padding-bottom ion-text-center">
+                        Other items will only appear when it is the right time. For example, the vocabulary "{{
                             singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
                         }}" will appear on
                         {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}.
-                    </span>
-                </ion-card-subtitle>
-            </view>
-
-            <ion-row
-                v-for="boxItem in boxItems"
-                :key="boxItem.vocabularyId"
-                class="display-flex ion-justify-content-center item-container"
-            >
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
-                    <ion-card class="margin-top-bottom-unset">
-                        <ion-card-header>
-                            <ion-card-title class="display-flex ion-justify-content-center capitalize">
-                                {{ boxItem.word }}
-                            </ion-card-title>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <ion-row
-                                class="display-flex ion-justify-content-center ion-align-items-center capitalize ion-margin-top"
-                            >
-                                <font-awesome-icon :icon="faCalendarAlt" class="firecracker-primary-color-icon" />
-                                <span class="updated-at ion-padding-start ion-padding-end">
-                                    {{ format(boxItem.updatedAt, 'MMMM dd, yyyy') }}
-                                </span>
-                                <font-awesome-icon :icon="faClock" class="firecracker-primary-color-icon" />
-                                <span class="updated-at ion-padding-start">
-                                    {{ format(boxItem.updatedAt, 'hh:mm aa') }}
-                                </span>
-                            </ion-row>
-
-                            <ion-row class="item-actions ion-justify-content-center ion-padding-top">
-                                <ion-button
-                                    v-if="!isFirstBox()"
-                                    aria-label="Move to the previous box"
-                                    fill="outline"
-                                    size="small"
-                                    shape="round"
-                                    :strong="true"
-                                    color="warning"
-                                    @click="moveBackward(boxItem.vocabularyId)"
-                                >
-                                    <font-awesome-icon :icon="faArrowLeft" />
-                                </ion-button>
-                                <ion-button
-                                    v-if="!isLastBox()"
-                                    aria-label="Move to the next box"
-                                    fill="outline"
-                                    size="small"
-                                    shape="round"
-                                    :strong="true"
-                                    color="primary"
-                                    @click="moveForward(boxItem.vocabularyId)"
-                                >
-                                    <font-awesome-icon :icon="faArrowRight" />
-                                </ion-button>
-                                <ion-button
-                                    aria-label="View vocabulary details"
-                                    fill="outline"
-                                    size="small"
-                                    shape="round"
-                                    :strong="true"
-                                    color="fern-green"
-                                    class="item-actions__details"
-                                    @click="seeMore(boxItem.vocabularyId, boxItem.word)"
-                                >
-                                    <font-awesome-icon :icon="faUnlockAlt" />
-                                </ion-button>
-                            </ion-row>
-                        </ion-card-content>
-                    </ion-card>
+                    </ion-card-subtitle>
                 </ion-col>
-            </ion-row>
 
-            <ion-col
-                v-if="!allQuietOnTheWesternFront && singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary"
-                sizeXs="12"
-                sizeSm="12"
-                sizeMd="8"
-                sizeLg="6"
-                sizeXl="6"
-            >
-                <ion-card-subtitle class="ion-padding-start ion-padding-end ion-padding-bottom ion-text-center">
-                    Other items will only appear when it is the right time. For example, the vocabulary "{{
-                        singleLeitnerItemEarlierToBoxAppearanceDate.vocabulary.word
-                    }}" will appear on
-                    {{ format(singleLeitnerItemEarlierToBoxAppearanceDate.boxAppearanceDate, 'LLLL, dd') }}.
-                </ion-card-subtitle>
-            </ion-col>
+                <end-of-list v-if="shouldShowEndOfList" />
 
-            <end-of-list v-if="shouldShowEndOfList" />
-
-            <network-error v-if="isNetworkError" />
+                <network-error v-if="isNetworkError" />
+            </div>
 
             <ion-infinite-scroll
+                v-if="boxItems.length > 0 && !showSpinner && !isNetworkError"
                 @ionInfinite="renderBoxItems($event)"
                 threshold="100px"
                 id="infinite-scroll"
                 :disabled="isDisabled"
             >
-                <spinner />
+                <ion-infinite-scroll-content loading-spinner="crescent" />
             </ion-infinite-scroll>
         </ion-content>
 
@@ -170,6 +233,7 @@ import {
     IonCol,
     IonContent,
     IonInfiniteScroll,
+    IonInfiniteScrollContent,
     IonPage,
     IonRow,
 } from '@ionic/vue';
@@ -184,7 +248,7 @@ import LeitnerBoxItem from '@/domains/LeitnerBoxItem';
 import HttpHandler from '@/utils/HttpHandler';
 import Pagination from '@/domains/Pagination';
 import { Components } from '@ionic/core/components';
-import Spinner from '@/views/shared/Spinner.vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 import NetworkError from '@/views/shared/NetworkError.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -217,7 +281,7 @@ export default defineComponent({
     components: {
         FirecrackerHeader,
         LottieAnimation,
-        Spinner,
+        SkeletonText,
         NetworkError,
         EndOfList,
         IonContent,
@@ -227,6 +291,7 @@ export default defineComponent({
         IonCardTitle,
         IonCardSubtitle,
         IonInfiniteScroll,
+        IonInfiniteScrollContent,
         IonCardContent,
         IonRow,
         IonCol,
@@ -241,7 +306,7 @@ export default defineComponent({
             mappedBoxWithDays: MappedLeitnerBoxWithDays,
             boxItems: [] as LeitnerBoxItem[],
             singleLeitnerItemEarlierToBoxAppearanceDate: {} as SingleLeitnerItemEarlierToBoxAppearanceDate,
-            showSpinner: false,
+            showSpinner: true,
             pageNumber: 1,
             pageSize: 10,
             isDisabled: false,
@@ -264,6 +329,15 @@ export default defineComponent({
         };
     },
     computed: {
+        loadingStatus(): string {
+            if (this.showSpinner) {
+                return 'Loading flashcards';
+            }
+            if (this.isNetworkError) {
+                return 'Unable to load flashcards';
+            }
+            return 'Flashcards loaded';
+        },
         /**
          * An empty Box 1 means "you have no flashcards yet", anything else means
          * "there is nothing due right now" — two different messages that deserve
@@ -281,7 +355,12 @@ export default defineComponent({
          * celebration to finish instead.
          */
         shouldShowEmptyState(): boolean {
-            return this.allQuietOnTheWesternFront && !this.isNetworkError && !this.isMasteredFeedbackPlaying;
+            return (
+                !this.showSpinner &&
+                this.allQuietOnTheWesternFront &&
+                !this.isNetworkError &&
+                !this.isMasteredFeedbackPlaying
+            );
         },
 
         /**
@@ -291,6 +370,7 @@ export default defineComponent({
          */
         shouldShowEndOfList(): boolean {
             return (
+                !this.showSpinner &&
                 this.isDisabled &&
                 this.boxItems.length > 0 &&
                 !this.singleLeitnerItemEarlierToBoxAppearanceDate?.vocabulary &&
@@ -365,8 +445,11 @@ export default defineComponent({
         async refresh(): Promise<void> {
             this.clean();
             this.showSpinner = true;
-            await this.renderBoxItems();
-            this.showSpinner = false;
+            try {
+                await this.renderBoxItems();
+            } finally {
+                this.showSpinner = false;
+            }
         },
 
         async seeMore(id: string, word: string): Promise<void> {
@@ -537,8 +620,16 @@ ion-card-content {
 
 /* The arrows change which box the word lives in; keep the details action away
    from them so it is not hit by mistake. */
-.item-container ion-button.item-actions__details {
+.item-container .item-actions__details {
     margin-inline-start: var(--space-md);
+}
+
+.skeleton-date-row {
+    flex-wrap: nowrap;
+}
+
+.skeleton-date-row .updated-at {
+    min-width: 0;
 }
 
 .leitner-icon {

@@ -14,6 +14,7 @@ jest.mock('@ionic/vue', () => {
     const IonStub = define({ template: '<div><slot /></div>' });
 
     return {
+        IonSkeletonText: IonStub,
         IonButton: IonStub,
         IonCard: IonStub,
         IonCardContent: IonStub,
@@ -23,6 +24,7 @@ jest.mock('@ionic/vue', () => {
         IonCol: IonStub,
         IonContent: IonStub,
         IonInfiniteScroll: IonStub,
+        IonInfiniteScrollContent: IonStub,
         IonPage: IonStub,
         IonRow: IonStub,
     };
@@ -96,6 +98,8 @@ jest.mock('@/utils/NativeStorage', () => ({
 
 interface LeitnerBoxItemsVm {
     box: string;
+    showSpinner: boolean;
+    refresh(): Promise<void>;
     totalItems: number;
     boxItems: LeitnerBoxItem[];
     allQuietOnTheWesternFront: boolean;
@@ -126,8 +130,8 @@ const vm = (wrapper: VueWrapper): LeitnerBoxItemsVm => wrapper.vm as unknown as 
 
 const emptyStateName = (wrapper: VueWrapper): string => (vm(wrapper).emptyStateAnimation as { nm: string }).nm;
 
-const mountView = (box: string, count = '0'): VueWrapper =>
-    shallowMount(LeitnerBoxItems, {
+const mountView = (box: string, count = '0', loading = false): VueWrapper => {
+    const wrapper = shallowMount(LeitnerBoxItems, {
         global: {
             mocks: {
                 $route: { params: { box, count } },
@@ -135,6 +139,10 @@ const mountView = (box: string, count = '0'): VueWrapper =>
             stubs: { RouterLink: true },
         },
     });
+    // These fixtures normally represent a box after its initial request.
+    vm(wrapper).showSpinner = loading;
+    return wrapper;
+};
 
 describe('Leitner box items view (integration)', () => {
     beforeEach(() => {
@@ -144,6 +152,19 @@ describe('Leitner box items view (integration)', () => {
         nativeStorage.getShouldReloadLeitnerItems.mockResolvedValue(false);
         nativeStorage.removeShouldReloadLeitnerItems.mockResolvedValue(undefined);
         nativeStorage.getUpdatedVocabulary.mockResolvedValue({});
+    });
+
+    it('SHOULD suppress empty and end-of-list states until initial loading finishes', async () => {
+        const wrapper = mountView('1', '0', true);
+        vm(wrapper).allQuietOnTheWesternFront = true;
+
+        expect(vm(wrapper).shouldShowEmptyState).toBe(false);
+        expect(vm(wrapper).shouldShowEndOfList).toBe(false);
+
+        await vm(wrapper).refresh();
+
+        expect(vm(wrapper).showSpinner).toBe(false);
+        expect(vm(wrapper).shouldShowEmptyState).toBe(true);
     });
 
     describe('WHEN the box is empty', () => {

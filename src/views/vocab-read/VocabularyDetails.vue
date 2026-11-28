@@ -1,5 +1,5 @@
 <template>
-    <spinner v-if="isLoading" />
+    <vocabulary-details-skeleton v-if="isLoading" />
 
     <ion-row v-if="!isLoading && Object.keys(vocabulary).length" class="display-flex ion-justify-content-center">
         <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
@@ -116,7 +116,7 @@
         </ion-col>
     </ion-row>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab v-if="!isLoading && vocabulary.id" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button
             v-if="!isLoading && Object.keys(vocabulary).length && !disableInsertingIntoLeitnerBox"
             aria-label="Make flashcard"
@@ -170,7 +170,6 @@ import {
     IonRow,
     IonCol,
 } from '@ionic/vue';
-import Spinner from '@/views/shared/Spinner.vue';
 import EmptyContainer from '@/views/vocab-read/EmptyContainer.vue';
 import Dictionary from '@/views/vocab-read/Dictionary.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -180,6 +179,7 @@ import LeitnerSystemService from '@/utils/LeitnerSystemService';
 import Vocabulary from '@/domains/Vocabulary';
 import LottieAnimation from '@/media/LottieAnimation.vue';
 import flashcardCreated from '@/media/lottie/flashcard-created.json';
+import VocabularyDetailsSkeleton from '@/views/vocab-read/VocabularyDetailsSkeleton.vue';
 
 interface FlashcardFeedback {
     top: number;
@@ -190,7 +190,7 @@ export default defineComponent({
     name: 'VocabularyDetails',
     components: {
         Dictionary,
-        Spinner,
+        VocabularyDetailsSkeleton,
         EmptyContainer,
         LottieAnimation,
         IonCard,

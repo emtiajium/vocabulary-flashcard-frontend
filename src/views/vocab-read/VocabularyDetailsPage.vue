@@ -7,6 +7,7 @@
             type="BACK"
         />
         <ion-content :fullscreen="true" id="vocabulary-details">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
             <vocabulary-details
                 :word="word"
                 :vocabulary="vocabulary"
@@ -42,6 +43,7 @@ export default defineComponent({
             vocabulary: new Vocabulary(),
             disableInsertingIntoLeitnerBox: this.$route.params.disableInsertingIntoLeitnerBox === 'true',
             isLoading: true,
+            loadFailed: false,
         };
     },
     async ionViewDidEnter() {
@@ -50,16 +52,29 @@ export default defineComponent({
     ionViewWillLeave() {
         this.clean();
     },
+    computed: {
+        loadingStatus(): string {
+            if (this.isLoading) {
+                return 'Loading vocabulary details';
+            }
+            if (this.loadFailed) {
+                return 'Unable to load vocabulary details';
+            }
+            return 'Vocabulary details loaded';
+        },
+    },
     methods: {
         async init(): Promise<void> {
             await this.loadVocabulary();
         },
 
         async loadVocabulary(): Promise<void> {
+            this.loadFailed = false;
             try {
                 this.vocabulary = await HttpHandler.get<Vocabulary>(`/v1/vocabularies/${this.id}`);
                 this.word = this.vocabulary.word;
             } catch {
+                this.loadFailed = true;
                 await Promise.all([Toast.present(MessageDB.networkError, 'error'), this.$router.back()]);
             } finally {
                 this.isLoading = false;
@@ -68,6 +83,7 @@ export default defineComponent({
 
         clean(): void {
             this.isLoading = true;
+            this.loadFailed = false;
             this.vocabulary = new Vocabulary();
         },
     },

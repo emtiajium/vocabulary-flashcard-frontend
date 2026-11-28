@@ -2,6 +2,7 @@
     <ion-page>
         <firecracker-header header-title="My Flashcards" content-id="leitner-boxes" menu-id="leitner-boxes-menu" />
         <ion-content :fullscreen="true" id="leitner-boxes">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
             <ion-row class="display-flex ion-justify-content-center">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
                     <ion-card class="margin-top-bottom-unset">
@@ -56,7 +57,7 @@
                 </ion-col>
             </ion-row>
 
-            <ion-row class="display-flex ion-justify-content-center">
+            <ion-row class="display-flex ion-justify-content-center" :aria-busy="areCountsLoading">
                 <ion-col sizeXs="6" sizeSm="4" sizeMd="3" sizeLg="3" sizeXl="2">
                     <leitner-single-box :box="1" :count="count[1]" :error="error[1]" />
                 </ion-col>
@@ -114,6 +115,20 @@ export default defineComponent({
     },
     ionViewWillLeave() {
         this.clean();
+    },
+    computed: {
+        areCountsLoading(): boolean {
+            return this.placeholderItems.some((box) => this.count[box] === -1 && !this.error[box]);
+        },
+        loadingStatus(): string {
+            if (this.areCountsLoading) {
+                return 'Loading flashcard counts';
+            }
+            if (this.placeholderItems.some((box) => this.error[box])) {
+                return 'Some flashcard counts are unavailable';
+            }
+            return 'Flashcard counts loaded';
+        },
     },
     methods: {
         toggle(): void {

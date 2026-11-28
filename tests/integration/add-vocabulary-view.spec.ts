@@ -44,7 +44,7 @@ jest.mock('@/views/shared/FirecrackerHeader.vue', () => {
     return { __esModule: true, default: define({ template: '<div><slot /></div>' }) };
 });
 
-jest.mock('@/views/shared/Spinner.vue', () => {
+jest.mock('@/views/shared/SkeletonText.vue', () => {
     const { defineComponent: define } = jest.requireActual('vue');
     return { __esModule: true, default: define({ template: '<div />' }) };
 });

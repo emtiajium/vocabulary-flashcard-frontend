@@ -2,9 +2,48 @@
     <ion-page>
         <firecracker-header header-title="My Cohort" content-id="cohort" menu-id="cohort-menu" />
         <ion-content :fullscreen="true" id="cohort">
-            <ion-row class="display-flex ion-justify-content-center">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
+            <ion-row class="display-flex ion-justify-content-center" :aria-busy="!isReady">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
-                    <spinner v-if="!isReady" />
+                    <div v-if="!isReady" aria-hidden="true">
+                        <ion-card class="margin-top-unset" aria-hidden="true">
+                            <ion-card-title class="display-flex ion-justify-content-center name-container">
+                                <skeleton-text width="45%" height="calc(var(--text-lg) * var(--leading-snug))" />
+                            </ion-card-title>
+                        </ion-card>
+
+                        <ion-card v-for="index in 3" :key="index" aria-hidden="true">
+                            <ion-card-content>
+                                <ion-row>
+                                    <ion-col sizeXs="4" sizeSm="4" sizeMd="6" sizeLg="6" sizeXl="6" class="avatar">
+                                        <div class="avatar-skeleton">
+                                            <skeleton-text width="100%" height="100%" border-radius="50%" />
+                                        </div>
+                                    </ion-col>
+                                    <ion-col
+                                        sizeXs="8"
+                                        sizeSm="8"
+                                        sizeMd="6"
+                                        sizeLg="6"
+                                        sizeXl="6"
+                                        class="profile-info"
+                                    >
+                                        <ion-card-subtitle class="profile-skeleton-line">
+                                            <skeleton-text width="65%" height="var(--text-sm)" />
+                                        </ion-card-subtitle>
+                                        <ion-card-subtitle class="ion-padding-top profile-skeleton-line">
+                                            <skeleton-text width="85%" height="var(--text-sm)" />
+                                        </ion-card-subtitle>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-card-content>
+                        </ion-card>
+
+                        <ion-card-header class="cohort-skeleton-footer" aria-hidden="true">
+                            <skeleton-text width="90%" height="var(--text-sm)" />
+                            <skeleton-text width="75%" height="var(--text-sm)" />
+                        </ion-card-header>
+                    </div>
 
                     <network-error v-if="isNetworkError && isReady" />
 
@@ -88,7 +127,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Spinner from '@/views/shared/Spinner.vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 import Cohort from '@/domains/Cohort';
 import {
     IonCard,
@@ -112,7 +151,7 @@ export default defineComponent({
     components: {
         NetworkError,
         FirecrackerHeader,
-        Spinner,
+        SkeletonText,
         LottieAnimation,
         IonPage,
         IonContent,
@@ -137,6 +176,17 @@ export default defineComponent({
     },
     ionViewWillLeave() {
         this.clean();
+    },
+    computed: {
+        loadingStatus(): string {
+            if (!this.isReady) {
+                return 'Loading cohort';
+            }
+            if (this.isNetworkError) {
+                return 'Unable to load cohort';
+            }
+            return 'Cohort loaded';
+        },
     },
     methods: {
         async init(): Promise<void> {
@@ -182,6 +232,30 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+}
+.avatar-skeleton {
+    width: min(100px, 100%);
+    aspect-ratio: 1;
+    flex-shrink: 0;
+    padding: var(--ion-padding);
+    border: 1px solid var(--app-border-color);
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+.profile-skeleton-line {
+    width: 100%;
+    min-height: calc(var(--text-sm) * var(--leading-normal));
+    display: flex;
+    align-items: center;
+}
+.profile-skeleton-line.ion-padding-top {
+    min-height: calc(var(--text-sm) * var(--leading-normal) + var(--ion-padding));
+}
+.cohort-skeleton-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
 }
 .empty-cohort-icon {
     width: min(160px, 50%);

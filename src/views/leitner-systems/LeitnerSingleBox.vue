@@ -8,7 +8,9 @@
                 <ion-card-subtitle> {{ mappedBoxWithDays[`BOX_${box}`] }} Box </ion-card-subtitle>
             </ion-row>
             <ion-row class="display-flex ion-justify-content-center count-container">
-                <spinner v-if="count === -1 && error === false" />
+                <skeleton-text v-if="count === -1 && error === false" width="75px" height="var(--text-xs)" />
+                <span v-if="count === -1 && !error" class="visually-hidden">Loading vocabulary count</span>
+                <span v-if="error" class="visually-hidden">Vocabulary count unavailable</span>
                 <ion-card-subtitle v-if="count !== -1 && error === false">
                     {{ count }} {{ count > 1 ? 'Vocabs' : 'Vocab' }}
                 </ion-card-subtitle>
@@ -21,15 +23,15 @@
 import { defineComponent } from 'vue';
 import { IonCard, IonCardContent, IonCardSubtitle, IonRow } from '@ionic/vue';
 import MappedLeitnerBoxWithDays from '@/domains/MappedLeitnerBoxWithDays';
-import Spinner from '@/views/shared/Spinner.vue';
 import NativeStorage from '@/utils/NativeStorage';
 import EmptyBoxIcon from '@/media/EmptyBoxIcon.vue';
+import SkeletonText from '@/views/shared/SkeletonText.vue';
 
 export default defineComponent({
     name: 'LeitnerSingleBox',
     components: {
         EmptyBoxIcon,
-        Spinner,
+        SkeletonText,
         IonCard,
         IonCardContent,
         IonCardSubtitle,
@@ -73,6 +75,8 @@ ion-card.transparent {
 }
 .count-container {
     margin-bottom: var(--ion-margin);
+    min-height: calc(var(--text-sm) * var(--leading-normal));
+    align-items: center;
 }
 ion-card-subtitle {
     font-weight: var(--font-weight-medium);

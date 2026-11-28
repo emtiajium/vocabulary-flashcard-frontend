@@ -13,120 +13,133 @@
         />
 
         <ion-content :fullscreen="true" id="vocabulary-list">
-            <ion-row v-if="shouldDisplayFetchButton()" class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
-                    <ion-card class="margin-top-unset">
-                        <ion-card-content>
-                            <view class="display-flex ion-justify-content-center">
-                                <lottie-animation
-                                    class="announcement-animation"
-                                    :animation-data="emptyVocabulariesAnimation"
-                                    :loop="true"
-                                >
-                                    <template #fallback>
-                                        <ion-item lines="none">
-                                            <span class="material-icons firecracker-primary-color-icon-large">
-                                                campaign
-                                            </span>
-                                        </ion-item>
-                                    </template>
-                                </lottie-animation>
-                            </view>
-                            <ion-card-subtitle class="ion-text-center ion-padding">
-                                Looks like you do not have any vocabulary in your cohort yet! We can generate a few if
-                                you wish. All you need is to click the button below and wait a bit! And FYI, you may
-                                remove those later.
-                            </ion-card-subtitle>
-                            <view class="display-flex ion-justify-content-center ion-padding">
-                                <ion-item lines="none">
-                                    <ion-button @click="bootstrap" size="large"> Fetch </ion-button>
-                                </ion-item>
-                            </view>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
+            <div :aria-busy="showSpinner">
+                <ion-row v-if="shouldDisplayFetchButton()" class="display-flex ion-justify-content-center">
+                    <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
+                        <ion-card class="margin-top-unset">
+                            <ion-card-content>
+                                <view class="display-flex ion-justify-content-center">
+                                    <lottie-animation
+                                        class="announcement-animation"
+                                        :animation-data="emptyVocabulariesAnimation"
+                                        :loop="true"
+                                    >
+                                        <template #fallback>
+                                            <ion-item lines="none">
+                                                <span class="material-icons firecracker-primary-color-icon-large">
+                                                    campaign
+                                                </span>
+                                            </ion-item>
+                                        </template>
+                                    </lottie-animation>
+                                </view>
+                                <ion-card-subtitle class="ion-text-center ion-padding">
+                                    Looks like you do not have any vocabulary in your cohort yet! We can generate a few
+                                    if you wish. All you need is to click the button below and wait a bit! And FYI, you
+                                    may remove those later.
+                                </ion-card-subtitle>
+                                <view class="display-flex ion-justify-content-center ion-padding">
+                                    <ion-item lines="none">
+                                        <ion-button @click="bootstrap" size="large"> Fetch </ion-button>
+                                    </ion-item>
+                                </view>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
 
-            <spinner v-if="showSpinner" />
-
-            <view v-if="shouldDisplayNoSearchResultMessage()">
-                <ion-card-subtitle class="ion-padding ion-text-center">
-                    {{
-                        `No vocabulary was found for "${searchKeyword}". ${
-                            !fetchFlashcard || !fetchNotHavingDefinitionOnly
-                                ? `You may get better search results if you change your filtering preference.`
-                                : ``
-                        }`
-                    }}
-                </ion-card-subtitle>
-                <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <lottie-animation
-                        class="empty-search-animation"
-                        :animation-data="emptySearchAnimation"
-                        :loop="true"
-                    >
-                        <template #fallback>
-                            <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
-                        </template>
-                    </lottie-animation>
+                <view v-if="showSpinner && !vocabularies.length" aria-hidden="true">
+                    <ion-row v-for="index in 5" :key="index" class="display-flex ion-justify-content-center">
+                        <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
+                            <minified-vocabulary-skeleton />
+                        </ion-col>
+                    </ion-row>
                 </view>
-            </view>
 
-            <view v-if="shouldDisplayEmptyDraftVocabMessage()">
-                <ion-card-subtitle class="ion-text-center ion-padding">
-                    No vocabulary was found without definition.
-                    {{
-                        !fetchFlashcard
-                            ? `However, as "Show flashcard in boxes" is turned off, you may try to find draft vocab by turning on "Show flashcard in boxes".`
-                            : ''
-                    }}
-                </ion-card-subtitle>
-                <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-large" />
+                <view v-if="shouldDisplayNoSearchResultMessage()">
+                    <ion-card-subtitle class="ion-padding ion-text-center">
+                        {{
+                            `No vocabulary was found for "${searchKeyword}". ${
+                                !fetchFlashcard || !fetchNotHavingDefinitionOnly
+                                    ? `You may get better search results if you change your filtering preference.`
+                                    : ``
+                            }`
+                        }}
+                    </ion-card-subtitle>
+                    <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                        <lottie-animation
+                            class="empty-search-animation"
+                            :animation-data="emptySearchAnimation"
+                            :loop="true"
+                        >
+                            <template #fallback>
+                                <span class="material-icons firecracker-primary-color-icon-large"> manage_search </span>
+                            </template>
+                        </lottie-animation>
+                    </view>
                 </view>
-            </view>
 
-            <view v-if="shouldDisplayEmptyNonFlashcardMessage()">
-                <ion-card-subtitle class="ion-text-center ion-padding">
-                    No vocabulary was found that is not in boxes.
-                </ion-card-subtitle>
-                <view class="display-flex ion-justify-content-center ion-padding-bottom">
-                    <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-large" />
+                <view v-if="shouldDisplayEmptyDraftVocabMessage()">
+                    <ion-card-subtitle class="ion-text-center ion-padding">
+                        No vocabulary was found without definition.
+                        {{
+                            !fetchFlashcard
+                                ? `However, as "Show flashcard in boxes" is turned off, you may try to find draft vocab by turning on "Show flashcard in boxes".`
+                                : ''
+                        }}
+                    </ion-card-subtitle>
+                    <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                        <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-large" />
+                    </view>
                 </view>
-            </view>
 
-            <ion-row
-                v-for="vocabulary in vocabularies"
-                :key="vocabulary.id"
-                class="display-flex ion-justify-content-center"
-            >
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
-                    <minified-vocabulary
-                        :vocabulary="vocabulary"
-                        :delete-vocabulary="disappearVocabularyFromUI"
-                        :update-leitner-box-existence="updateLeitnerBoxExistence"
-                    />
-                </ion-col>
-            </ion-row>
+                <view v-if="shouldDisplayEmptyNonFlashcardMessage()">
+                    <ion-card-subtitle class="ion-text-center ion-padding">
+                        No vocabulary was found that is not in boxes.
+                    </ion-card-subtitle>
+                    <view class="display-flex ion-justify-content-center ion-padding-bottom">
+                        <font-awesome-icon :icon="faThumbsUp" class="firecracker-primary-color-icon-large" />
+                    </view>
+                </view>
 
-            <end-of-list
-                v-if="isDisabled && vocabularies.length > 0 && !isNetworkError"
-                :inline-style="cssStyleToClearlyDisplayVocabCountChip"
-            />
+                <ion-row
+                    v-for="vocabulary in vocabularies"
+                    :key="vocabulary.id"
+                    class="display-flex ion-justify-content-center"
+                >
+                    <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
+                        <minified-vocabulary
+                            :vocabulary="vocabulary"
+                            :delete-vocabulary="disappearVocabularyFromUI"
+                            :update-leitner-box-existence="updateLeitnerBoxExistence"
+                        />
+                    </ion-col>
+                </ion-row>
 
-            <network-error v-if="isNetworkError" :message="errorMessage" />
+                <end-of-list
+                    v-if="!showSpinner && isDisabled && vocabularies.length > 0 && !isNetworkError"
+                    :inline-style="cssStyleToClearlyDisplayVocabCountChip"
+                />
+
+                <network-error v-if="!showSpinner && isNetworkError" :message="errorMessage" />
+            </div>
 
             <ion-infinite-scroll
+                v-if="vocabularies.length > 0 && !showSpinner && !isNetworkError"
                 @ionInfinite="renderVocabularies($event)"
                 threshold="100px"
                 id="infinite-scroll"
                 :disabled="isDisabled"
             >
-                <spinner :inline-style="cssStyleToClearlyDisplayVocabCountChip" />
+                <ion-infinite-scroll-content
+                    loading-spinner="crescent"
+                    :style="cssStyleToClearlyDisplayVocabCountChip"
+                />
             </ion-infinite-scroll>
 
             <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
-                <spinner />
+                <ion-refresher-content />
             </ion-refresher>
 
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -175,6 +188,8 @@ import {
     IonRow,
     IonCol,
     IonChip,
+    IonRefresherContent,
+    IonInfiniteScrollContent,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import HttpHandler from '@/utils/HttpHandler';
@@ -189,7 +204,6 @@ import FirecrackerHeader from '@/views/shared/FirecrackerHeader.vue';
 import EndOfList from '@/views/shared/EndOfList.vue';
 import NetworkError from '@/views/shared/NetworkError.vue';
 import NativeStorage from '@/utils/NativeStorage';
-import Spinner from '@/views/shared/Spinner.vue';
 import Sort, { SortDirection, SupportedSortFields } from '@/domains/Sort';
 import { isObjectEqual } from '@/utils/is-equal';
 import Settings from '@/views/vocab-read/Settings.vue';
@@ -200,6 +214,7 @@ import VocabularySearchCoverage from '@/domains/VocabularySearchCoverage';
 import { FirecrackerError } from '@/domains/FirecrackerError';
 import MessageDB from '@/utils/MessageDB';
 import { cloneDeep, isEmpty, uniqBy } from 'lodash';
+import MinifiedVocabularySkeleton from '@/views/vocab-read/MinifiedVocabularySkeleton.vue';
 
 type IonInfiniteScrollType = Components.IonInfiniteScroll;
 type IonRefresherType = Components.IonRefresher;
@@ -208,12 +223,12 @@ export default defineComponent({
     name: 'VocabularyList',
     components: {
         Settings,
-        Spinner,
         EndOfList,
         NetworkError,
         MinifiedVocabulary,
         FirecrackerHeader,
         LottieAnimation,
+        MinifiedVocabularySkeleton,
         IonContent,
         IonPage,
         IonFab,
@@ -226,13 +241,15 @@ export default defineComponent({
         IonButton,
         IonItem,
         IonRefresher,
+        IonRefresherContent,
+        IonInfiniteScrollContent,
         IonRow,
         IonCol,
         IonChip,
     },
     data() {
         return {
-            showSpinner: false,
+            showSpinner: true,
             faPlus,
             faThumbsUp,
             emptyVocabulariesAnimation: announcement,
@@ -267,15 +284,31 @@ export default defineComponent({
     },
     async mounted() {
         this.showSpinner = true;
-        await this.setSettingsStuff();
-        await this.renderVocabularies();
-        this.showSpinner = false;
+        try {
+            await this.setSettingsStuff();
+            await this.renderVocabularies();
+        } catch (error) {
+            this.reportRequestFailure(error);
+        } finally {
+            this.showSpinner = false;
+        }
     },
     ionViewDidEnter() {
         // executing concurrently
         this.assertRefreshList();
         this.assertRefreshVocabulary();
         this.assertRefreshIsInLeitnerBox();
+    },
+    computed: {
+        loadingStatus(): string {
+            if (this.showSpinner) {
+                return 'Loading vocabularies';
+            }
+            if (this.isNetworkError) {
+                return 'Unable to load vocabularies';
+            }
+            return 'Vocabularies loaded';
+        },
     },
     methods: {
         clean(): void {
@@ -347,8 +380,13 @@ export default defineComponent({
         async refresh(): Promise<void> {
             this.clean();
             this.showSpinner = true;
-            await this.renderVocabularies();
-            this.showSpinner = false;
+            try {
+                await this.renderVocabularies();
+            } catch (error) {
+                this.reportRequestFailure(error);
+            } finally {
+                this.showSpinner = false;
+            }
         },
 
         async renderVocabularies(event?: CustomEvent<void>): Promise<void> {
@@ -367,8 +405,11 @@ export default defineComponent({
         },
 
         async doRefresh(event: CustomEvent): Promise<void> {
-            await this.refresh();
-            await ((event as CustomEvent).target as unknown as IonRefresherType).complete();
+            try {
+                await this.refresh();
+            } finally {
+                await ((event as CustomEvent).target as unknown as IonRefresherType).complete();
+            }
         },
 
         /**
@@ -496,10 +537,17 @@ export default defineComponent({
         async setSearchKeyword(searchKeyword: string): Promise<void> {
             this.searchKeyword = searchKeyword;
             const searchKeywordLength = searchKeyword.length;
+
             if (searchKeywordLength === 0 || searchKeywordLength > 2) {
                 this.pageNumber = 1;
                 this.vocabularies = [] as Vocabulary[];
-                await this.renderVocabularies();
+                this.showSpinner = true;
+
+                try {
+                    await this.renderVocabularies();
+                } finally {
+                    this.showSpinner = false;
+                }
             }
         },
 
@@ -551,6 +599,7 @@ export default defineComponent({
 
         shouldDisplayFetchButton(): boolean {
             return (
+                !this.showSpinner &&
                 this.allQuietOnTheWesternFront &&
                 // The card offers to generate a cohort's first words, which is a
                 // statement about the cohort and not about the current search: an
@@ -565,6 +614,7 @@ export default defineComponent({
 
         shouldDisplayNoSearchResultMessage(): boolean {
             return (
+                !this.showSpinner &&
                 this.isDisabled &&
                 this.vocabularies.length === 0 &&
                 this.searchKeyword.length > 2 &&
@@ -574,6 +624,7 @@ export default defineComponent({
 
         shouldDisplayEmptyDraftVocabMessage(): boolean {
             return (
+                !this.showSpinner &&
                 this.vocabularies.length === 0 &&
                 this.fetchNotHavingDefinitionOnly &&
                 !this.isNetworkError &&
@@ -583,6 +634,7 @@ export default defineComponent({
 
         shouldDisplayEmptyNonFlashcardMessage(): boolean {
             return (
+                !this.showSpinner &&
                 this.vocabularies.length === 0 &&
                 !this.fetchNotHavingDefinitionOnly &&
                 !this.fetchFlashcard &&

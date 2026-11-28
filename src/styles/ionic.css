@@ -340,3 +340,15 @@ ion-fab-button {
 ion-fab-button:active {
     transform: scale(0.94);
 }
+
+ion-spinner {
+    --color: var(--ion-color-primary);
+}
+
+ion-skeleton-text {
+    --background: var(--app-skeleton-background);
+    --background-rgb: var(--app-skeleton-background-rgb);
+    --border-radius: var(--radius-xs);
+
+    margin: 0;
+}
