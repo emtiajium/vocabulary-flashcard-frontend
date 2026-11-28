@@ -11,6 +11,9 @@
                 "apple": false,
                 "twitter": false
             }
+        },
+        "SystemBars": {
+            "insetsHandling": "disable"
         }
     },
     "server": {
