@@ -171,6 +171,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Change Log
 
+-   `9.0.2`: Uninstalled @capacitor/status-bar
 -   `9.0.1`: Refresh token for Android too
 -   `9.0.0`: Refresh token
 -   `8.0.3`: Upgraded Node to 26.13.1
@@ -306,6 +307,7 @@ The finished images land in `play-store/rendered/<device-type>/`.
 
 ## Android Release Log
 
+-   `115`: `9.0.2`
 -   `114`: `9.0.1`
 -   `113`: `8.0.0`
 -   `112`: `6.0.2`

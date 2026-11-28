@@ -1,6 +1,5 @@
 import { ThemeDetection } from '@ionic-native/theme-detection';
 import Platform from '@/utils/Platform';
-import { StatusBar } from '@capacitor/status-bar';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 declare global {
@@ -16,25 +15,27 @@ function getStatusBarBackgroundColor(): string {
     return getComputedStyle(document.body).getPropertyValue('--ion-toolbar-background').trim();
 }
 
+async function updateSystemBarColors(): Promise<void> {
+    const color = getStatusBarBackgroundColor();
+
+    await Promise.all([EdgeToEdge.setStatusBarColor({ color }), EdgeToEdge.setNavigationBarColor({ color })]);
+}
+
 export function setDarkMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('dark');
+
     if (isAndroid) {
-        StatusBar.setBackgroundColor({
-            color: getStatusBarBackgroundColor(),
-        }).finally();
-        EdgeToEdge.setBackgroundColor({ color: getStatusBarBackgroundColor() }).finally();
+        void updateSystemBarColors().catch(console.error);
     }
 }
 
 export function setLightMode(): void {
     document.body.classList.remove('light', 'dark');
     document.body.classList.add('light');
+
     if (isAndroid) {
-        StatusBar.setBackgroundColor({
-            color: getStatusBarBackgroundColor(),
-        }).finally();
-        EdgeToEdge.setBackgroundColor({ color: getStatusBarBackgroundColor() }).finally();
+        void updateSystemBarColors().catch(console.error);
     }
 }
 
@@ -52,10 +53,13 @@ export function setThemeMode(mode: 'light' | 'dark'): void {
 export async function setThemeBasedOnSystem(): Promise<void> {
     try {
         isAndroid = await Platform.isAndroid();
+
         if (isAndroid) {
             const { value: isAvailable } = await ThemeDetection.isAvailable();
+
             if (isAvailable) {
                 const { value: isDarkModeEnabled } = await ThemeDetection.isDarkModeEnabled();
+
                 if (isDarkModeEnabled) {
                     setDarkMode();
                 } else {
@@ -63,7 +67,7 @@ export async function setThemeBasedOnSystem(): Promise<void> {
                 }
             }
         } else {
-            const prefersDark = window.matchMedia(`(prefers-color-scheme: dark)`);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
             setThemeMode(prefersDark.matches ? 'dark' : 'light');
         }
     } catch {
@@ -72,7 +76,7 @@ export async function setThemeBasedOnSystem(): Promise<void> {
 }
 
 export function subscribeToThemeChanges(): void {
-    const prefersDark = window.matchMedia(`(prefers-color-scheme: dark)`);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
     if (prefersDark.addEventListener) {
         prefersDark.addEventListener('change', (mediaQuery) => {
@@ -87,9 +91,11 @@ export function subscribeToThemeChanges(): void {
 
 export async function initTheme(): Promise<void> {
     await setThemeBasedOnSystem();
+
     if (!isAndroid) {
         subscribeToThemeChanges();
     }
+
     // WebView as a rescuer for the Android app
     // android/app/src/main/java/com/emtiajium/firecracker/collaborative/vocab/practice/MainActivity.java
 }
