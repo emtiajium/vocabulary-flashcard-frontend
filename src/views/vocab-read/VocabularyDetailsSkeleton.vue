@@ -1,5 +1,5 @@
 <template>
-    <ion-row class="display-flex ion-justify-content-center" role="status" aria-label="Loading vocabulary details">
+    <ion-row class="display-flex ion-justify-content-center" aria-hidden="true">
         <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
             <ion-card v-for="index in 2" :key="index">
                 <ion-card-header>

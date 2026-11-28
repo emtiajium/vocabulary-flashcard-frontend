@@ -2,9 +2,10 @@
     <ion-page>
         <firecracker-header header-title="My Cohort" content-id="cohort" menu-id="cohort-menu" />
         <ion-content :fullscreen="true" id="cohort">
-            <ion-row class="display-flex ion-justify-content-center">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
+            <ion-row class="display-flex ion-justify-content-center" :aria-busy="!isReady">
                 <ion-col sizeXs="12" sizeSm="12" sizeMd="8" sizeLg="6" sizeXl="6">
-                    <div v-if="!isReady" role="status" aria-label="Loading cohort">
+                    <div v-if="!isReady" aria-hidden="true">
                         <ion-card class="margin-top-unset" aria-hidden="true">
                             <ion-card-title class="display-flex ion-justify-content-center name-container">
                                 <skeleton-text width="45%" height="calc(var(--text-lg) * var(--leading-snug))" />
@@ -175,6 +176,17 @@ export default defineComponent({
     },
     ionViewWillLeave() {
         this.clean();
+    },
+    computed: {
+        loadingStatus(): string {
+            if (!this.isReady) {
+                return 'Loading cohort';
+            }
+            if (this.isNetworkError) {
+                return 'Unable to load cohort';
+            }
+            return 'Cohort loaded';
+        },
     },
     methods: {
         async init(): Promise<void> {

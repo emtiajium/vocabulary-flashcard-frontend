@@ -94,8 +94,8 @@ body.light {
     --ion-text-color: #0d1f1e;
     --ion-text-color-rgb: 13, 31, 30;
 
-    --app-skeleton-background: #d1e3db;
-    --app-skeleton-background-rgb: 209, 227, 219;
+    --app-skeleton-background: #b6cec2;
+    --app-skeleton-background-rgb: 182, 206, 194;
 
     --app-surface: var(--ion-color-card);
     --app-surface-raised: #fafafa;
@@ -235,8 +235,8 @@ body.dark {
     --ion-text-color: #eef2f0;
     --ion-text-color-rgb: 238, 242, 240;
 
-    --app-skeleton-background: #34483e;
-    --app-skeleton-background-rgb: 52, 72, 62;
+    --app-skeleton-background: #41594d;
+    --app-skeleton-background-rgb: 65, 89, 77;
 
     --app-surface: var(--ion-color-card);
     --app-surface-raised: #1d2822;

@@ -116,7 +116,7 @@
         </ion-col>
     </ion-row>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab v-if="!isLoading && vocabulary.id" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button
             v-if="!isLoading && Object.keys(vocabulary).length && !disableInsertingIntoLeitnerBox"
             aria-label="Make flashcard"

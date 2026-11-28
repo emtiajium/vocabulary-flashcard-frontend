@@ -10,9 +10,10 @@
         />
 
         <ion-content :fullscreen="true" id="add-vocabulary">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
             <ion-row class="display-flex ion-justify-content-center">
-                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8">
-                    <view v-if="isLoading" role="status" aria-label="Loading vocabulary form">
+                <ion-col sizeXs="12" sizeSm="12" sizeMd="10" sizeLg="8" sizeXl="8" :aria-busy="isLoading">
+                    <view v-if="isLoading" aria-hidden="true">
                         <div aria-hidden="true">
                             <ion-card
                                 v-for="(section, index) in skeletonSections"
@@ -74,6 +75,9 @@
                         </div>
                     </view>
 
+                    <ion-card-subtitle v-else-if="loadFailed" class="ion-padding ion-text-center">
+                        Unable to load vocabulary form. Please go back and try again.
+                    </ion-card-subtitle>
                     <view v-else>
                         <ion-card class="margin-top-unset">
                             <ion-card-header>
@@ -324,6 +328,7 @@ export default defineComponent({
     data() {
         return {
             isLoading: true,
+            loadFailed: false,
             skeletonSections: [
                 { title: 'Word', tipWidths: ['100%', '75%'] },
                 { title: 'Definitions', tipWidths: ['80%'] },
@@ -357,6 +362,17 @@ export default defineComponent({
     ionViewWillLeave() {
         this.clear();
     },
+    computed: {
+        loadingStatus(): string {
+            if (this.isLoading) {
+                return 'Loading vocabulary form';
+            }
+            if (this.loadFailed) {
+                return 'Unable to load vocabulary form';
+            }
+            return 'Vocabulary form ready';
+        },
+    },
     methods: {
         subscribeToHardwareBackButtonListener(): void {
             this.unsubscribeBackButtonListener();
@@ -372,6 +388,7 @@ export default defineComponent({
         async init(): Promise<void> {
             this.subscribeToHardwareBackButtonListener();
             this.isLoading = true;
+            this.loadFailed = false;
             const routeParameters = this.$route.params;
             if (routeParameters?.id) {
                 await this.loadEditView();
@@ -404,6 +421,7 @@ export default defineComponent({
                 this.genericExternalLinks = vocabulary.genericExternalLinks as string[];
                 this.isDraft = vocabulary.isDraft;
             } catch {
+                this.loadFailed = true;
                 await Promise.all([Toast.present(MessageDB.networkError, 'error'), this.$router.back()]);
             }
         },

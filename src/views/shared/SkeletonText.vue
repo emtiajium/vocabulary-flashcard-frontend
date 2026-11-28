@@ -1,6 +1,6 @@
 <template>
     <ion-skeleton-text
-        :animated="animated && !prefersReducedMotion"
+        :animated="animated && !prefersReducedMotion && !animationExpired"
         :style="{
             width,
             height,
@@ -39,7 +39,9 @@ export default defineComponent({
     },
     data() {
         return {
-            prefersReducedMotion: false,
+            prefersReducedMotion: true,
+            animationExpired: false,
+            animationTimeout: null as ReturnType<typeof setTimeout> | null,
             motionPreference: null as MediaQueryList | null,
         };
     },
@@ -52,10 +54,16 @@ export default defineComponent({
 
         this.prefersReducedMotion = this.motionPreference.matches;
 
-        this.motionPreference.addEventListener('change', this.onMotionPreferenceChange);
+        this.motionPreference.addEventListener?.('change', this.onMotionPreferenceChange);
+        this.animationTimeout = setTimeout(() => {
+            this.animationExpired = true;
+        }, 5000);
     },
     beforeUnmount() {
-        this.motionPreference?.removeEventListener('change', this.onMotionPreferenceChange);
+        this.motionPreference?.removeEventListener?.('change', this.onMotionPreferenceChange);
+        if (this.animationTimeout !== null) {
+            clearTimeout(this.animationTimeout);
+        }
     },
     methods: {
         onMotionPreferenceChange(event: MediaQueryListEvent): void {

@@ -2,17 +2,17 @@
     <ion-menu side="start" :menu-id="menuId" :content-id="contentId">
         <view class="container">
             <ion-grid class="display-grid">
-                <ion-row
-                    v-if="isUserLoading"
-                    class="profile profile-skeleton"
-                    role="status"
-                    aria-label="Loading profile"
-                >
+                <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
+                <ion-row v-if="isUserLoading" class="profile profile-skeleton" aria-hidden="true">
                     <skeleton-text width="120px" height="120px" border-radius="50%" />
                     <div class="profile-skeleton-text ion-padding-bottom">
                         <skeleton-text width="60%" height="var(--text-md)" />
                         <skeleton-text width="85%" height="var(--text-sm)" />
                     </div>
+                </ion-row>
+
+                <ion-row v-else-if="isUserLoadFailed" class="intro">
+                    <p class="item-text">Unable to load profile</p>
                 </ion-row>
 
                 <ion-row v-else-if="isAuthenticated" class="profile">
@@ -45,11 +45,11 @@
                                 </ion-label>
                             </ion-item>
                         </template>
-                        <ion-item v-if="!isUserLoading && isAuthenticated" button @click="navigate('/vocabularies')">
+                        <ion-item v-if="showAuthenticatedMenu" button @click="navigate('/vocabularies')">
                             <font-awesome-icon :icon="faBook" class="menu-icon" />
                             <ion-label class="ion-padding-start"> Vocabularies </ion-label>
                         </ion-item>
-                        <ion-item v-if="!isUserLoading && isAuthenticated" button @click="navigate('/leitner-systems')">
+                        <ion-item v-if="showAuthenticatedMenu" button @click="navigate('/leitner-systems')">
                             <flashcard-icon
                                 :fill-color-variable="'--ion-color-primary'"
                                 :stroke-color-variable="'--ion-color-primary'"
@@ -57,17 +57,20 @@
                             />
                             <ion-label class="ion-padding-start"> My Flashcards </ion-label>
                         </ion-item>
-                        <ion-item v-if="!isUserLoading && isAuthenticated" button @click="navigate('/guessing-game')">
+                        <ion-item v-if="showAuthenticatedMenu" button @click="navigate('/guessing-game')">
                             <font-awesome-icon :icon="faBullseye" class="menu-icon" />
                             <ion-label class="ion-padding-start"> Guessing Word </ion-label>
                         </ion-item>
-                        <ion-item v-if="!isUserLoading && isAuthenticated" button @click="navigate('/cohort/read')">
+                        <ion-item v-if="showAuthenticatedMenu" button @click="navigate('/cohort/read')">
                             <font-awesome-icon :icon="faUsers" class="menu-icon" />
                             <ion-label class="ion-padding-start"> My Cohort </ion-label>
                         </ion-item>
-                        <ion-item v-if="!isUserLoading && !isAuthenticated" button @click="navigate('/sign-in')">
+                        <ion-item v-if="showGuestMenu" button @click="navigate('/sign-in')">
                             <font-awesome-icon :icon="faSignInAlt" class="menu-icon" />
                             <ion-label class="ion-padding-start"> Sign In </ion-label>
+                        </ion-item>
+                        <ion-item v-if="isUserLoadFailed" button @click="initUser">
+                            <ion-label>Retry loading profile</ion-label>
                         </ion-item>
                         <ion-item button @click="navigate('/privacy-policy')">
                             <policy-icon
@@ -81,10 +84,10 @@
                 </ion-row>
 
                 <!-- dummy elements to resolve height issue; it looks uglier without those -->
-                <ion-row v-if="isUserLoading || !(isAuthenticated && !isAndroid)"></ion-row>
-                <ion-row v-if="isUserLoading || !(isAuthenticated && !isAndroid)"></ion-row>
+                <ion-row v-if="!(showAuthenticatedMenu && !isAndroid)"></ion-row>
+                <ion-row v-if="!(showAuthenticatedMenu && !isAndroid)"></ion-row>
 
-                <ion-row v-if="!isUserLoading && isAuthenticated && !isAndroid">
+                <ion-row v-if="showAuthenticatedMenu && !isAndroid">
                     <ion-list lines="none">
                         <ion-item class="display-flex ion-align-items-end">
                             <a
@@ -116,7 +119,7 @@
                                 Switch to {{ isDark ? 'Light' : 'Dark' }} Theme
                             </ion-label>
                         </ion-item>
-                        <ion-item v-if="!isUserLoading && isAuthenticated" button @click="signOut">
+                        <ion-item v-if="showAuthenticatedMenu" button @click="signOut">
                             <font-awesome-icon :icon="faSignOutAlt" class="menu-icon" />
                             <ion-label class="ion-padding-start"> Sign Out </ion-label>
                         </ion-item>
@@ -175,6 +178,7 @@ export default defineComponent({
             isDark: false,
             isAuthenticated: false,
             isUserLoading: true,
+            isUserLoadFailed: false,
             isAndroid: true,
         };
     },
@@ -184,9 +188,30 @@ export default defineComponent({
         this.setThemeStatus();
         this.observeThemeChange();
     },
+    computed: {
+        showAuthenticatedMenu(): boolean {
+            return !this.isUserLoading && !this.isUserLoadFailed && this.isAuthenticated;
+        },
+        showGuestMenu(): boolean {
+            return !this.isUserLoading && !this.isUserLoadFailed && !this.isAuthenticated;
+        },
+        loadingStatus(): string {
+            if (this.isUserLoading) {
+                return 'Loading profile';
+            }
+            if (this.isUserLoadFailed) {
+                return 'Unable to load profile';
+            }
+            if (this.isAuthenticated) {
+                return 'Profile loaded';
+            }
+            return 'Guest menu ready';
+        },
+    },
     methods: {
         async initUser(): Promise<void> {
             this.isUserLoading = true;
+            this.isUserLoadFailed = false;
             try {
                 const user = await HttpHandler.get<User>('/v1/users/self');
 
@@ -211,6 +236,8 @@ export default defineComponent({
                 if (status === 401) {
                     this.isAuthenticated = false;
                     await NativeStorage.setIsAuthenticated(false);
+                } else {
+                    this.isUserLoadFailed = true;
                 }
             } finally {
                 this.isUserLoading = false;
@@ -307,7 +334,7 @@ export default defineComponent({
     gap: var(--space-sm);
 }
 .profile-skeleton :deep(ion-skeleton-text) {
-    --background: rgba(var(--ion-color-primary-contrast-rgb), 0.25);
+    --background: rgba(var(--ion-color-primary-contrast-rgb), 0.4);
     --background-rgb: var(--ion-color-primary-contrast-rgb);
 }
 .profile-skeleton-text {

@@ -7,7 +7,8 @@
             type="MENU"
         />
         <ion-content :fullscreen="true" id="guessing-game">
-            <div class="game-shell">
+            <div class="visually-hidden" role="status" aria-atomic="true">{{ loadingStatus }}</div>
+            <div class="game-shell" :aria-busy="isLoading">
                 <!-- The play surface stays mounted (hidden) so the swiper it owns is
                      always in the DOM by the time `initSwiper` runs. -->
                 <section v-show="showGame" class="game-progress" aria-labelledby="game-progress-label">
@@ -183,7 +184,6 @@
                 </div>
 
                 <template v-if="isLoading">
-                    <span class="visually-hidden" role="status">Preparing the guessing game for today...</span>
                     <section class="game-progress" aria-hidden="true">
                         <div class="game-progress__head">
                             <skeleton-text width="7rem" height="var(--text-sm)" />
@@ -213,13 +213,18 @@
                                 <div class="game-footer"></div>
                             </div>
                         </div>
-                        <div class="game-rail">
+                        <div class="game-rail" aria-hidden="true">
                             <div v-for="index in 10" :key="index" class="game-skeleton-rail-step">
                                 <skeleton-text height="8px" border-radius="var(--radius-pill)" />
                             </div>
                         </div>
                     </div>
                 </template>
+
+                <div v-else-if="loadFailed" class="game-empty">
+                    <h2 class="game-empty__title">Unable to load the guessing game</h2>
+                    <p class="game-empty__text">Please try again later.</p>
+                </div>
 
                 <div v-else-if="!vocabularies.length" class="game-empty">
                     <lottie-animation class="game-empty__art" :animation-data="funGameAnimation" :loop="true">
@@ -357,6 +362,7 @@ export default defineComponent({
             funGameAnimation: funGame,
             failedMessage: 'Not quite. Try again.',
             isLoading: true,
+            loadFailed: false,
             vocabularies: [] as RandomlyChosenMeaningResponse[],
             // Draft per word so a half-typed answer survives swiping away and back.
             givenAnswers: [] as string[],
@@ -376,6 +382,18 @@ export default defineComponent({
         };
     },
     computed: {
+        loadingStatus(): string {
+            if (this.isLoading) {
+                return 'Preparing the guessing game for today';
+            }
+            if (this.loadFailed) {
+                return 'Unable to load the guessing game';
+            }
+            if (!this.vocabularies.length) {
+                return 'No words available';
+            }
+            return 'Guessing game ready';
+        },
         showGame(): boolean {
             return !this.isLoading && this.vocabularies.length > 0;
         },
@@ -428,15 +446,22 @@ export default defineComponent({
 
         async assertLoadingVocabularies(): Promise<void> {
             this.isLoading = true;
-            const cachedRandomlyChosenMeaningResponse = await NativeStorage.getGuessingGameVocabularies();
-            const today = format(new Date(), 'yyyy-MM-dd');
-            if (cachedRandomlyChosenMeaningResponse?.createdAt !== today) {
-                NativeStorage.removeGuessingGameVocabularies().catch();
-                await this.loadVocabularies();
-            } else {
-                this.setVocabularies(cachedRandomlyChosenMeaningResponse.data);
+            this.loadFailed = false;
+            try {
+                const cachedRandomlyChosenMeaningResponse = await NativeStorage.getGuessingGameVocabularies();
+                const today = format(new Date(), 'yyyy-MM-dd');
+                if (cachedRandomlyChosenMeaningResponse?.createdAt !== today) {
+                    NativeStorage.removeGuessingGameVocabularies().catch();
+                    await this.loadVocabularies();
+                } else {
+                    this.setVocabularies(cachedRandomlyChosenMeaningResponse.data);
+                }
+            } catch {
+                this.loadFailed = true;
+                this.setVocabularies([]);
+            } finally {
+                this.isLoading = false;
             }
-            this.isLoading = false;
         },
 
         async loadVocabularies(): Promise<void> {
@@ -447,6 +472,7 @@ export default defineComponent({
                 this.setVocabularies(vocabularies);
                 this.storeInCache(vocabularies);
             } catch {
+                this.loadFailed = true;
                 this.setVocabularies([]);
                 await Toast.present(MessageDB.genericError, 'error');
             }
@@ -632,6 +658,7 @@ export default defineComponent({
 
         clean(): void {
             this.isLoading = true;
+            this.loadFailed = false;
             this.vocabularies = [];
             this.givenAnswers = [];
             this.revealedIndex = null;
@@ -951,19 +978,6 @@ ion-content#guessing-game {
 
 .game-feedback.is-neutral {
     color: var(--ion-text-color-step-300);
-}
-
-/* Announce-only: visible to assistive tech, not to the eye. */
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-    border: 0;
 }
 
 .game-reveal {
